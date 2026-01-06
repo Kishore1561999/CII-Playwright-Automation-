@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'node' // This name must match the name in Global Tool Configuration
+    }
+
+    environment {
+        // Map your secrets as environment variables here
+        // BASE_URL = credentials('base-url')
+        // USER_EMAIL = credentials('user-email')
+        // PASSWORD = credentials('password')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('playwright-automation') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                dir('playwright-automation') {
+                    sh 'npx playwright install --with-deps'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                dir('playwright-automation') {
+                    script {
+                        try {
+                            sh 'npx playwright test'
+                        } catch (Exception e) {
+                            currentBuild.result = 'FAILURE'
+                            error('Tests failed')
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('playwright-automation') {
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'playwright-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Playwright Report',
+                    reportTitles: ''
+                ])
+                
+                archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+            }
+        }
+    }
+}
