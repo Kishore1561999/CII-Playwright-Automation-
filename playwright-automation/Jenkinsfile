@@ -22,7 +22,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('playwright-automation') {
-                    sh 'npm install'
+                    bat 'npm install'
+                    bat 'npm list @playwright/test'
                 }
             }
         }
@@ -30,7 +31,7 @@ pipeline {
         stage('Install Playwright Browsers') {
             steps {
                 dir('playwright-automation') {
-                    sh 'npx playwright install --with-deps'
+                    bat 'npx playwright install --with-deps'
                 }
             }
         }
@@ -40,7 +41,7 @@ pipeline {
                 dir('playwright-automation') {
                     script {
                         try {
-                            sh 'npx playwright test'
+                            bat 'npx playwright test'
                         } catch (Exception e) {
                             currentBuild.result = 'FAILURE'
                             error('Tests failed')
