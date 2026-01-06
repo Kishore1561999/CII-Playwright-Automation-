@@ -1,0 +1,155 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\playwright.config.js",
+    "rootDir": "C:/Users/SPRITLE/Downloads/cii-production/cii-production/playwright-automation/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/Users/SPRITLE/Downloads/cii-production/cii-production/playwright-automation/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/SPRITLE/Downloads/cii-production/cii-production/playwright-automation/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.57.0",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\common\\login.spec.js",
+      "file": "e2e/common/login.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication",
+          "file": "e2e/common/login.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should login successfully with valid admin credentials",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10927,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/.*dashboard/\u001b[39m\nReceived string:  \u001b[31m\"https://esgdiagnostics.in/esgadmin/company_users\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 5000ms\u001b[22m\n\u001b[2m    8 × unexpected value \"https://esgdiagnostics.in/esgadmin/company_users\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/.*dashboard/\u001b[39m\nReceived string:  \u001b[31m\"https://esgdiagnostics.in/esgadmin/company_users\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 5000ms\u001b[22m\n\u001b[2m    8 × unexpected value \"https://esgdiagnostics.in/esgadmin/company_users\"\u001b[22m\n\n    at C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\tests\\e2e\\common\\login.spec.js:18:28",
+                        "location": {
+                          "file": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\tests\\e2e\\common\\login.spec.js",
+                          "column": 28,
+                          "line": 18
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 16 |\u001b[39m         \u001b[90m// Verify successful login (e.g., check for dashboard URL or element)\u001b[39m\n \u001b[90m 17 |\u001b[39m         \u001b[90m// Adjust assertion based on actual redirect\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 |\u001b[39m         \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/.*dashboard/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 19 |\u001b[39m         \u001b[90m// or\u001b[39m\n \u001b[90m 20 |\u001b[39m         \u001b[90m// await expect(page.locator('text=Signed in successfully')).toBeVisible();\u001b[39m\n \u001b[90m 21 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\tests\\e2e\\common\\login.spec.js",
+                            "column": 28,
+                            "line": 18
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/.*dashboard/\u001b[39m\nReceived string:  \u001b[31m\"https://esgdiagnostics.in/esgadmin/company_users\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 5000ms\u001b[22m\n\u001b[2m    8 × unexpected value \"https://esgdiagnostics.in/esgadmin/company_users\"\u001b[22m\n\n\n  16 |         // Verify successful login (e.g., check for dashboard URL or element)\n  17 |         // Adjust assertion based on actual redirect\n> 18 |         await expect(page).toHaveURL(/.*dashboard/);\n     |                            ^\n  19 |         // or\n  20 |         // await expect(page.locator('text=Signed in successfully')).toBeVisible();\n  21 |     });\n    at C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\tests\\e2e\\common\\login.spec.js:18:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-02T08:42:32.646Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\test-results\\e2e-common-login-Authentic-e4471-ith-valid-admin-credentials-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\test-results\\e2e-common-login-Authentic-e4471-ith-valid-admin-credentials-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\test-results\\e2e-common-login-Authentic-e4471-ith-valid-admin-credentials-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Users\\SPRITLE\\Downloads\\cii-production\\cii-production\\playwright-automation\\tests\\e2e\\common\\login.spec.js",
+                        "column": 28,
+                        "line": 18
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ef3b1bbadec268f0711-4ec6272ff8166fe26264",
+              "file": "e2e/common/login.spec.js",
+              "line": 13,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-01-02T08:42:31.377Z",
+    "duration": 14367.283,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

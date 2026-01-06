@@ -1,0 +1,17 @@
+{
+  "name": "cii-automation",
+  "version": "1.0.0",
+  "description": "Playwright automation framework for CII application",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "dotenv": "^17.2.3"
+  }
+}
