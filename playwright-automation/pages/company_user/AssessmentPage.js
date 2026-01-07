@@ -64,7 +64,7 @@ class AssessmentPage extends BasePage {
     }
     async _checkRadioButton(locator) {
         // Ensure the element is visible and scrolled into view
-        await locator.scrollIntoViewIfNeeded();
+
         // Wait for it to be stable and enabled
         await locator.waitFor({ state: 'visible' });
         // Use dblclick as per the previous working pattern if single click is unreliable, 

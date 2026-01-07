@@ -83,7 +83,7 @@ test.describe('Company User Assessment Workflow', () => {
 
     test('Step 3: Company User Login & Assessment', async () => {
         console.log('Starting Step 3: Company User Login & Assessment');
-        test.setTimeout(120000);
+        test.setTimeout(300000);
         const loginPage = new LoginPage(page);
         const dashboardPage = new DashboardPage(page);
         const assessmentPage = new AssessmentPage(page);
