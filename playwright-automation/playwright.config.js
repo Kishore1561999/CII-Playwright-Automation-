@@ -30,6 +30,11 @@ module.exports = defineConfig({
             title: 'CII Automation Report',
             authorName: 'Kishore RS',
             preferredTheme: 'light'
+        }],
+        ['allure-playwright', {
+            detail: true,
+            outputFolder: 'allure-results',
+            suiteTitle: false
         }]
     ],
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
