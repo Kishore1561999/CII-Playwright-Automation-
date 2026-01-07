@@ -16,7 +16,8 @@ class AdminCompanyUsersPage extends BasePage {
         console.log(`Approving company: ${companyName}`);
         await this.searchNameInput.fill(companyName);
         await this.applyButton.click();
-        await this.page.waitForTimeout(3000); // Wait for filter results
+
+        // await this.page.waitForTimeout(3000); // Wait for filter results
 
         // Find the row containing the company name (using normalize-space for robustness)
         const row = this.page.locator(`xpath=//strong[contains(normalize-space(.), "${companyName}")]/ancestor::tr`);

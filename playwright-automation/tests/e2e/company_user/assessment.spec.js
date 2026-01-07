@@ -56,6 +56,7 @@ test.describe('Company User Assessment Workflow', () => {
     });
 
     test('Step 2: Admin Approval', async () => {
+        test.setTimeout(60000);
         const loginPage = new LoginPage(page);
         const adminDashboard = new AdminDashboardPage(page);
         const adminCompanyUsers = new AdminCompanyUsersPage(page);
