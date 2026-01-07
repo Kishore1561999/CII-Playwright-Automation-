@@ -54,51 +54,51 @@ pipeline {
 
     post {
         always {
-            dir('playwright-automation') {
-                // Generate Allure Report
-                script {
+            script {
+                dir('playwright-automation') {
+                     // Generate Allure Report
                      try {
                         bat 'npx allure generate allure-results -o allure-report --clean'
                      } catch (Exception e) {
                         echo 'Failed to generate Allure report'
                      }
                 }
-
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'playwright-report',
-                    reportFiles: 'index.html',
-                    reportName: 'Playwright Report',
-                    reportTitles: ''
-                ])
-
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'ortoni-report',
-                    reportFiles: 'index.html',
-                    reportName: 'Ortoni Report',
-                    reportTitles: ''
-                ])
-
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'allure-report',
-                    reportFiles: 'index.html',
-                    reportName: 'Allure Report',
-                    reportTitles: ''
-                ])
-                
-                archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
-                archiveArtifacts artifacts: 'ortoni-report/**', allowEmptyArchive: true
-                archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
-                archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
             }
+
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-automation/playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report',
+                reportTitles: ''
+            ])
+
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-automation/ortoni-report',
+                reportFiles: 'index.html',
+                reportName: 'Ortoni Report',
+                reportTitles: ''
+            ])
+
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-automation/allure-report',
+                reportFiles: 'index.html',
+                reportName: 'Allure Report',
+                reportTitles: ''
+            ])
+            
+            archiveArtifacts artifacts: 'playwright-automation/playwright-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/ortoni-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/allure-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/test-results/**', allowEmptyArchive: true
         }
     }
 }
