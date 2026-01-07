@@ -2,15 +2,10 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'node' // This name must match the name in Global Tool Configuration
+        nodejs 'NodeJS_LTS' // Updated based on error message
     }
 
-    environment {
-        // Map your secrets as environment variables here
-        // BASE_URL = credentials('base-url')
-        // USER_EMAIL = credentials('user-email')
-        // PASSWORD = credentials('password')
-    }
+    // environment block removed as it was empty
 
     stages {
         stage('Checkout') {
