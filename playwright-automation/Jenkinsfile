@@ -95,15 +95,19 @@ pipeline {
             archiveArtifacts artifacts: 'playwright-automation/allure-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'playwright-automation/test-results/**', allowEmptyArchive: true
 
-            emailext (
-                subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
-                body: """<p>Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) finished.</p>
-                         <p>Status: <strong>${currentBuild.result ?: 'SUCCESS'}</strong></p>
-                         <p>Check console output at: <a href='${env.BUILD_URL}'>${env.BUILD_URL}</a></p>""",
-                to: "kishore.r@spritle.com", // TODO: Update this email address
-                mimeType: 'text/html',
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
-            )
+            // emailext (
+            //     subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
+            //     body: """<p>Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) finished.</p>
+            //              <p>Status: <strong>${currentBuild.result ?: 'SUCCESS'}</strong></p>
+            //              <p>Check console output at: <a href='${env.BUILD_URL}'>${env.BUILD_URL}</a></p>""",
+            //     to: "kishore.r@spritle.com",
+            //     mimeType: 'text/html',
+            //     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+            // )
+
+            mail to: 'kishore.r@spritle.com',
+                 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
+                 body: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) finished.\nStatus: ${currentBuild.result ?: 'SUCCESS'}\nCheck console output at: ${env.BUILD_URL}"
         }
     }
 }
