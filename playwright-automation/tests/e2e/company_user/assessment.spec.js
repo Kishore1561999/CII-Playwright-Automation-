@@ -22,7 +22,40 @@ test.describe('Company User Assessment Workflow', () => {
     });
 
     test.afterAll(async () => {
-        await page.close();
+        console.log('Starting cleanup: Deleting the User');
+        try {
+            const loginPage = new LoginPage(page);
+            const adminDashboard = new AdminDashboardPage(page);
+            const adminCompanyUsers = new AdminCompanyUsersPage(page);
+
+            // Attempt to logout if stuck in user session
+            try {
+                const logoutLink = page.getByRole('link', { name: 'Log Out' });
+                if (await logoutLink.isVisible()) {
+                    await page.locator('a.nav-link.dropdown-toggle').click();
+                    await logoutLink.click();
+                    await page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
+                    await page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
+                    await page.waitForURL(/.*sign_in/, { timeout: 10000 });
+                }
+            } catch (e) {
+                console.log('Cleanup: User already logged out or unable to logout', e.message);
+            }
+
+            // Login as Admin
+            await loginPage.navigate('/users/sign_in');
+            await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
+            await adminDashboard.navigateToCompanyUsers();
+
+            // Delete the company
+            await adminCompanyUsers.deleteCompany(companyName);
+            await expect(adminCompanyUsers.deleteSuccessToast).toBeVisible();
+            console.log(`Successfully deleted company: ${companyName}`);
+        } catch (error) {
+            console.error('Error during cleanup:', error);
+        } finally {
+            await page.close();
+        }
     });
 
     test('Step 1: Company Registration', async () => {
@@ -240,26 +273,5 @@ test.describe('Company User Assessment Workflow', () => {
         await page.waitForTimeout(2000);
     });
 
-    test('Step 5: Delete the User', async () => {
-        const loginPage = new LoginPage(page);
-        const adminDashboard = new AdminDashboardPage(page);
-        const adminCompanyUsers = new AdminCompanyUsersPage(page);
 
-        // Logout Company User
-        await page.locator('a.nav-link.dropdown-toggle').click();
-        await page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible', timeout: 5000 });
-        await page.getByRole('link', { name: 'Log Out' }).click();
-        await page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
-        await page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
-
-        // Login as Admin
-        await loginPage.navigate('/users/sign_in');
-        await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
-        await adminDashboard.navigateToCompanyUsers();
-
-        // Delete the company
-        await adminCompanyUsers.deleteCompany(companyName);
-        await expect(adminCompanyUsers.deleteSuccessToast).toBeVisible();
-        console.log(`Successfully deleted company: ${companyName}`);
-    });
 });

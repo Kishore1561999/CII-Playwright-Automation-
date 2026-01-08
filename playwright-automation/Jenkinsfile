@@ -105,9 +105,20 @@ pipeline {
             //     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
             // )
 
-            mail to: 'kishore.r@spritle.com',
+            emailext (
                  subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
-                 body: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) finished.\nStatus: ${currentBuild.result ?: 'SUCCESS'}\nCheck console output at: ${env.BUILD_URL}"
+                 body: """
+                     <p><b>Project:</b> ${env.JOB_NAME}</p>
+                     <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                     <p><b>Build Status:</b> <b>${currentBuild.result ?: 'SUCCESS'}</b></p>
+                     <br>
+                     <p>Click below to view Playwright Ortoni Report:</p>
+                     <a href="${env.BUILD_URL}artifact/playwright-automation/ortoni-report/index.html">View Ortoni HTML Report</a>
+                 """,
+                 to: 'kishore.r@spritle.com',
+                 mimeType: 'text/html',
+                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+            )
         }
     }
 }
