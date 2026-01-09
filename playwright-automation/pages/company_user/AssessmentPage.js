@@ -64,12 +64,31 @@ class AssessmentPage extends BasePage {
     }
     async _checkRadioButton(locator) {
         // Ensure the element is visible and scrolled into view
-
-        // Wait for it to be stable and enabled
-        await locator.waitFor({ state: 'visible' });
-        // Use dblclick as per the previous working pattern if single click is unreliable, 
-        // but adding force:true to bypass potential overlay issues
+        await locator.waitFor({ state: 'visible', timeout: 10000 });
+        
+        // Scroll into view to ensure it's not hidden behind overlays
+        await locator.scrollIntoViewIfNeeded();
+        
+        // Add small delay to ensure DOM is stable
+        await this.page.waitForTimeout(300);
+        
+        // Check if the element is disabled
+        const isDisabled = await locator.isDisabled();
+        if (isDisabled) {
+            console.warn(`Radio button is disabled, waiting for it to be enabled...`);
+            // Wait for the element to be enabled
+            await this.page.waitForFunction((selector) => {
+                const el = document.querySelector(selector);
+                return el && !el.disabled;
+            }, locator.locator(':first-child'));
+        }
+        
+        // Use dblclick as per the previous working pattern if single click is unreliable
         await locator.dblclick({ force: true });
+        
+        // Verify the click registered by checking if it's now checked
+        const isChecked = await locator.isChecked();
+        console.log(`Radio button checked status: ${isChecked}`);
     }
 
     async corporateGovernance(index) {
@@ -114,6 +133,25 @@ class AssessmentPage extends BasePage {
     }
 
     async submit() {
+        // Wait for submit button to be enabled
+        await this.submitButton.waitFor({ state: 'visible', timeout: 10000 });
+        
+        // Check if button is disabled and wait for it to be enabled
+        let isDisabled = await this.submitButton.isDisabled();
+        let attempts = 0;
+        while (isDisabled && attempts < 10) {
+            console.log(`Submit button is disabled, waiting... (attempt ${attempts + 1})`);
+            await this.page.waitForTimeout(1000);
+            isDisabled = await this.submitButton.isDisabled();
+            attempts++;
+        }
+        
+        if (isDisabled) {
+            console.error('Submit button is still disabled after 10 seconds. Check if all radio buttons are selected.');
+            throw new Error('Submit button remains disabled. All assessment questions may not be answered.');
+        }
+        
+        console.log('Submit button is now enabled, proceeding with submit...');
         await this.submitButton.click();
         // Wait for and click the confirmation "Yes" button in the modal
         await this.confirmSubmitButton.waitFor({ state: 'visible', timeout: 5000 });

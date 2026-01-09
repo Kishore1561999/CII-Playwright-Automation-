@@ -30,20 +30,21 @@ test.describe('Company User Assessment Workflow', () => {
 
             // Attempt to logout if stuck in user session
             try {
-                const logoutLink = page.getByRole('link', { name: 'Log Out' });
-                if (await logoutLink.isVisible()) {
-                    await page.locator('a.nav-link.dropdown-toggle').click();
-                    await logoutLink.click();
-                    await page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
-                    await page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
-                    await page.waitForURL(/.*sign_in/, { timeout: 10000 });
-                }
-            } catch (e) {
-                console.log('Cleanup: User already logged out or unable to logout', e.message);
+                await page.locator('a.nav-link.dropdown-toggle').click();
+                await page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible', timeout: 5000 });
+                await page.getByRole('link', { name: 'Log Out' }).click();
+                // Wait for logout modal and click Yes
+                await page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
+                await page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
+
+                // Ensure logout is complete by waiting for sign-in page
+                await page.waitForURL(/.*sign_in/, { timeout: 10000 });
+            } catch (error) {
+                console.log('Cleanup: User already logged out or unable to logout', error.message);
             }
 
             // Login as Admin
-            await loginPage.navigate('/users/sign_in');
+            //await loginPage.navigate('/users/sign_in');
             await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
             await adminDashboard.navigateToCompanyUsers();
 
@@ -136,11 +137,13 @@ test.describe('Company User Assessment Workflow', () => {
             const count = '0' + index;
             //console.log(count);
             await assessmentPage.corporateGovernance(count);
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton(); // Business Ethics
         for (let index = 1; index < 9; index++) {
             const count = '0' + index;
             await assessmentPage.businessEthics(count);
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton(); //Risk Management
         for (let index = 1; index < 8; index++) {
@@ -150,6 +153,7 @@ test.describe('Company User Assessment Workflow', () => {
             } else {
                 await assessmentPage.riskManagement(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 7; index++) {
@@ -159,6 +163,7 @@ test.describe('Company User Assessment Workflow', () => {
             } else {
                 await assessmentPage.transparencyDisclosure(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 13; index++) {
@@ -170,6 +175,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.humanRights(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 6; index++) {
@@ -181,6 +187,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.humanCapital(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 9; index++) {
@@ -192,6 +199,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.ohs(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 7; index++) {
@@ -203,6 +211,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.csr(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 12; index++) {
@@ -214,6 +223,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.environmentManagement(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 7; index++) {
@@ -225,6 +235,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.supplyChain(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 8; index++) {
@@ -236,6 +247,7 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.bioDiversity(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.aspectNextButton();
         for (let index = 1; index < 12; index++) {
@@ -247,9 +259,15 @@ test.describe('Company User Assessment Workflow', () => {
                 const count = index;
                 await assessmentPage.productResponsibility(count);
             }
+            await page.waitForTimeout(500); // Slower execution to ensure clicks register
         }
         await assessmentPage.save();
         await expect(assessmentPage.saveSuccessToast).toBeVisible();
+
+        // Debug: Check submit button state before submission
+        const isSubmitDisabled = await assessmentPage.submitButton.isDisabled();
+        console.log(`DEBUG: Submit button disabled state before submit(): ${isSubmitDisabled}`);
+
         await assessmentPage.submit();
         await expect(assessmentPage.submitSuccessToast).toBeVisible();
         // Wait for the application's automatic redirect to dashboard and ensure it's loaded

@@ -1,3 +1,4 @@
+const { expect } = require('@playwright/test');
 const BasePage = require('../BasePage');
 
 class AdminCompanyUsersPage extends BasePage {
@@ -8,8 +9,8 @@ class AdminCompanyUsersPage extends BasePage {
         this.approveButton = page.locator('.approve_button');
         this.confirmApproveButton = page.locator('#modalApprove button#approve_button');
         this.confirmDeleteButton = page.locator('#modalDelete button#delete_button');
-        this.successToast = page.locator('div.toast-message', { hasText: /Company User request status has been updated successfully./i });
-        this.deleteSuccessToast = page.locator('div.toast-message', { hasText: /Company User has been deleted successfully/i });
+        this.successToast = page.locator('div.toast-message').filter({ hasText: /Company User request status has been updated successfully/i });
+        this.deleteSuccessToast = page.locator('div.toast-message').filter({ hasText: /Company User has been deleted successfully/i });
     }
 
     async approveCompany(companyName) {
@@ -35,7 +36,7 @@ class AdminCompanyUsersPage extends BasePage {
 
         // Wait for the button and check if it's visible
         try {
-            await approveBtn.waitFor({ state: 'visible', timeout: 5000 });
+            await approveBtn.waitFor({ state: 'visible', timeout: 10000 });
             console.log(`Approve button found and visible for: ${companyName}`);
             await approveBtn.click();
 

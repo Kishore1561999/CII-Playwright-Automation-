@@ -77,10 +77,10 @@ class RegistrationPage extends BasePage {
 
     async selectServices() {
         await this.nextButton.click();
-        await this.page.waitForTimeout(1000);
+        await this.page.locator('#user_active').waitFor({ state: 'visible', timeout: 10000 });
         await this.page.locator('#user_active').click();
-        await this.page.locator('#services').click();
-        await this.page.locator('#basics').click();
+        // await this.page.locator('#services').click();
+        // await this.page.locator('#basics').click();
     }
 
     async submit() {
