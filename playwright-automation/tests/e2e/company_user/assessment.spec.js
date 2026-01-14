@@ -98,11 +98,8 @@ test.describe('Company User Assessment Workflow', () => {
 
         await loginPage.navigate('/users/sign_in');
         await loginPage.login(companyEmail, password);
-        await page.waitForTimeout(2000);
         await dashboardPage.clickTakeAssessment();
-        await page.waitForTimeout(2000);
         await assessmentPage.closeInstructions();
-        await page.waitForTimeout(2000);
 
         // Fill a dummy question to verify save/submit
         await assessmentPage.selectAspect(); // Corporate Governance
@@ -261,7 +258,7 @@ test.describe('Company User Assessment Workflow', () => {
         console.log('Dashboard button states verified.');
 
         // Wait for potential background processing
-        await page.waitForTimeout(2000);
+        await page.waitForLoadState('networkidle');
         await loginPage.logout();
     });
 

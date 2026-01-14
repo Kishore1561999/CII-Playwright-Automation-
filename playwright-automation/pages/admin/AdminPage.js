@@ -46,7 +46,7 @@ class AdminPage extends BasePage {
     async searchCompany(companyName) {
         await this.searchNameInput.fill(companyName);
         await this.applyFilterButton.click();
-        await this.page.waitForTimeout(2000); // Wait for filter results
+        await this.page.waitForLoadState('networkidle');
         console.log(`✓ Searched for company: ${companyName}`);
     }
 
@@ -93,6 +93,8 @@ class AdminPage extends BasePage {
         const row = await this.getCompanyRow(companyName);
         //Select company
         const checkbox = row.locator('input[type="checkbox"]');
+        await checkbox.waitFor({ state: 'visible', timeout: 5000 });
+        await checkbox.scrollIntoViewIfNeeded();
         await checkbox.check();
         // 2. Wait for global analyst dropdown
         const userdropdown = this.page.locator('select#analyst_id');
@@ -104,8 +106,9 @@ class AdminPage extends BasePage {
         await assignBtn.waitFor({ state: 'visible', timeout: 5000 });
         await assignBtn.click();
         // 5. Confirm modal
+        await this.confirmAssignButton.waitFor({ state: 'visible', timeout: 5000 });
         await this.confirmAssignButton.click();
-        await this.page.waitForTimeout(1000);
+        await this.page.waitForLoadState('networkidle');
 
         const message = await this.assignmentSuccessMessage.first().textContent();
         if (message && message.toLowerCase().includes('success')) {

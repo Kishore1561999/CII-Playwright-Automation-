@@ -1,4 +1,4 @@
-const BasePage = require('../../pages/BasePage');
+const BasePage = require('../BasePage');
 
 class LoginPage extends BasePage {
     constructor(page) {
@@ -14,8 +14,21 @@ class LoginPage extends BasePage {
         await this.emailInput.fill(email);
         await this.passwordInput.fill(password);
         await this.signInButton.click();
-        // Wait for redirect to dashboard or company users page
-        await this.page.waitForURL(/.*dashboard|.*company_users/, { waitUntil: 'networkidle', timeout: 30000 });
+        // Wait for redirect to dashboard or company users page to ensure it's loaded before next steps
+        await this.page.waitForURL(/.*dashboard|.*company_users|.*analyst\/dashboard/, { waitUntil: 'load', timeout: 30000 });
+        await this.page.waitForLoadState('networkidle');
+    }
+    async logout() {
+        await this.page.locator('a.nav-link.dropdown-toggle').click();
+        await this.page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible', timeout: 5000 });
+        await this.page.getByRole('link', { name: 'Log Out' }).click();
+
+        // Wait for logout modal and click Yes
+        await this.page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
+        await this.page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
+
+        // Ensure logout is complete by waiting for sign-in page
+        await this.page.waitForURL(/.*sign_in/, { timeout: 10000 });
     }
 }
 
