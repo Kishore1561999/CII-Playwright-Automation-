@@ -1,17 +1,25 @@
 const { test, expect } = require('@playwright/test');
+const path = require('path');
 const RegistrationPage = require('../../../pages/company_user/RegistrationPage');
-const AdminDashboardPage = require('../../../pages/admin/AdminDashboardPage');
-const AdminCompanyUsersPage = require('../../../pages/admin/AdminCompanyUsersPage');
+const AdminPage = require('../../../pages/admin/AdminPage');
 const LoginPage = require('../../../pages/common/LoginPage');
 const DashboardPage = require('../../../pages/company_user/DashboardPage');
 const AssessmentPage = require('../../../pages/company_user/AssessmentPage');
+const AnalystDashboardPage = require('../../../pages/analyst/AnalystDashboardPage');
+const AnalystAssessmentReviewPage = require('../../../pages/analyst/AnalystAssessmentReviewPage');
 const Env = require('../../../utils/Env');
+const TestData = require('../../../utils/TestData');
 
 // Run tests in serial mode to maintain workflow order
 test.describe.configure({ mode: 'serial' });
 
 test.describe('Company User Assessment Workflow', () => {
     let page;
+    let loginPage;
+    let adminPage;
+    let analystDashboardPage;
+    let analystReviewPage;
+
     const timestamp = Date.now();
     const companyEmail = `e2e_user_${timestamp}@example.com`;
     const companyName = `E2E_Company_${timestamp}`;
@@ -19,44 +27,21 @@ test.describe('Company User Assessment Workflow', () => {
 
     test.beforeAll(async ({ browser }) => {
         page = await browser.newPage();
+        loginPage = new LoginPage(page);
+        adminPage = new AdminPage(page);
+        analystDashboardPage = new AnalystDashboardPage(page);
+        analystReviewPage = new AnalystAssessmentReviewPage(page);
     });
 
     test.afterAll(async () => {
-        console.log('Starting cleanup: Deleting the User');
-        try {
-            const loginPage = new LoginPage(page);
-            const adminDashboard = new AdminDashboardPage(page);
-            const adminCompanyUsers = new AdminCompanyUsersPage(page);
+        console.log('Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js');
+        // Store test data in environment and file for post-assessment and delete flows
+        process.env.TEST_COMPANY_NAME = companyName;
+        process.env.TEST_COMPANY_EMAIL = companyEmail;
+        TestData.save({ companyName, companyEmail });
 
-            // Attempt to logout if stuck in user session
-            try {
-                await page.locator('a.nav-link.dropdown-toggle').click();
-                await page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible', timeout: 5000 });
-                await page.getByRole('link', { name: 'Log Out' }).click();
-                // Wait for logout modal and click Yes
-                await page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
-                await page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
-
-                // Ensure logout is complete by waiting for sign-in page
-                await page.waitForURL(/.*sign_in/, { timeout: 10000 });
-            } catch (error) {
-                console.log('Cleanup: User already logged out or unable to logout', error.message);
-            }
-
-            // Login as Admin
-            //await loginPage.navigate('/users/sign_in');
-            await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
-            await adminDashboard.navigateToCompanyUsers();
-
-            // Delete the company
-            await adminCompanyUsers.deleteCompany(companyName);
-            await expect(adminCompanyUsers.deleteSuccessToast).toBeVisible();
-            console.log(`Successfully deleted company: ${companyName}`);
-        } catch (error) {
-            console.error('Error during cleanup:', error);
-        } finally {
-            await page.close();
-        }
+        // Close page connection (not deleted yet)
+        await page.close();
     });
 
     test('Step 1: Company Registration', async () => {
@@ -92,27 +77,16 @@ test.describe('Company User Assessment Workflow', () => {
     test('Step 2: Admin Approval', async () => {
         test.setTimeout(60000);
         const loginPage = new LoginPage(page);
-        const adminDashboard = new AdminDashboardPage(page);
-        const adminCompanyUsers = new AdminCompanyUsersPage(page);
-
         await loginPage.navigate('/users/sign_in');
         await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
-        await adminDashboard.navigateToCompanyUsers();
-        await adminCompanyUsers.approveCompany(companyName);
-        await expect(adminCompanyUsers.successToast).toBeVisible();
+        await expect(page).toHaveURL(/.*esgadmin\/company_users/);
+        await adminPage.navigateToCompanyUsers();
+        await adminPage.approveCompany(companyName);
+        await expect(adminPage.successToast).toBeVisible();
         await page.waitForTimeout(2000);
 
         // Logout Admin
-        await page.locator('a.nav-link.dropdown-toggle').click();
-        await page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible', timeout: 5000 });
-        await page.getByRole('link', { name: 'Log Out' }).click();
-
-        // Wait for logout modal and click Yes
-        await page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
-        await page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
-
-        // Ensure logout is complete by waiting for sign-in page
-        await page.waitForURL(/.*sign_in/, { timeout: 10000 });
+        await loginPage.logout();
     });
 
     test('Step 3: Company User Login & Assessment', async () => {
@@ -277,19 +251,137 @@ test.describe('Company User Assessment Workflow', () => {
     test('Step 4: Verify Dashboard After Submission', async () => {
         console.log('Starting Step 4: Verify Dashboard After Submission');
         const dashboardPage = new DashboardPage(page);
-        // Ensure we are on the dashboard after the automatic redirect
         await page.waitForURL(/.*company_user\/dashboard/, { timeout: 10000 });
 
-        // Verify Take Assessment is disabled
         const isTakeDisabled = await dashboardPage.isTakeAssessmentDisabled();
         expect(isTakeDisabled).toBe(true);
 
-        // Verify View Assessment is enabled
         const isViewEnabled = await dashboardPage.isViewAssessmentEnabled();
         expect(isViewEnabled).toBe(true);
-        console.log('Dashboard button states verified: Take Assessment disabled, View Assessment enabled.');
+        console.log('Dashboard button states verified.');
+
+        // Wait for potential background processing
         await page.waitForTimeout(2000);
+        await loginPage.logout();
     });
 
+    // ==========================================
+    // ANALYST REVIEW FLOW (Merged from post_assessment_review.spec.js)
+    // ==========================================
 
+    test('Step 5: Admin Login and Assign Analyst', async () => {
+        console.log('\n📋 STEP 5: Admin Assignment Workflow');
+
+        await loginPage.navigate('/users/sign_in');
+        await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
+        await expect(page).toHaveURL(/.*esgadmin\/company_users/);
+
+        await adminPage.navigateToCompanyUsers();
+        await adminPage.searchCompany(companyName);
+
+        const ciiUserName = 'Kishore Analyst';
+        const assignmentSuccess = await adminPage.assignAnalyst(companyName, ciiUserName);
+        expect(assignmentSuccess).toBe(true);
+
+        await loginPage.logout();
+    });
+
+    test('Step 6: Analyst Login and Review Assessment', async () => {
+        console.log('\n📋 STEP 6: Analyst Review Workflow');
+        test.setTimeout(120000);
+
+        const analystEmail = 'kishore.r+analyst@spritle.com';
+        const analystPassword = 'Spritle123@';
+        await loginPage.navigate('/users/sign_in');
+        await loginPage.login(analystEmail, analystPassword);
+        // verify the Analyst login success
+        await expect(page).toHaveURL(/.*analyst\/dashboard/);
+
+        await analystDashboardPage.navigateToAnalystDashboard();
+        await analystDashboardPage.clickViewAssessment(companyName);
+
+        // --- NEW FLOW BASED ON USER FEEDBACK ---
+        await analystReviewPage.verifyAssessmentPageLoaded();
+        await analystReviewPage.clickEdit();
+        await analystReviewPage.fillComments('Unified E2E verification comment for CII.');
+        await analystReviewPage.clickUpdate();
+        await analystReviewPage.clickSubmit();
+        await analystReviewPage.handleConfirmationModal();
+        await analystReviewPage.verifySubmissionSuccess();
+
+        await loginPage.logout();
+    });
+
+    test('Step 7: Admin Login and complete Review Assessment', async () => {
+        console.log('\n📋 STEP 7: Admin Review Workflow');
+        test.setTimeout(180000);
+
+        await loginPage.navigate('/users/sign_in');
+        await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
+        // verify the Admin login success
+        await expect(page).toHaveURL(/.*esgadmin\/company_users/);
+
+        await adminPage.navigateToCompanyUsers();
+        await adminPage.searchCompany(companyName);
+
+        const ciiUserName = 'Kishore admin';
+        const assignmentSuccess = await adminPage.assignAnalyst(companyName, ciiUserName);
+        expect(assignmentSuccess).toBe(true);
+
+        await analystDashboardPage.clickViewAssessment(companyName);
+
+        await analystReviewPage.verifyAssessmentPageLoaded();
+        await analystReviewPage.clickEdit();
+        await analystReviewPage.fillComments('Unified E2E verification comment for CII.');
+        await analystReviewPage.clickUpdate();
+        await analystReviewPage.clickSubmit();
+        await analystReviewPage.handleConfirmationModal();
+        await analystReviewPage.verifySubmissionSuccess();
+
+        // --- SCORECARD & REPORT FLOW ---
+        await adminPage.navigateToCompanyUsers();
+        await adminPage.generateScorecard(companyName);
+        await adminPage.clickGenerateTemplate(companyName);
+
+        const reportPath = path.resolve(__dirname, '../../../utils/sample.pdf');
+        await adminPage.uploadReport(companyName, reportPath);
+
+        await loginPage.logout();
+    });
+
+    test('Step 8: Company User Login and Download Scorecard/Report', async () => {
+        console.log('\n📋 STEP 8: User Download Workflow');
+        test.setTimeout(120000);
+
+        const dashboardPage = new DashboardPage(page);
+
+        await loginPage.navigate('/users/sign_in');
+        await loginPage.login(companyEmail, password);
+
+        // Ensure we are on dashboard
+        await expect(page).toHaveURL(/.*dashboard/);
+
+        // Download activities
+        //await dashboardPage.downloadScorecard();
+        await dashboardPage.downloadReport();
+
+        await loginPage.logout();
+    });
+
+    // ==========================================
+    // CLEANUP FLOW (Merged from delete_user.spec.js)
+    // ==========================================
+
+    test('Step 9: Admin Login and Delete Test Company', async () => {
+        console.log('\n📋 STEP 9: Cleanup Workflow');
+
+        await loginPage.navigate('/users/sign_in');
+        await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
+
+        await adminPage.navigateToCompanyUsers();
+        await adminPage.deleteCompany(companyName);
+
+        console.log(`✓ Deleted test company: ${companyName}`);
+        await loginPage.logout();
+    });
 });
