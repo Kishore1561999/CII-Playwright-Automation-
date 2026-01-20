@@ -1,4 +1,4 @@
-const BasePage = require('../../pages/BasePage');
+const BasePage = require('../BasePage');
 
 class DashboardPage extends BasePage {
     constructor(page) {
@@ -27,6 +27,28 @@ class DashboardPage extends BasePage {
     async isViewAssessmentEnabled() {
         const classAttribute = await this.viewAssessmentLink.getAttribute('class');
         return classAttribute ? !classAttribute.includes('tile-disabled') : true;
+    }
+
+    async downloadScorecard() {
+        console.log('Attempting to download scorecard...');
+        const [download] = await Promise.all([
+            this.page.waitForEvent('download'),
+            this.viewScorecardCard.click()
+        ]);
+        const path = await download.path();
+        console.log(`✓ Scorecard downloaded to: ${path}`);
+        return path;
+    }
+
+    async downloadReport() {
+        console.log('Attempting to download report...');
+        const [download] = await Promise.all([
+            this.page.waitForEvent('download'),
+            this.viewReportCard.click()
+        ]);
+        const path = await download.path();
+        console.log(`✓ Report downloaded to: ${path}`);
+        return path;
     }
 }
 

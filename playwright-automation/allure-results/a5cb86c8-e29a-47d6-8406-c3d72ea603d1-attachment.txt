@@ -1,0 +1,13 @@
+
+📋 STEP 6: Analyst Review Workflow
+✓ Navigated to Analyst Dashboard
+✓ Clicked View Response -> CII user response for: E2E_Company_1768305039818
+✓ Assessment review page loaded (Aspects list visible)
+✓ Clicked Edit button
+✓ Found 95 comment fields
+  - Filled comment field 1
+  - Filled comment field 2
+✓ Clicked Update button
+✓ Clicked Submit button
+✓ Confirmed submission (Clicked Yes)
+✓ Redirected to analyst dashboard - Submission successful

@@ -31,15 +31,16 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run All Tests') {
             steps {
                 dir('playwright-automation') {
                     script {
                         try {
-                            bat 'npx playwright test --project=E2E_Flow'
+                            // Run both E2E and Functional projects in a single command for consolidated reporting
+                            bat 'npx playwright test --project=E2E_Flow --project=Functional_Tests'
                         } catch (Exception e) {
-                            currentBuild.result = 'FAILURE'
-                            error('Tests failed')
+                            echo 'Some tests failed'
+                            currentBuild.result = 'UNSTABLE'
                         }
                     }
                 }

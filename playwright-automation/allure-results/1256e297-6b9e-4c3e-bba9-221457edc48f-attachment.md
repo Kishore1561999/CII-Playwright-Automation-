@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /analyst/dashboard
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "CII Data Collection" [ref=e15] [cursor=pointer]:
+            - /url: /analyst/data_collection
+            - generic [ref=e16]: CII Data Collection
+      - list [ref=e17]
+    - generic [ref=e18]:
+      - navigation [ref=e19]:
+        - generic [ref=e20]:
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link [ref=e24] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e26]
+          - list [ref=e27]:
+            - listitem [ref=e28]:
+              - link [ref=e30] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e32]
+            - listitem [ref=e33]:
+              - link " Kishore Analyst" [ref=e34] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e35]:
+                  - generic [ref=e38]: 
+                  - generic [ref=e39]:
+                    - generic [ref=e40]: Kishore
+                    - text: Analyst
+              - text:   
+      - generic [ref=e44]:
+        - heading "Page Not Found :(" [level=2] [ref=e45]
+        - paragraph [ref=e46]: Oops! 😖 The requested URL was not found on this server.
+        - img "not_found" [ref=e48]
+      - contentinfo [ref=e49]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e51]
+        - heading "Privacy Policy" [level=6] [ref=e53] [cursor=pointer]
+  - img
+```

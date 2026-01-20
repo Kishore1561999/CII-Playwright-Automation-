@@ -1,0 +1,6 @@
+Error during cleanup: locator.fill: Test ended.
+Call log:
+  - waiting for locator('input[name="user[email]"]')
+
+    at LoginPage.login (C:\Users\SPRITLE\CII_Playwright_Automation\playwright-automation\pages\common\LoginPage.js:14:31)
+    at C:\Users\SPRITLE\CII_Playwright_Automation\playwright-automation\tests\e2e\company_user\assessment.spec.js:42:29

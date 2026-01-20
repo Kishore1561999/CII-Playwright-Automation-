@@ -1,0 +1,8 @@
+
+📋 STEP 9: Cleanup Workflow
+✓ Navigated to Company Users / ESG Diagnostic page
+Deleting company: E2E_Company_1768305039818
+✓ Searched for company: E2E_Company_1768305039818
+✓ Deleted test company: E2E_Company_1768305039818
+✓ Deleted test company: E2E_Company_1768305039818
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

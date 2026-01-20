@@ -1,0 +1,4 @@
+
+📋 STEP 7: Admin Review Workflow
+✓ Navigated to Company Users / ESG Diagnostic page
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

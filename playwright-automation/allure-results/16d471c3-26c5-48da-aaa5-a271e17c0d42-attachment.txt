@@ -1,0 +1,4 @@
+✓ Admin: Navigated to User Management
+✓ Admin: Created user: testuser_1768557371230@example.com
+✓ Admin: Editing user: testuser_1768557371230@example.com
+✓ Admin: Get updated user: testuser_1768557371230@example.com

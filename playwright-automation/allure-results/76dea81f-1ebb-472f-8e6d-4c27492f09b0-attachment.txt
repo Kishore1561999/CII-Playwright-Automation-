@@ -1,0 +1,10 @@
+
+=== CLEANUP STEP 4: Search and Delete Company ===
+
+Searching for company: E2E_Company_1768197809029
+✓ Searched for company: E2E_Company_1768197809029
+Deleting company: E2E_Company_1768197809029
+Found row for company deletion: E2E_Company_1768197809029
+Confirmed deletion for: E2E_Company_1768197809029
+✓ Delete action initiated for: E2E_Company_1768197809029
+✓ Successfully deleted company: E2E_Company_1768197809029

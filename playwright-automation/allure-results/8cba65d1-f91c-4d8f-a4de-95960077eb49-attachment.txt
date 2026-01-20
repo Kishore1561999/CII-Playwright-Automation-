@@ -1,0 +1,5 @@
+Cleanup: Preparing to delete company: E2E_Company_1768197809029
+
+=== CLEANUP STEP 1: Logout Current User ===
+
+User already logged out

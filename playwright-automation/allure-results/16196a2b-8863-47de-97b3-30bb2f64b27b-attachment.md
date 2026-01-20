@@ -1,0 +1,144 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /analyst/dashboard
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "CII Data Collection" [ref=e15] [cursor=pointer]:
+            - /url: /analyst/data_collection
+            - generic [ref=e16]: CII Data Collection
+      - list [ref=e17]
+    - generic [ref=e18]:
+      - navigation [ref=e19]:
+        - generic [ref=e20]:
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link [ref=e24] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e26]
+          - list [ref=e27]:
+            - listitem [ref=e28]:
+              - link [ref=e30] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e32]
+            - listitem [ref=e33]:
+              - link " Kishore Analyst" [ref=e34] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e35]:
+                  - generic [ref=e38]: 
+                  - generic [ref=e39]:
+                    - generic [ref=e40]: Kishore
+                    - text: Analyst
+              - text:   
+      - table [ref=e46]:
+        - rowgroup [ref=e47]:
+          - row "ISIN Company Name Sector Assessment Actions" [ref=e48]:
+            - columnheader "ISIN" [ref=e49]
+            - columnheader "Company Name" [ref=e50]
+            - columnheader "Sector" [ref=e51]
+            - columnheader "Assessment" [ref=e52]
+            - columnheader "Actions" [ref=e53]
+        - rowgroup [ref=e54]:
+          - row "E2E_Company_1768211711052 Automobiles & Auto Components   CII user response  Company user response     " [ref=e55]:
+            - cell [ref=e56]
+            - cell "E2E_Company_1768211711052" [ref=e57]:
+              - strong [ref=e58]: E2E_Company_1768211711052
+            - cell "Automobiles & Auto Components" [ref=e59]
+            - cell "  CII user response  Company user response    " [ref=e60]:
+              - generic [ref=e61]:
+                - button "" [expanded] [active] [ref=e62] [cursor=pointer]:
+                  - generic [ref=e63]: 
+                - generic [ref=e64]:
+                  - link " CII user response" [ref=e65] [cursor=pointer]:
+                    - /url: /analyst/assessment/213/view_assessment/cii_user
+                    - generic [ref=e66]: 
+                    - text: CII user response
+                  - link " Company user response" [ref=e67] [cursor=pointer]:
+                    - /url: /analyst/assessment/213/view_assessment/company_user
+                    - generic [ref=e68]: 
+                    - text: Company user response
+              - link "":
+                - /url: "#"
+                - generic: 
+              - link "":
+                - /url: /upload_chart/213
+                - generic: 
+              - link "":
+                - /url: "#"
+                - generic: 
+              - link "" [ref=e69] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=e70]: 
+            - cell "" [ref=e71]:
+              - generic [ref=e72]:
+                - button "" [ref=e73] [cursor=pointer]:
+                  - generic [ref=e74]: 
+                - text:  
+          - row "983456789 Demo user for testing Information Technology      " [ref=e75]:
+            - cell "983456789" [ref=e76]
+            - cell "Demo user for testing" [ref=e77]:
+              - strong [ref=e78]: Demo user for testing
+            - cell "Information Technology" [ref=e79]
+            - cell "    " [ref=e80]:
+              - generic [ref=e81]:
+                - button "" [ref=e82] [cursor=pointer]:
+                  - generic [ref=e83]: 
+                - text:  
+              - link "":
+                - /url: "#"
+                - generic: 
+              - link "":
+                - /url: /upload_chart/96
+                - generic: 
+              - link "":
+                - /url: "#"
+                - generic: 
+              - link "" [ref=e84] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=e85]: 
+            - cell "" [ref=e86]:
+              - generic [ref=e87]:
+                - button "" [ref=e88] [cursor=pointer]:
+                  - generic [ref=e89]: 
+                - text:  
+          - row "Spr test user 15 1 Constructions      " [ref=e90]:
+            - cell [ref=e91]
+            - cell "Spr test user 15 1" [ref=e92]:
+              - strong [ref=e93]: Spr test user 15 1
+            - cell "Constructions" [ref=e94]
+            - cell "    " [ref=e95]:
+              - generic [ref=e96]:
+                - button "" [ref=e97] [cursor=pointer]:
+                  - generic [ref=e98]: 
+                - text:  
+              - link "":
+                - /url: "#"
+                - generic: 
+              - link "":
+                - /url: /upload_chart/63
+                - generic: 
+              - link "":
+                - /url: "#"
+                - generic: 
+              - link "" [ref=e99] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=e100]: 
+            - cell "" [ref=e101]:
+              - generic [ref=e102]:
+                - button "" [ref=e103] [cursor=pointer]:
+                  - generic [ref=e104]: 
+                - text:  
+      - contentinfo [ref=e105]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e107]
+        - heading "Privacy Policy" [level=6] [ref=e109] [cursor=pointer]
+  - img
+```

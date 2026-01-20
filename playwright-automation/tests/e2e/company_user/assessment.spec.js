@@ -287,10 +287,8 @@ test.describe('Company User Assessment Workflow', () => {
         console.log('\n📋 STEP 6: Analyst Review Workflow');
         test.setTimeout(120000);
 
-        const analystEmail = 'kishore.r+analyst@spritle.com';
-        const analystPassword = 'Spritle123@';
         await loginPage.navigate('/users/sign_in');
-        await loginPage.login(analystEmail, analystPassword);
+        await loginPage.login(Env.ANALYST_EMAIL, Env.ANALYST_PASSWORD);
         // verify the Analyst login success
         await expect(page).toHaveURL(/.*analyst\/dashboard/);
 

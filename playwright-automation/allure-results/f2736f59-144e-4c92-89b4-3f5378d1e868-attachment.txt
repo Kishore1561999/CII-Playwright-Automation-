@@ -1,0 +1,5 @@
+CII Data link hidden, clicking PB Data Management first.
+✓ Admin: Navigated to CII Data Collection
+✓ Admin: Filtered by Year: 2024
+✓ Admin: Filtered by Sector: Automobiles & Auto Components
+✓ Admin: Searched for Company: CII_CEAT Limited

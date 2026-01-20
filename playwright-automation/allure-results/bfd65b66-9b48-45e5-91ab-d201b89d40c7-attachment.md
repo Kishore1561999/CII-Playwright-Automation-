@@ -1,0 +1,79 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /company_user/dashboard
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - generic [ref=e16]:
+            - text: Peer Benchmarking
+            - generic [ref=e17]: 
+        - text:  
+    - generic [ref=e18]:
+      - navigation [ref=e19]:
+        - generic [ref=e20]:
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link [ref=e24] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e26]
+          - list [ref=e27]:
+            - listitem [ref=e28]:
+              - link [ref=e30] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e32]
+            - listitem [ref=e33]:
+              - link " Workflow User Company user" [expanded] [active] [ref=e34] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e35]:
+                  - generic [ref=e38]: 
+                  - generic [ref=e39]:
+                    - generic [ref=e40]: Workflow User
+                    - text: Company user
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link " My Profile" [ref=e43] [cursor=pointer]:
+                    - /url: /users/show
+                    - generic [ref=e44]: 
+                    - text: My Profile
+                - listitem [ref=e45]:
+                  - link " Change Password" [ref=e46] [cursor=pointer]:
+                    - /url: /users/200/edit
+                    - generic [ref=e47]: 
+                    - text: Change Password
+                - listitem [ref=e48]
+                - listitem [ref=e50]:
+                  - link " Log Out" [ref=e51] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e52]: 
+                    - text: Log Out
+      - generic [ref=e56]:
+        - link " Take Assessment" [ref=e58]:
+          - /url: "#"
+          - generic [ref=e59]:
+            - generic [ref=e61]: 
+            - paragraph [ref=e62]: Take Assessment
+        - link " View Assessment" [ref=e64] [cursor=pointer]:
+          - /url: /company_user/view_assessment
+          - generic [ref=e65]:
+            - generic [ref=e67]: 
+            - paragraph [ref=e68]: View Assessment
+        - generic [ref=e70]:
+          - generic [ref=e72]: 
+          - paragraph [ref=e73]: View Scorecard
+        - generic [ref=e75]:
+          - generic [ref=e77]: 
+          - paragraph [ref=e78]: View Report
+      - contentinfo [ref=e79]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e81]
+        - heading "Privacy Policy" [level=6] [ref=e83] [cursor=pointer]
+  - img
+```

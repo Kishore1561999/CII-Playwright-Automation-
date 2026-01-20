@@ -1,0 +1,9 @@
+
+=== CLEANUP STEP 4: Search and Delete Company ===
+
+Searching for company: E2E_Company_1768197773211
+✓ Searched for company: E2E_Company_1768197773211
+Deleting company: E2E_Company_1768197773211
+Row for E2E_Company_1768197773211 not found for deletion.
+Cleanup: Page closed
+Cleanup: Test data cleared

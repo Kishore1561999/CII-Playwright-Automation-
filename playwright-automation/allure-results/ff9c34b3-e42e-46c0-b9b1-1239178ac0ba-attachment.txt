@@ -1,0 +1,5 @@
+
+📋 TEST 3: Open Assessment for Review
+
+STEP 1: Ensure on Analyst Dashboard
+✓ Navigated to Analyst Dashboard
