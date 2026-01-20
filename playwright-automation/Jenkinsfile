@@ -58,6 +58,13 @@ pipeline {
                      } catch (Exception e) {
                         echo 'Failed to generate Allure report'
                      }
+
+                     // Generate Ortoni PDF Report
+                     try {
+                        bat 'node utils/generatePDF.js'
+                     } catch (Exception e) {
+                        echo 'Failed to generate PDF report'
+                     }
                 }
             }
 
@@ -95,6 +102,7 @@ pipeline {
             archiveArtifacts artifacts: 'playwright-automation/ortoni-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'playwright-automation/allure-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'playwright-automation/test-results/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/report.pdf', allowEmptyArchive: true
 
             // emailext (
             //     subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
@@ -115,8 +123,11 @@ pipeline {
                      <br>
                      <p>Click below to view Playwright Ortoni Report:</p>
                      <a href="${env.BUILD_URL}artifact/playwright-automation/ortoni-report/index.html">View Ortoni HTML Report</a>
+                     <br>
+                     <p><i>Note: Detailed PDF report is attached to this email.</i></p>
                  """,
                  to: 'kishore.r@spritle.com',
+                 attachmentsPattern: 'playwright-automation/report.pdf',
                  mimeType: 'text/html',
                  recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
             )
