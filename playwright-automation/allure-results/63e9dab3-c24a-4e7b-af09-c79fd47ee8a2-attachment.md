@@ -1,0 +1,466 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /manager/company_users
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "ESG - Premium Subscription" [ref=e15] [cursor=pointer]:
+            - /url: /service/premium_subscription
+            - generic [ref=e16]: ESG - Premium Subscription
+        - listitem [ref=e17]:
+          - link "ESG - Basic Subscription" [ref=e18] [cursor=pointer]:
+            - /url: /service/basic_subscription
+            - generic [ref=e19]: ESG - Basic Subscription
+        - listitem [ref=e20]:
+          - link "PB Data Management" [ref=e21] [cursor=pointer]:
+            - /url: /service/peer_benchmark
+            - generic [ref=e22]: PB Data Management
+    - generic [ref=e23]:
+      - navigation [ref=e24]:
+        - generic [ref=e25]:
+          - list [ref=e26]:
+            - listitem [ref=e27]:
+              - link [ref=e29] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e31]
+          - list [ref=e32]:
+            - listitem [ref=e33]:
+              - link [ref=e35] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e37]
+            - listitem [ref=e38]:
+              - link " kishore manager222 Manager" [ref=e39] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e40]:
+                  - generic [ref=e43]: 
+                  - generic [ref=e44]:
+                    - generic [ref=e45]: kishore manager222
+                    - text: Manager
+              - text:   
+      - generic [ref=e48]:
+        - generic [ref=e50]:
+          - generic [ref=e53]:
+            - textbox "Filter by Sector" [ref=e56] [cursor=pointer]
+            - textbox "Search by Name" [ref=e58]
+            - combobox [ref=e60]:
+              - option "Select Year" [selected]
+              - option "2026"
+              - option "2025"
+              - option "2024"
+              - option "2023"
+              - option "2022"
+              - option "2021"
+              - option "2020"
+              - option "2019"
+              - option "2018"
+              - option "2017"
+              - option "2016"
+            - button "Apply" [ref=e62] [cursor=pointer]
+            - button "Clear" [ref=e64] [cursor=pointer]
+          - list [ref=e65]:
+            - listitem [ref=e66]:
+              - combobox [disabled] [ref=e68]:
+                - option "Select analyst" [selected]
+                - option "Manager T"
+                - option "UpdatedTest UpdatedUser"
+                - option "Kishore admin"
+                - option "Surabhi Singh"
+                - option "Ajith kumar"
+                - option "kishore manager222 r"
+                - option "Aditi Sharma"
+                - option "sur raghuvanshi"
+                - option "Sri Vaish"
+                - option "mathan kumar"
+                - option "Kishore Analyst"
+                - option "Rishika Bhardwaj"
+                - option "Gokul Sanjeev"
+                - option "Kamakshi s"
+                - option "Karthick T"
+                - option "UpdatedTestu UpdatedUser"
+                - option "Jiyath limran"
+            - listitem [ref=e69]:
+              - generic [ref=e70]:
+                - button "Assign" [disabled]
+        - generic [ref=e71]:
+          - table [ref=e72]:
+            - rowgroup [ref=e73]:
+              - row "ISIN Company Name Sector Approval Status Analyst Assigned Assessment Actions" [ref=e74]:
+                - columnheader [ref=e75]:
+                  - checkbox [ref=e76]
+                - columnheader "ISIN" [ref=e77]
+                - columnheader "Company Name" [ref=e78]
+                - columnheader "Sector" [ref=e79]
+                - columnheader "Approval" [ref=e80]
+                - columnheader "Status" [ref=e81]
+                - columnheader "Analyst Assigned" [ref=e82]
+                - columnheader "Assessment" [ref=e83]
+                - columnheader "Actions" [ref=e84]
+            - rowgroup [ref=e85]:
+              - row "E2E_Company_1768370765976 Automobiles & Auto Components  Report generated Kishore admin      " [ref=e86]:
+                - cell [ref=e87]:
+                  - checkbox [disabled]
+                - cell [ref=e88]
+                - cell "E2E_Company_1768370765976" [ref=e89]:
+                  - strong [ref=e90]: E2E_Company_1768370765976
+                - cell "Automobiles & Auto Components" [ref=e91]
+                - cell "" [ref=e92]:
+                  - generic [ref=e94]: 
+                - cell "Report generated" [ref=e95]
+                - cell "Kishore admin" [ref=e96]
+                - cell "    " [ref=e97]:
+                  - generic [ref=e98]:
+                    - button "" [ref=e99] [cursor=pointer]:
+                      - generic [ref=e100]: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: /upload_chart/219
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "" [ref=e101] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e102]: 
+                - cell "" [ref=e103]:
+                  - generic [ref=e104]:
+                    - button "" [ref=e105] [cursor=pointer]:
+                      - generic [ref=e106]: 
+                    - text:   
+              - row "E2E_Company_1768370515543 Automobiles & Auto Components  Report generated Kishore admin      " [ref=e107]:
+                - cell [ref=e108]:
+                  - checkbox [disabled]
+                - cell [ref=e109]
+                - cell "E2E_Company_1768370515543" [ref=e110]:
+                  - strong [ref=e111]: E2E_Company_1768370515543
+                - cell "Automobiles & Auto Components" [ref=e112]
+                - cell "" [ref=e113]:
+                  - generic [ref=e115]: 
+                - cell "Report generated" [ref=e116]
+                - cell "Kishore admin" [ref=e117]
+                - cell "    " [ref=e118]:
+                  - generic [ref=e119]:
+                    - button "" [ref=e120] [cursor=pointer]:
+                      - generic [ref=e121]: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: /upload_chart/218
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "" [ref=e122] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e123]: 
+                - cell "" [ref=e124]:
+                  - generic [ref=e125]:
+                    - button "" [ref=e126] [cursor=pointer]:
+                      - generic [ref=e127]: 
+                    - text:   
+              - row "E2E_Company_1768299481740 Automobiles & Auto Components   Registration submitted NA      " [ref=e128]:
+                - cell [ref=e129]:
+                  - checkbox [disabled]
+                - cell [ref=e130]
+                - cell "E2E_Company_1768299481740" [ref=e131]:
+                  - strong [ref=e132]: E2E_Company_1768299481740
+                - cell "Automobiles & Auto Components" [ref=e133]
+                - cell " " [ref=e134]:
+                  - button "" [ref=e135] [cursor=pointer]:
+                    - generic [ref=e136]: 
+                  - button "" [ref=e137] [cursor=pointer]:
+                    - generic [ref=e138]: 
+                - cell "Registration submitted" [ref=e139]
+                - cell "NA" [ref=e140]
+                - cell "    " [ref=e141]:
+                  - generic [ref=e142]:
+                    - button "":
+                      - generic: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "" [ref=e143]:
+                  - generic [ref=e144]:
+                    - button "" [ref=e145] [cursor=pointer]:
+                      - generic [ref=e146]: 
+                    - text:   
+              - row "E2E_Company_1768211711052 Automobiles & Auto Components  Report generated Kishore admin      " [ref=e147]:
+                - cell [ref=e148]:
+                  - checkbox [disabled]
+                - cell [ref=e149]
+                - cell "E2E_Company_1768211711052" [ref=e150]:
+                  - strong [ref=e151]: E2E_Company_1768211711052
+                - cell "Automobiles & Auto Components" [ref=e152]
+                - cell "" [ref=e153]:
+                  - generic [ref=e155]: 
+                - cell "Report generated" [ref=e156]
+                - cell "Kishore admin" [ref=e157]
+                - cell "    " [ref=e158]:
+                  - generic [ref=e159]:
+                    - button "" [ref=e160] [cursor=pointer]:
+                      - generic [ref=e161]: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: /upload_chart/213
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "" [ref=e162] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e163]: 
+                - cell "" [ref=e164]:
+                  - generic [ref=e165]:
+                    - button "" [ref=e166] [cursor=pointer]:
+                      - generic [ref=e167]: 
+                    - text:   
+              - row "E2E_Company_1768211711023 Automobiles & Auto Components  Assessment submitted NA      " [ref=e168]:
+                - cell [ref=e169]:
+                  - checkbox [ref=e170]
+                - cell [ref=e171]
+                - cell "E2E_Company_1768211711023" [ref=e172]:
+                  - strong [ref=e173]: E2E_Company_1768211711023
+                - cell "Automobiles & Auto Components" [ref=e174]
+                - cell "" [ref=e175]:
+                  - generic [ref=e177]: 
+                - cell "Assessment submitted" [ref=e178]
+                - cell "NA" [ref=e179]
+                - cell "    " [ref=e180]:
+                  - generic [ref=e181]:
+                    - button "" [ref=e182] [cursor=pointer]:
+                      - generic [ref=e183]: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: /upload_chart/212
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "" [ref=e184] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e185]: 
+                - cell "" [ref=e186]:
+                  - generic [ref=e187]:
+                    - button "" [ref=e188] [cursor=pointer]:
+                      - generic [ref=e189]: 
+                    - text:   
+              - row "E2E_Company_1768211575376 Automobiles & Auto Components  Registration approved NA      " [ref=e190]:
+                - cell [ref=e191]:
+                  - checkbox [disabled]
+                - cell [ref=e192]
+                - cell "E2E_Company_1768211575376" [ref=e193]:
+                  - strong [ref=e194]: E2E_Company_1768211575376
+                - cell "Automobiles & Auto Components" [ref=e195]
+                - cell "" [ref=e196]:
+                  - generic [ref=e198]: 
+                - cell "Registration approved" [ref=e199]
+                - cell "NA" [ref=e200]
+                - cell "    " [ref=e201]:
+                  - generic [ref=e202]:
+                    - button "":
+                      - generic: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "" [ref=e203]:
+                  - generic [ref=e204]:
+                    - button "" [ref=e205] [cursor=pointer]:
+                      - generic [ref=e206]: 
+                    - text:   
+              - row "E2E_Company_1768211575336 Automobiles & Auto Components  Registration approved NA      " [ref=e207]:
+                - cell [ref=e208]:
+                  - checkbox [disabled]
+                - cell [ref=e209]
+                - cell "E2E_Company_1768211575336" [ref=e210]:
+                  - strong [ref=e211]: E2E_Company_1768211575336
+                - cell "Automobiles & Auto Components" [ref=e212]
+                - cell "" [ref=e213]:
+                  - generic [ref=e215]: 
+                - cell "Registration approved" [ref=e216]
+                - cell "NA" [ref=e217]
+                - cell "    " [ref=e218]:
+                  - generic [ref=e219]:
+                    - button "":
+                      - generic: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "" [ref=e220]:
+                  - generic [ref=e221]:
+                    - button "" [ref=e222] [cursor=pointer]:
+                      - generic [ref=e223]: 
+                    - text:   
+              - row "E2E_Company_1768200209623 Automobiles & Auto Components  Registration approved NA      " [ref=e224]:
+                - cell [ref=e225]:
+                  - checkbox [disabled]
+                - cell [ref=e226]
+                - cell "E2E_Company_1768200209623" [ref=e227]:
+                  - strong [ref=e228]: E2E_Company_1768200209623
+                - cell "Automobiles & Auto Components" [ref=e229]
+                - cell "" [ref=e230]:
+                  - generic [ref=e232]: 
+                - cell "Registration approved" [ref=e233]
+                - cell "NA" [ref=e234]
+                - cell "    " [ref=e235]:
+                  - generic [ref=e236]:
+                    - button "":
+                      - generic: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "" [ref=e237]:
+                  - generic [ref=e238]:
+                    - button "" [ref=e239] [cursor=pointer]:
+                      - generic [ref=e240]: 
+                    - text:   
+              - row "E2E_Company_1768199936143 Automobiles & Auto Components  Assessment submitted NA      " [ref=e241]:
+                - cell [ref=e242]:
+                  - checkbox [ref=e243]
+                - cell [ref=e244]
+                - cell "E2E_Company_1768199936143" [ref=e245]:
+                  - strong [ref=e246]: E2E_Company_1768199936143
+                - cell "Automobiles & Auto Components" [ref=e247]
+                - cell "" [ref=e248]:
+                  - generic [ref=e250]: 
+                - cell "Assessment submitted" [ref=e251]
+                - cell "NA" [ref=e252]
+                - cell "    " [ref=e253]:
+                  - generic [ref=e254]:
+                    - button "" [ref=e255] [cursor=pointer]:
+                      - generic [ref=e256]: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: /upload_chart/208
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "" [ref=e257] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e258]: 
+                - cell "" [ref=e259]:
+                  - generic [ref=e260]:
+                    - button "" [ref=e261] [cursor=pointer]:
+                      - generic [ref=e262]: 
+                    - text:   
+              - row "E2E_Company_1768199014961 Automobiles & Auto Components  Assessment submitted NA      " [ref=e263]:
+                - cell [ref=e264]:
+                  - checkbox [ref=e265]
+                - cell [ref=e266]
+                - cell "E2E_Company_1768199014961" [ref=e267]:
+                  - strong [ref=e268]: E2E_Company_1768199014961
+                - cell "Automobiles & Auto Components" [ref=e269]
+                - cell "" [ref=e270]:
+                  - generic [ref=e272]: 
+                - cell "Assessment submitted" [ref=e273]
+                - cell "NA" [ref=e274]
+                - cell "    " [ref=e275]:
+                  - generic [ref=e276]:
+                    - button "" [ref=e277] [cursor=pointer]:
+                      - generic [ref=e278]: 
+                    - text:  
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "":
+                    - /url: /upload_chart/207
+                    - generic: 
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                  - link "" [ref=e279] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e280]: 
+                - cell "" [ref=e281]:
+                  - generic [ref=e282]:
+                    - button "" [ref=e283] [cursor=pointer]:
+                      - generic [ref=e284]: 
+                    - text:   
+          - navigation [ref=e285]:
+            - list [ref=e286]:
+              - listitem [ref=e287]:
+                - generic: ←
+              - listitem [ref=e288]:
+                - generic [ref=e289]: "1"
+              - listitem [ref=e290]:
+                - link "2" [ref=e291] [cursor=pointer]:
+                  - /url: /manager/company_users?page=2
+              - listitem [ref=e292]:
+                - link "3" [ref=e293] [cursor=pointer]:
+                  - /url: /manager/company_users?page=3
+              - listitem [ref=e294]:
+                - link "4" [ref=e295] [cursor=pointer]:
+                  - /url: /manager/company_users?page=4
+              - listitem [ref=e296]:
+                - link "5" [ref=e297] [cursor=pointer]:
+                  - /url: /manager/company_users?page=5
+              - listitem [ref=e298]:
+                - link "→" [ref=e299] [cursor=pointer]:
+                  - /url: /manager/company_users?page=2
+      - contentinfo [ref=e300]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e302]
+        - heading "Privacy Policy" [level=6] [ref=e304] [cursor=pointer]
+  - img
+```

@@ -1,0 +1,4 @@
+Approving company: E2E_Company_1767935361668
+Found row for company: E2E_Company_1767935361668
+Approve button found and visible for: E2E_Company_1767935361668
+Clicked approve and confirm for: E2E_Company_1767935361668

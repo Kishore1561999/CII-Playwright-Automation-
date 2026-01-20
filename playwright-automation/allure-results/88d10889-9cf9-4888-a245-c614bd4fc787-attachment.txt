@@ -1,0 +1,7 @@
+Cleanup: Preparing to delete company: E2E_Company_1768197805899
+
+=== CLEANUP STEP 5: Verify Deletion and Logout ===
+
+✓ Page refreshed
+Cleanup: Page closed
+Cleanup: Test data cleared

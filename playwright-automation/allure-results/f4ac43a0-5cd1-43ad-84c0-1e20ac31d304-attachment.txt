@@ -1,0 +1,6 @@
+
+📋 STEP 5: Admin Assignment Workflow
+✓ Navigated to Company Users / ESG Diagnostic page
+✓ Searched for company: E2E_Company_1768211711052
+Assigning analyst Kishore Analyst to company E2E_Company_1768211711052
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

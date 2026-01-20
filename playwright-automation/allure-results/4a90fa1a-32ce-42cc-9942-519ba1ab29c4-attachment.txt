@@ -1,0 +1,2 @@
+Registered company: E2E_Company_1768299481740
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

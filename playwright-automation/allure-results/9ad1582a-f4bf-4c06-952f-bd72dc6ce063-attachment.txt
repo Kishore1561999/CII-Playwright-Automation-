@@ -1,0 +1,4 @@
+✓ Navigated to Company Users / ESG Diagnostic page
+Approving company: E2E_Company_1768305039818
+✓ Searched for company: E2E_Company_1768305039818
+✓ Clicked approve and confirm for: E2E_Company_1768305039818

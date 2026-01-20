@@ -80,4 +80,15 @@ test.describe('Registration and Approval Flow', () => {
         console.log('✓ Company User successfully logged in after approval');
         await loginPage.logout();
     });
+    test('Admin Login and Delete Test Company', async () => {
+
+        await loginPage.navigate('/users/sign_in');
+        await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
+
+        await adminPage.navigateToCompanyUsers();
+        await adminPage.deleteCompany(companyName);
+
+        console.log(`✓ Deleted test company: ${companyName}`);
+        await loginPage.logout();
+    });
 });

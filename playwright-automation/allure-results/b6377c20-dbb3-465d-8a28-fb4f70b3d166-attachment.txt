@@ -1,0 +1,5 @@
+Approving company: E2E_Company_1767871586321
+Found row for company: E2E_Company_1767871586321
+Approve button found and visible for: E2E_Company_1767871586321
+Clicked approve and confirm for: E2E_Company_1767871586321
+Starting cleanup: Deleting the User

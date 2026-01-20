@@ -1,0 +1,3 @@
+
+📋 TEST 2: Analyst Dashboard Access
+STEP 1: Analyst Login as kishore.r+analyst@spritle.com

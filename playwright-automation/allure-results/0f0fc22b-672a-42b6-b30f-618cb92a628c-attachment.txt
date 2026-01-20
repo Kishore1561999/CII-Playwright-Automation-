@@ -1,0 +1,8 @@
+Starting Step 4: Verify Dashboard After Submission
+Dashboard button states verified: Take Assessment disabled, View Assessment enabled.
+Starting cleanup: Deleting the User
+Cleanup: User already logged out or unable to logout locator.waitFor: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('a.dropdown-item[data-bs-target="#modalLogout"]') to be visible
+    15 × locator resolved to hidden <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalLogout" onclick="logoutSaveAssessmentCheck()">…</a>
+

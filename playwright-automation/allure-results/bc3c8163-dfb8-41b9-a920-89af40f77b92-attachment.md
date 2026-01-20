@@ -1,0 +1,90 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - link "CII- confedaration of indian industry" [ref=e9] [cursor=pointer]:
+            - /url: https://www.cii.in/
+            - img "CII- confedaration of indian industry" [ref=e11]
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link "ESG intelligence and analytics" [ref=e15] [cursor=pointer]:
+            - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+            - img "ESG intelligence and analytics" [ref=e17]
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "CII-ITC Centre of Excellence for Sustainable Development" [ref=e21] [cursor=pointer]:
+            - /url: https://sustainabledevelopment.in/
+            - img "CII-ITC Centre of Excellence for Sustainable Development" [ref=e23]
+    - generic [ref=e24]:
+      - generic [ref=e27]:
+        - paragraph
+        - heading "CII-ITC Centre of Excellence for Sustainable Development" [level=1] [ref=e28]
+        - text: is committed to empowering organisations in their ESG journey through the
+        - link "ESG Intelligence & Analytics" [ref=e29] [cursor=pointer]:
+          - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+        - text: portfolio.
+        - paragraph
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - paragraph [ref=e33]: "This platform hosts two major services under this portfolio:"
+          - list [ref=e34]:
+            - listitem [ref=e35]:
+              - heading "ESG Diagnostics services:" [level=2] [ref=e36]
+              - text: These services help organisations understand their status quo in the ESG space through an evaluation of their ESG policies and practices against the global and national best practices.
+            - listitem [ref=e37]:
+              - heading "ESG Subscription services:" [level=2] [ref=e38]
+              - text: The subscription services host a set of knowledge and analytics-based products that are designed to help organisations strategize their efforts in the ESG space.
+          - list [ref=e39]:
+            - listitem [ref=e40]:
+              - heading "ESG Peer Benchmarking:" [level=2] [ref=e41]
+              - text: It is an online platform that helps organisations compare their ESG performance to that of their peers on several ESG quantitative and qualitative indicators.
+            - listitem [ref=e42]:
+              - heading "ESG E-Learning Modules:" [level=3] [ref=e43]
+              - text: We have curated self-paced e-learning modules covering a range of topics, from basics of ESG to the more complex topics of developing framework on different ESG aspects.
+            - listitem [ref=e44]:
+              - heading "ESG Publications:" [level=4] [ref=e45]
+              - text: Our publications aim to improve the knowledge of the organisations on ESG ecosystem. It includes Annual industry reports covering ESG trends and performances; Publications on ESG mandates and on other major ESG developments.
+          - paragraph [ref=e46]:
+            - text: You can choose between
+            - generic [ref=e47]: Basic Subscription
+            - text: and
+            - generic [ref=e48]: Premium Subscription
+        - generic [ref=e51]:
+          - heading "Subscribe / Sign In" [level=4] [ref=e52]
+          - generic [ref=e53]:
+            - generic [ref=e54]:
+              - generic [ref=e55]: Email ID
+              - textbox "Enter email" [ref=e56]: func_test_1768559592396@example.com
+            - generic [ref=e57]:
+              - generic [ref=e58]: Password
+              - generic [ref=e59]:
+                - textbox "Enter password" [ref=e60]
+                - generic [ref=e62] [cursor=pointer]: 
+            - button "Sign In" [ref=e63] [cursor=pointer]
+          - paragraph [ref=e64]:
+            - text: New on our platform?
+            - link "Create an Account" [ref=e65] [cursor=pointer]:
+              - /url: /users/sign_up
+          - paragraph [ref=e66]:
+            - link "Forgot Password?" [ref=e67] [cursor=pointer]:
+              - /url: /users/password/new
+      - generic [ref=e68]:
+        - generic [ref=e70]:
+          - generic [ref=e71]: Basic Subscription
+          - list [ref=e74]:
+            - listitem [ref=e75]: ESG - Peer Benchmarking
+        - generic [ref=e77]:
+          - generic [ref=e78]: Premium Subscription
+          - list [ref=e81]:
+            - listitem [ref=e82]: ESG - Peer Benchmarking
+            - listitem [ref=e83]: ESG E-Learning Modules
+            - listitem [ref=e84]: ESG Publications
+  - contentinfo [ref=e85]:
+    - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e87]
+    - heading "Privacy Policy" [level=6] [ref=e89] [cursor=pointer]
+  - img
+```

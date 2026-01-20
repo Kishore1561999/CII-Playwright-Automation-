@@ -1,0 +1,7 @@
+Starting Step 4: Verify Dashboard After Submission
+Dashboard button states verified: Take Assessment disabled, View Assessment enabled.
+Starting cleanup: Deleting the User
+Deleting company: E2E_Company_1767935361668
+Found row for company deletion: E2E_Company_1767935361668
+Confirmed deletion for: E2E_Company_1767935361668
+Successfully deleted company: E2E_Company_1767935361668

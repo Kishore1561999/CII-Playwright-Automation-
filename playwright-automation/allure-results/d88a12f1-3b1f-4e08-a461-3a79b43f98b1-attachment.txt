@@ -1,0 +1,3 @@
+DEBUG: AdminPage type: object
+DEBUG: AdminPage value: {}
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

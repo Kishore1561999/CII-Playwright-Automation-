@@ -1,0 +1,6 @@
+Registered company: E2E_Company_1767871081851
+Starting cleanup: Deleting the User
+Deleting company: E2E_Company_1767871081851
+Found row for company deletion: E2E_Company_1767871081851
+Confirmed deletion for: E2E_Company_1767871081851
+Successfully deleted company: E2E_Company_1767871081851

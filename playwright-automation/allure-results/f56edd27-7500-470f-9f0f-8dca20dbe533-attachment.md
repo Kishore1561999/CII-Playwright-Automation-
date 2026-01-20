@@ -1,0 +1,254 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - button "×" [ref=e4] [cursor=pointer]
+    - generic [ref=e5]: User has been updated successfully.
+  - generic [ref=e7]:
+    - complementary [ref=e8]:
+      - link [ref=e11] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e13]
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "ESG Diagnostics" [ref=e16] [cursor=pointer]:
+            - /url: /esgadmin/company_users
+            - generic [ref=e17]: ESG Diagnostics
+        - listitem [ref=e18]:
+          - link "ESG - Premium Subscription" [ref=e19] [cursor=pointer]:
+            - /url: /service/premium_subscription
+            - generic [ref=e20]: ESG - Premium Subscription
+        - listitem [ref=e21]:
+          - link "ESG - Basic Subscription" [ref=e22] [cursor=pointer]:
+            - /url: /service/basic_subscription
+            - generic [ref=e23]: ESG - Basic Subscription
+        - listitem [ref=e24]:
+          - link "PB Data Management" [ref=e25] [cursor=pointer]:
+            - /url: /service/peer_benchmark
+            - generic [ref=e26]: PB Data Management
+        - listitem [ref=e27]:
+          - link "User Management" [ref=e28] [cursor=pointer]:
+            - /url: /esgadmin/users
+            - generic [ref=e29]: User Management
+        - listitem [ref=e30]:
+          - link "Email Content" [ref=e31] [cursor=pointer]:
+            - /url: /esgadmin/emails
+            - generic [ref=e32]: Email Content
+    - generic [ref=e33]:
+      - navigation [ref=e34]:
+        - generic [ref=e35]:
+          - list [ref=e36]:
+            - listitem [ref=e37]:
+              - link [ref=e39] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e41]
+          - list [ref=e42]:
+            - listitem [ref=e43]:
+              - link [ref=e45] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e47]
+            - listitem [ref=e48]:
+              - link " Kishore Admin" [ref=e49] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e50]:
+                  - generic [ref=e53]: 
+                  - generic [ref=e54]:
+                    - generic [ref=e55]: Kishore
+                    - text: Admin
+              - text:   
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - heading "Users" [level=5] [ref=e60]
+          - link "Create New CII User" [ref=e62] [cursor=pointer]:
+            - /url: /esgadmin/users/new
+        - table [ref=e64]:
+          - rowgroup [ref=e65]:
+            - row "Full Name Email Mobile Role Actions" [ref=e66]:
+              - columnheader "Full Name" [ref=e67]
+              - columnheader "Email" [ref=e68]
+              - columnheader "Mobile" [ref=e69]
+              - columnheader "Role" [ref=e70]
+              - columnheader "Actions" [ref=e71]
+          - rowgroup [ref=e72]:
+            - row "UpdatedTest UpdatedUser testuser_1768557371230@example.com 1234567890 Admin " [ref=e73]:
+              - cell "UpdatedTest UpdatedUser" [ref=e74]:
+                - strong [ref=e75]: UpdatedTest UpdatedUser
+              - cell "testuser_1768557371230@example.com" [ref=e76]
+              - cell "1234567890" [ref=e77]
+              - cell "Admin" [ref=e78]
+              - cell "" [ref=e79]:
+                - generic [ref=e80]:
+                  - button "" [ref=e81] [cursor=pointer]:
+                    - generic [ref=e82]: 
+                  - text:   
+            - row "UpdatedTest UpdatedUser testuser_1768555528318@example.com 1234567890 Admin " [ref=e83]:
+              - cell "UpdatedTest UpdatedUser" [ref=e84]:
+                - strong [ref=e85]: UpdatedTest UpdatedUser
+              - cell "testuser_1768555528318@example.com" [ref=e86]
+              - cell "1234567890" [ref=e87]
+              - cell "Admin" [ref=e88]
+              - cell "" [ref=e89]:
+                - generic [ref=e90]:
+                  - button "" [ref=e91] [cursor=pointer]:
+                    - generic [ref=e92]: 
+                  - text:   
+            - row "Jiyath limran jiyath.l@spritle.com 9874567894 Analyst " [ref=e93]:
+              - cell "Jiyath limran" [ref=e94]:
+                - strong [ref=e95]: Jiyath limran
+              - cell "jiyath.l@spritle.com" [ref=e96]
+              - cell "9874567894" [ref=e97]
+              - cell "Analyst" [ref=e98]
+              - cell "" [ref=e99]:
+                - generic [ref=e100]:
+                  - button "" [ref=e101] [cursor=pointer]:
+                    - generic [ref=e102]: 
+                  - text:   
+            - row "Kamakshi s kamakshi.s@spritle.com 9887765434 Analyst " [ref=e103]:
+              - cell "Kamakshi s" [ref=e104]:
+                - strong [ref=e105]: Kamakshi s
+              - cell "kamakshi.s@spritle.com" [ref=e106]
+              - cell "9887765434" [ref=e107]
+              - cell "Analyst" [ref=e108]
+              - cell "" [ref=e109]:
+                - generic [ref=e110]:
+                  - button "" [ref=e111] [cursor=pointer]:
+                    - generic [ref=e112]: 
+                  - text:   
+            - row "Gokul Sanjeev kishore.r+gokul@spritle.com 9078675645 Analyst " [ref=e113]:
+              - cell "Gokul Sanjeev" [ref=e114]:
+                - strong [ref=e115]: Gokul Sanjeev
+              - cell "kishore.r+gokul@spritle.com" [ref=e116]
+              - cell "9078675645" [ref=e117]
+              - cell "Analyst" [ref=e118]
+              - cell "" [ref=e119]:
+                - generic [ref=e120]:
+                  - button "" [ref=e121] [cursor=pointer]:
+                    - generic [ref=e122]: 
+                  - text:   
+            - row "Sri Vaish srivaishnavi.m@spritle.com 9047880689 Analyst " [ref=e123]:
+              - cell "Sri Vaish" [ref=e124]:
+                - strong [ref=e125]: Sri Vaish
+              - cell "srivaishnavi.m@spritle.com" [ref=e126]
+              - cell "9047880689" [ref=e127]
+              - cell "Analyst" [ref=e128]
+              - cell "" [ref=e129]:
+                - generic [ref=e130]:
+                  - button "" [ref=e131] [cursor=pointer]:
+                    - generic [ref=e132]: 
+                  - text:   
+            - row "Karthick T karthickthangaraju96@gmail.com 9790241139 Admin " [ref=e133]:
+              - cell "Karthick T" [ref=e134]:
+                - strong [ref=e135]: Karthick T
+              - cell "karthickthangaraju96@gmail.com" [ref=e136]
+              - cell "9790241139" [ref=e137]
+              - cell "Admin" [ref=e138]
+              - cell "" [ref=e139]:
+                - generic [ref=e140]:
+                  - button "" [ref=e141] [cursor=pointer]:
+                    - generic [ref=e142]: 
+                  - text:   
+            - row "Rishika Bhardwaj rishika.bhardwaj@terisas.ac.in 9163819261 Analyst " [ref=e143]:
+              - cell "Rishika Bhardwaj" [ref=e144]:
+                - strong [ref=e145]: Rishika Bhardwaj
+              - cell "rishika.bhardwaj@terisas.ac.in" [ref=e146]
+              - cell "9163819261" [ref=e147]
+              - cell "Analyst" [ref=e148]
+              - cell "" [ref=e149]:
+                - generic [ref=e150]:
+                  - button "" [ref=e151] [cursor=pointer]:
+                    - generic [ref=e152]: 
+                  - text:   
+            - row "Aditi Sharma aditi.sharma0417@gmail.com 8949788617 Analyst " [ref=e153]:
+              - cell "Aditi Sharma" [ref=e154]:
+                - strong [ref=e155]: Aditi Sharma
+              - cell "aditi.sharma0417@gmail.com" [ref=e156]
+              - cell "8949788617" [ref=e157]
+              - cell "Analyst" [ref=e158]
+              - cell "" [ref=e159]:
+                - generic [ref=e160]:
+                  - button "" [ref=e161] [cursor=pointer]:
+                    - generic [ref=e162]: 
+                  - text:   
+            - row "mathan kumar ajithkumar.p+manager1@spritle.com 06374355319 Analyst " [ref=e163]:
+              - cell "mathan kumar" [ref=e164]:
+                - strong [ref=e165]: mathan kumar
+              - cell "ajithkumar.p+manager1@spritle.com" [ref=e166]
+              - cell "06374355319" [ref=e167]
+              - cell "Analyst" [ref=e168]
+              - cell "" [ref=e169]:
+                - generic [ref=e170]:
+                  - button "" [ref=e171] [cursor=pointer]:
+                    - generic [ref=e172]: 
+                  - text:   
+            - row "sur raghuvanshi surabhi.singh+manager@cii.in 09958582768 Analyst " [ref=e173]:
+              - cell "sur raghuvanshi" [ref=e174]:
+                - strong [ref=e175]: sur raghuvanshi
+              - cell "surabhi.singh+manager@cii.in" [ref=e176]
+              - cell "09958582768" [ref=e177]
+              - cell "Analyst" [ref=e178]
+              - cell "" [ref=e179]:
+                - generic [ref=e180]:
+                  - button "" [ref=e181] [cursor=pointer]:
+                    - generic [ref=e182]: 
+                  - text:   
+            - row "kishore manager222 r kishore.r+manager@spritle.com 9089876544 Manager " [ref=e183]:
+              - cell "kishore manager222 r" [ref=e184]:
+                - strong [ref=e185]: kishore manager222 r
+              - cell "kishore.r+manager@spritle.com" [ref=e186]
+              - cell "9089876544" [ref=e187]
+              - cell "Manager" [ref=e188]
+              - cell "" [ref=e189]:
+                - generic [ref=e190]:
+                  - button "" [ref=e191] [cursor=pointer]:
+                    - generic [ref=e192]: 
+                  - text:   
+            - row "Manager T manager@cii.in 9790241139 Manager " [ref=e193]:
+              - cell "Manager T" [ref=e194]:
+                - strong [ref=e195]: Manager T
+              - cell "manager@cii.in" [ref=e196]
+              - cell "9790241139" [ref=e197]
+              - cell "Manager" [ref=e198]
+              - cell "" [ref=e199]:
+                - generic [ref=e200]:
+                  - button "" [ref=e201] [cursor=pointer]:
+                    - generic [ref=e202]: 
+                  - text:   
+            - row "Ajith kumar ajithkumar.p+analyst@spritle.com 6374355319 Analyst " [ref=e203]:
+              - cell "Ajith kumar" [ref=e204]:
+                - strong [ref=e205]: Ajith kumar
+              - cell "ajithkumar.p+analyst@spritle.com" [ref=e206]
+              - cell "6374355319" [ref=e207]
+              - cell "Analyst" [ref=e208]
+              - cell "" [ref=e209]:
+                - generic [ref=e210]:
+                  - button "" [ref=e211] [cursor=pointer]:
+                    - generic [ref=e212]: 
+                  - text:   
+            - row "Kishore Analyst kishore.r+analyst@spritle.com 9695949897 Analyst " [ref=e213]:
+              - cell "Kishore Analyst" [ref=e214]:
+                - strong [ref=e215]: Kishore Analyst
+              - cell "kishore.r+analyst@spritle.com" [ref=e216]
+              - cell "9695949897" [ref=e217]
+              - cell "Analyst" [ref=e218]
+              - cell "" [ref=e219]:
+                - generic [ref=e220]:
+                  - button "" [ref=e221] [cursor=pointer]:
+                    - generic [ref=e222]: 
+                  - text:   
+            - row "Surabhi Singh surabhi.singh@cii.in 9958582768 Admin " [ref=e223]:
+              - cell "Surabhi Singh" [ref=e224]:
+                - strong [ref=e225]: Surabhi Singh
+              - cell "surabhi.singh@cii.in" [ref=e226]
+              - cell "9958582768" [ref=e227]
+              - cell "Admin" [ref=e228]
+              - cell "" [ref=e229]:
+                - generic [ref=e230]:
+                  - button "" [ref=e231] [cursor=pointer]:
+                    - generic [ref=e232]: 
+                  - text:   
+      - contentinfo [ref=e233]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e235]
+        - heading "Privacy Policy" [level=6] [ref=e237] [cursor=pointer]
+  - img
+```
