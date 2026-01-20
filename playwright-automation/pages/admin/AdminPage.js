@@ -1,3 +1,4 @@
+const { expect } = require('@playwright/test');
 const BasePage = require('../BasePage');
 
 class AdminPage extends BasePage {
@@ -5,7 +6,8 @@ class AdminPage extends BasePage {
         super(page);
 
         // Navigation / Dashboard elements
-        this.esgDiagnosticsLink = page.locator('a.menu-link[href="/esgadmin/company_users"]');
+        // Updated to support both Admin (/esgadmin/) and Manager (/manager/) paths
+        this.esgDiagnosticsLink = page.locator('a.menu-link[href*="/esgadmin/company_users"], a.menu-link[href*="/manager/company_users"]');
 
         // Common Table / Filter elements
         this.searchNameInput = page.locator('input#companyNameFilter');
@@ -25,6 +27,266 @@ class AdminPage extends BasePage {
         // Deletion elements
         this.confirmDeleteButton = page.locator('#modalDelete button#delete_button');
         this.deleteSuccessToast = page.locator('div.toast-message').filter({ hasText: /Company User has been deleted successfully/i });
+
+        // New Admin Functionality Selectors
+        // Basic Subscription
+        this.basicSubLink = page.locator('a[href*="basic_subscription"]');
+
+        // Updated Locators based on user HTML (with fallbacks for legacy pages)
+        this.yearDropdown = page.locator('select#year-picker, select#year_id');
+        this.sectorFilterInput = page.locator('input#sectorFilter'); // For clicking to open custom dropdown
+        this.sectorDropdownContainer = page.locator('.filter-container'); // Container for custom checkboxes
+
+        // For legacy Sector dropdown (if some pages still use simple select)
+        this.legacySectorDropdown = page.locator('select#sector_id');
+
+        this.searchNameInput = page.locator('input#companyNameFilter'); // Confirmed ID
+        this.analystFilterDropdown = page.locator('select#analyst_search'); // New ID from user HTML
+
+        // Prioritize #apply-filter as it is explicitly in the HTML
+        this.applyFilterBtn = page.locator('#apply-filter, button#apply-filter, button:has-text("Apply")');
+
+        // PB Data Management
+        this.pbDataLink = page.locator('a[href*="/service/peer_benchmark"]');
+
+        // CII Data Collection - supports Admin, Manager, and Analyst paths
+        this.ciiDataLink = page.locator('a[href*="/service/data_collection?subscription_type=premium"], a[href*="/analyst/data_collection"]');
+        this.analystNameInput = page.locator('input#analyst_name'); // Keeping as fallback or for other pages if needed
+
+        // User Management
+        this.userMgmtLink = page.locator('a[href*="/esgadmin/users"]'); // Adjust based on actual link
+        this.createUserBtn = page.locator('a[href*="/esgadmin/users/new"], button:has-text("Create New CII User")');
+
+        // User Form Locators
+        this.userFirstNameInput = page.locator('input#user_first_name');
+        this.userLastNameInput = page.locator('input#user_last_name');
+        this.userEmailInput = page.locator('input#user_email');
+        this.userMobileInput = page.locator('input#user_mobile');
+        this.userRoleDropdown = page.locator('select#user_role_id');
+        this.userPasswordInput = page.locator('input#user_password');
+        this.userConfirmPasswordInput = page.locator('input#user_password_confirmation');
+        this.createUserSubmitBtn = page.locator('input[type="submit"][value="Create User"]');
+        this.updateUserSubmitBtn = page.locator('input[type="submit"][value="Update User"]');
+
+        // ... add other user inputs as needed dynamically or in methods
+
+    }
+
+    async verifyDashboardLoaded() {
+        await expect(this.page).toHaveURL(/.*esgadmin\/company_users/);
+    }
+    /**
+ * ESG Diagnostic
+ */
+    async navigateToESGDiagnostic() {
+        await this.esgDiagnosticsLink.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log('✓ Admin: Navigated to ESG Diagnostic');
+    }
+
+    async filterByYear(year) {
+        if (year) {
+            await this.yearDropdown.selectOption(year);
+            await this.applyFilterBtn.click();
+            await this.page.waitForLoadState('networkidle');
+            console.log(`✓ Admin: Filtered by Year: ${year}`);
+        }
+    }
+
+    async filterBySector(sectorName) {
+        if (sectorName) {
+            if (await this.sectorFilterInput.isVisible()) {
+                // New Custom Dropdown logic
+                await this.sectorFilterInput.click();
+                await this.sectorDropdownContainer.waitFor({ state: 'visible' });
+                await this.page.locator(`label.form-check-label:has-text("${sectorName}")`).click();
+            } else if (await this.legacySectorDropdown.isVisible()) {
+                // Legacy Simple Select logic
+                await this.legacySectorDropdown.selectOption({ label: sectorName });
+                console.log(`✓ Admin: used legacy sector dropdown`);
+            } else {
+                throw new Error('No suitable sector filter locator found');
+            }
+
+            // Click apply
+            await this.applyFilterBtn.click();
+            await this.page.waitForLoadState('networkidle');
+            console.log(`✓ Admin: Filtered by Sector: ${sectorName}`);
+        }
+    }
+
+    async searchByCompany(companyName) {
+        if (companyName) {
+            await this.searchNameInput.fill(companyName);
+            await this.applyFilterBtn.click();
+            await this.page.waitForLoadState('networkidle');
+            console.log(`✓ Admin: Searched for Company: ${companyName}`);
+        }
+    }
+
+    async searchESGDiagnostic(companyName, sector, year) {
+        // Keeping this for backward compatibility if needed, but updating to use new methods if logic overlaps, 
+        // or just updating implementation to match new locators.
+        // For this task, we will just use the new specific methods in the test.
+        // But let's fix this one too to use new locators just in case.
+        if (companyName) await this.searchNameInput.fill(companyName);
+        if (sector) {
+            await this.sectorFilterInput.click();
+            await this.sectorDropdownContainer.waitFor({ state: 'visible' });
+            await this.page.locator(`label.form-check-label:has-text("${sector}")`).click();
+        }
+        if (year) await this.yearDropdown.selectOption(year);
+
+        await this.applyFilterBtn.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Searched ESG Diagnostic`);
+    }
+
+    /**
+     * Basic Subscription
+     */
+    async navigateToBasicSubscription() {
+        await this.basicSubLink.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log('✓ Admin: Navigated to Basic Subscription');
+    }
+
+    async searchBasicSubscription(sector, year) {
+        if (sector) await this.selectOption('select#sector_id', sector);
+        if (year) await this.selectOption('select#year_id', year);
+        await this.applyFilterBtn.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Searched Basic Sub: Sector=${sector}, Year=${year}`);
+    }
+
+    /**
+     * PB Data Management
+     */
+    async navigateToPBDataManagement() {
+        await this.pbDataLink.click();
+        // await this.page.waitForLoadState('networkidle'); 
+        // Better to wait for an element that signifies the page is loaded
+        await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
+        console.log('✓ Admin: Navigated to PB Data Management');
+    }
+
+    async searchPBData(sector, year) {
+        if (sector) await this.selectOption('select#sector_id', sector);
+        if (year) await this.selectOption('select#year_id', year);
+        await this.applyFilterBtn.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Searched PB Data: Sector=${sector}, Year=${year}`);
+    }
+
+    /**
+     * CII Data Collection
+     */
+    async navigateToCIIDataCollection() {
+        // CII Data Collection is nested under PB Data Management
+        // Use .first() to avoid strict mode violations if multiple menus (desktop/mobile) exist with same href
+        const pbLink = this.pbDataLink.first();
+        const ciiLink = this.ciiDataLink.first();
+
+        // Check if sub-menu is already visible
+        if (await ciiLink.isVisible()) {
+            console.log('CII Data link is visible, clicking directly.');
+            await ciiLink.click();
+        } else {
+            // If not visible, click PB Data menu to expand
+            console.log('CII Data link hidden, clicking PB Data Management first.');
+            await pbLink.click();
+            await ciiLink.waitFor({ state: 'visible', timeout: 10000 });
+            await ciiLink.click();
+        }
+
+        // await this.page.waitForLoadState('networkidle');
+        await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
+        console.log('✓ Admin: Navigated to CII Data Collection');
+    }
+
+    async searchCIIData(sector, year, analystName) {
+        if (sector) await this.selectOption('select#sector_id', sector);
+        if (year) await this.selectOption('select#year_id', year);
+        if (analystName) await this.fillText('input#analyst_name', analystName);
+        await this.applyFilterBtn.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Searched CII Data: Sector=${sector}, Year=${year}, Analyst=${analystName}`);
+    }
+
+    /**
+     * User Management
+     */
+    async navigateToUserManagement() {
+        await this.userMgmtLink.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log('✓ Admin: Navigated to User Management');
+    }
+
+    async createUser(firstName, lastName, email, mobile, roleValue, password) {
+        await this.createUserBtn.click();
+        await this.page.waitForLoadState('networkidle');
+
+        await this.userFirstNameInput.fill(firstName);
+        await this.userLastNameInput.fill(lastName);
+        await this.userEmailInput.fill(email);
+        await this.userMobileInput.fill(mobile);
+
+        if (roleValue) await this.userRoleDropdown.selectOption(roleValue); // "1" for Admin
+
+        await this.userPasswordInput.fill(password);
+        await this.userConfirmPasswordInput.fill(password);
+
+        await this.createUserSubmitBtn.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Created user: ${email}`);
+    }
+
+    async editUser(email, newFirstName, newLastName) {
+        console.log(`✓ Admin: Editing user: ${email}`);
+
+        // Find row by email
+        // Note: Assuming email is visible in the row. If not, might need to search first if a search box exists.
+        // Based on user request, user just "clicks menu option".
+        // Let's assume we can locate the row by text.
+
+        const row = this.page.locator('tr').filter({ hasText: email });
+
+        // Click dropdown toggle in that row
+        const dropdownToggle = row.locator('.dropdown-toggle');
+        await dropdownToggle.click();
+
+        // Click Edit
+        const editLink = row.locator('a[href*="/edit"]');
+        await editLink.click();
+        await this.page.waitForLoadState('networkidle');
+
+        // Update fields
+        if (newFirstName) await this.userFirstNameInput.fill(newFirstName);
+        if (newLastName) await this.userLastNameInput.fill(newLastName);
+
+        await this.updateUserSubmitBtn.click();
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Get updated user: ${email}`);
+    }
+
+    async deleteUserMgmt(email) {
+        console.log(`✓ Admin: Deleting user: ${email}`);
+        const row = this.page.locator('tr').filter({ hasText: email });
+
+        // Click dropdown toggle
+        const dropdownToggle = row.locator('.dropdown-toggle');
+        await dropdownToggle.click();
+
+        // Click Delete
+        const deleteLink = row.locator('a.delete_button');
+        await deleteLink.click();
+
+        // Confirm Modal
+        await this.page.locator('#modalDelete').waitFor({ state: 'visible' });
+        await this.page.locator('button#delete_button').click(); // Using the ID provided in user request for confirm button
+
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Deleted user: ${email}`);
     }
 
     /**
@@ -37,7 +299,7 @@ class AdminPage extends BasePage {
             await this.page.goto('/esgadmin/company_users');
         }
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Navigated to Company Users / ESG Diagnostic page');
+        console.log('✓ Admin: Navigated to Company Users / ESG Diagnostic page');
     }
 
     /**
@@ -47,7 +309,7 @@ class AdminPage extends BasePage {
         await this.searchNameInput.fill(companyName);
         await this.applyFilterButton.click();
         await this.page.waitForLoadState('networkidle');
-        console.log(`✓ Searched for company: ${companyName}`);
+        console.log(`✓ Admin: Searched for company: ${companyName}`);
     }
 
     /**
@@ -63,7 +325,7 @@ class AdminPage extends BasePage {
      * Approval workflow
      */
     async approveCompany(companyName) {
-        console.log(`Approving company: ${companyName}`);
+        console.log(`✓ Admin: Approving company: ${companyName}`);
         await this.searchCompany(companyName);
         const row = await this.getCompanyRow(companyName);
 
@@ -73,6 +335,17 @@ class AdminPage extends BasePage {
             await approveBtn.click();
             await this.confirmApproveButton.waitFor({ state: 'visible', timeout: 5000 });
             await this.confirmApproveButton.click();
+
+            // Wait for success toast to ensure approval is processed
+            try {
+                await this.successToast.waitFor({ state: 'visible', timeout: 10000 });
+                console.log(`✓ Approval confirmed for: ${companyName}`);
+                // Give a moment for backend processing
+                await this.page.waitForTimeout(2000);
+            } catch (toastError) {
+                console.log(`⚠ Success toast not visible, but approval may have succeeded for: ${companyName}`);
+            }
+
             console.log(`✓ Clicked approve and confirm for: ${companyName}`);
         } catch (error) {
             const rowText = await row.innerText();
@@ -88,7 +361,7 @@ class AdminPage extends BasePage {
      * Analyst Assignment workflow
      */
     async assignAnalyst(companyName, ciiUserName) {
-        console.log(`Assigning analyst ${ciiUserName} to company ${companyName}`);
+        console.log(`✓ Admin: Assigning analyst ${ciiUserName} to company ${companyName}`);
         //await this.searchCompany(companyName);
         const row = await this.getCompanyRow(companyName);
         //Select company

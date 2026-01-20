@@ -1,3 +1,4 @@
+const { expect } = require('@playwright/test');
 const BasePage = require('../BasePage');
 
 class AnalystDashboardPage extends BasePage {
@@ -9,6 +10,33 @@ class AnalystDashboardPage extends BasePage {
     this.dashboardTitle = page.locator('h1, [class*="dashboard"], [class*="heading"]');
     this.userRows = page.locator('table tbody tr, [class*="user-row"], [class*="item"]');
     this.statusBadge = page.locator('[class*="badge"], [class*="status"]');
+
+    // CII Data Collection (Analyst)
+    this.ciiDataLink = page.locator('a[href*="cii_data"]');
+    this.sectorDropdown = page.locator('select#sector_id');
+    this.yearDropdown = page.locator('select#year_id');
+    this.applyFilterBtn = page.locator('#apply-filter, button:has-text("Search")');
+  }
+
+  async verifyDashboardLoaded() {
+    await expect(this.page).toHaveURL(/.*analyst\/dashboard/);
+  }
+
+  /**
+   * CII Data Collection
+   */
+  async navigateToCIIDataCollection() {
+    await this.ciiDataLink.click();
+    await this.page.waitForLoadState('networkidle');
+    console.log('✓ Analyst: Navigated to CII Data Collection');
+  }
+
+  async searchCIIData(sector, year) {
+    if (sector) await this.selectOption('select#sector_id', sector);
+    if (year) await this.selectOption('select#year_id', year);
+    await this.applyFilterBtn.click();
+    await this.page.waitForLoadState('networkidle');
+    console.log(`✓ Analyst: Searched CII Data: Sector=${sector}, Year=${year}`);
   }
 
   async navigateToAnalystDashboard() {
@@ -17,11 +45,8 @@ class AnalystDashboardPage extends BasePage {
     console.log('✓ Navigated to Analyst Dashboard');
   }
 
-  async verifyDashboardLoaded() {
-    await this.dashboardTitle.first().waitFor({ state: 'visible', timeout: 10000 });
-    console.log('✓ Analyst dashboard loaded');
-    return true;
-  }
+  // Duplicate verifyDashboardLoaded removed
+
 
   async getAssignedUserRow(companyName) {
     // Using filter to find the row containing company name

@@ -40,6 +40,10 @@ class RegistrationPage extends BasePage {
         // Submit
         this.registerButton = page.locator('input[type="submit"][value="Register"]');
     }
+    
+    // async navigateToRegistrationPage() {
+    //     await this.page.goto('/users/sign_up');
+    // }
 
     async fillCompanyInfo(data) {
         await this.companyNameInput.fill(data.name);
