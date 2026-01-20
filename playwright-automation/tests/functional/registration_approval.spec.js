@@ -88,7 +88,7 @@ test.describe('Registration and Approval Flow', () => {
         await adminPage.navigateToCompanyUsers();
         await adminPage.deleteCompany(companyName);
 
-        console.log(`✓ Deleted test company: ${companyName}`);
+        console.log(`✓ Deleted test company: ${companyName}`); 
         await loginPage.logout();
     });
 });
