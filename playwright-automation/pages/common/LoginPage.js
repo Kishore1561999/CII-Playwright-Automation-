@@ -21,7 +21,7 @@ class LoginPage extends BasePage {
             // Manager -> /manager/company_users
             // Analyst -> /analyst/dashboard
             // Company User -> /company_user/dashboard
-            await this.page.waitForURL(/.*esgadmin\/company_users|.*manager\/company_users|.*analyst\/dashboard|.*company_user\/dashboard/, {
+            await this.page.waitForURL(/.*esgadmin\/company_users|.*manager\/company_users|.*analyst\/dashboard|.*company_user\/dashboard|.*company_user\/peer_benchmarking/, {
                 waitUntil: 'domcontentloaded',
                 timeout: 45000
             });
@@ -45,7 +45,17 @@ class LoginPage extends BasePage {
         await this.page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
 
         // Ensure logout is complete by waiting for sign-in page
-        await this.page.waitForURL(/.*sign_in/, { timeout: 10000 });
+        try {
+            await this.page.waitForURL(/.*sign_in/, { timeout: 15000 });
+        } catch (error) {
+            if (this.page.url().includes('chromewebdata') || error.name === 'TimeoutError') {
+                console.warn('⚠ Logout redirect failed or timed out. Attempting reload...');
+                await this.page.reload();
+                await this.page.waitForURL(/.*sign_in/, { timeout: 10000 });
+            } else {
+                throw error;
+            }
+        }
     }
 }
 

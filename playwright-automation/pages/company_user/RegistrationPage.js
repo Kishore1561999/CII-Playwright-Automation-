@@ -40,7 +40,7 @@ class RegistrationPage extends BasePage {
         // Submit
         this.registerButton = page.locator('input[type="submit"][value="Register"]');
     }
-    
+
     // async navigateToRegistrationPage() {
     //     await this.page.goto('/users/sign_up');
     // }
@@ -54,11 +54,11 @@ class RegistrationPage extends BasePage {
         await this.logoInput.setInputFiles(data.logoPath); // Logo upload
 
         await this.addressLine1Input.fill(data.address);
-        await this.countrySelect.selectOption(data.country); // Value or label
-        // Wait for state dropdown to populate if dynamic
-        await this.page.waitForTimeout(1000);
+        await this.countrySelect.selectOption(data.country);
+        // Wait for dynamic fields to populate
+        await this.stateSelect.waitFor({ state: 'visible' });
         await this.stateSelect.selectOption(data.state);
-        await this.page.waitForTimeout(1000);
+        await this.citySelect.waitFor({ state: 'visible' });
         await this.citySelect.selectOption(data.city);
         await this.zipInput.fill(data.zip);
         await this.panInput.fill(data.pan);
@@ -83,9 +83,14 @@ class RegistrationPage extends BasePage {
         await this.nextButton.click();
         await this.page.locator('#user_active').waitFor({ state: 'visible', timeout: 10000 });
         await this.page.locator('#user_active').click();
-        // await this.page.locator('#services').click();
-        // await this.page.locator('#basics').click();
     }
+    async selectBasicServices() {
+        await this.nextButton.click();
+        await this.page.locator('#services').waitFor({ state: 'visible', timeout: 10000 });
+        await this.page.locator('#services').click();
+        await this.page.locator('#basics').click();
+    }
+
 
     async submit() {
         await this.registerButton.click();
@@ -98,6 +103,14 @@ class RegistrationPage extends BasePage {
         await this.selectServices();
         await this.submit();
     }
+    async registerAccountBasic(companyData, contactData, password) {
+        await this.fillCompanyInfo(companyData);
+        await this.fillContactInfo(contactData);
+        await this.fillLoginInfo(contactData, password);
+        await this.selectBasicServices();
+        await this.submit();
+    }
+
 }
 
 module.exports = RegistrationPage;

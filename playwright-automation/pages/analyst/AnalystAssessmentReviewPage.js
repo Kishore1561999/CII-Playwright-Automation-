@@ -74,9 +74,14 @@ class AnalystAssessmentReviewPage extends BasePage {
 
   async handleConfirmationModal() {
     try {
+      const modal = this.page.locator('.modal.show, #modalSubmit'); // Generic or ID if known
       await this.confirmYesButton.waitFor({ state: 'visible', timeout: 5000 });
       await this.confirmYesButton.click();
       console.log('✓ Confirmed submission (Clicked Yes)');
+
+      // Wait for modal and backdrop cleanup
+      await modal.waitFor({ state: 'hidden', timeout: 10000 }).catch(() => { });
+      await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
     } catch (e) {
       console.warn('⚠ Could not handle confirmation modal or "Yes" button not found');
     }

@@ -12,7 +12,7 @@ class AnalystDashboardPage extends BasePage {
     this.statusBadge = page.locator('[class*="badge"], [class*="status"]');
 
     // CII Data Collection (Analyst)
-    this.ciiDataLink = page.locator('a[href*="cii_data"]');
+    this.ciiDataLink = page.locator('a[href="/analyst/data_collection"]');
     this.sectorDropdown = page.locator('select#sector_id');
     this.yearDropdown = page.locator('select#year_id');
     this.applyFilterBtn = page.locator('#apply-filter, button:has-text("Search")');
@@ -29,6 +29,33 @@ class AnalystDashboardPage extends BasePage {
     await this.ciiDataLink.click();
     await this.page.waitForLoadState('networkidle');
     console.log('✓ Analyst: Navigated to CII Data Collection');
+  }
+
+  async searchCompany(companyName) {
+    // Assuming a search input exists, based on AdminPage it's often input#companyNameFilter or just a search box
+    // User request: "Search the company name in search box"
+    const searchInput = this.page.getByPlaceholder(/Search/i).or(this.page.locator('input[type="search"]')).or(this.page.locator('input#companyNameFilter'));
+    await searchInput.first().fill(companyName);
+
+    const applyBtn = this.page.locator('#apply-filter, button:has-text("Search"), button:has-text("Apply")');
+    if (await applyBtn.isVisible()) {
+      await applyBtn.click();
+    } else {
+      await searchInput.press('Enter');
+    }
+
+    await this.page.waitForLoadState('networkidle');
+    console.log(`✓ Analyst: Searched for company: ${companyName}`);
+  }
+
+  async clickEditAssessment(companyName) {
+    console.log(`✓ Analyst: Clicking Edit for ${companyName}`);
+    // Find row with company name (optional, if search is effectively filtering)
+    // Locator from request: <a ... href="/analyst/analyst_data_collection/320/provide_data">...<i class="bx bx-edit-alt ..."></i></a>
+    const editBtn = this.page.locator(`a[href*="provide_data"]`).first();
+    await editBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await editBtn.click();
+    await this.page.waitForLoadState('networkidle');
   }
 
   async searchCIIData(sector, year) {
