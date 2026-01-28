@@ -55,11 +55,15 @@ class RegistrationPage extends BasePage {
 
         await this.addressLine1Input.fill(data.address);
         await this.countrySelect.selectOption(data.country);
-        // Wait for dynamic fields to populate
-        await this.stateSelect.waitFor({ state: 'visible' });
+
+        // Robust wait: Wait for the specific state option to appear in the dropdown (handles AJAX population)
+        await this.stateSelect.locator(`option[value="${data.state}"], option:has-text("${data.state}")`).first().waitFor({ state: 'attached', timeout: 10000 });
         await this.stateSelect.selectOption(data.state);
-        await this.citySelect.waitFor({ state: 'visible' });
+
+        // Robust wait: Wait for the specific city option to appear in the dropdown
+        await this.citySelect.locator(`option[value="${data.city}"], option:has-text("${data.city}")`).first().waitFor({ state: 'attached', timeout: 10000 });
         await this.citySelect.selectOption(data.city);
+
         await this.zipInput.fill(data.zip);
         await this.panInput.fill(data.pan);
     }

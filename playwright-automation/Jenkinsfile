@@ -126,7 +126,8 @@ pipeline {
                      <br>
                      <p><i>Note: Detailed PDF report is attached to this email.</i></p>
                  """,
-                 to: 'kishore.r@spritle.com, karthikeyan.s@spritle.com, abinaya.t@spritle.com',
+                 to: 'kishore.r@spritle.com',
+                 //to: 'kishore.r@spritle.com, karthikeyan.s@spritle.com, abinaya.t@spritle.com',
                  attachmentsPattern: 'playwright-automation/report.pdf',
                  mimeType: 'text/html',
                  recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
