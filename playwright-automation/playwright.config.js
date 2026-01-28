@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-dotenv.config({ path: 'utils/.env' });
+dotenv.config({ path: 'utils/.env', quiet: true });
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -17,8 +17,8 @@ module.exports = defineConfig({
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
-    /* Retry on CI only */
-    retries: process.env.CI ? 0 : 0,
+    /* Retry on failures */
+    retries: 0,
     /* Opt out of parallel tests on CI. */
     workers: 1,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -35,7 +35,8 @@ module.exports = defineConfig({
             detail: true,
             outputFolder: 'allure-results',
             suiteTitle: false
-        }]
+        }],
+        ['json', { outputFile: 'result.json' }]
     ],
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
@@ -48,6 +49,10 @@ module.exports = defineConfig({
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
         headless: false,
+        viewport: null,
+        launchOptions: {
+            args: ["--start-maximized"]
+        }
     },
 
     /* Configure projects for major browsers */
@@ -58,15 +63,22 @@ module.exports = defineConfig({
         // },
         {
             name: 'E2E_Flow',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                browserName: 'chromium',
+                viewport: null
+            },
             testMatch: [
-                '**/tests/e2e/company_user/assessment.spec.js'
+                '**/tests/e2e/company_user/assessment.spec.js',
+                '**/tests/e2e/company_user/peer_benchmarking.spec.js'
             ],
             fullyParallel: false,
         },
         {
             name: 'Functional_Tests',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                browserName: 'chromium',
+                viewport: null
+            },
             testMatch: [
                 '**/tests/functional/**/*.spec.js'
             ],
