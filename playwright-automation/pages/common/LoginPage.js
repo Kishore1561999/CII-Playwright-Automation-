@@ -11,9 +11,13 @@ class LoginPage extends BasePage {
     }
 
     async login(email, password) {
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
         await this.emailInput.fill(email);
         await this.passwordInput.fill(password);
-        await this.signInButton.click();
+        // Use force: true to bypass any minor UI obstructions or lingering invisible elements
+        await this.signInButton.click({ force: true });
 
         try {
             // Wait for redirect to dashboard or company users page

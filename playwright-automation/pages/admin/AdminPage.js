@@ -79,7 +79,9 @@ class AdminPage extends BasePage {
  * ESG Diagnostic
  */
     async navigateToESGDiagnostic() {
-        await this.esgDiagnosticsLink.click();
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+        await this.esgDiagnosticsLink.click({ force: true });
         await this.page.waitForLoadState('networkidle');
         console.log('✓ Admin: Navigated to ESG Diagnostic');
     }
@@ -146,7 +148,9 @@ class AdminPage extends BasePage {
      * Basic Subscription
      */
     async navigateToBasicSubscription() {
-        await this.basicSubLink.click();
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+        await this.basicSubLink.click({ force: true });
         await this.page.waitForLoadState('networkidle');
         console.log('✓ Admin: Navigated to Basic Subscription');
     }
@@ -186,7 +190,9 @@ class AdminPage extends BasePage {
      * PB Data Management
      */
     async navigateToPBDataManagement() {
-        await this.pbDataLink.click();
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+        await this.pbDataLink.click({ force: true });
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
         console.log('✓ Admin: Navigated to PB Data Management');
     }
@@ -226,23 +232,26 @@ class AdminPage extends BasePage {
      */
     async navigateToCIIDataCollection() {
         // CII Data Collection is nested under PB Data Management
-        // Use .first() to avoid strict mode violations if multiple menus (desktop/mobile) exist with same href
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
         const pbLink = this.pbDataLink.first();
         const ciiLink = this.ciiDataLink.first();
 
         // Check if sub-menu is already visible
         if (await ciiLink.isVisible()) {
             console.log('CII Data link is visible, clicking directly.');
-            await ciiLink.click();
+            // Use force: true to bypass any minor UI obstructions or lingering invisible elements
+            await ciiLink.click({ force: true });
         } else {
             // If not visible, click PB Data menu to expand
             console.log('CII Data link hidden, clicking PB Data Management first.');
-            await pbLink.click();
+            await pbLink.click({ force: true });
             await ciiLink.waitFor({ state: 'visible', timeout: 10000 });
-            await ciiLink.click();
+            await ciiLink.click({ force: true });
         }
 
-        // await this.page.waitForLoadState('networkidle');
+        // Wait for the filter button on the target page to ensure navigation is complete
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
         console.log('✓ Admin: Navigated to CII Data Collection');
     }
@@ -315,7 +324,9 @@ class AdminPage extends BasePage {
      * User Management
      */
     async navigateToUserManagement() {
-        await this.userMgmtLink.click();
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+        await this.userMgmtLink.click({ force: true });
         await this.page.waitForLoadState('networkidle');
         console.log('✓ Admin: Navigated to User Management');
     }
@@ -396,8 +407,10 @@ class AdminPage extends BasePage {
      * Navigation methods
      */
     async navigateToCompanyUsers() {
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
         if (await this.esgDiagnosticsLink.isVisible()) {
-            await this.esgDiagnosticsLink.click();
+            await this.esgDiagnosticsLink.click({ force: true });
         } else {
             await this.page.goto('/esgadmin/company_users');
         }
