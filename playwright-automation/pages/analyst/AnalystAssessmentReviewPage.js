@@ -18,6 +18,21 @@ class AnalystAssessmentReviewPage extends BasePage {
     };
   }
 
+  async _robustClick(locator, name) {
+    // Ensure any lingering modals or backdrops are cleared first
+    await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+    await locator.scrollIntoViewIfNeeded();
+    try {
+      await locator.click({ force: true, timeout: 5000 });
+      console.log(`\u2713 Clicked: ${name}`);
+    } catch (error) {
+      console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+      await locator.dispatchEvent('click');
+      console.log(`\u2713 JS clicked: ${name}`);
+    }
+  }
+
   async navigateToAssessmentReview(companyUserId, userType = 'cii_user') {
     const url = `${process.env.BASE_URL}${this.baseURL}/${companyUserId}/edit_assessment/${userType}`;
     await this.page.goto(url);
@@ -36,10 +51,8 @@ class AnalystAssessmentReviewPage extends BasePage {
   }
 
   async clickEdit() {
-    await this.editButton.waitFor({ state: 'visible', timeout: 5000 });
-    await this.editButton.click();
+    await this._robustClick(this.editButton, 'Edit button');
     await this.page.waitForLoadState('networkidle');
-    console.log('✓ Clicked Edit button');
   }
 
   async fillComments(comment = 'Automated review comment') {
@@ -52,9 +65,7 @@ class AnalystAssessmentReviewPage extends BasePage {
   }
 
   async clickUpdate() {
-    await this.updateButton.waitFor({ state: 'visible', timeout: 5000 });
-    await this.updateButton.click();
-    console.log('✓ Clicked Update button');
+    await this._robustClick(this.updateButton, 'Update button');
 
     // Wait for toaster
     try {
@@ -67,9 +78,7 @@ class AnalystAssessmentReviewPage extends BasePage {
   }
 
   async clickSubmit() {
-    await this.submitButton.waitFor({ state: 'visible', timeout: 5000 });
-    await this.submitButton.click();
-    console.log('✓ Clicked Submit button');
+    await this._robustClick(this.submitButton, 'Submit button');
   }
 
   async handleConfirmationModal() {

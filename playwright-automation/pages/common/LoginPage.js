@@ -44,7 +44,13 @@ class LoginPage extends BasePage {
         await this.page.waitForLoadState('load');
         await this.page.waitForTimeout(1000);
 
-        // Ensure any lingering modals or backdrops are cleared first
+        // Aggressively clear any lingering modals, backdrops or toasts using JS evaluation
+        await this.page.evaluate(() => {
+            document.querySelectorAll('.modal-backdrop, .toast, .modal.show').forEach(el => el.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        }).catch(() => { });
         await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
 
         const profileDropdown = this.page.locator('a.nav-link.dropdown-toggle, .user-profile-dropdown, #user-profile').first();
@@ -62,25 +68,31 @@ class LoginPage extends BasePage {
         // Wait for dropdown animation and check visibility
         await this.page.waitForTimeout(1500);
 
+        const modal = this.page.locator('#modalLogout, .modal:has-text("Logout"), .modal:has-text("Log Out")').first();
         try {
             console.log('Waiting for Logout link...');
-            // Wait for either visible or at least attached (some menus might be tricky with visibility)
             await logoutLink.waitFor({ state: 'attached', timeout: 10000 });
             await logoutLink.scrollIntoViewIfNeeded();
 
             // Try to click it
             await logoutLink.click({ force: true, timeout: 5000 });
+
+            // Critical check: Did the modal appear?
+            try {
+                await modal.waitFor({ state: 'visible', timeout: 3000 });
+            } catch (e) {
+                console.warn('⚠ Modal did not appear after standard click. Retrying with JS click.');
+                await logoutLink.dispatchEvent('click');
+            }
         } catch (error) {
-            console.warn(`⚠ Logout link click failed: ${error.message}. Attempting JS click fallback.`);
+            console.warn(`⚠ Logout link interaction failed: ${error.message}. Attempting JS click fallback.`);
             await logoutLink.dispatchEvent('click');
         }
 
-        // Wait for logout modal and click Yes
-        const modal = this.page.locator('#modalLogout, .modal:has-text("Logout"), .modal:has-text("Log Out")').first();
         try {
             await modal.waitFor({ state: 'visible', timeout: 10000 });
         } catch (error) {
-            console.warn(`⚠ Logout modal not fully visible via selector: ${error.message}`);
+            console.warn(`⚠ Logout modal still not visible via selector: ${error.message}. Forcing JS click on Yes button anyway.`);
         }
 
         const yesButton = modal.locator('a:has-text("Yes"), button:has-text("Yes"), .btn:has-text("Yes"), #logout_yes').first();

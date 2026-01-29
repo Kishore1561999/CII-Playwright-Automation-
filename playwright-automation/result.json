@@ -94,159 +94,18 @@
   },
   "suites": [
     {
-      "title": "functional\\admin_workflows.spec.js",
-      "file": "functional/admin_workflows.spec.js",
+      "title": "functional\\analyst_workflows.spec.js",
+      "file": "functional/analyst_workflows.spec.js",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Admin Functional Workflows",
-          "file": "functional/admin_workflows.spec.js",
+          "title": "Analyst Functional Workflows",
+          "file": "functional/analyst_workflows.spec.js",
           "line": 6,
           "column": 6,
           "specs": [
-            {
-              "title": "ESG Diagnostic - Search and Filter",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "Functional_Tests",
-                  "projectName": "Functional_Tests",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 11647,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✓ Clicked: ESG Diagnostic link\n"
-                        },
-                        {
-                          "text": "✓ Admin: Filtered by Year: 2025\n"
-                        },
-                        {
-                          "text": "✓ Admin: Filtered by Sector: Information Technology\n"
-                        },
-                        {
-                          "text": "✓ Admin: Searched for Company: Demo user for testing\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-01-29T08:46:31.554Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67bb5f0f16b6c07ef839-86b4e83972e58d8367c0",
-              "file": "functional/admin_workflows.spec.js",
-              "line": 27,
-              "column": 5
-            },
-            {
-              "title": "Basic Subscription - Search and Filter",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "Functional_Tests",
-                  "projectName": "Functional_Tests",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 5589,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✓ Clicked: Basic Subscription link\n"
-                        },
-                        {
-                          "text": "✓ Admin: Filtered by Year: 2025\n"
-                        },
-                        {
-                          "text": "✓ Admin: Filtered by Sector: Information Technology\n"
-                        },
-                        {
-                          "text": "✓ Admin: Searched for Company: Demo user for testing\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-01-29T08:46:53.583Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67bb5f0f16b6c07ef839-82502f145c1230b4c4c6",
-              "file": "functional/admin_workflows.spec.js",
-              "line": 43,
-              "column": 5
-            },
-            {
-              "title": "PB Data Management - Search and Filter",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "Functional_Tests",
-                  "projectName": "Functional_Tests",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 5545,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✓ Clicked: PB Data Management link\n"
-                        },
-                        {
-                          "text": "✓ Admin: Filtered by Year: 2025\n"
-                        },
-                        {
-                          "text": "✓ Admin: Filtered by Sector: Information Technology\n"
-                        },
-                        {
-                          "text": "✓ Admin: Searched for Company: Demo user for testing\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-01-29T08:46:59.190Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67bb5f0f16b6c07ef839-abc2463d6ef35960362a",
-              "file": "functional/admin_workflows.spec.js",
-              "line": 59,
-              "column": 5
-            },
             {
               "title": "CII Data Collection - Search and Filter",
               "ok": true,
@@ -263,7 +122,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7728,
+                      "duration": 12682,
                       "errors": [],
                       "stdout": [
                         {
@@ -287,7 +146,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-01-29T08:47:04.749Z",
+                      "startTime": "2026-01-29T10:03:41.494Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -295,62 +154,9 @@
                   "status": "expected"
                 }
               ],
-              "id": "67bb5f0f16b6c07ef839-44f158b103500fe73442",
-              "file": "functional/admin_workflows.spec.js",
-              "line": 75,
-              "column": 5
-            },
-            {
-              "title": "User Management - Create and Edit User",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "Functional_Tests",
-                  "projectName": "Functional_Tests",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 9487,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✓ Clicked: User Management link\n"
-                        },
-                        {
-                          "text": "✓ Admin: Created user: testuser_1769676434554@example.com\n"
-                        },
-                        {
-                          "text": "✓ Admin: Editing user: testuser_1769676434554@example.com\n"
-                        },
-                        {
-                          "text": "✓ Admin: Get updated user: testuser_1769676434554@example.com\n"
-                        },
-                        {
-                          "text": "✓ Admin: Deleting user: testuser_1769676434554@example.com\n"
-                        },
-                        {
-                          "text": "✓ Admin: Deleted user: testuser_1769676434554@example.com\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-01-29T08:47:12.492Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "67bb5f0f16b6c07ef839-69fbcbdec3eb8bf63362",
-              "file": "functional/admin_workflows.spec.js",
-              "line": 91,
+              "id": "c9e4eb3c74cf4e8a741d-5c1b295d1b1b8d5e6af0",
+              "file": "functional/analyst_workflows.spec.js",
+              "line": 26,
               "column": 5
             }
           ]
@@ -360,9 +166,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-29T08:46:30.225Z",
-    "duration": 52556.397,
-    "expected": 5,
+    "startTime": "2026-01-29T10:03:40.372Z",
+    "duration": 23165.644999999997,
+    "expected": 1,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
