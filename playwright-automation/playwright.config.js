@@ -48,8 +48,8 @@ module.exports = defineConfig({
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
-        headless: false,
-        viewport: null,
+        headless: process.env.CI ? true : false,
+        viewport: { width: 1920, height: 1080 },
         launchOptions: {
             args: ["--start-maximized"]
         }
