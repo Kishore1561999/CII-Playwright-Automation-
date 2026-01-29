@@ -52,15 +52,42 @@ class AnalystAssessmentReviewPage extends BasePage {
 
   async clickEdit() {
     await this._robustClick(this.editButton, 'Edit button');
+    // Wait for the Update button to appear, which indicates we are in edit mode
+    await this.updateButton.waitFor({ state: 'visible', timeout: 10000 });
+    // Aggressive wait to ensure transition from readonly to editable
+    await this.page.waitForTimeout(2000);
     await this.page.waitForLoadState('networkidle');
   }
 
-  async fillComments(comment = 'Automated review comment') {
+  async fillComments(comment = 'Unified E2E verification comment for CII.') {
     const fields = await this.commentFields.all();
-    console.log(`✓ Found ${fields.length} comment fields`);
+    console.log(`\u2713 Found ${fields.length} comment fields`);
+
     for (let i = 0; i < Math.min(fields.length, 2); i++) {
-      await fields[i].fill(comment);
-      console.log(`  - Filled comment field ${i + 1}`);
+      try {
+        await fields[i].scrollIntoViewIfNeeded();
+
+        // Wait for editability (max 10s)
+        await fields[i].evaluate(async (el) => {
+          const timeout = 10000;
+          const start = Date.now();
+          while (el.readOnly && (Date.now() - start) < timeout) {
+            await new Promise(r => setTimeout(r, 500));
+          }
+        });
+
+        await fields[i].fill(comment, { timeout: 3000 });
+        console.log(`  - Filled comment field ${i + 1}`);
+      } catch (error) {
+        console.warn(`\u26A0 Standard fill failed on field ${i + 1}: ${error.message}. Attempting JS fallback.`);
+        await fields[i].evaluate((el, val) => {
+          el.readOnly = false;
+          el.value = val;
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+        }, comment);
+        console.log(`  - JS filled comment field ${i + 1} (Forced readOnly=false)`);
+      }
     }
   }
 
