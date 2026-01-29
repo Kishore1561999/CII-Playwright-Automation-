@@ -1,0 +1,5 @@
+✓ Admin: Navigated to Company Users / ESG Diagnostic page
+✓ Admin: Approving company: E2E_Company_1769597674975
+✓ Admin: Searched for company: E2E_Company_1769597674975
+✓ Approval confirmed for: E2E_Company_1769597674975
+✓ Clicked approve and confirm for: E2E_Company_1769597674975

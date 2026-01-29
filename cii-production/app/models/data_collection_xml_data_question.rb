@@ -1,0 +1,2 @@
+class DataCollectionXmlDataQuestion < ApplicationRecord
+end

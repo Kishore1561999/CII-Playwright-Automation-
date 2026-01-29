@@ -1,0 +1,2213 @@
+<% content_for :title, "ESG Peer Benchmarking Analytics Report | Compare Your Performance" %>
+<% content_for :description, "View your ESG Peer Benchmarking Analytics Report to compare your company's performance with others in your sector. Gain insights to enhance your ESG strategy." %>
+<style>
+div.wrapperr {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    border-radius: 150px;
+    margin-left: 230px;
+}
+
+div.quarter {
+    position: absolute;
+    width: 118px; /* Half of wrapper size */
+    height: 118px; /* Half of wrapper size */
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 9px; /* Adjusted font size */
+    text-align: center;
+    padding: 20px; /* Added padding for text */
+    box-sizing: border-box;
+    font-weight: 500; /* Ensure padding doesn't affect element size */
+}
+
+div.quarter.left-top {
+    left: 0;
+    top: 0;
+    border-top-left-radius: 150px; /* Half of wrapper size */
+    background-color: #002060;
+    padding-left: 31px;
+    padding-top: 40px;
+}
+
+div.quarter.right-top {
+    left: 124px;
+    top: 0;
+    border-top-right-radius: 150px; /* Half of wrapper size */
+    background-color: #92D050;
+    padding-top: 45px;
+    padding-right: 35px;
+}
+
+div.quarter.left-bottom {
+    left: 0;
+    top: 124px;
+    border-bottom-left-radius: 150px;
+    background-color: #156082;
+    padding-bottom: 55px;
+    padding-left: 32px;
+}
+
+div.quarter.right-bottom {
+    left: 124px;
+    top: 124px;
+    border-bottom-right-radius: 150px; /* Half of wrapper size */
+    background-color: #3B7D23;
+    padding-bottom: 45px;
+    padding-left: 2px;
+}
+.card-blur {
+   filter: blur(20px) !important;
+}
+.hexagon {
+    width: 100px;
+    height: 70px;
+    background-color: #a5c936;
+    position: relative;
+    margin: 27.5px 0;
+}
+.hexagon:before,
+.hexagon:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+}
+.hexagon:before {
+    bottom: 100%;
+    border-bottom: 27.5px solid #a5c936;
+}
+.hexagon:after {
+    top: 100%;
+    width: 0;
+    border-top: 27.5px solid #a5c936;
+}
+.hexagon.blue {
+    background-color: #003057;
+}
+.hexagon.blue:before {
+    border-bottom-color: #003057;
+}
+.hexagon.blue:after {
+    border-top-color: #003057;
+}
+.hexagon-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 45px;
+    color: white;
+    font-size: 12px;
+}
+.circle-hexagon {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.legend-hexagon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-top: 1px
+}
+.yellow-hexagon { background-color: #ffcc00; }
+.green-hexagon { background-color: #a5c936; }
+.red-hexagon { background-color: #ff0000; }
+.grey-hexagon { background-color: #B3B3B3; }
+
+.yellow { background-color: #ffcc00; }
+.green { background-color: #a5c936; }
+.red { background-color: #ff0000; }
+.grey { background-color: #B3B3B3; }
+
+/* basic positioning */
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; font-size:10px }
+.legend span { border: 1px solid #ccc; float: left; width: 10px; height: 10px; margin: 3px; }
+/* your colors */
+.legend .notawesome { background-color: #000000; font-family: Calibri,sans-serif; }
+.chart-heading {font-size: 13px; font-weight: 600,  }
+.follow-us-container {
+    text-align: center;
+    font-family: Calibri, sans-serif;
+    font-size: 12pt;
+}
+.follow-us-container::before,
+.follow-us-container::after {
+    content: '';
+    display: inline-block;
+    width: 150px; /* Adjust the width as needed */
+    border-top: 1px solid black;
+    vertical-align: middle;
+    margin: 0 10px; /* Adjust the margin as needed */
+}
+
+.report-container {
+    text-align: center;
+    font-family: Calibri, sans-serif;
+    font-size: 12pt;
+}
+.report-container::before,
+.report-container::after {
+    content: '';
+    display: inline-block;
+    width: 55px; /* Adjust the width as needed */
+    border-top: 3px solid #c9c9c9;
+    vertical-align: middle;
+    margin: 0 10px; /* Adjust the margin as needed */
+}
+.margins-adjustment {
+    margin-left:1.5cm; margin-right:1.5cm;
+}
+.apexcharts-yaxis-title {
+    white-space: pre-wrap; /* Enable word wrapping */
+    word-break: break-word; /* Ensure long words break */
+    width: 100px; /* Adjust the width as necessary */
+    text-align: center;
+}
+</style>
+<div id="content1" class="card-blur" style="padding:30px;">
+    <span class=""><%= image_tag asset_path('graph_main.jpg'), style: 'max-height: 63rem; position: relative; left: 2px' %></span>
+    <div class="page-break"></div><br><br><br><br><br>
+    <div class="text-black" style="margin-top: 95%">
+        <div>
+        <h6 class="margins-adjustment" style="font-size: 9px; color:black;"><strong>Copyright © <%= ApplicationRecord::CURRENT_YEAR %> Confederation of Indian Industry (CII).</strong></h6>
+        </div>
+        <div>
+            <p class="margins-adjustment" style="font-size: 9px; text-align: justify; color:black;">All rights reserved. No part of this publication may be reproduced, stored in, or introduced into a retrieval system, or transmitted in any
+            form or by any means (electronic, mechanical, photocopying, recording or otherwise), in part or full in any manner whatsoever, or
+            translated into any language, without the prior written permission of the copyright owner. CII has made every effort to ensure the
+            accuracy of the information and material presented in this document, based on the provision of information by the second party involved
+            and secondary information. Nonetheless, all information, estimates, and opinions contained in this publication are subject to change
+            without notice and do not constitute professional advice in any manner. Neither CII nor any of its office bearers or analysts or employees
+            accept or assume any responsibility or liability in respect of the information provided herein. However, any discrepancy or error found in
+            this publication may please be brought to the notice of CII for appropriate correction.</p>
+        </div>
+            <span class="margins-adjustment" style="font-size: 9px; color:black;">Published by Confederation of Indian Industry (CII), The Mantosh Sondhi Centre; 23, Institutional Area, Lodi Road, New Delhi 110003, India</span><br>
+            <span class="margins-adjustment" style="font-size: 9px; color:black;">Tel: +91-11-24629994-7; Email: <a>info@cii.in</a>; Web: <a href="www.cii.in" target="_blank" style="text-decoration: underline;">www.cii.in</a></span>
+    </div>
+    <div class="page-break"></div>
+    <br>
+    <br>
+    <p style="text-align: center !important; ">
+        <span class="margins-adjustment" style="text-align:center">
+        <strong><span style=" font-family:Calibri,sans-serif; font-size:26.0pt; color:#002060">ESG Peer Benchmarking Analytics</span></strong>
+    </span>
+    <strong>
+        <div class="report-container" style=" font-size:14.0pt;  color:#70ad47">R e p o r t &nbsp<%= @year %></div>
+    </strong>
+    </span>
+    </p>
+   <table class="margins-adjustment"style=" border-collapse: collapse;">
+    <tr>
+        <td style="width: 20%;">
+        <%= image_tag(current_user.company_logo.present? ? current_user.company_logo : "#{ENV['APPLICATION_URL']}/word_doc_images/no-image.png", width: 130, height: 130, alt: "User Logo") %>
+        </td>
+        <td style="width: 60%;position: relative; bottom: 8px">
+        <span style="font-size:13px; color:black;">Company Name: <b><%= current_user.company_name.present? ? current_user.company_name : '-' %></b></span>
+        <br>
+        <span style="font-size:13px;  color:black; position: relative;right: 5px; top: 8px;">&nbsp;&nbsp;Sector Benchmarked: <b><%= current_user.company_sector ? current_user.company_sector : '-' %></b></span>
+        <br>
+        <span style="font-size:13px; color:black;position: relative;left: 2px;top: 15px;">Date: <b><%= Time.now.strftime("%Y-%d-%m") %></b></span>
+        </td>
+    </tr>
+    </table>
+    <div class="mt-3">
+        <p class="margins-adjustment" style="font-size: 12px; text-align: justify;  color:black;">ESG is a framework that enables investors and other stakeholders to assess a company's impact on society and the environment, as well as its corporate governance practices. This report presents the performance of the company on these ESG indicators, against that of the industry through analytics like industry averages, maximum, minimum, etc. Wherever reasonable, the report also includes the cross-industry analytics calculated for all companies across different sectors. In addition to the analytics, a glimpse of the relative performance of the company is also presented.</p>
+    </div>
+    <div class="mt-3">
+    <div class="wrapperr">
+        <div class="quarter left-top">Industry Universe size: <%= @sector_industry %></div>
+        <div class="quarter right-top">Cross Industry Universe size: <%= @cross_industry %></div>
+        <div class="quarter left-bottom">Total number of indicators benchmarked: <%= @total_questions %></div>
+        <div class="quarter right-bottom" id="data-points">Total number of datapoints that show comparative company status with coloured dots:</div>
+    </div>
+    </div>
+    <div class="mt-3">
+        <div class="mt-3">
+            <p class="margins-adjustment" style="font-size: 10px; text-align: justify; color:black;"><b>*</b> For selected datapoints in each indicator, company performance has been compared with the industry performance for last FY and the result has been shown in form of colored dots. These colored dot are displayed under head Company Performance for the indicator. The total number of colored dots in an indicator gives the total number of datapoints compared in that particular indicator and the color of each dot indicates the comparative performance of the company. The table below summarizes the performance for all the indicators:</p>
+        </div>
+        <div class="mt-2">
+            <table class="margins-adjustment" border="1" cellspacing="0" cellpadding="5">
+            <tr>
+                <td class="" style="border: 0.5pt solid #0000004f; width: 75%;color: black; font-size: 12px;">
+                    Total number of datapoints across indicators, for which company performance was compared with industry.
+                </td>
+                <td style="border: 0.5pt solid #0000004f; width: 5%;text-align: center;" colspan="2" ><span id="total-hexagons" class="about_indicator"> </span></td>
+            </tr>
+               <tr>
+                <td class="" style="border: 0.5pt solid #0000004f; width: 75%; color: black; font-size: 12px;">
+                    Number of datapoints where company performance is better than industry average or where company practice is best in the industry.
+                </td>
+                <td class="text-center" style="border: 0.5pt solid #0000004f; width: 10%;">
+                    <span style="display:inline-block; width:12px; height:12px; background-color:#a5c936; border-radius:50%;"></span>
+                </td>
+                <td style="border: 0.5pt solid #0000004f;text-align: center; width: 10%;"><span id="green-qstn" class="about_indicator"> </span></td>
+            </tr>
+            <tr>
+                <td class="" style="border: 0.5pt solid #0000004f; width: 75%; color: black; font-size: 12px;">
+                    Number of datapoints where company performance is on par with industry average or where company practice needs some improvements compared to best practice.
+                </td>
+                <td class="text-center" style="border: 0.5pt solid #0000004f; width: 5%;">
+                    <span style="display:inline-block; width:12px; height:12px; background-color:#ffcc00; border-radius:50%;"></span>
+                </td>
+                <td style="border: 0.5pt solid #0000004f;text-align: center; width: 5%;"><span id="yellow-qstn" class="about_indicator"> </span></td>
+            </tr>
+            <tr>
+                <td class="" style="border: 0.5pt solid #0000004f; width: 75%; color: black; font-size: 12px;">
+                    Number of datapoints where company is on below industry average or where company practice needs significant improvement compared to best practice.
+                </td>
+                <td class="text-center" style="border: 0.5pt solid #0000004f; width: 5%;">
+                    <span style="display:inline-block; width:12px; height:12px; background-color:#ff0000; border-radius:50%;"></span>
+                </td>
+                <td style="border: 0.5pt solid #0000004f;text-align: center; width: 5%;"><span id="red-qstn" class="about_indicator"> </span></td>
+            </tr>
+            <tr>
+                <td class="" style="border: 0.5pt solid #0000004f; width: 75%; color: black; font-size: 12px;">
+                    Number of datapoints not answered by the company.
+                </td>
+                <td class="text-center" style="border: 0.5pt solid #0000004f;; width: 5%;">
+                    <span style="display:inline-block; width:12px; height:12px; background-color:#B3B3B3; border-radius:50%;"></span>
+                </td>
+                <td style="border: 0.5pt solid #0000004f;text-align: center; width: 5%;"><span id="grey-qstn" class="about_indicator"> </span></td>
+            </tr>
+          </table>
+        </div>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    
+    <table class="graph-table about_indicator margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 01</th>
+            <th class="graph-table table-border-none">Please indicate the % of women in the workforce.</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th>
+            <th class="graph-table" style="border: none; color: black;">Section A, Indicator: 20a</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th>
+            <th class="graph-table about_indicator" style="border: none; color: black;">
+                The indicator is aligned with SDG5: Gender Equality. It helps understand the
+                level of employment of women in an industry and identify the industries that
+                need better practices to improve gender balance across different types of
+                employees and workers. It asks for % of women employed under different
+                employee &amp; worker categories and the analytics highlight the industry
+                averages, minimum and maximum for the same.
+            </th>
+        </tr>
+    </table>
+    </div>
+    <br>
+    <center>
+    <b class="chart-heading">Representation of women on workforce</b>
+    </center>
+    <br>
+    <div style="margin-left:200px">
+    <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+    <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+    <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+   </div><br>
+
+    <div class="row" style="margin-left: 0.5cm;margin-right: 0.5cm;">
+    &nbsp&nbsp&nbsp&nbsp
+    <div class="col-md-5">
+    <b class="chart-heading" style="margin-left:130px">Employees</b>
+        <div id="chartpb-01-1"></div>
+    </div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <div class="col-md-5">
+    <b class="chart-heading" style="margin-left:140px">Workers</b>
+        <div id="chartpb-01-2"></div>
+    </div>
+    <div class="col-md-1"></div>    
+    </div>
+
+    <ul class="legend margins-adjustment">
+    <li style=" font-size: 10px;color:black"><span class="notawesome"></span> PF: Permanent Female</li>
+    <li style=" font-size: 10px;color:black"><span class="notawesome"></span> OTPF: Other than Permanent Female</li>
+    <li style=" font-size: 10px;color:black"><span class="notawesome"></span> TF: Total Female</li>
+    </ul>
+    <br><br>
+    <span class="about_indicator margins-adjustment">Company Performance</span>
+    <br>
+    <div class="margins-adjustment">
+    <span class="circle-hexagon pb1_commonclass pb1_button1"></span>
+    <span class="circle-hexagon pb1_commonclass pb1_button2"></span>
+    <span class="circle-hexagon pb1_commonclass pb1_button3"></span>
+    <span class="circle-hexagon pb1_commonclass pb1_button4"></span>
+    <span class="circle-hexagon pb1_commonclass pb1_button5"></span>
+    <span class="circle-hexagon pb1_commonclass pb1_button6"></span>
+    </div>
+    
+    <div class="page-break"></div>
+     <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 02</th>
+            <th class="graph-table table-border-none">Number of differently abled employees in workforce</th>
+        </tr>
+       <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th>
+            <th class="graph-table" style="border: none; color: black;">Section A, Indicator: 20b</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th>
+            <th class="graph-table about_indicator" style="border: none; color: black;">
+                The indicator is aligned with SDG10: Reduced Inequalities. It helps
+                understand the level of employment of differently abled employees in
+                company/companies. Several industries are trying to redefine their
+                employment processes, identify functions that can be fulfilled by differently
+                abled employees and design offices that are accessible.
+            </th>
+        </tr>
+    </table>
+    </div><br><br>
+    <% data_hash = @first_value[:total] %>
+    <% if @total_answers_data_sectorwise.size > 0 %>
+        <% average1 = @value[0][:total].to_f / @total_answers_data_sectorwise.size %>
+        <% average2 = @value[1][:total].to_f / @total_answers_data_sectorwise.size %>
+    <% else %>
+        <% average1 = 0 %>
+        <% average2 = 0 %>
+    <% end %>
+    <% answer_1 = @answers.find { |entry| entry[:name] == "pb_02_option_number1" } %>
+    <% answer_2 = @answers.find { |entry| entry[:name] == "pb_02_option_number2" } %>
+    <!--<table class="margins-adjustment" style="margin-bottom:3%">
+    <tr>
+        <th class="about_indicator">The companies in the industry sample had a total of <%= data_hash %> employees, maximum of <%= @first_value[:maximum][:maximum].to_i %> employees and minimum of <%= @first_value[:maximum][:minimum].to_i %> employees, who are differently abled.</th>
+    </tr>
+    </table>-->
+    <center><b class="chart-heading">Differently abled individuals employed in the industry</b></center><br> 
+    <div class="row margins-adjustment">
+        <div class="col-md-5">
+            <div id="chartpb-02"></div>
+        </div>
+        <div class="col-md-1"></div>
+         
+    </div><br><br>
+        
+    <div class="margins-adjustment"> 
+    <span class="about_indicator">Company Performance</span><br>   
+    <% if answer_1[:checkbox_name] == 'information_available' %>  
+       <span class="circle-hexagon <%= pbtwo_buttons(answer_1[:ans], average1) %>"></span>
+       <span class="circle-hexagon <%= pbtwo_buttons(answer_2[:ans], average2) %>"></span>
+    <% else %>
+        <span class="circle-hexagon grey-hexagon"></span>
+        <span class="circle-hexagon grey-hexagon"></span>
+    <% end %>
+     </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+        <table class="graph-table normal-font-size margins-adjustment table-header-border">
+            <tr class="table-tr-background">
+                <th class="graph-table table-border-none">PB 03</th>
+                <th class="graph-table table-border-none">Percentage of women among: Board of Directors and Senior Management</th>
+            </tr>
+            <tr class="table-border-line">
+                <th class="graph-table table-border-none">BRSR Indicator</th>
+                <th class="graph-table" style="border: none; color: black;">Section A, Indicator: 21</th>
+            </tr>
+            <tr class="table-border-line">
+                <th class="graph-table table-border-none">About the Indicator</th>
+                <th class="graph-table about_indicator" style="border: none; color: black;">
+                    The indicator is aligned with SDG5: Gender Equality. It helps understand the
+                    level of employment of women in company/companies in the decision-
+                    making positions. It captures the percentage of women on Board of directors
+                    and on the Senior management team. The indicator analytics highlight the
+                    industry averages, minimum and maximum for the same.
+                </th>
+            </tr>
+        </table>
+    </div><br> 
+    <center><b class="chart-heading">Representation of women in decision making bodies</b></center><br>
+    <div style="margin-left:200px">
+    <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+    <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+    <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+   </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-6">
+        <center><b class="chart-heading">Industry Specific</b></center><br>
+            <div id="chartpb-03-1"></div>
+        </div>
+        <div class="col-md-6">
+        <center><b class="chart-heading">Cross Industry</b></center><br>
+            <div id="chartpb-03-2"></div>
+        </div>
+    </div><br><br>
+    
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br> 
+    <span class="circle-hexagon pb3_commonclass pb3_button1"></span>
+    <span class="circle-hexagon pb3_commonclass pb3_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 04</th><th class="graph-table table-border-none">Turnover rate for permanent employees and workers</th>
+        </tr>
+        <tr class="table-border-line">
+           <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section A, Indicator: 22</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator captures the turnover rate for permanent employees & workers by gender over last 3 years. The indicator analytics highlight the industry averages for the same. A high turnover rate is associated with a high cost of replacement and thus highlights the need to improve employment policies, benefits, work environment. The employee turnover trends vary as per the industry.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading">Turnover rate by Gender</b></center><br><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-5">
+            <center><b class="chart-heading" style="">Permanent Employees</b></center>
+            <div id="chartpb-04-1"></div>
+        </div>
+        <div class="col-md-5">
+            <center><b class="chart-heading" style="">Permanent Workers</b></center>
+            <div id="chartpb-04-2"></div>
+        </div>
+        <div style="margin-left:130px">
+            <span class="legend-hexagon" style="background-color:#150E40"></span><span style="font-size:11px"><%= @year %></span>
+            <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px"><%= @year.to_i - 1 %></span>
+            <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px"><%= @year.to_i - 2 %></span>
+            <span class="legend-hexagon" style="background-color:#FF4560;margin-left:3px;"></span> <span style="font-size:11px">Company Value</span>
+        </div><br>
+    </div>
+    <br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>    
+    <span class="circle-hexagon pb4_commonclass pb4_button1"></span>
+    <span class="circle-hexagon pb4_commonclass pb4_button2"></span>
+    <span class="circle-hexagon pb4_commonclass pb4_button3"></span>
+    <span class="circle-hexagon pb4_commonclass pb4_button4"></span>
+    <span class="circle-hexagon pb4_commonclass pb4_button5"></span>
+    <span class="circle-hexagon pb4_commonclass pb4_button6"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table normal-font-size table-border-none">PB 05</th><th class="graph-table table-border-none">Grievance mechanism for different stakeholders</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section A, Indicator: 25</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Grievance mechanism helps company identify &amp; timely address issues of the
+            stakeholders to prevent them from converting into risks. This indicator
+            captures if such mechanism is available for different types of stakeholders,
+            i.e. employees, workers, communities, value chain partners and customers,
+            or not. The indicator analytics highlight the percentage of companies in the
+            industry that have the mechanism in place for each of these stakeholders.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading">Grievance mechanism for different stakeholders</b></center><br> 
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading">Industry Specific</b></center><br>
+        <div class="col-md-7">
+            <div id="chartpb-05-1"></div>
+        </div>
+        <div class="col-md-1"></div>
+         
+    </div><br><br>
+    <div class="page-break"></div><br>
+    <div style="margin-top: 2cm">
+        <div class="row margins-adjustment">
+        <center><b class="chart-heading">Cross Industry</b></center><br>
+            <div class="col-md-7">
+                <div id="chartpb-05-2"></div>
+            </div>
+            <div class="col-md-1"></div>
+            
+        </div>
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>          
+    <span class="circle-hexagon pb5_commonclass pb5_button1"></span>
+    <span class="circle-hexagon pb5_commonclass pb5_button2"></span>
+    <span class="circle-hexagon pb5_commonclass pb5_button3"></span>
+    <span class="circle-hexagon pb5_commonclass pb5_button4"></span>
+    <span class="circle-hexagon pb5_commonclass pb5_button5"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 06</th><th class="graph-table table-border-none">Code of conduct/ethics policy for employees/Board of Directors</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section B, Indicator: 1, P1</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Code of Conduct/Ethics policy is a standard of professional conduct that
+            guides employees toward following the letter and spirit of law. The indicator
+            checks for the presence of such policy in the company. The indicator analytics
+            highlight the percentage of companies that have a code of conduct for their
+            employees and or for their BoD and the percentage of companies for which
+            the policy is publicly available.</th>
+        </tr>
+    </table>
+    </div>
+    <center><b class="chart-heading">Industry Specific</b></center><br><br>
+    <b class="chart-heading margins-adjustment pb-06-heading" style="margin-left:90px">Code of Conduct/Ethics Policy for Employee /or BoD</b><br><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-7">
+            <div id="chartpb-06-1" class="about_indicator"></div>
+        </div>
+        <div class="col-md-1"></div>
+    </div> 
+    <div class="row margins-adjustment pb-06-2-industry">
+        <div class="col-md-5">
+        <b class="chart-heading"> Companies with Code of Conduct for Board of Directors/ KMPs</b>
+                <div id="chartpb-06-2" class="about_indicator" style="width:70%;height:100px"></div>
+        </div>
+        <div class="col-md-5" style="margin-left:40px">
+        <b class="chart-heading">Companies with Code of Conduct for Employees</b>
+                <div id="chartpb-06-3" class="about_indicator" style="width:70%;height:100px"></div>
+        </div>
+    </div>
+    <ul class="legend margins-adjustment" style="margin-left: 106px;">
+        <li style="font-size: 10px;color:black"><span style="background-color:#150E40;"></span> % of companies with Internal Policy</li>
+        <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies with Publicly available policy</li>
+    </ul><br>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+        <center><b class="chart-heading">Cross Industry</b></center><br><br>
+        <b class="chart-heading margins-adjustment pb-06-heading" style="margin-left:90px">Code of Conduct/Ethics Policy for Employee /or BoD</b><br><br>
+        <div class="row margins-adjustment">
+            <div class="col-md-7">
+                <div id="chartpb-06-cross-1" class="about_indicator"></div>
+            </div>
+            <div class="col-md-1"></div>
+        </div> 
+        <div class="row margins-adjustment">
+            <div class="col-md-5">
+            <b class="chart-heading"> Companies with Code of Conduct for Board of Directors/ KMPs</b>
+                    <div id="chartpb-06-cross-2" class="about_indicator" style="width:70%;height:100px"></div>
+            </div>
+            <div class="col-md-5" style="margin-left:40px">
+            <b class="chart-heading">Companies with Code of Conduct for Employees</b>
+                    <div id="chartpb-06-cross-3" class="about_indicator" style="width:70%;height:100px"></div>
+            </div>
+        </div>
+        <ul class="legend margins-adjustment" style="margin-left: 106px;">
+            <li style="font-size: 10px;color:black"><span style="background-color:#150E40;"></span> % of companies with Internal Policy</li>
+            <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies with Publicly available policy</li>
+        </ul>
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>  
+    <span class="circle-hexagon pb6_commonclass pb6_button1"></span>
+    <span class="circle-hexagon pb6_commonclass pb6_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 07</th><th class="graph-table table-border-none">Human rights policy: Internal or publicly available policy</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section B, Indicator: 1, P5</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Human rights violations expose companies to significant operational,
+            regulatory, reputational, and financial risks. An effective human rights policy
+            sets out the commitment of the company towards protection and promotion
+            of human rights across its business operations. The indicator checks for the
+            presence of such policy in the company. The indicator analytics highlight the
+            percentage of companies that have a formal human rights policy and for
+            which this policy is publicly available.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading margins-adjustment" style="margin-right:160px ;">Companies with Human Rights Policy</b></center><br><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading margins-adjustment" style="margin-right:160px ;">Industry Specific</b></center><br>
+        <div class="col-md-2"></div>
+        <div class="col-md-7">
+            <div id="chartpb-07-1"></div>
+        </div>
+    </div><br><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading margins-adjustment" style="margin-right:160px ;">Cross Industry</b></center><br>
+        <div class="col-md-2"></div>
+        <div class="col-md-7">
+            <div id="chartpb-07-2"></div>
+        </div>
+    </div>
+     <br> 
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb7_commonclass pb7_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 08</th><th class="graph-table table-border-none">Sustainability related decision making committee/individual of the board</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section B, Indicator: 9</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Board of Directors is the top-most decision-making body in any company.
+            Thus, to ensure that the business decisions and strategies of the company are
+            made considering ESG perspective, it is essential to appoint an
+            individual/director who can represent ESG related matters in the board
+            discussions. The indicator captures the senior most position responsible for
+            sustainability in the company. This indicator analytics highlight the
+            percentage of companies that have assigned the ESG responsibilities to
+            different levels of management and individuals.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <b class="chart-heading margins-adjustment" style="margin-left: 220px;">Allocation of ESG responsibilities at top level</b><br><br>
+    <center><b class="chart-heading margins-adjustment" style="">Industry Specific</b></center><br><br>
+    <div id="chartpb-08-1" class="margins-adjustment" style="margin-left:180px ;"></div><br><br>
+    <ul class="legend margins-adjustment pb-08-legends" style="margin-left:160px ;">
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#150E40"></span> % of companies with dedicated Board ESG/Sustainability committee</li><br>
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#B7D93D"></span> % of companies where ESG/Sustainability function part of other board committee</li><br>
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#00D4E1"></span> % of companies with no dedicated board committee, but CSO or dedicated executive director for sustainability issues</li><br>
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#FF662B"></span> % of companies with no dedicated board committee, but MD/CEO/CFO/COO or any other executive with multiple responsibilities is also responsible for sustainability issues</li><br>
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#780096"></span> % of companies with no dedicated board committee but a non-executive director is responsible for sustainability issues</li><br>
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#FFA837"></span> % of companies with no board level responsibility but an operational level ESG committee/Individual</li><br>
+        <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#BA4A00"></span> % of companies which have not defined the responsibility</li><br>
+    </ul><br><br>
+    <div class="page-break"></div>
+    <div style="margin-top: 4cm">
+    <b class="chart-heading margins-adjustment" style="margin-left: 220px;">Allocation of ESG responsibilities at top level</b><br><br>
+    <center><b class="chart-heading margins-adjustment" style="">Cross Industry</b></center><br><br>
+    <div id="chartpb-08-2" class="margins-adjustment" style="margin-left:180px ;"></div><br><br>
+    <ul class="legend margins-adjustment pb-08-legends" style="margin-left:160px ;">
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#150E40"></span> % of companies with dedicated Board ESG/Sustainability committee</li><br>
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#B7D93D"></span> % of companies where ESG/Sustainability function part of other board committee</li><br>
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#00D4E1"></span> % of companies with no dedicated board committee, but CSO or dedicated executive director for sustainability issues</li><br>
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#FF662B"></span> % of companies with no dedicated board committee, but MD/CEO/CFO/COO or any other executive with multiple responsibilities is also responsible for sustainability issues</li><br>
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#780096"></span> % of companies with no dedicated board committee but a non-executive director is responsible for sustainability issues</li><br>
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#FFA837"></span> % of companies with no board level responsibility but an operational level ESG committee/Individual</li><br>
+            <li style="font-size: 10px;color:black"><span style=" font-size: 11px;background-color:#BA4A00"></span> % of companies which have not defined the responsibility</li><br>
+    </ul><br><br>
+    </div>
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb8_commonclass pb8_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 09</th><th class="graph-table table-border-none">Code of Ethics training programs: Coverage</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 1, Essential Indicator 1, Leadership Indicator 1</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">The indicator is to understand if the company has been imparting training on
+            the code of conduct/ethics policy to its associates including directors,
+            employees, workers, value chain partners. It captures the percentage of
+            employees/ workers/ directors that have received training on the policy. The
+            indicator analytics highlight the industry averages, minimum and maximum
+            for the same.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading">Code of Ethics training programs: Coverage</b></center><br>
+    <div style="margin-left:200px">
+    <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+    <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+    <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+        <div class="row margins-adjustment">
+            <div class="col-md-6">
+            <center><b class="chart-heading" style="margin-left:40px">Industry Specific</b></center>
+                <div id="chartpb-09-1"></div>
+            </div>
+            <div class="col-md-6">
+            <center><b class="chart-heading" style="margin-left:40px">Cross Industry</b></center>
+                <div id="chartpb-09-2"></div>
+            </div>
+        <ul class="legend" style="margin-left: 47px;">
+            <li style="font-size: 10px;color:black"><span class="notawesome"></span> BD: Board of directors</li>
+            <li style="font-size: 10px;color:black"><span class="notawesome"></span> KMP: Key managerial personnel</li>
+            <li style="font-size: 10px;color:black"><span class="notawesome"></span> Employees: Employees other than bods and Kmps</li>
+            <li style="font-size: 10px;color:black"><span class="notawesome"></span> Workers: Workers</li>
+            <li style="font-size: 10px;color:black"><span class="notawesome"></span> VCP: Value chain partners</li>
+        </ul>
+        </div><br><br>
+        <br><br>
+    <div class="margins-adjustment">
+        <span class="about_indicator">Company Performance</span><br>      
+        <span class="circle-hexagon pb9_commonclass pb9_button1"></span>
+        <span class="circle-hexagon pb9_commonclass pb9_button2"></span>
+        <span class="circle-hexagon pb9_commonclass pb9_button3"></span>
+        <span class="circle-hexagon pb9_commonclass pb9_button4"></span>
+        <span class="circle-hexagon pb9_commonclass pb9_button5"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 10</th><th class="graph-table table-border-none">Corruption policy: Internal or publicly available policy</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 1, Essential Indicator 4</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">The purpose of an Anti -corruption policy is to safeguard and promote
+            legitimate business throughout the company and to prevent and prohibit
+            corruption, bribery, and similar acts in connection with the organisation. The
+            indicator checks for the presence of such policy in the company. The
+            indicator analytics highlight the percentage of companies that have an anti-
+            corruption policy in place and for which the policy is publicly available.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading margins-adjustment" style="margin-right:180px ;">Companies with Anti-Corruption Policy</b></center><br><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading margins-adjustment" style="margin-right:210px ;">Industry Specific</b></center><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-10-1" style="margin-left:15px"></div>
+        </div>
+    </div><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading margins-adjustment" style="margin-right:194px;">Cross Industry</b></center><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-10-2" style="margin-left:15px"></div>
+        </div>
+    </div>
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb10_commonclass pb10_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 11</th><th class="graph-table table-border-none">Percentage of R&amp;D and capital expenditure (capex) investments in specific technologies to improve the environmental and social impacts of product and processes</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 2, Essential Indicator 1</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">The commitment to improve the environmental and social impact of
+            products begins with a formal commitment of funds to the R&amp;D and capital
+            expenditure for the same. This indicator captures the percentage of
+            investments committed to these categories. The indicator analytics highlights
+            the percentage of companies that have committed a part of their
+            investments or 100% of their investments to the cause, in the last FY. It also
+            captures the percentage of companies for which there has been an increase
+            in these funds over the last 2 years.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading">Product Responsibility: Investment Commitment</b></center> 
+    <div class="row margins-adjustment">
+    <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-11"></div>
+        </div>
+        <div class="col-md-1"></div>
+    </div><br> 
+    <ul class="legend margins-adjustment pb-11-legends" >
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span>Trend: Companies with increasing trend</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span>Investments: % of companies that made investment in <%= ApplicationRecord::CURRENT_YEAR %> </li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span>Commitment: % of companies that committed 100% investment in <%= ApplicationRecord::CURRENT_YEAR %></li>
+    </ul><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb11_commonclass pb11_button1"></span>
+    <span class="circle-hexagon pb11_commonclass pb11_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 12</th><th class="graph-table table-border-none">Sustainable procurement: Percentage of inputs</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 2, Essential Indicator 2(b)</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">When developing socially &amp; environmentally responsible products, it is
+            important to ensure that the input material is also sourced in a sustainable
+            manner. This indicator gives stakeholder a quantitative evaluation of the
+            sustainable procurement process of the company by capturing the
+            percentage of input that was sourced by the company/companies
+            considering sustainability parameters. The industry analytics highlight the
+            industry average, minimum and maximum for the same.</th>
+        </tr>
+    </table>
+    </div><br><br>
+    <center><b class="chart-heading">Sustainable Procurement</b></center><br> 
+    <div class="row margins-adjustment">
+    <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <div id="chartpb-12"></div>
+        </div>
+        <div class="col-md-1"></div>
+         
+    </div><br><br>
+    <% @questions.each do |question| %>
+        <% if question.question_id == 'PB-12' %>
+        <% question.options.each do |question_option| %>
+            <% if question_option['sub_answers'] %>
+            <% question_option['sub_answers'].each do |sub_answer| %>
+                <% average = calculate_average(@total_answers_data_sectorwise, sub_answer['name'], @current_user_answer, question.question_id)[:average] %>
+                <% max = calculate_average(@total_answers_data_sectorwise, sub_answer['name'], @current_user_answer, question.question_id) %>
+                <!--<table class="margins-adjustment" style="margin-bottom:3%">
+                <tr>
+                    <th class="about_indicator">An average of <%= average %>% of input, a maximum of <%= max[:maximum] %>% and a minimum of <%= max[:minimum] %>% was sourced considering sustainability parameters by companies in the industry.</th>
+                </tr>
+                </table><br><br>-->
+                <div class="margins-adjustment">
+                <span class="about_indicator">Company Performance</span><br>  
+                 <% if @current_user_answer['pb_12'] == 'information_available' %>
+                    <% if @current_user_answer[sub_answer['name']].to_f > average.to_f %>
+                        <span class="circle-hexagon green-hexagon"></span>   
+                    <% elsif @current_user_answer[sub_answer['name']].to_f < average.to_f  %>
+                        <span class="circle-hexagon red-hexagon"></span>   
+                    <% elsif @current_user_answer[sub_answer['name']].to_f == average.to_f  %>
+                        <span class="circle-hexagon yellow-hexagon"></span>   
+                    <% else %>
+                        <span class="circle-hexagon grey-hexagon"></span>   
+                    <% end %>
+                 <% else %>
+                    <span class="circle-hexagon grey-hexagon"></span>   
+                 <% end %>
+                 </div>
+            <% end %>
+            <% end %>
+        <% end %>
+        <% end %>
+    <% end %>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 13</th><th class="graph-table table-border-none">Life Cycle Perspective / Assessments (LCA) &amp; its coverage</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 2, Leadership Indicator 1</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">LCA is a process that helps identify, measures and monitor the impact of the
+            product throughout their life cycle that is from procurement of raw material
+            to disposal of products. This helps company draft a plan for stages where
+            alterations are feasible to reduce the overall impact of the product. This
+            indicator captures if the company has conducted LCA. The indicator analytics
+            highlight the percentage of companies which have conducted LCA
+            internally/externally and that have communicated the results publicly. It also
+            highlights the average coverage of the LCA, in the industry, in terms of
+            percentage of turnover contributed by products/services for which LCA is
+            conducted.</th>
+        </tr>
+    </table>
+    </div>
+    <div class="row margins-adjustment">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <b class="chart-heading" style="margin-left: 40px;">Life Cycle Assessment</b><br>
+            <div id="chartpb-13-1" class="about_indicator" style=""></div>
+        </div>
+    </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-5">
+            <center><b class="chart-heading">LCA: Coverage</b></center>
+            <div style="">
+                <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:10px">Max & Min</span>
+                <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Avg Value</span>
+                <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Comp Value</span>
+            </div><br>
+            <div id="chartpb-13-2"></div>
+        </div>
+        <div class="col-md-7">
+            <center><b class="chart-heading" style="margin-left:80px">Transparency of LCA results</b></center>
+            <div id="chartpb-13-3" class="about_indicator" style="margin-right:145px"></div>
+            <ul class="legend pb-13-3-legend" style="margin-left:30px;margin-top: -20px;">
+                <li style="font-size: 10px;color:black;width:300px"><span style="background-color:#B7D93D"></span> Companies that externally communicated the LCA results</li>
+            </ul>
+        </div>
+    </div>
+    <div class="margins-adjustment company_buttons">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb13_commonclass pb13_button1"></span>
+    <!--<span class="circle-hexagon pb13_commonclass pb13_button2"></span>-->
+    <span class="circle-hexagon pb13_commonclass pb13_button3"></span>
+    <span class="circle-hexagon pb13_commonclass pb13_button4"></span>
+    </div>
+</div>
+<div id="content2" style="padding:30px;">
+  <div style="margin-top: 1.2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 14</th><th class="graph-table table-border-none">Spending on measures towards well-being of employees and workers</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 1c</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator helps evaluate company’s commitment to the well being of its
+            employees and workers. The well being of employees is directly related to
+            their motivation, commitment and productivity. The industry analytics
+            highlight the industry average, minimum and maximum for the cost incurred
+            on well-being of employees as percentage of turnover.</th>
+        </tr>
+    </table>
+  </div>
+  <center><b class="chart-heading" style="margin-top:-30px">Proportion of spending towards employees/ workers well-being</b></center> <br>
+    <div style="margin-left:200px;margin-top:-15px">
+    <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+    <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+    <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div>
+  <div class="row margins-adjustment" style="margin-top:20px">
+    <div class="col-md-6">
+    <center><b class="chart-heading">Industry Specific</b></center> 
+        <div id="chartpb-14-1"></div>
+    </div>
+    <div class="col-md-6">
+    <center><b class="chart-heading">Cross Industry</b></center> 
+        <div id="chartpb-14-cross-1"></div>
+    </div>
+  </div>
+  <div class="row margins-adjustment">
+    <center><b class="chart-heading" style="margin-left:30px">Companies for which the above data was third party verified</b></center>
+    <div class="col-md-6" style="margin-top:10px;">
+    <center><b class="chart-heading" style="margin-left:80px">Industry Specific</b></center> 
+        <div id="chartpb-14-2" style="width:50%;margin-left:60px;margin-top:-15px;"></div>
+    </div>
+    <div class="col-md-6" style="margin-top:10px;">
+    <center><b class="chart-heading" style="margin-left:70px">Cross Industry</b></center> 
+        <div id="chartpb-14-cross-2" style="width:50%;margin-left:40px;margin-top:-15px;"></div>
+    </div>
+    <ul class="legend margins-adjustment pb-14-2-legend" style="margin-top: -20px;margin-left:260px;">
+        <li style="font-size: 10px;color:black"><span style="background-color:#150E40"></span> Verified</li>
+        <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> Not verified</li>
+    </ul>  
+  </div>
+    
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb14_commonclass pb14_button1"></span>
+    <span class="circle-hexagon pb14_commonclass pb14_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 15</th><th class="graph-table table-border-none">Equal Opportunity Policy: Internal or publicly available policy</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 4</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Equal Opportunity policy is a company’s formal document that outlines their
+            commitment to fair treatment of all employees, regardless of age, sex,
+            gender, disability, religion, etc. The indicator checks for the presence of such
+            policy in the company. The indicator analytics highlight the percentage of
+            companies that have this policy in place and for which the policy is publicly
+            available.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading" style="margin-right:120px">Companies with Equal Opportunity Policy</b></center><br><br>
+    <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-right:130px">Industry Specific</b></center><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+        <div id="chartpb-15-1" style="margin-left:30px"></div>
+        </div>
+    </div><br>
+    <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-right:120px">Cross Industry</b></center><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+        <div id="chartpb-15-2" style="margin-left:30px"></div>
+        </div>
+    </div>
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb15_commonclass pb15_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 16</th><th class="graph-table table-border-none">Membership of employees and worker in association(s) or Unions recognised by the company</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 7</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator helps evaluate the freedom that the company provides to its
+            employees to join trade unions or associations for better representation of
+            their rights. It captures the percentage of permanent employees and workers of the
+            company that are covered under trade union, by gender. The indicator
+            analytics highlight the industry averages, minimum and maximum for the
+            same.</th>
+        </tr>
+    </table>
+    </div><br>
+     <center><b class="chart-heading" style="margin-left:40px">Membership in associations or unions</b></center><br>
+     <div style="margin-left:200px">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-3"></div>
+       
+        <div class="col-md-7">
+            <div id="chartpb-16"></div>
+        </div>
+ 
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+         <span class="circle-hexagon pb16_commonclass pb16_button1"></span>
+         <span class="circle-hexagon pb16_commonclass pb16_button2"></span>
+         <span class="circle-hexagon pb16_commonclass pb16_button3"></span>
+         <span class="circle-hexagon pb16_commonclass pb16_button4"></span>
+         <span class="circle-hexagon pb16_commonclass pb16_button5"></span>
+         <span class="circle-hexagon pb16_commonclass pb16_button6"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 17</th><th class="graph-table table-border-none">Skill upgradation training: Coverage</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 8</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator evaluates the commitment of the company to upskill its staff
+            through classroom trainings, online trainings, on-the floor trainings, external
+            trainings, etc. It captures the percentage of employees and workers of the
+            company that have received skill development training, by gender. The
+            indicator analytics highlight the industry averages, minimum and maximum
+            for the same.</th>
+        </tr>
+    </table>
+    </div><br>
+        <center><b class="chart-heading" style="margin-left:40px">Coverage of skill upgradation training programs</b></center><br>
+        <div style="margin-left:200px">
+            <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+            <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+            <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+        </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-3"></div>
+
+        <div class="col-md-7">
+            <div id="chartpb-17"></div>
+        </div>
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+         <span class="circle-hexagon pb17_commonclass pb17_button1"></span>
+         <span class="circle-hexagon pb17_commonclass pb17_button2"></span>
+         <span class="circle-hexagon pb17_commonclass pb17_button3"></span>
+         <span class="circle-hexagon pb17_commonclass pb17_button4"></span>
+         <span class="circle-hexagon pb17_commonclass pb17_button5"></span>
+         <span class="circle-hexagon pb17_commonclass pb17_button6"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 18</th><th class="graph-table table-border-none">Performance and career development reviews: Coverage</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 9</th>
+        </tr>
+       <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">The indicator helps evaluate the employee related processes of companies,
+            especially aimed at talent retention. Regular performance evaluations and
+            appraisals contribute to employee motivation. It captures the percentage of
+            employees and workers of the company that have received performance and career development review, by gender. The indicator analytics highlight the
+            industry averages, minimum and maximum for the same.</th>
+        </tr>
+    </table>
+    </div><br>
+    <center><b class="chart-heading" style="margin-left:20px">Coverage of Performance and career development reviews</b></center><br>
+    <div style="margin-left:200px">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-3"></div>
+        
+        <div class="col-md-7">
+            <div id="chartpb-18"></div>
+        </div>
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+         <span class="circle-hexagon pb18_commonclass pb18_button1"></span>
+         <span class="circle-hexagon pb18_commonclass pb18_button2"></span>
+         <span class="circle-hexagon pb18_commonclass pb18_button3"></span>
+         <span class="circle-hexagon pb18_commonclass pb18_button4"></span>
+         <span class="circle-hexagon pb18_commonclass pb18_button5"></span>
+         <span class="circle-hexagon pb18_commonclass pb18_button6"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 19</th><th class="graph-table table-border-none">Health and safety management system &amp; processes covered</th>
+        </tr>
+        <tr class="table-border-line">
+           <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 10</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Health &amp; Safety is one of the most crucial aspects of company sustainability.
+            The indicator checks if the company has a H&amp;S management system in place
+            and if the system defines process for identification of risks, for reporting of
+            risks and protocols to be followed by employees to remove themselves from
+            such risks. The industry analytics highlight the percentage of companies that
+            have H&amp;S management system in place and that have the above elements
+            defined.</th>
+        </tr>
+    </table>
+    </div>
+    <center><b class="chart-heading" style="margin-right: 210px;">Industry Specific</b></center><br><br>
+    <center><b class="chart-heading" style="margin-right: 190px;">Percentage of companies with OHS management system</b></center><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-19-1"></div>
+        </div>
+    </div><br>
+    <center><b class="chart-heading" style="margin-right: 180px;">Elements of OHS management system</b></center><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-19-2"></div>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div style="margin-top: 2cm">
+    <center><b class="chart-heading" style="margin-right: 190px;">Cross Industry</b></center><br><br>
+    <center><b class="chart-heading" style="margin-right: 190px;">Percentage of companies with OHS management system</b></center><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-19-cross-1"></div>
+        </div>
+    </div><br>
+    <center><b class="chart-heading" style="margin-right: 180px;">Elements of OHS management system</b></center><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-19-cross-2"></div>
+        </div>
+    </div>
+    </div><br><br>
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb19_commonclass pb19_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 20</th><th class="graph-table table-border-none">Details of safety related incidents</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 11</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator captures the crucial KPIs of health & safety aspect i.e., Lost-time injury frequency rate. Poor results reflect high risk exposure of the company. The indicator analytics highlight the industry averages, minimum and maximum for the same.</th>
+        </tr>
+    </table>
+    </div>
+    <center><b class="chart-heading" id="pb-20-1-heading" >LTIFR: FY <%= @year.to_i %></b></center><br>
+    <div style="margin-left:200px" class="labelclass-20">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+    <div class="col-md-2"></div>
+        <div class="col-md-7">
+        <div id="chartpb-20-1"></div>
+        </div>
+    </div>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading" >Third party verification</b></center>
+    <div class="" id="pb-20-2-class1"></div>     
+        <div class="col-md-7" id="pb-20-2-class2">
+            <div id="chartpb-20-2" ></div>
+        </div>
+         
+    </div>
+    <ul class="legend pb-20-2-legend" style="margin-left: 195px;margin-top:-20px">
+        <li style="font-size: 10px;color:black;width:300px"><span style="background-color:#B7D93D"></span> Companies for which the KPI was third party verified</li>
+    </ul><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+         <span class="circle-hexagon pb20_commonclass pb20_button1"></span>
+         <span class="circle-hexagon pb20_commonclass pb20_button2"></span>
+         <span class="circle-hexagon pb20_commonclass pb20_button3"></span>
+         
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 21</th><th class="graph-table table-border-none">Health &amp; safety practices &amp; Working conditions: % of plants and offices assessed</th>
+        </tr>
+       <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 3, Essential Indicator 14</th>
+        </tr>
+       <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator captures for the percentage of company operations that have
+            undergone a formal assessment for health &amp; safety practices and for working
+            conditions. Higher the coverage in terms of percentage of operations, lower
+            the health &amp; safety risk exposure of the company. The indicator analytics
+            highlight the industry averages, minimum and maximum for the same.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading">H&S assessments: Coverage</b></center><br>
+    <div style="margin-left:200px" class="labelclass-21">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+    <div class="col-md-3"></div>
+    <div class="col-md-7"><div id="chartpb-21"></div></div>
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb21_commonclass pb21_button1"></span>
+    <span class="circle-hexagon pb21_commonclass pb21_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+        <tr class="table-tr-background">
+            <th class="graph-table table-border-none">PB 22</th><th class="graph-table table-border-none">% Employees and workers who have been provided training on human rights issues and policy(ies) of the entity under different categories:</th>
+        </tr>
+        <tr class="table-border-line">
+            <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 5, Essential Indicator 1</th>
+        </tr>
+       <tr class="table-border-line">
+            <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator brings out the level of awareness on human rights &amp; related
+            issues in the company by capturing the data on percentage of employees &amp;
+            workers that were covered under Human Rights training programs, by
+            category. This is especially crucial for industries that have been reporting high
+            human rights violations (as can be studied in PB 25). The indicator analytics
+            highlight the industry averages, minimum and maximum for the same.</th>
+        </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading" style="margin-left: 30px;">Human rights training programs: Coverage</b></center><br>
+    <div style="margin-left:200px;">
+    <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+    <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+    <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+    <div class="col-md-6">
+    <center><b class="chart-heading" style="margin-left: 30px;">Industry Specific</b></center><br>
+        <div id="chartpb-22-1"></div>
+    </div>
+    <div class="col-md-6">
+    <center><b class="chart-heading" style="margin-left: 30px;">Cross Industry</b></center><br>
+        <div id="chartpb-22-2"></div>
+    </div>
+    <ul class="legend" style="margin-left:50px ;">
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> PE: Permanent Employees</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> OPE: Other Than Permanent Employees</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> TE: Total Employees</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> PW: Permanent Workers</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> OPW: Other Than Permanent Workers</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> TW: Total Workers</li>
+    </ul>
+    </div>
+        <br><br>
+    <div class="margins-adjustment" >
+        <span class="about_indicator">Company Performance</span><br>      
+        <span class="circle-hexagon pb22_commonclass pb22_button1"></span>
+        <span class="circle-hexagon pb22_commonclass pb22_button2"></span>
+        <span class="circle-hexagon pb22_commonclass pb22_button3"></span>
+        <span class="circle-hexagon pb22_commonclass pb22_button4"></span>
+        <span class="circle-hexagon pb22_commonclass pb22_button5"></span>
+        <span class="circle-hexagon pb22_commonclass pb22_button6"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 23</th><th class="graph-table table-border-none">Details of minimum wages paid to employees and workers, in the following format</th>
+    </tr>
+   <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 5, Essential Indicator 2</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">Good remuneration practices are considered to have a significant impact on
+        employee commitment towards the company and its goals. This indicator
+        captures the percentage of employees &amp; workers of the company who are
+        paid more than the minimum wage. The indicator analytics highlight the
+        industry average, minimum and maximum for the same.</th>
+    </tr>
+    </table>
+    </div><br>
+    <center><b class="chart-heading" style="margin-left: 20px;">Employees/workers receiving more than minimum wage</b></center><br>
+    <div style="margin-left:200px;">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-6">
+        <center><b class="chart-heading" style="">Employees</b></center><br>
+            <div id="chartpb-23-1"></div>
+        </div>
+        <div class="col-md-6">
+        <center><b class="chart-heading" style="">Workers</b></center><br>
+            <div id="chartpb-23-2"></div>
+        </div>
+        <ul class="legend" style="margin-left:50px">
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> PM: Permanent Male</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> PF: Permanent Female</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> PT: Permanent Total</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> OPM: Other than permanent Male</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> OPF: Other than permanent Female</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> OPT: Other than Permanent Total</li>
+        </ul>
+    </div><br>
+       <br>
+        <div class="margins-adjustment">
+        <span class="about_indicator ">Company Performance</span><br>      
+        <span class="circle-hexagon pb23_commonclass pb23_button1"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button2"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button3"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button4"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button5"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button6"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button7"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button8"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button9"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button10"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button11"></span>
+        <span class="circle-hexagon pb23_commonclass pb23_button12"></span>
+        </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 24</th><th class="graph-table table-border-none">Gross wages paid to females as % of total wages paid by the entity.</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 5, Essential Indicator 3b</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator indicates the proportion of the wages that is paid to the
+        females in the company compared to that is paid to the males. The indicator
+        analytics highlight the industry average, minimum and maximum for the
+        same. The rational for such disclosures is to improve the gender pay parity
+        across companies and industries.
+        NOTE: The indicator should be studied along with the indicator on % of
+        women in the workforce to draw correct conclusions.</th>
+    </tr>
+    </table>
+    </div>
+    <center><b class="chart-heading" style="margin-left: 20px;">% of total wages that is paid to females</b></center><br>
+    <div style="margin-left:200px" class="labelclass-21">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+        <div class="col-md-3"></div>
+        <div class="col-md-7"><div id="chartpb-24-1" class="about_indicator" style=""></div></div>
+    </div> 
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading" id="pb-24-2-heading" style="margin-left:60px">Third party verification</b></center>
+        <div class="col-md-7"><div id="chartpb-24-2" class="" style="margin-left:38px;"></div></div>
+    </div>
+    <ul class="legend pb-24-2-legend" style="margin-left: 210px;margin-top:-15px">
+        <li style="font-size: 10px;color:black;width:300px"><span style="background-color:#B7D93D"></span> Companies for which the KPI was third party verified</li>
+    </ul>
+     <br>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 25</th><th class="graph-table table-border-none">Number of Human rights Complaints filed by employees and workers during the year.</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 5, Essential Indicator 6</th>
+    </tr>
+   <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This is a result indicator that captures the number of human rights violations
+    in the company under different categories. The indicator analytics highlight the total number of violations in each category for the industry and the high-
+        risk areas basis these numbers. The rational for such disclosures is to
+        motivate companies to work towards zero violations.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    <table class="margins-adjustment" style="margin-bottom:3%">
+        <tr>
+            <th class="about_indicator">Basis the total number of cases reported by companies from the industry, the top two human rights risk areas identified for the industry are:</th>
+        </tr>
+    </table><br>
+    <% @questions.each do |question| %>
+        <% if question.question_id == 'PB-25' %>
+            <% question.options.each do |question_option| %>
+                <% if question_option['sub_answers'] %>
+                <% question_option['sub_answers'].each do |sub_answer| %>
+                    <% if sub_answer['has_table'] %>
+                    <% sub_answer['table_data'].each do |table_data| %>
+                        <% table_data.each do |table_row| %>
+                        <% if ['pb_25_table_row1_number1'].include?(table_row['name']) && @current_user_answer[table_row['name']] %>
+                            <%= render partial: 'analytics', locals: { q_id: question.question_id, total_answers_data: @total_answers_data_sectorwise, data: table_row, answer: @current_user_answer, label: 'Emp' } %>
+                        <% end %>
+                        <% end %>
+                    <% end %>
+                    <% end %>
+                <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb25_commonclass pb25_button1"></span>
+    <span class="circle-hexagon pb25_commonclass pb25_button2"></span>
+    <span class="circle-hexagon pb25_commonclass pb25_button3"></span>
+    <span class="circle-hexagon pb25_commonclass pb25_button4"></span>
+    <span class="circle-hexagon pb25_commonclass pb25_button5"></span>
+    <span class="circle-hexagon pb25_commonclass pb25_button6"></span>
+    </div>
+</div>
+<div id="content3" style="padding:30px;">    
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 26</th><th class="graph-table table-border-none">Do human rights requirements form part of your business agreements and contracts?</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 5, Essential Indicator 9</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator reflects if the company is committed to protecting human
+        rights not just in its direct operations but also through integration in business
+        agreements and contracts with affiliates/ partners/ vendors etc. This also
+        protects them from risks arising from being associated with organisation that
+        face human rights violations. The indicator analytics highlight the percentage
+        of companies in the industry that have included human rights clause in their
+        business agreements and contracts.</th>
+    </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading" style="margin-right: 40px;">Integration of Human Rights clause in business agreements</b></center><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading" style="margin-right: 90px;">Industry Specific</b></center><br>
+        <div class="col-md-2"></div>
+        <div class="col-md-7"><div id="chartpb-26-1" class="about_indicator" style=""></div></div>
+    </div><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading" style="margin-right: 100px;">Cross Industry</b></center><br>
+        <div class="col-md-2"></div>
+        <div class="col-md-7"><div id="chartpb-26-2" class="about_indicator" style=""></div></div>
+    </div> 
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb26_commonclass pb26_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 27</th><th class="graph-table table-border-none">% of operations that were assessed for human rights risks</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 5, Essential Indicator 10</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This is a result indicator that captures the percentage of plants &amp; offices of
+        the company that were assessed for different types of human rights risks like
+        discrimination, sexual harassment, child labor, forced labor, etc. The
+        indicator analytics highlight the highlight the industry average, minimum and
+        maximum for each type of these risks.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    <center><b class="chart-heading">Human Rights Risk assessment: Coverage</b></center><br>
+    
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading">Industry Specific</b></center><br><br>
+    <div style="margin-left:100px">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div id="chartpb-27-1"></div>
+        </div>
+    </div><br>
+    <div class="page-break"></div>
+
+    <div style="margin-top: 2cm">
+        <div class="row margins-adjustment">
+        <center><b class="chart-heading">Cross Industry</b></center><br><br>
+        <div style="margin-left:100px">
+            <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+            <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+            <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+        </div><br>
+         <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div id="chartpb-27-2"></div>
+        </div>
+    </div>
+    </div><br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb27_commonclass pb27_button1"></span>
+    <span class="circle-hexagon pb27_commonclass pb27_button2"></span>
+    <span class="circle-hexagon pb27_commonclass pb27_button3"></span>
+    <span class="circle-hexagon pb27_commonclass pb27_button4"></span>
+    <span class="circle-hexagon pb27_commonclass pb27_button5"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 28</th><th class="graph-table table-border-none">Energy intensity (in Gigajoules) per crore-rupee of turnover</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 6, Essential Indicator 1</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This is a result indicator of environmental performance of the company that
+        captures the energy consumed by the company per crore-rupee of their turnover.
+        The industry analytics highlight the industry average, minimum and
+        maximum for the same. For companies that are committed to reducing their
+        environmental impact, it will help them understand their status against the
+        industry, set better targets and accordingly dedicate necessary resources.</th>
+    </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading margins-adjustment">Energy intensity: GJ/turnover</b></center><br>
+        <% data_1 = @data.find { |entry| entry[:data][:question_name] == "pb_28_table_row1_number1" } %>
+        <% data_2 = @data.find { |entry| entry[:data][:question_name] == "pb_28_table_row1_number2" } %>
+        <% answer_1 = @answers.find { |entry| entry[:name] == "pb_28_table_row1_number1" } %>
+        <% answer_2 = @answers.find { |entry| entry[:name] == "pb_28_table_row1_number2" } %>
+        <table class="graph-table margins-adjustment" style="width:84%">
+        <tr class="table-tr-background" style="background-color:#00D4E1">
+          <th class="graph-table" style="color:#000;font-weight:bold">Particulars</th>
+          <th class="graph-table" style="color:#000;font-weight:bold"><%= ApplicationRecord::CURRENT_YEAR %></th>
+          <th class="graph-table" style="color:#000;font-weight:bold;"><%= ApplicationRecord::PREVIOUS_YEAR %></th>
+        </tr>
+        <% if data_1.present? || data_2.present? %>
+            <% value_1 = data_1[:data][:allvalues]%>
+            <% value_2 = data_2[:data][:allvalues]%>
+            <% allvalues_numeric_1 = value_1.map(&:to_f)%>
+            <% allvalues_numeric_2 = value_2.map(&:to_f)%>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry average</th>
+            <th class="graph-table"><%= data_1[:data][:average]&.round(3) %></th>
+            <th class="graph-table"><%= data_2[:data][:average]&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry maximum</th>
+            <th class="graph-table"><%= allvalues_numeric_1&.max&.round(3) %></th>
+            <th class="graph-table"><%= allvalues_numeric_2&.max&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry minimum</th>
+            <th class="graph-table"><%= allvalues_numeric_1&.min&.round(3) %></th>
+            <th class="graph-table"><%= allvalues_numeric_2&.min&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Company data</th>
+            <th class="graph-table"><%= answer_1[:ans] != '' ? answer_1[:ans].to_f.round(3) : '' %></th>
+            <th class="graph-table"><%= answer_2[:ans] != '' ? answer_2[:ans].to_f.round(3) : '' %></th>
+          </tr>
+          <% else %>
+          <tr>
+            <th colspan="5">Data not available</th>
+          </tr>
+          <% end %>
+      </table><br><br>
+      
+      <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-left:5%">Independent assessment</b></center><br>
+        <div class="col-md-7"><div id="chartpb-28-1" style="margin-right:3%"></div></div>
+        <ul class="legend margins-adjustment" style="margin-top: -20px;">
+            <li style="font-size: 10px;color:black"><span style="background-color:#150E40"></span> % of companies for which data is third party verified</li>
+            <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies for which data is not verified</li>
+        </ul>  
+    </div> <br><br>
+      <div class="margins-adjustment">
+      <span class="about_indicator">Company Performance</span><br>      
+      <span class="circle-hexagon pb28_commonclass pb28_button1"></span>
+      <span class="circle-hexagon pb28_commonclass pb28_button2"></span>
+      </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 29</th><th class="graph-table table-border-none">Water consumption (in kilolitres) intensity per crore-rupee of turnover</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 6, Essential Indicator 3</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This is a result indicator of environmental performance of the company that
+        captures the water consumed by the company per crore-rupee of their turnover.
+        The industry analytics highlight the industry average, minimum and
+        maximum for the same. For companies that are committed to reducing their
+        environmental impact, it will help them understand their status against the
+        industry, set better targets and accordingly dedicate necessary resources.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    <center><b class="chart-heading margins-adjustment">Water consumption intensity: Kl/turnover</b></center><br>
+    <% data_1 = @data.find { |entry| entry[:data][:question_name] == "pb_29_table_row1_number1" } %>
+        <% data_2 = @data.find { |entry| entry[:data][:question_name] == "pb_29_table_row1_number2" } %>
+        <% answer_1 = @answers.find { |entry| entry[:name] == "pb_29_table_row1_number1" } %>
+        <% answer_2 = @answers.find { |entry| entry[:name] == "pb_29_table_row1_number2" } %>
+        <table class="graph-table margins-adjustment" style="width:84%">
+        <tr class="table-tr-background" style="background-color:#00D4E1">
+          <th class="graph-table" style="color:#000;font-weight:bold;">Particulars</th>
+          <th class="graph-table" style="color:#000;font-weight:bold;"><%= ApplicationRecord::CURRENT_YEAR %></th>
+          <th class="graph-table" style="color:#000;font-weight:bold;"><%= ApplicationRecord::PREVIOUS_YEAR %></th>
+        </tr>
+        <% if data_1.present? || data_2.present? %>
+            <% value_1 = data_1[:data][:allvalues]%>
+            <% value_2 = data_2[:data][:allvalues]%>
+            <% allvalues_numeric_1 = value_1.map(&:to_f)%>
+            <% allvalues_numeric_2 = value_2.map(&:to_f)%>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry average</th>
+            <th class="graph-table"><%= data_1[:data][:average]&.round(3) %></th>
+            <th class="graph-table"><%= data_2[:data][:average]&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry maximum</th>
+            <th class="graph-table"><%= allvalues_numeric_1&.max&.round(3) %></th>
+            <th class="graph-table"><%= allvalues_numeric_2&.max&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry minimum</th>
+            <th class="graph-table"><%= allvalues_numeric_1&.min&.round(3) %></th>
+            <th class="graph-table"><%= allvalues_numeric_2&.min&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Company data</th>
+            <th class="graph-table"><%= answer_1[:ans] != '' ? answer_1[:ans].to_f.round(3) : '' %></th>
+            <th class="graph-table"><%= answer_2[:ans] != '' ? answer_2[:ans].to_f.round(3) : '' %></th>
+          </tr>
+          <% else %>
+          <tr>
+            <th colspan="5">Data not available</th>
+          </tr>
+          <% end %>
+      </table><br><br>
+      <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-left:5%">Independent assessment</b></center><br>
+        <div class="col-md-7"><div id="chartpb-29-1" class="" style="margin-right:3%"></div></div>
+        <ul class="legend margins-adjustment" style="margin-top: -20px;">
+            <li style="font-size: 10px;color:black"><span style="background-color:#150E40"></span> % of companies for which data is third party verified</li>
+            <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies for which data is not verified</li>
+        </ul>  
+    </div> <br><br>
+      <div class="margins-adjustment">
+        <span class="about_indicator">Company Performance</span><br>      
+        <span class="circle-hexagon pb29_commonclass pb29_button1"></span>
+        <span class="circle-hexagon pb29_commonclass pb29_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 30</th><th class="graph-table table-border-none">Total Scope 1 and Scope 2 emissions (in metric tonnes) per crore-rupee of turnover</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 6, Essential Indicator 7</th>
+    </tr>
+   <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This is a result indicator of environmental performance of the company that
+        captures the scope 1 &amp; 2 GHG emissions generated by the company per
+        crore-rupee of their turnover. The industry analytics highlight the industry average,
+        minimum and maximum for the same. For companies that are committed to
+        reducing their environmental impact, it will help them understand their
+        status against the industry, set better targets and accordingly dedicate
+        necessary resources.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    <center><b class="chart-heading margins-adjustment">Scope 1&2 GHG emissions intensity: Mt/turnover</b></center><br>
+    <% data_1 = @data.find { |entry| entry[:data][:question_name] == "pb_30_table_row1_number1" } %>
+        <% data_2 = @data.find { |entry| entry[:data][:question_name] == "pb_30_table_row1_number2" } %>
+        <% answer_1 = @answers.find { |entry| entry[:name] == "pb_30_table_row1_number1" } %>
+        <% answer_2 = @answers.find { |entry| entry[:name] == "pb_30_table_row1_number2" } %>
+        <table class="graph-table margins-adjustment" style="width:84%">
+        <tr class="table-tr-background" style="background-color:#00D4E1">
+          <th class="graph-table" style="color:#000;font-weight:bold;">Particularss</th>
+          <th class="graph-table" style="color:#000;font-weight:bold;"><%= ApplicationRecord::CURRENT_YEAR %></th>
+          <th class="graph-table" style="color:#000;font-weight:bold;"><%= ApplicationRecord::PREVIOUS_YEAR %></th>
+        </tr>
+        <% if data_1.present? || data_2.present? %>
+            <% value_1 = data_1[:data][:allvalues]%>
+            <% value_2 = data_2[:data][:allvalues]%>
+            <% allvalues_numeric_1 = value_1.map(&:to_f)%>
+            <% allvalues_numeric_2 = value_2.map(&:to_f)%>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry average</th>
+            <th class="graph-table"><%= data_1[:data][:average]&.round(3) %></th>
+            <th class="graph-table"><%= data_2[:data][:average]&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry maximum</th>
+            <th class="graph-table"><%= allvalues_numeric_1&.max&.round(3) %></th>
+            <th class="graph-table"><%= allvalues_numeric_2&.max&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Industry minimum</th>
+            <th class="graph-table"><%= allvalues_numeric_1&.min&.round(3) %></th>
+            <th class="graph-table"><%= allvalues_numeric_2&.min&.round(3) %></th>
+          </tr>
+          <tr>
+            <th class="graph-table" style="font-weight:bold">Company data</th>
+            <th class="graph-table"><%= answer_1[:ans] != '' ? answer_1[:ans].to_f.round(3) : '' %></th>
+            <th class="graph-table"><%= answer_2[:ans] != '' ? answer_2[:ans].to_f.round(3) : '' %></th>
+          </tr>
+          <% else %>
+          <tr>
+            <th colspan="5">Data not available</th>
+          </tr>
+          <% end %>
+      </table><br><br>
+      <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-left:5%">Independent assessment</b></center><br>
+        <div class="col-md-7"><div id="chartpb-30-1" class="" style="margin-right:3%"></div></div>
+        <ul class="legend margins-adjustment" style="margin-top: -20px;">
+            <li style="font-size: 10px;color:black"><span style="background-color:#150E40"></span> % of companies for which data is third party verified</li>
+            <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies for which data is not verified</li>
+        </ul>  
+    </div> <br><br>
+      <div class="margins-adjustment">
+        <span class="about_indicator">Company Performance</span><br>      
+        <span class="circle-hexagon pb30_commonclass pb30_button1"></span>
+        <span class="circle-hexagon pb30_commonclass pb30_button2"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 31</th><th class="graph-table table-border-none">Total Scope 3 emissions (in metric tonnes) per crore-rupee of turnover</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 6, Leadership Indicator 3</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This is a result indicator of environmental performance of the company that
+        captures the scope 3 GHG emissions generated by the company per crore-rupee of
+        their turnover. The industry analytics highlight the industry average, minimum and maximum for the same. For companies that are committed to
+        reducing their environmental impact, it will help them understand their
+        status against the industry, set better targets and accordingly dedicate
+        necessary resources.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    <center><b class="chart-heading margins-adjustment">Scope 3 GHG emissions intensity: Mt/turnover</b></center><br>
+    <% data_1 = @data.find { |entry| entry[:data][:question_name] == "pb_31_table_row1_number1" } %>
+        <% data_2 = @data.find { |entry| entry[:data][:question_name] == "pb_31_table_row1_number2" } %>
+        <% answer_1 = @answers.find { |entry| entry[:name] == "pb_31_table_row1_number1" } %>
+        <% answer_2 = @answers.find { |entry| entry[:name] == "pb_31_table_row1_number2" } %>
+        <table class="graph-table margins-adjustment" style="width:84%">
+            <tr class="table-tr-background" style="background-color:#00D4E1">
+            <th class="graph-table" style="color:#000;font-weight:bold">Particulars</th>
+            <th class="graph-table" style="color:#000;font-weight:bold"><%= ApplicationRecord::CURRENT_YEAR %></th>
+            <th class="graph-table" style="color:#000;font-weight:bold;"><%= ApplicationRecord::PREVIOUS_YEAR %></th>
+            </tr>
+            <% if data_1.present? || data_2.present? %>
+                <% value_1 = data_1[:data][:allvalues]%>
+                <% value_2 = data_2[:data][:allvalues]%>
+                <% allvalues_numeric_1 = value_1.map(&:to_f)%>
+                <% allvalues_numeric_2 = value_2.map(&:to_f)%>
+            <tr>
+                <th class="graph-table" style="font-weight:bold">Industry average</th>
+                <th class="graph-table"><%= data_1[:data][:average]&.round(3) %></th>
+                <th class="graph-table"><%= data_2[:data][:average]&.round(3) %></th>
+            </tr>
+            <tr>
+                <th class="graph-table" style="font-weight:bold">Industry maximum</th>
+                <th class="graph-table"><%= allvalues_numeric_1&.max&.round(3) %></th>
+                <th class="graph-table"><%= allvalues_numeric_2&.max&.round(3) %></th>
+            </tr>
+            <tr>
+                <th class="graph-table" style="font-weight:bold">Industry minimum</th>
+                <th class="graph-table"><%= allvalues_numeric_1&.min&.round(3) %></th>
+                <th class="graph-table"><%= allvalues_numeric_2&.min&.round(3) %></th>
+            </tr>
+            <tr>
+                <th class="graph-table" style="font-weight:bold">Company data</th>
+                <th class="graph-table"><%= answer_1[:ans] != '' ? answer_1[:ans].to_f.round(3) : '' %></th>
+                <th class="graph-table"><%= answer_2[:ans] != '' ? answer_2[:ans].to_f.round(3) : '' %></th>
+            </tr>
+            <% else %>
+            <tr>
+                <th colspan="5">Data not available</th>
+            </tr>
+            <% end %>
+        </table><br><br>
+        <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-left:5%">Independent assessment</b></center><br>
+        <div class="col-md-7"><div id="chartpb-31-1" class="" style="margin-right:3%"></div></div>
+        <ul class="legend margins-adjustment" style="margin-top: -20px;">
+            <li style="font-size: 10px;color:black"><span style="background-color:#150E40"></span> % of companies for which data is third party verified</li>
+            <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies for which data is not verified</li>
+        </ul>  
+    </div> <br><br>
+        <div class="margins-adjustment">
+        <span class="about_indicator">Company Performance</span><br>      
+        <span class="circle-hexagon pb31_commonclass pb31_button1"></span>
+        <span class="circle-hexagon pb31_commonclass pb31_button2"></span>
+        </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 32</th><th class="graph-table table-border-none">Percentage of input material (inputs to total inputs by value) sourced from MSME/small producers and from local suppliers.</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 8, Essential Indicator 4</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator captures the percentage of input material, used by the
+        company in its production/operations, that is sourced from small producers,
+        MSMEs and local suppliers. It indicates the company’s conscious efforts to
+        stimulate &amp; improve local economy by working with small producers and
+        local suppliers. The industry analytics highlight the industry average,
+        minimum and maximum for the same.</th>
+    </tr>
+    </table>
+    </div>
+    <% results = [] %>
+    <% results1 = [] %>
+        <% @questions.each do |question| %>
+            <% if question.question_id == 'PB-32' %>
+            <% question.options.each do |question_option| %>
+              <% if question_option['sub_answers'] %>
+                <% question_option['sub_answers'].each do |sub_answer| %>
+                  <% if sub_answer['has_table'] %>
+                    <% sub_answer['table_data'].each do |table_data| %>
+                      <% table_data.each do |table_row| %>
+                        <% if ['pb_32_table_row1_number1', 'pb_32_table_row1_number2','pb_32_table1_row1_number1', 'pb_32_table1_row1_number2'].include?(table_row['name']) %>
+                            <% result = calculate_average(@total_answers_data_sectorwise, table_row['name'], @current_user_answer, question.question_id) %>
+                            <% result1 = calculate_total_value(@total_answers_data_sectorwise, table_row['name'], @current_user_answer) %>
+                            <% results << result %>
+                            <% results1 << result1 %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <% end %>
+        <% end %>
+        <center><b class="chart-heading margins-adjustment">Sourcing from MSMEs/ small producers and Local Suppliers</b></center>
+        <div class="row margins-adjustment">
+        <div class="col-md-5">
+            <div id="chartpb-32-1"></div>
+        </div>
+            <div class="col-md-1"></div>
+        </div>
+         
+        <ul class="legend margins-adjustment" style="margin-left:140px">
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> DSP: Directly sourced from MSMEs/Small producers</li>
+        <li style="font-size: 10px;color:black"><span class="notawesome"></span> DWI: Directly from within India</li>
+        </ul><br>
+        <!--<table class="graph-table margins-adjustment" style="width:84%">
+            <thead>
+                <tr style="background-color:#00D4E1;color:#000;font-weight:bold">
+                    <th rowspan="2"></th>
+                    <th colspan="3" class="graph-table" style="font-weight:bold"><center>% of input material by value</center></th>
+                </tr>
+                <tr style="background-color:#00D4E1;color:#000;font-weight:bold">
+                    <th class="graph-table" style="font-weight:bold">Company Data</th>
+                    <th class="graph-table" style="font-weight:bold">Industry Average</th>
+                    <th class="graph-table" style="font-weight:bold">Industry Max</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="graph-table" style="font-weight:bold">Directly sourced from MSMEs/Small producers</td>
+                    <td class="graph-table"><%= @current_user_answer['pb_32_table_row1_number1'] %></td>
+                    <td class="graph-table"><%= results[0][:average] %></td>
+                    <td class="graph-table"><%= results[0][:maximum] %></td>
+                </tr>
+                <tr>
+                    <td class="graph-table" style="font-weight:bold">Directly from within India</td>
+                    <td class="graph-table"><%= @current_user_answer['pb_32_table1_row1_number1'] %></td>
+                    <td class="graph-table"><%=  results[2][:average] %></td>
+                    <td class="graph-table"><%=  results[2][:maximum] %></td>
+                </tr>
+            </tbody>
+        </table><br><br>-->
+        <div class="row margins-adjustment">
+        <center><b class="chart-heading" style="margin-left:5%">Independent assessment</b></center>
+        <div class="col-md-7"><div id="chartpb-32-2" class="" style="margin-top:-20px;margin-right:3%"></div></div>
+        <ul class="legend margins-adjustment" style="margin-top: -20px;">
+            <li style="font-size: 10px;color:black"><span style="background-color:#150E40"></span> % of companies for which data is third party verified</li>
+            <li style="font-size: 10px;color:black"><span style="background-color:#B7D93D"></span> % of companies for which data is not verified</li>
+        </ul>  
+    </div>
+        <div class="margins-adjustment">
+        <span class="about_indicator">Company Performance</span><br>      
+        <span class="circle-hexagon pb32_commonclass pb32_button1"></span>
+        <span class="circle-hexagon pb32_commonclass pb32_button3"></span>
+        <span class="circle-hexagon pb32_commonclass pb32_button4"></span>
+        </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 33</th><th class="graph-table table-border-none">Percentage of input material (inputs to total inputs by value) sourced from marginalized /vulnerable groups</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 8, Leadership Indicator 3c</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator highlights company’s efforts to improve social inclusion by offering opportunities to vulnerable groups. It captures the percentage of input material that was sourced from vulnerable/ marginalised groups under preferential procurement policy or otherwise. The industry analytics highlight the industry average, minimum and maximum for the same.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    
+        <% data_33 = @value.find { |entry| entry[:maximum][:question_name] == "pb_33_option_number" } %>
+        <% answer_1 = @answers.find { |entry| entry[:name] == "pb_33_option_number" } %>
+            <% if data_33.present?  %>
+            <!--<table class="margins-adjustment" style="margin-bottom:3%">
+                <tr>
+                    <th class="about_indicator">An average of <%= data_33[:maximum][:average] %>% of input, a maximum of <%= data_33[:maximum][:maximum] %>% and a minimum of <%= data_33[:maximum][:minimum] %>% was sourced from marginalized/ vulnerable groups by companies in the industry.</th>
+                </tr>
+            </table>-->
+            <% else %>
+             <!--<span class="margins-adjustment" style="font-size:11px;margin-left:200px"> Data not available</span>-->
+            <% end %>
+            
+            <center><b class="chart-heading">Sustainable Procurement</b></center><br> 
+        <div class="row margins-adjustment">
+            <div class="col-md-5">
+                <div id="chartpb-33"></div>
+            </div>
+            <div class="col-md-1"></div>
+            
+        </div><br><br>
+        <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+        <span class="circle-hexagon pb33_commonclass pb33_button1 margins-adjustment"></span>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table normal-font-size table-border-none">PB 34</th><th class="graph-table table-border-none">Turnover of products and/ services as a percentage of turnover from all products/service that carry information about:</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 9, Essential Indicator 2</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator highlights the level of transparency practiced by company and
+        the industry on product/services related ESG elements. It captures the percentage of turnover generated by the products and services that carry
+        information on environmental &amp; social parameters relevant to the product,
+        safe &amp; responsible usage of the product, and on recycling &amp; safe disposal of
+        the product. The industry analytics highlight the industry average, minimum
+        and maximum for the same.</th>
+    </tr>
+    </table>
+    </div><br><br>
+    <br>
+    <center><b class="chart-heading">Share of Products &amp; services that carry ESG related information</b></center><br>
+    <div style="margin-left:200px">
+        <span class="legend-hexagon" style="background-color:#B7D93D"></span><span style="font-size:11px">Maximum & Mininimum</span>
+        <span class="legend-hexagon" style="background-color:#00D4E1"></span><span style="font-size:11px">Average Value</span>
+        <span class="legend-hexagon" style="background-color:#FF662B"></span> <span style="font-size:11px">Company Value</span>
+    </div><br>
+    <div class="row margins-adjustment">
+    
+    <div class="col-md-3"></div>
+        <div class="col-md-7">
+            <div id="chartpb-34"></div>
+        </div>
+    </div>   
+    <ul class="legend margins-adjustment" style="margin-left: 180px;">
+    <li style="font-size: 10px;color:black"><span class="notawesome"></span> Environmental: Environmental and Social Parameters Relevant to the Product</li>
+    <li style="font-size: 10px;color:black"><span class="notawesome"></span> Usage related: Safe and Responsible Usage</li>
+    <li style="font-size: 10px;color:black"><span class="notawesome"></span> Recycling: Recycling</li>
+    </ul>
+    <br><br>
+    <div class="margins-adjustment">
+    <span class="about_indicator">Company Performance</span><br>      
+    <span class="circle-hexagon pb34_commonclass pb34_button1"></span>
+    <span class="circle-hexagon pb34_commonclass pb34_button2"></span>
+    <span class="circle-hexagon pb34_commonclass pb34_button3"></span>
+    </div>
+    <div class="page-break"></div>
+    <div style="margin-top: 2cm">
+    <table class="graph-table normal-font-size margins-adjustment table-header-border">
+    <tr class="table-tr-background">
+        <th class="graph-table table-border-none">PB 35</th><th class="graph-table table-border-none">Does the entity have a framework/ policy on cyber security and risks related to data privacy?</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">BRSR Indicator</th><th class="graph-table" style="border: none; color: black;">Section C, Principle 9, Essential Indicator 5</th>
+    </tr>
+    <tr class="table-border-line">
+        <th class="graph-table table-border-none">About the Indicator</th><th class="graph-table about_indicator" style="border: none; color: black;">This indicator helps stakeholders evaluate the company’s and industry’s
+        preparedness to tackle the cyber security risks. The indicator captures
+        whether the company has a formal cyber security policy in place or not. The
+        industry analytics highlight the percentage of companies that have this policy
+        in place and that have it publicly available.</th>
+    </tr>
+    </table>
+    </div><br> 
+    <center><b class="chart-heading" style="margin-right:140px">Cyber-security policy</b></center><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading" style="margin-right:140px">Industry Specific</b></center><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-35-1" style="margin-left:30px"></div>
+        </div> 
+    </div><br>
+    <div class="row margins-adjustment">
+    <center><b class="chart-heading" style="margin-right:140px">Cross Industry</b></center><br>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <div id="chartpb-35-2" style="margin-left:30px"></div>
+        </div> 
+    </div><br>
+    <span class="about_indicator margins-adjustment">Company Performance</span><br>      
+    <span class="circle-hexagon pb35_commonclass pb35_button1 margins-adjustment"></span>
+    <div class="page-break"></div><br><br><br><br>
+    <div style="" class="margins-adjustment">
+        <br>
+        <div class="notes" style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">
+            <p style="font-family:Calibri,sans-serif;font-size:12.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;"><b>NOTES:</b></p>
+            <ol>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">The Company Subscriber provided data is not included in the dataset used for calculating the industry analytics.</li>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">The primary source of dataset, used for calculating the industry analytics, is the Business Responsibility and Social Responsibility (BRSR) Reports, filed and available on the  <a href="https://www.nseindia.com/companies-listing/corporate-filings-bussiness-sustainabilitiy-reports" target="_blank" style="color: blue; text-decoration: underline; font-family:Calibri,sans-serif; font-size:10.0pt !important;">NSE website</a>.</li>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">Where the data reported in BRSR XBRL format differed from that reported in BRSR PDF format, a judgement call has been taken. However, preference was given to the data in XBRL format.</li>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">The size of the dataset, used for calculating the industry analytics, is expected to increase over time. Hence, the industry analytics might also get updated.</li>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">The graphs show category-wise data reported by the company against the relevant industry analytics for each question.</li>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">In Average, Maximum &amp; Minimum graphs, the company value is represented with an orange line. Categories for which the company did not provide their own data, the category value for the company was shown in grey at 0.</li>
+                <li style="font-family:Calibri,sans-serif;font-size:10.0pt !important; text-align: justify; line-height: 2; word-spacing: 1px;">The company performance-colored buttons at the bottom of each indicator are presented for selected categories/datapoints in the indicator and not for all datapoints/categories.</li>
+            </ol>
+            <p>To understand the benchmarking graphs and your performance in detail, please connect with us at:</p>
+            <p style="text-align: left;">
+                <a href="mailto:Surabhi.singh@cii.in" style="font-family:Calibri,sans-serif;font-size:10.0pt;">Surabhi.singh@cii.in</a><br>
+                <a href="mailto:Swati.pandey@cii.in" style="font-family:Calibri,sans-serif;font-size:10.0pt;">Swati.pandey@cii.in</a>
+            </p>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="page-break"></div><br><br><br><br>
+    <div style="" class="margins-adjustment">
+        <br>
+        <br>
+        <br>
+        <p style="text-align: center !important;">
+            <%= image_tag asset_path('cesd_cii.png'), size: "310x90" %>
+        </p>
+        <br>
+        <br>
+      <div>
+        <p style="font-family:Calibri,sans-serif;font-size:10pt !important; text-align: justify;">
+            CII-ITC Centre of Excellence for Sustainable Development is a not-for-profit, industry-led institution that helps business become sustainable organisations. It is on a mission to catalyse innovative ideas and solutions, in India, and globally, to enable business, and its stakeholders, in sustainable value creation. It&rsquo;s knowledge, action and recognition activities enable companies to be future ready improve footprints profiles, and advocate policymakers and legislators to improve standards of sustainable business through domestic and global policy interventions.
+        </p>
+
+        <p style="font-family:Calibri,sans-serif;font-size:10pt !important; text-align: justify;">
+            CESD leverages its role of all-inclusive ecosystem player, partnering industry, government, and civil society. It has been a pioneer of environment management systems, biodiversity mapping, sustainability reporting, integrated reporting, and social &amp; natural capital valuation in India, thus upgrading business in India to sustainable competitiveness.
+        </p>
+
+        <p style="font-family:Calibri,sans-serif;font-size:10pt !important; text-align: justify;">
+            CESD operates across the country and has also been active in parts of South and South East Asia, Middle East, and Africa. It has held institutional partnerships and memberships of the United Nations Global Compact, Global Reporting Initiative, International Integrated Reporting Council, Carbon Disclosure Project, development agencies of Canada, the USA, the UK, and Germany. 
+        </p>
+      </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><strong><span style="font-size:10.0pt"><span style="">CII-ITC Centre of Excellence for Sustainable Development</span></span></strong><br/>
+        <span style="font-size:10.0pt"><span style="">3rd Floor, Andhra Association, 24/25 Institutional Area,<br/>
+        Lodhi Road, New Delhi 110003</span></span></span></span></p>
+
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+            <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:10.0pt"><span style=""><a href="tel:+911141502301" style="text-decoration: none !important; color: black !important;">T: +91 11 41502301</a></span></span></span></span>
+        </p>
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+            <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:10.0pt"><span style="">&nbsp;W: </span></span><a href="http://www.sustainabledevelopment.in" style="color:#0563c1; text-decoration:underline"><span style="font-size:10.0pt"><span style="">www.sustainabledevelopment.in</span></span></a></span></span>
+        </p>
+        <div class="follow-us-container" style="font-family: Calibri,sans-serif; ">
+            Follow us on
+        </div>
+        <div class="social-icons" style="margin-left:110px">
+            <a href="https://www.linkedin.com/company/cii-itc-centre-of-excellence-for-sustainable-development/">
+                <%= image_tag asset_path('linkedIn.png'), style: 'width: 90px; height: 90px;' %>
+            </a>
+            <a href="https://twitter.com/ciicesd">
+                <%= image_tag asset_path('twitter.png'), style: 'width: 90px; height: 90px;' %>
+            </a>
+            <a href="https://www.facebook.com/ciicesd">
+                <%= image_tag asset_path('fb.png'), style: 'width: 90px; height: 90px;' %>
+            </a>
+            <a href="https://www.youtube.com/user/ciicesd">
+                <%= image_tag asset_path('youtube.png'), style: 'width: 90px; height: 90px;' %>
+            </a>
+        </div>
+    </div>
+</div>
+<button id="savePdfBtn" data-id= "<%= current_user.company_name%>">Save as PDF</button>
+
+<script>
+$(document).ready(function() {
+  setTimeout(function() {
+  $("#loader-wrapper").css("display", "block");
+  }, 1000);
+  $("body").css("overflow", "hidden");
+});
+$(document).ready(function() {
+  setTimeout(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('showAlert') === 'true') {
+        $('#total_questions').text(urlParams.get('total'))
+        $('#savePdfBtn').click();
+    }
+     $("body").css("overflow", "hidden");
+     $('#green-qstn').text($('.green-hexagon').length);
+     $('#yellow-qstn').text($('.yellow-hexagon').length);
+     $('#red-qstn').text($('.red-hexagon').length);
+     $('#grey-qstn').text($('.grey-hexagon').length);
+     const totalHexagons = $('.green-hexagon').length + $('.yellow-hexagon').length + $('.red-hexagon').length + $('.grey-hexagon').length;
+     $('#data-points').text('Total number of datapoints that show comparative company status with coloured dots: '+totalHexagons+'');
+     $('#total-hexagons').text(totalHexagons);
+  }, 60000);
+});
+</script>
+<script>
+
+</script>
+

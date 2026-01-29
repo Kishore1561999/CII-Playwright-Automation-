@@ -1,0 +1,97 @@
+<nav class="layout-navbar navbar sticky-navbar navbar-expand-xl align-items-center bg-navbar-theme pad-3" style="height: 110px;" id="layout-navbar">
+<!--  <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">-->
+<!--    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">-->
+<!--      <i class="bx bx-menu bx-sm"></i>-->
+<!--    </a>-->
+<!--  </div>-->
+
+  <div class="navbar-nav-right d-flex" id="navbar-collapse">
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <li class="nav-item lh-1">
+        <div class="app-brand-link" style="margin-left: 70px;">
+          <a href="https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/" class="app-brand-link" target="_blank">
+            <span class="app-brand-esg-logo demo profile-logo"><%= image_tag asset_path('esg_ia_blue.png') %></span>
+          </a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav flex-column ms-auto">
+      <li class="nav-item lh-1 itc-logo">
+        <div class="app-brand-link">
+          <a href="https://sustainabledevelopment.in/" class="app-brand-link" target="_blank">
+            <span class="app-brand-logo demo profile-logo"><%= image_tag asset_path('cesd_cii.png') %></span>
+          </a>
+        </div>
+      </li>
+      <li class="nav-item navbar-dropdown dropdown-user dropdown alignment-profile">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <div class="d-flex">
+            <div class="flex-shrink-0 me-3">
+              <div class="avatar avatar-online">
+                <i class="bx bx-user-circle w-px-40 h-auto rounded-circle profile-image"></i>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <span class="fw-semibold d-block profile_name_text"><%= current_user.first_name || current_user.primary_name %></span>
+              <small class="text-muted role-name"><%= current_user.role.role_name.humanize %></small>
+            </div>
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <%= link_to profile_path, class: "dropdown-item" do %>
+              <i class="bx bx-user me-2"></i>
+              <span class="align-middle">My Profile</span>
+            <% end %>
+          </li>
+          <% if current_user.subscription_approved_at.present? && current_user.subscription_approved_at <= 1.year.ago %>
+            <li>
+              <%= link_to service_renew_path(renew: "true"), class: "dropdown-item" do %>
+                <i class="bx bx-arrow-from-bottom"></i>
+                <span class="align-middle">Service Renew</span>
+              <% end %>
+            </li>
+          <% end %>
+          <% if current_user.subscription_approved == 'basics' %>
+           <!-- if need to enable service upgrade means remove d-none class -->
+          <li class="d-none">
+            <%= link_to service_upgrade_path(upgrade: "true"), class: "dropdown-item" do %>
+              <i class="bx bx-arrow-from-bottom"></i>
+              <span class="align-middle">Service Upgrade</span>
+            <% end %>
+          </li>
+          <% end %>
+          <li>
+            <%= link_to profile_password_path(current_user), class: "dropdown-item" do %>
+              <i class="bx bx-cog me-2"></i>
+              <span class="align-middle">Change Password</span>
+            <% end %>
+          </li>
+          <li>
+            <div class="dropdown-divider"></div>
+          </li>
+          <li>
+            <%= link_to "#", class: "dropdown-item", 'data-bs-toggle': "modal", 'data-bs-target': "#modalLogout", 'onclick': "logoutSaveAssessmentCheck()" do %>
+              <i class="bx bx-power-off me-2"></i>
+              <span class="align-middle">Log Out</span>
+            <% end %>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="modal fade" id="modalLogout" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+			</div>
+			<div class="modal-footer">
+				<%= link_to "Yes", destroy_user_session_path, method: :delete, class: "btn btn-primary" %>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>

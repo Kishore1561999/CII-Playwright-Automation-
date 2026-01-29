@@ -1,0 +1,365 @@
+<% content_for :title, "ESG Diagnostics: Assess, Analyze, Score & Remarks" %>
+<% content_for :description, "Perform ESG assessments, analyze data, generate scorecards, and provide detailed remarks. Optimize your ESG diagnostics for comprehensive insights and better decision-making." %>
+<div class="card">
+  <div class="card-header">
+    <div class="table-responsive text-nowrap set-height">
+      <table class="display expandable-table" style="width:100%">
+        <thead class="table-light sticky-top" style="background-color:#fff;">
+        <tr>
+          <th>ISIN</th>
+          <th>Company Name</th>
+          <th>Sector</th>
+          <th>Assessment</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody class="table-border-bottom-0" style="line-height: 55px">
+        <% if @company_users.length > 0 %>
+          <% @company_users.each do |company_user| %>
+            <% has_assessment_status = (ApplicationRecord::ASSESSMENT_STATUS.include?(company_user.user_status)) ? true : false %>
+            <% has_score = CompanyScore.where(company_user_id: company_user.id).count %>
+            <tr class="mb-2">
+              <td><%= company_user.company_isin_number %></td>
+              <td><strong id="companyNameId_<%= company_user.id %>"><%= "#{company_user.company_name}" %></strong></td>
+              <td><%= company_user.company_sector %></td>
+              <td>
+                <div class="dropdown text-center" style=" display: inline-block;">
+                  <button type="button" class="btn btn-sm btn-primary <% if !has_assessment_status %>disabled<% end %>" data-bs-toggle="dropdown" title="View response" aria-expanded="false">
+                    <i class="bx bx-show me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <%= link_to analyst_view_assessment_path(company_user.id, ApplicationRecord::CII_USER), class: "dropdown-item" do %>
+                      <i class="bx bx-show me-1" style="font-size: 1rem;margin: 0.125rem;"></i> CII user response
+                    <% end %>
+                    <%= link_to analyst_view_assessment_path(company_user.id, ApplicationRecord::COMPANY_USER), class: "dropdown-item" do %>
+                      <i class="bx bx-show me-1" style="font-size: 1rem;margin: 0.125rem;"></i> Company user response
+                    <% end %>
+                  </div>
+                </div>
+                <%= link_to "#", id: company_user.id, class: "btn btn-sm btn-primary score_button score_button_id_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_QC_COMPLETED == company_user.user_status ? (has_score > 0 ? 'disabled' : '') : 'disabled')}", title: "Generate score", 'data-bs-toggle': "modal", 'data-bs-target': "#modalScore" do %>
+                  <i class="bx bx-medal me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+                <% end %>
+                <%= link_to has_assessment_status ? upload_chart_path(company_user.id) : "#", class: "btn btn-sm btn-primary wReportButtonId_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_SCORE_GENERATED == company_user.user_status ? (has_score > 0 ? '' : 'disabled') : 'disabled')}", title: "Generate Template" do %>
+                  <i class="bx bx-bar-chart-alt-2 me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+                <% end %>
+                <%= link_to "#", id: "#{company_user.id}", class: "btn btn-sm btn-primary setfileUploadCuId fileUploadBtnId_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_SCORE_GENERATED == company_user.user_status ? (has_score > 0 ? '' : 'disabled') : 'disabled')}", title: "Upload report", 'data-bs-toggle': "modal", 'data-bs-target': "#modalFileupload"  do %>
+                  <i class="bx bx-upload" style="font-size: 1rem;margin: 0.125rem;"></i>
+                <% end %>
+                <%= link_to "#", class: "btn btn-sm btn-primary send-comment send-admin-btn #{!has_assessment_status ? 'disabled' : ''}", id: "#{company_user.id}", title: "Comments", 'data-bs-toggle': "modal", 'data-bs-target': "#modalComment" do %>
+                  <i class="bx bx-comment-detail me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+                <% end %>
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <% attachment = Report.find_by(company_user_id: company_user.id) %>
+                    <% if !attachment.nil? && attachment.analyst_report.attachments.present? %>
+                      <%= link_to rails_blob_path(attachment&.analyst_report, disposition: "attachment"), class: "dropdown-item #{(ApplicationRecord::REPORT_DOWNLOAD_ENABLE_STATUS.include?(company_user.user_status)) ? '' : 'disabled'}", title: "download report" do %>
+                        <i class="bx bxs-download me-1"></i> Download Report
+                      <% end %>
+                    <% else %>
+                      <%= link_to "#", class: "dropdown-item disabled" do %>
+                        <i class="bx bxs-download me-1"></i> Download Report
+                      <% end %>
+                    <% end %>
+
+                    <% if has_score > 0 %>
+                      <a href="#" class="dropdown-item downloadCiiReport" id="<%= company_user.id %>"><i class="bx bxs-download me-1"></i>
+                        Download Score Card</a>
+                    <% else %>
+                      <%= link_to "#", class: "dropdown-item disabled ciiReportButtonId_#{company_user.id}" do %>
+                        <i class="bx bxs-download me-1"></i> Download Score Card
+                      <% end %>
+                    <% end %>
+
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5" class="text-center">No data available!</td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @company_users %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title commentModalTitle">Add your comments here</h5>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" id="comment_box" name="comment_box" rows="7" cols="50" placeholder="Comments here..."></textarea>
+      </div>
+      <div class="modal-footer mdl-bx">
+        <p id="comment_id"></p>
+        <div id="view-btn" style="display:none; margin:15px; overflow-y: auto;"></div>
+        <%= hidden_field_tag "company_user_id_comment" %>
+        <%= hidden_field_tag "current_user_id", current_user.id %>
+      </div>
+      <div class="text-center" style="margin:20px;">
+        <button type="button" class="btn btn-primary" id="view-btn-func">View</button>
+        <button type="button" class="btn btn-primary" id="save-btn-func">Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalScore" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to generate score?</p>
+        <input type="hidden" id="company_user_id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="generateScoreCard">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="scoreErrorModel" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="text-danger">Something Went Wrong while Generating Score Card, Try Again!...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalFileupload" tabindex="-1" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="alert alert-danger alert-dismissible" role="alert" style="display: none;"></div>
+      <div class="modal-body">
+        <p>File Upload</p>
+        <p>Company name: <span id="modalCompanyName"></span></p>
+          <div class="col-md-12">
+            <input type="file" name="fileUpload" id="fileUpload" class="form-control">
+          </div>
+        <input type="hidden" id="file_upload_cu_id">
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary disabled uploadFileAjax" id="file-upload-analyst">Upload</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+    let scoreCardPrevAjaxId = 0
+    let reportPrevAjaxId = 0
+
+    $(document).on('turbolinks:load', function () {
+        $("#view-btn-func").on("click", function (event) {
+            $('.mdl-bx').removeClass('modal-footer')
+            $("#comment_box, #save-btn-func, #view-btn-func").css("display", "none");
+            $("#view-btn").css("display", "block");
+            $(".commentModalTitle").text('Comments');
+        });
+        $('#modalComment').on('hidden.bs.modal', function () {
+            $('textarea[id="comment_box"]').val('');
+            $(".commentModalTitle").text('Add your comments here');
+            $('.mdl-bx').addClass('modal-footer')
+            $("#comment_box").css("display", "block");
+            $("#save-btn-func, #view-btn-func").show();
+            $("#view-btn").css("display", "none");
+        });
+
+        $(document).on("click", ".send-comment", function (event) {
+            event.stopPropagation();
+            $("#company_user_id_comment").val(this.id)
+        });
+
+        $(document).on("click", "#save-btn-func", function (event) {
+            event.stopPropagation();
+            var current_user_id = $("#current_user_id").val()
+            var company_user_id = $("#company_user_id_comment").val()
+            var comments = $("#comment_box").val()
+            var formData = new FormData();
+            formData.append("comments[comment]", comments);
+            formData.append("comments[user_id]", company_user_id);
+            formData.append("comments[resource_id]", current_user_id);
+
+            $.ajax({
+                type: "POST",
+                url: "/comments/create",
+                data: formData,
+                success: function () {
+                    toastr.success('comments added');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error('comment is not updated');
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        $(document).on("click", ".send-admin-btn", function (event) {
+            event.stopPropagation();
+            $("#company_user_id_comment").val(this.id)
+        });
+
+        $(document).on("change", "#fileUpload", function (event) {
+            event.stopPropagation();
+            $("#file-upload-analyst").removeClass("disabled");
+        });
+
+        $(document).on("click", ".send-admin-btn", function (event) {
+            event.stopPropagation();
+
+            var company_user_id = $("#company_user_id_comment").val()
+            var formData = new FormData();
+            formData.append("comments[user_id]", company_user_id);
+            var view_btn = $("#view-btn")
+
+            $.ajax({
+                type: "POST",
+                url: "/comments/show",
+                data: formData,
+                success: function (res) {
+                    view_btn.empty()
+                    $.each(res.company, function (indexes, company) {
+                            var html = `<h6 style='float: left;'>${company.user_type}:</h6><br><span style='line-height: 2.8;'>${company.comments}</span><br><br>`
+                            view_btn.append(html)
+                        }
+                    );
+                },
+                error: function (error) {
+                    console.log(error);
+                    toastr.error('comment is not updated');
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        $(document).on("click", ".score_button", function (event) {
+            event.stopPropagation();
+
+            $("#company_user_id").val($(this).attr('id'));
+        });
+
+        $(document).on("click", "#generateScoreCard", function (event) {
+            event.stopPropagation();
+            generateScoreCard();
+        });
+
+        function generateScoreCard(){
+            $('#modalScore').modal('toggle');
+
+            let user_id = $("#company_user_id").val();
+            var ciiReportButton = $(".ciiReportButtonId_" + user_id);
+            var wReportButton = $(".wReportButtonId_"+ user_id);
+            if (scoreCardPrevAjaxId !== user_id) {
+                scoreCardPrevAjaxId = user_id;
+                $.ajax({
+                    type: "PATCH",
+                    url: `/score/${user_id}/generate_score_card`,
+                    processData: false,
+                    success: function (data) {
+                        $(".score_button_id_" + user_id).addClass("disabled");
+                        $(".fileUploadBtnId_" + user_id).removeClass("disabled");
+                        ciiReportButton.removeClass("disabled");
+                        ciiReportButton.addClass("downloadCiiReport");
+                        ciiReportButton.attr('id', user_id);
+                        wReportButton.removeClass("disabled");
+                        // wReportButton.attr('href', '/upload_chart/'+user_id);
+                        toastr.success('Score card Generated!..');
+                        window.location.replace('/download_excel/cii/' + user_id)
+                    },
+                    error: function (err) {
+                        $('#scoreErrorModel').modal('toggle');
+                    }
+                });
+            }
+        }
+
+        $(document).on("click", ".downloadCiiReport", function (event) {
+            event.stopPropagation();
+            window.location.replace('/download_excel/cii/' + $(this).attr('id'))
+        });
+
+        $(document).on("click", ".setfileUploadCuId", function (event) {
+            event.stopPropagation();
+            $('#file_upload_cu_id').val($(this).attr('id'));
+            $('#modalCompanyName').text($('#companyNameId_'+ $(this).attr('id')).text());
+        });
+
+        $(document).on("click", ".uploadFileAjax", function (event) {
+            event.stopPropagation();
+            uploadFileAjax();
+        });
+
+        function uploadFileAjax(){
+            $("#modalFileupload").modal('toggle')
+            var company_user_id = $('#file_upload_cu_id').val();
+            var attachment = $("#fileUpload")[0].files[0]
+            var formData = new FormData();
+            formData.append("report[analyst_report]", attachment);
+            formData.append("report[company_user_id]", company_user_id);
+            if (reportPrevAjaxId !== company_user_id) {
+                reportPrevAjaxId = company_user_id;
+                $.ajax({
+                    type: "POST",
+                    url: "/report/report_details_analyst",
+                    data: formData,
+                    success: function () {
+                        toastr.success('File updated');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.danger('file is not updated');
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+        }
+    });
+
+  let downloadCheck = 0;
+  $(document).ready(function() {
+      var company_id = <%= @company_user_doc_id ? @company_user_doc_id : 0 %>;
+
+      if ((downloadCheck !== company_id) && (company_id > 0)){
+          downloadCheck = company_id;
+          window.location.replace('/download_word_document/'+company_id);
+      }
+  });
+</script>

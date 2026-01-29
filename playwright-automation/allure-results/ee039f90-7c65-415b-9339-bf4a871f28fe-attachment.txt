@@ -1,0 +1,6 @@
+✓ Admin: Navigated to User Management
+✓ Admin: Created user: testuser_1769596737249@example.com
+✓ Admin: Editing user: testuser_1769596737249@example.com
+✓ Admin: Get updated user: testuser_1769596737249@example.com
+✓ Admin: Deleting user: testuser_1769596737249@example.com
+✓ Admin: Deleted user: testuser_1769596737249@example.com

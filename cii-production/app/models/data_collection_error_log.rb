@@ -1,0 +1,3 @@
+class DataCollectionErrorLog < ApplicationRecord
+
+end

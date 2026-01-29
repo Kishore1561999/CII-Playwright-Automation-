@@ -1,0 +1,48 @@
+<div class="top-header container row my-2">
+  <div class="row col-md-8">
+    <div class="col-md-4">
+      <div class="d-flex align-items-center gap-2">
+        <h5>Assessment</h5></p>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-0">
+        <i class="bx bx-notepad fs-4"></i>
+        <p class="m-0"><%= @questions.length %> questions</p>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <i class='bx bx-calendar fs-4'></i>
+        <p class="m-0"><%= getDateString(@answer.present? ? @answer.submitted_at : DateTime.now) %></p>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="d-flex align-items-center gap-2 mt-4" style="margin-top: 2rem !important">
+        <span class="badge rounded-circle badge-center bg-success p-2">
+          <span class="visually-hidden">1</span>
+        </span>
+        <p class="m-0">All questions attended</p>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <span class="badge rounded-circle badge-center bg-danger p-2">
+          <span class="visually-hidden">1</span>
+        </span>
+        <p class="m-0">Number of questions not attended</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="d-flex align-items-center gap-2" style="float: right">
+      <% if params[:action] == "view_assessment" %>
+        <% if params[:user_type] == ApplicationRecord::CII_USER %>
+          <%= link_to 'Edit', manager_edit_assessment_path(params[:company_user_id], ApplicationRecord::CII_USER), class: "btn btn-primary mx-1 #{ (@user_company_id.present? && @user_company_id.company_user_id > 0) ? 'disabled' : (@restrict_edit_access ? 'disabled' : '') }" %>
+        <% else %>
+          <%= link_to 'PDF', download_assessment_pdf_path(params[:company_user_id], ApplicationRecord::COMPANY_USER, format: :pdf), class: "btn btn-primary mx-1 #{ (@user_company_id.present? && @user_company_id.company_user_id > 0) ? 'disabled' : ''}", target: "new" %>
+        <% end %>
+        <%= link_to 'Back', manager_company_users_url, class: "btn btn-secondary mx-1" %>
+      <% else %>
+        <button class="btn btn-primary mx-1 update_assessment">Update</button>
+        <button class="btn btn-primary mx-1 submit_assessment disabled" data-bs-toggle="modal" data-bs-target="#modalSubmit">Submit</button>
+        <%= link_to 'Cancel', manager_view_assessment_path(params[:company_user_id], ApplicationRecord::CII_USER), class: "btn btn-secondary mx-1" %>
+      <% end %>
+    </div>
+  </div>
+</div>

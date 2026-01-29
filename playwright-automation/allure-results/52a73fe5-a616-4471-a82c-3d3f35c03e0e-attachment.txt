@@ -1,0 +1,4 @@
+✓ Admin: Navigated to ESG Diagnostic
+✓ Admin: Filtered by Year: 2025
+✓ Admin: Filtered by Sector: Information Technology
+✓ Admin: Searched for Company: Demo user for testing

@@ -1,0 +1,56 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalInstructions" style="display: none" id="instructionsModal">Option 2</button>
+
+<div class="modal fade" id="modalInstructions" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-instructions" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><b>INSTRUCTIONS</b></h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+        <div class="mb-3">
+          <h6 class="card-header no-padding"><b>PROCESS RELATED</b></h6>
+          <div class="demo-inline-spacing mt-3">
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item no-border">The first step for the company is to fill in the registration form and submit it</li>
+              <li class="list-group-item no-border">After acceptance of the registration application by CII-CESD, the questionnaire becomes active and can be accessed from the dashboard</li>
+              <li class="list-group-item no-border">Once all the questions are attempted, the application can be submitted for review by CII-CESD. Post this, no changes to the application will be possible on the portal</li>
+              <li class="list-group-item no-border">While the application is in review by CII-CESD, the company can view its response in read only mode</li>
+              <li class="list-group-item no-border">After completion of review and analysis by CII-CESD, the scorecard and ESG Diagnostic Report will be available for downloaded on the Dashboard</li>
+            </ol>
+          </div>
+        </div>
+        <div class="mb-3">
+          <h6 class="card-header no-padding"><b>QUESTIONNAIRE RELATED</b></h6>
+          <div class="demo-inline-spacing mt-3">
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item no-border">The questionnaire is built on the three pillars of sustainability: Environment, Social & Governance. These pillars are represented by 12 aspects that in together have 85 questions</li>
+              <li class="list-group-item no-border">The response to these 85 questions will become the basis of performance analysis and score allocation</li>
+              <li class="list-group-item no-border">You can navigate between these aspects from the left panel</li>
+              <li class="list-group-item no-border">While answering a question, the option you chose will subsequently show the related sub options. The sub-options must also be attempted</li>
+              <li class="list-group-item no-border">Please use company comment box to support your answer for the question. Try keeping the information crisp & short. Also include the reference document and page no. This information will be used by CII-CESD to verify the company’s response</li>
+              <li class="list-group-item no-border">The documents that have been used to fill in the questions in an aspect, should be attached in the aspect itself</li>
+              <li class="list-group-item no-border">There will be data restriction in certain questions on the type of data that can be entered in the box. Please provide the data type asked in the question, i.e., percentage, number or text. Any additional information can be entered in the Company Comment box</li>
+              <li class="list-group-item no-border">For the questions not applicable to the company’s business, option ‘Not applicable’ should be marked Not applicable and the reasoning should be provided in the respective text box</li>
+            </ol>
+          </div>
+        </div>
+        <div class="mb-3">
+          <h6 class="card-header no-padding"><b>FUNCTIONALITY RELATED</b></h6>
+          <div class="demo-inline-spacing mt-3">
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item no-border">Please attempt all questions to be able to submit the application for review. It doesn’t necessarily have to be done at one go. Questions for which the response is not readily available can be attempted at a later point also</li>
+              <li class="list-group-item no-border">Before submitting the application, you can quickly review the response in review & edit mode. This mode also allows changes to be made & saved</li>
+              <li class="list-group-item no-border">The tool has autosave functionality, but you can also manually save your answer or any minor changes to it, if you must switch to another page in less than a minute.</li>
+            </ol>
+          </div>
+        </div>
+			</div>
+			<div class="modal-footer">
+        <%= link_to take_assessment_path(format: :pdf), target: "_blank", class: "btn btn-primary" do %>
+          <i class='bx bxs-download'></i> Download
+        <% end %>
+			</div>
+		</div>
+	</div>
+</div>

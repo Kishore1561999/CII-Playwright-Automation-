@@ -1,0 +1,1070 @@
+[
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Male_PermanentEmployees_TableA",
+    "cii_question_name": "pb_01_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Female_PermanentEmployees_TableA",
+    "cii_question_name": "pb_01_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Male_PermanentWorkers_TableA",
+    "cii_question_name": "pb_01_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Female_PermanentWorkers_TableA",
+    "cii_question_name": "pb_01_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Male_OtherThanPermanentEmployees_TableA",
+    "cii_question_name": "pb_01_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Female_OtherThanPermanentEmployees_TableA",
+    "cii_question_name": "pb_01_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Male_OtherThanPermanentWorkers_TableA",
+    "cii_question_name": "pb_01_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Female_OtherThanPermanentWorkers_TableA",
+    "cii_question_name": "pb_01_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Male_Employees_TableA",
+    "cii_question_name": "pb_01_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Female_Employees_TableA",
+    "cii_question_name": "pb_01_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Male_Workers_TableA",
+    "cii_question_name": "pb_01_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersIncludingDifferentlyAbled",
+    "xml_question_name": "D_Female_Workers_TableA",
+    "cii_question_name": "pb_01_table_row3_number4",
+    "decimals": true
+  },
+  {
+    "elements": "NumberOfDifferentlyAbledEmployeesOrWorkers",
+    "xml_question_name": "D_Gender_Employees_TableB",
+    "cii_question_name": "pb_02_option_number1",
+    "decimals": false
+  },
+  {
+    "elements": "NumberOfDifferentlyAbledEmployeesOrWorkers",
+    "xml_question_name": "D_Gender_Workers_TableB",
+    "cii_question_name": "pb_02_option_number2",
+    "decimals": false
+  },
+  {
+    "elements": "PercentageOfFemaleBoardOfDirectors",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_03_option_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfFemaleKeyManagementPersonnel",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_03_option_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Male_PermanentEmployees_TableB_TurnOverRate_CY",
+    "cii_question_name": "pb_04_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Male_PermanentEmployees_TableB_TurnOverRate_PY",
+    "cii_question_name": "pb_04_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Male_PermanentEmployees_TableB_TurnOverRate_PPY",
+    "cii_question_name": "pb_04_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Female_PermanentEmployees_TableB_TurnOverRate_CY",
+    "cii_question_name": "pb_04_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Female_PermanentEmployees_TableB_TurnOverRate_PY",
+    "cii_question_name": "pb_04_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Female_PermanentEmployees_TableB_TurnOverRate_PPY",
+    "cii_question_name": "pb_04_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Gender_PermanentEmployees_TableB_TurnOverRate_CY",
+    "cii_question_name": "pb_04_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Gender_PermanentEmployees_TableB_TurnOverRate_PY",
+    "cii_question_name": "pb_04_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Gender_PermanentEmployees_TableB_TurnOverRate_PPY",
+    "cii_question_name": "pb_04_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Male_PermanentWorkers_TableB_TurnOverRate_CY",
+    "cii_question_name": "pb_04_table_row4_number1",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Male_PermanentWorkers_TableB_TurnOverRate_PY",
+    "cii_question_name": "pb_04_table_row4_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Male_PermanentWorkers_TableB_TurnOverRate_PPY",
+    "cii_question_name": "pb_04_table_row4_number3",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Female_PermanentWorkers_TableB_TurnOverRate_CY",
+    "cii_question_name": "pb_04_table_row5_number1",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Female_PermanentWorkers_TableB_TurnOverRate_PY",
+    "cii_question_name": "pb_04_table_row5_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Female_PermanentWorkers_TableB_TurnOverRate_PPY",
+    "cii_question_name": "pb_04_table_row5_number3",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Gender_PermanentWorkers_TableB_TurnOverRate_CY",
+    "cii_question_name": "pb_04_table_row6_number1",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Gender_PermanentWorkers_TableB_TurnOverRate_PY",
+    "cii_question_name": "pb_04_table_row6_number2",
+    "decimals": true
+  },
+  {
+    "elements": "TurnoverRate",
+    "xml_question_name": "D_Gender_PermanentWorkers_TableB_TurnOverRate_PPY",
+    "cii_question_name": "pb_04_table_row6_number3",
+    "decimals": true
+  },
+  {
+    "elements": "GrievanceRedressalMechanismInPlace",
+    "xml_question_name": "D_ComplaintReceivedFromEmployeesAndWorkers",
+    "cii_question_name": "pb_05_option_checkbox1",
+    "decimals": false
+  },
+  {
+    "elements": "GrievanceRedressalMechanismInPlace",
+    "xml_question_name": "D_ComplaintReceivedFromCommunities",
+    "cii_question_name": "pb_05_option_checkbox3",
+    "decimals": false
+  },
+  {
+    "elements": "GrievanceRedressalMechanismInPlace",
+    "xml_question_name": "D_ComplaintReceivedFromValueChainPartners",
+    "cii_question_name": "pb_05_option_checkbox4",
+    "decimals": false
+  },
+  {
+    "elements": "GrievanceRedressalMechanismInPlace",
+    "xml_question_name": "D_ComplaintReceivedFromCustomers",
+    "cii_question_name": "pb_05_option_checkbox5",
+    "decimals": false
+  },
+  {
+    "elements": "DetailsOfSpecifiedCommitteeOfTheBoardOrDirectorResponsibleForDecisionMakingOnSustainabilityRelatedIssuesExplanatoryTextBlock",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_08_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "AntiCorruptionOrAntiBriberyPolicyExplanatoryTextBlock",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_10_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "PercentageOfRAndD",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_11_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfRAndD",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_11_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfCapex",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_11_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfCapex",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_11_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfInputsWereSourcedSustainably",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_12_option_number",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfCostIncurredOnWellBeingMeasuresWithRespectToTotalRevenueOfTheCompany",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_14_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfCostIncurredOnWellBeingMeasuresWithRespectToTotalRevenueOfTheCompany",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_14_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "WebLinkOfEqualOppertunityPolicyTextBlock",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_15_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Male_PermanentEmployees",
+    "cii_question_name": "pb_16_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Male_PermanentEmployees_PY",
+    "cii_question_name": "pb_16_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Male_PermanentWorkers",
+    "cii_question_name": "pb_16_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Male_PermanentWorkers_PY",
+    "cii_question_name": "pb_16_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Female_PermanentEmployees",
+    "cii_question_name": "pb_16_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Female_PermanentEmployees_PY",
+    "cii_question_name": "pb_16_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Female_PermanentWorkers",
+    "cii_question_name": "pb_16_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Female_PermanentWorkers_PY",
+    "cii_question_name": "pb_16_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Gender_PermanentEmployees",
+    "cii_question_name": "pb_16_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Gender_PermanentEmployees_PY",
+    "cii_question_name": "pb_16_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Gender_PermanentWorkers",
+    "cii_question_name": "pb_16_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersArePartOfAssociationsOrUnionOfTotalNumberOfEmployee",
+    "xml_question_name": "D_Gender_PermanentWorkers_PY",
+    "cii_question_name": "pb_16_table_row3_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Male_OnSkillUpgradation_Employees",
+    "cii_question_name": "pb_17_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Male_OnSkillUpgradation_Employees_PY",
+    "cii_question_name": "pb_17_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Female_OnSkillUpgradation_Employees",
+    "cii_question_name": "pb_17_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Female_OnSkillUpgradation_Employees_PY",
+    "cii_question_name": "pb_17_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Gender_OnSkillUpgradation_Employees",
+    "cii_question_name": "pb_17_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Gender_OnSkillUpgradation_Employees_PY",
+    "cii_question_name": "pb_17_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Male_OnSkillUpgradation_Workers",
+    "cii_question_name": "pb_17_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Male_OnSkillUpgradation_Workers_PY",
+    "cii_question_name": "pb_17_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Female_OnSkillUpgradation_Workers",
+    "cii_question_name": "pb_17_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Female_OnSkillUpgradation_Workers_PY",
+    "cii_question_name": "pb_17_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Gender_OnSkillUpgradation_Workers",
+    "cii_question_name": "pb_17_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfTrainedEmployeesOrWorkers",
+    "xml_question_name": "D_Gender_OnSkillUpgradation_Workers_PY",
+    "cii_question_name": "pb_17_table_row3_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Employees",
+    "cii_question_name": "pb_18_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Employees_PY",
+    "cii_question_name": "pb_18_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Workers",
+    "cii_question_name": "pb_18_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Workers_PY",
+    "cii_question_name": "pb_18_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Employees",
+    "cii_question_name": "pb_18_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Employees_PY",
+    "cii_question_name": "pb_18_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Workers",
+    "cii_question_name": "pb_18_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Workers_PY",
+    "cii_question_name": "pb_18_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Employees",
+    "cii_question_name": "pb_18_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Employees_PY",
+    "cii_question_name": "pb_18_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Workers",
+    "cii_question_name": "pb_18_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerForPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Workers_PY",
+    "cii_question_name": "pb_18_table_row3_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Employees",
+    "cii_question_name": "pb_18_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Employees_PY",
+    "cii_question_name": "pb_18_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Workers",
+    "cii_question_name": "pb_18_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Male_Workers_PY",
+    "cii_question_name": "pb_18_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Employees",
+    "cii_question_name": "pb_18_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Employees_PY",
+    "cii_question_name": "pb_18_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Workers",
+    "cii_question_name": "pb_18_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Female_Workers_PY",
+    "cii_question_name": "pb_18_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Employees",
+    "cii_question_name": "pb_18_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Employees_PY",
+    "cii_question_name": "pb_18_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Workers",
+    "cii_question_name": "pb_18_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkerforPerformanceAndCareerDevelopment",
+    "xml_question_name": "D_Gender_Workers_PY",
+    "cii_question_name": "pb_18_table_row3_number4",
+    "decimals": true
+  },
+  {
+    "elements": "DetailsOfOccupationalHealthAndSafetyManagementSystemExplanatoryTextBlock",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_19_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "DesclosureOfTheProcessesUsedToIdentifyWorkRelatedHazardsAndAssessRisksOnARoutineAndNonRoutineBasisByTheEntityExplanatoryTextBlock",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_19_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "WhetherYouHaveProcessesForWorkersToReportTheWorkRelatedHazardsAndToRemoveThemselvesFromSuchRisks",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_19_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "DoTheEmployeesOrWorkerOfTheEntityHaveAccessToNonOccupationalMedicalAndHealthcareServices",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_19_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "LostTimeInjuryFrequencyRatePerOneMillionPersonHoursWorked",
+    "xml_question_name": "D_Employees",
+    "cii_question_name": "pb_20_table1_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "LostTimeInjuryFrequencyRatePerOneMillionPersonHoursWorked",
+    "xml_question_name": "D_Employees_PY",
+    "cii_question_name": "pb_20_table1_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "LostTimeInjuryFrequencyRatePerOneMillionPersonHoursWorked",
+    "xml_question_name": "D_Workers",
+    "cii_question_name": "pb_20_table1_row2_number1",
+    "decimals": false
+  },
+  {
+    "elements": "LostTimeInjuryFrequencyRatePerOneMillionPersonHoursWorked",
+    "xml_question_name": "D_Workers_PY",
+    "cii_question_name": "pb_20_table1_row2_number2",
+    "decimals": false
+  },
+  {
+    "elements": "NumberOfFatalities",
+    "xml_question_name": "D_Employees",
+    "cii_question_name": "pb_20_table2_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "NumberOfFatalities",
+    "xml_question_name": "D_Employees_PY",
+    "cii_question_name": "pb_20_table2_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "NumberOfFatalities",
+    "xml_question_name": "D_Workers",
+    "cii_question_name": "pb_20_table2_row2_number1",
+    "decimals": false
+  },
+  {
+    "elements": "NumberOfFatalities",
+    "xml_question_name": "D_Workers_PY",
+    "cii_question_name": "pb_20_table2_row2_number2",
+    "decimals": false
+  },
+  {
+    "elements": "PercentageOfHealthAndSafetyPracticesOfYourPlantsAndOfficesThatWereAssessedP3",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_21_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfWorkingConditionsOfYourPlantsAndOfficesThatWereAssessedP3",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_21_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_PermanentEmployees_p5",
+    "cii_question_name": "pb_22_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_PermanentEmployees_p5_PY",
+    "cii_question_name": "pb_22_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_PermanentWorkers_p5",
+    "cii_question_name": "pb_22_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_PermanentWorkers_p5_PY",
+    "cii_question_name": "pb_22_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_OtherThanPermanentEmployees_p5",
+    "cii_question_name": "pb_22_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_OtherThanPermanentEmployees_p5_PY",
+    "cii_question_name": "pb_22_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_OtherThanPermanentWorkers_p5",
+    "cii_question_name": "pb_22_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_OtherThanPermanentWorkers_p5_PY",
+    "cii_question_name": "pb_22_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_Employees_p5",
+    "cii_question_name": "pb_22_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_Employees_p5_PY",
+    "cii_question_name": "pb_22_table_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_Workers_p5",
+    "cii_question_name": "pb_22_table_row3_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersCoveredForProvidedTrainingOnHumanRightsIssues",
+    "xml_question_name": "D_Workers_p5_PY",
+    "cii_question_name": "pb_22_table_row3_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_Workers_p5_PY",
+    "cii_question_name": "pb_22_table2_row3_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_2",
+    "cii_question_name": "pb_23_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_2_PY",
+    "cii_question_name": "pb_23_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_W_2",
+    "cii_question_name": "pb_23_table_row1_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_W_2_PY",
+    "cii_question_name": "pb_23_table_row1_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_3",
+    "cii_question_name": "pb_23_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_3_PY",
+    "cii_question_name": "pb_23_table_row2_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_W_3",
+    "cii_question_name": "pb_23_table_row2_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_W_3_PY",
+    "cii_question_name": "pb_23_table_row2_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_2",
+    "cii_question_name": "pb_23_table_row4_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_2_PY",
+    "cii_question_name": "pb_23_table_row4_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_W_2",
+    "cii_question_name": "pb_23_table_row4_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_W_2_PY",
+    "cii_question_name": "pb_23_table_row4_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_3",
+    "cii_question_name": "pb_23_table_row5_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_3_PY",
+    "cii_question_name": "pb_23_table_row5_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_W_3",
+    "cii_question_name": "pb_23_table_row5_number3",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfEmployeesOrWorkersRelatedToMinimumWages",
+    "xml_question_name": "D_MoreThanMinimumWage_Other_W_3_PY",
+    "cii_question_name": "pb_23_table_row5_number4",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfGrossWagesPaidToFemaleToTotalWagesPaid",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_24_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfGrossWagesPaidToFemaleToTotalWagesPaid",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_24_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "NumberOfComplaintsFiledDuringTheYear",
+    "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_1",
+    "cii_question_name": "pb_25_table_row1_number1",
+    "decimals": false
+  },
+  {
+  "elements": "NumberOfComplaintsFiledDuringTheYear",
+  "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_1",
+  "cii_question_name": "pb_25_table_row1_number1",
+  "decimals": false
+  },
+  {
+  "elements": "NumberOfComplaintsFiledDuringTheYear",
+  "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_2",
+  "cii_question_name": "pb_25_table_row2_number1",
+  "decimals": false
+  },
+  {
+  "elements": "NumberOfComplaintsFiledDuringTheYear",
+  "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_3",
+  "cii_question_name": "pb_25_table_row3_number1",
+  "decimals": false
+  },
+  {
+  "elements": "NumberOfComplaintsFiledDuringTheYear",
+  "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_4",
+  "cii_question_name": "pb_25_table_row4_number1",
+  "decimals": false
+  },
+  {
+  "elements": "NumberOfComplaintsFiledDuringTheYear",
+  "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_5",
+  "cii_question_name": "pb_25_table_row5_number1",
+  "decimals": false
+  },
+  {
+  "elements": "NumberOfComplaintsFiledDuringTheYear",
+  "xml_question_name": "D_NumberOfComplaintsFiledDuringTheYear_6",
+  "cii_question_name": "pb_25_table_row6_number1",
+  "decimals": false
+  },
+  {
+    "elements": "DoHumanRightsRequirementsFormPartOfYourBusinessAgreementsAndContracts",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_26_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "PercentageOfChildLabourOfYourPlantsAndOfficesThatWereAssessedP5",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_27_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfForcedLabourOrInvoluntaryLabourOfYourPlantsAndOfficesThatWereAssessedP5",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_27_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfSexualHarassmentOfYourPlantsAndOfficesThatWereAssessedP5",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_27_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfDiscriminationAtWorkPlaceOfYourPlantsAndOfficesThatWereAssessedP5",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_27_table_row4_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfWagesOfYourPlantsAndOfficesThatWereAssessedP5",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_27_table_row5_number1",
+    "decimals": true
+  },
+  {
+    "elements": "EnergyIntensityPerRupeeOfTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_28_table_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "EnergyIntensityPerRupeeOfTurnover",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_28_table_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "WhetherAnyIndependentAssessmentOrEvaluationOrAssuranceHasBeenCarriedOutByAnExternalAgencyForEnergyConsumptionUnderLeadershipIndicators",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_28_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "WaterIntensityPerRupeeOfTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_29_table_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "WaterIntensityPerRupeeOfTurnover",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_29_table_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "AnyIndependentAssessmentOrEvaluationOrAssuranceHasBeenCarriedOutByAnExternalAgencyForWaterWithdrawal",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_29_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "TotalScope1AndScope2EmissionsIntensityPerRupeeOfTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_30_table_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "TotalScope1AndScope2EmissionsIntensityPerRupeeOfTurnover",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_30_table_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "TotalScope1AndScope2EmissionsPerRupeeOfTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_30_table_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "TotalScope1AndScope2EmissionsPerRupeeOfTurnover",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_30_table_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "WhetherAnyIndicateIfAnyIndependentAssessmentOrEvaluationOrAssuranceHasBeenCarriedOutByAnExternalAgencyForGreenHouseGasEmissions",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_30_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "TotalScope3EmissionsPerRupeeOfTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_31_table_row1_number1",
+    "decimals": false
+  },
+  {
+    "elements": "TotalScope3EmissionsPerRupeeOfTurnover",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_31_table_row1_number2",
+    "decimals": false
+  },
+  {
+    "elements": "WhetherAnyIndependentAssessmentOrEvaluationOrAssuranceHasBeenCarriedOutByAnExternalAgencyForTotalScope3Emissions",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_31_textarea",
+    "decimals": false
+  },
+  {
+    "elements": "",
+    "xml_question_name": "",
+    "cii_question_name": "pb_32_option1_checkbox1",
+    "decimals": false
+  },
+  {
+    "elements": "PercentageOfDirectlySourcedFromMSMEsOrSmallProducers",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_32_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfDirectlySourcedFromMSMEsOrSmallProducers",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_32_table_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfSourcedDirectlyFromWithinTheDistrictAndNeighbouringDistricts",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_32_table1_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "PercentageOfSourcedDirectlyFromWithinTheDistrictAndNeighbouringDistricts",
+    "xml_question_name": "DPYMain",
+    "cii_question_name": "pb_32_table1_row1_number2",
+    "decimals": true
+  },
+  {
+    "elements": "WhatPercentageOfTotalProcurementByValueDoesItConstitute",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_33_option_number",
+    "decimals": true
+  },
+  {
+    "elements": "EnvironmentalAndSocialParametersRelevantToTheProductAsAPercentageToTotalTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_34_table_row1_number1",
+    "decimals": true
+  },
+  {
+    "elements": "SafeAndResponsibleUsageAsAPercentageToTotalTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_34_table_row2_number1",
+    "decimals": true
+  },
+  {
+    "elements": "RecyclingAndOrSafeDisposalAsAPercentageToTotalTurnover",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_34_table_row3_number1",
+    "decimals": true
+  },
+  {
+    "elements": "WebLinkOfThePolicyOnCyberSecurityAndRisksRelatedToDataPrivacy",
+    "xml_question_name": "DCYMain",
+    "cii_question_name": "pb_35_textarea",
+    "decimals": false
+  }
+]

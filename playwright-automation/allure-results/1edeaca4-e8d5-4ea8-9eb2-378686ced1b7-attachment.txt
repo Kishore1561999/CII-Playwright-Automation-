@@ -1,0 +1,5 @@
+✓ Admin: Navigated to Company Users / ESG Diagnostic page
+Deleting company: Func_Co_1769598952622
+✓ Admin: Searched for company: Func_Co_1769598952622
+✓ Deleted test company: Func_Co_1769598952622
+✓ Deleted test company: Func_Co_1769598952622

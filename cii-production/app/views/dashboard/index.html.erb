@@ -1,0 +1,14 @@
+
+<% if current_user.present? %>
+<% if current_user.is_admin? %>
+  <% controller.redirect_to admin_company_users_path %>
+<% elsif current_user.is_analyst? %>
+  <% controller.redirect_to analyst_dashboard_path %>
+<% elsif current_user.is_company_user? %>
+  <% controller.redirect_to current_user.subscription_esg_diagnostic? && current_user.approved? ? company_user_dashboard_path : peer_benchmarking_path %>
+<% elsif current_user.is_manager? %>
+  <% controller.redirect_to manager_company_users_path %>
+<% end %>
+<% else %>
+  <% controller.redirect_to new_user_session_path %>
+<% end %>

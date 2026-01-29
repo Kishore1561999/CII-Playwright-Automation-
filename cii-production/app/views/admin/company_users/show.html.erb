@@ -1,0 +1,136 @@
+<div class="card show-profile">
+	<h5 class="card-header">View Company User</h5>
+
+  <div class="card">
+    <div class="card-body col-md-10 offset-1">
+      <div class="col-md-12 row g-3">
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Basic Info</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Name</label>
+            <p class="mb-0"><%= @company_user.company_name %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">ISIN Number</label>
+            <p class="mb-0"><%= @company_user.company_isin_number %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Sector</label>
+            <p class="mb-0"><%= @company_user.company_sector %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Description</label>
+            <p class="mb-0"><%= @company_user.company_description %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Logo</label>
+            <p class="mb-0"><%= image_tag @company_user.company_logo.present? ? @company_user.company_logo : "no-image.png", class: "img-responsive img-thumbnail img-logo" %></p>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Address Info</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Address Line 1</label>
+            <p class="mb-0"><%= @company_user.company_address_line1 %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Address Line 2</label>
+            <p class="mb-0"><%= @company_user.company_address_line2.present? ? @company_user.company_address_line2 : 'NA' %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Country</label>
+            <p class="mb-0"><%= CS.countries[@company_user.company_country.to_sym] %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">State</label>
+            <p class="mb-0"><%= CS.states(@company_user.company_country)[@company_user.company_state.to_sym] %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">City</label>
+            <p class="mb-0"><%= @company_user.company_city %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">ZIP Code</label>
+            <p class="mb-0"><%= @company_user.company_zip %></p>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Primary Contact</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Full Name</label>
+            <p class="mb-0"><%= @company_user.primary_name %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Email</label>
+            <p class="mb-0"><%= @company_user.primary_email %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Designation</label>
+            <p class="mb-0"><%= @company_user.primary_designation %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Contact Number</label>
+            <p class="mb-0"><%= @company_user.primary_contact %></p>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Alternate Contact</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Full Name</label>
+            <p class="mb-0"><%= @company_user.alternate_name.present? ? @company_user.alternate_name : 'NA' %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Email</label>
+            <p class="mb-0"><%= @company_user.alternate_email.present? ? @company_user.alternate_email : 'NA' %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Designation</label>
+            <p class="mb-0"><%= @company_user.alternate_designation.present? ? @company_user.alternate_designation : 'NA' %></p>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Contact Number</label>
+            <p class="mb-0"><%= @company_user.alternate_contact.present? ? @company_user.alternate_contact : 'NA' %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 offset-4">
+        <center>
+          <div class="row">
+            <div class="col-md-12">
+              <% if !@company_user.is_rejected? %>
+                <%= link_to 'Edit', edit_admin_company_user_path(@company_user.id), class: "btn btn-primary" %>
+              <% end %>
+              <%= link_to 'Back', admin_company_users_path, class: "btn btn-secondary" %>
+            </div>
+          </div>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+			<div class="modal-body text-center">
+				<img src="" class="image-preview d-block rounded">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".img-logo").click(function() {
+      $('.image-preview').attr('src', $(this).attr('src'));
+      $('#imageModal').modal('show');
+    });
+  });
+</script>

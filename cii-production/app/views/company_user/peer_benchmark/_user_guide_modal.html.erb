@@ -1,0 +1,29 @@
+<% if current_user.is_company_user? %>
+<div class="modal fade" id="userGuideModal" tabindex="-1" aria-hidden="true">
+	<div class="user-guide-popup modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-content" style="border-radius: 1.5rem;">
+			<div class="modal-body">
+      <h5 class="modal-title" style="margin-left: 10px;" id="userGuideModalLabel">User Guide</h5>
+        <button type="button" class="btn-close float-right create-cookies" style="box-shadow: revert;position: relative; bottom: 30px;" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="">
+          <ol class="text-align-justify">
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The subscription period is one year starting from the date of subscription &amp; payment. It can, however, be renewed at the end of the year.</li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">Payment once made is non-refundable.</li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The invoice will be shared with the primary contact provided in the registration form.</li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The account should be used by the subscribing company only.</li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The subscribers interested in ESG Diagnostic services can send us an enquiry by clicking on the <strong>Send Enquiry</strong> button that appears when you click on ESG Diagnostics. Our team will get in touch with you.</li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The premium subscription services are yet to be launched and the account can be
+upgraded post the launch.</li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The company details can be edited by going to <strong>My Profile</strong> page under the Company user icon<i class="bx bx-user-circle w-px-40 h-auto rounded-circle profile-image-modal"></i></li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The account password can be reset under the Company user icon<i class="bx bx-user-circle w-px-40 h-auto rounded-circle profile-image-modal"></i></li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">The subscriber can log out by clicking on the <strong>Log out</strong> option under Company user icon<i class="bx bx-user-circle w-px-40 h-auto rounded-circle profile-image-modal"></i></li>
+            <li class="mt-3 px-2" style="word-spacing: 2px;">
+                For any queries please contact: <a href="mailto:surabhi.singh@cii.in">Surabhi.singh@cii.in</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+		</div>
+	</div>
+</div>
+<% end %>

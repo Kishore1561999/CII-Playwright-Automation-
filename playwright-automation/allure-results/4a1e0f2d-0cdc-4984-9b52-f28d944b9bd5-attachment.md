@@ -1,0 +1,292 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /esgadmin/company_users
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "ESG - Premium Subscription" [ref=e15] [cursor=pointer]:
+            - /url: /service/premium_subscription
+            - generic [ref=e16]: ESG - Premium Subscription
+        - listitem [ref=e17]:
+          - link "ESG - Basic Subscription" [ref=e18] [cursor=pointer]:
+            - /url: /service/basic_subscription
+            - generic [ref=e19]: ESG - Basic Subscription
+        - listitem [ref=e20]:
+          - link "PB Data Management" [ref=e21] [cursor=pointer]:
+            - /url: /service/peer_benchmark
+            - generic [ref=e22]: PB Data Management
+        - listitem [ref=e23]:
+          - link "User Management" [ref=e24] [cursor=pointer]:
+            - /url: /esgadmin/users
+            - generic [ref=e25]: User Management
+        - listitem [ref=e26]:
+          - link "Email Content" [ref=e27] [cursor=pointer]:
+            - /url: /esgadmin/emails
+            - generic [ref=e28]: Email Content
+    - generic [ref=e29]:
+      - navigation [ref=e30]:
+        - generic [ref=e31]:
+          - list [ref=e32]:
+            - listitem [ref=e33]:
+              - link [ref=e35] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e37]
+          - list [ref=e38]:
+            - listitem [ref=e39]:
+              - link [ref=e41] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e43]
+            - listitem [ref=e44]:
+              - link " Kishore Admin" [ref=e45] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e46]:
+                  - generic [ref=e49]: 
+                  - generic [ref=e50]:
+                    - generic [ref=e51]: Kishore
+                    - text: Admin
+              - text:   
+      - generic [ref=e53]:
+        - generic [ref=e55]:
+          - generic [ref=e58]:
+            - textbox "Filter by Sector" [ref=e61] [cursor=pointer]
+            - textbox "Search by Name" [ref=e63]
+            - combobox [ref=e65]:
+              - option "Select Year" [selected]
+              - option "2026"
+              - option "2025"
+              - option "2024"
+              - option "2023"
+              - option "2022"
+              - option "2021"
+              - option "2020"
+              - option "2019"
+              - option "2018"
+              - option "2017"
+              - option "2016"
+            - button "Apply" [ref=e67] [cursor=pointer]
+            - button "Clear" [ref=e69] [cursor=pointer]
+          - list [ref=e70]:
+            - listitem [ref=e71]:
+              - link "Export Export" [ref=e73] [cursor=pointer]:
+                - /url: /service/basic_subscription/export_excel.xlsx
+                - img "Export" [ref=e74]
+                - text: Export
+        - table [ref=e78]:
+          - rowgroup [ref=e79]:
+            - row "ISIN Company Name Sector Access Approval Registration Status Date of subscription Action" [ref=e80]:
+              - columnheader "ISIN" [ref=e81]
+              - columnheader "Company Name" [ref=e82]
+              - columnheader "Sector" [ref=e83]
+              - columnheader "Access Approval" [ref=e84]
+              - columnheader "Registration Status" [ref=e85]
+              - columnheader "Date of subscription" [ref=e86]
+              - columnheader "Action" [ref=e87]
+          - rowgroup [ref=e88]:
+            - row "- PB_Co_1769580677623 Automobiles & Auto Components   Due for approval --  " [ref=e89]:
+              - cell "-" [ref=e90]
+              - cell "PB_Co_1769580677623" [ref=e91]:
+                - strong [ref=e92]: PB_Co_1769580677623
+              - cell "Automobiles & Auto Components" [ref=e93]
+              - cell " " [ref=e94]:
+                - button "" [ref=e95] [cursor=pointer]:
+                  - generic [ref=e96]: 
+                - button "" [ref=e97] [cursor=pointer]:
+                  - generic [ref=e98]: 
+              - cell "Due for approval" [ref=e99]
+              - cell "--" [ref=e100]
+              - cell " " [ref=e101]:
+                - link "" [ref=e102] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e103]: 
+                - link "" [ref=e104] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e105]: 
+            - row "9047880 testing user march 14 Services  Active 22/01/2026  " [ref=e106]:
+              - cell "9047880" [ref=e107]
+              - cell "testing user march 14" [ref=e108]:
+                - strong [ref=e109]: testing user march 14
+              - cell "Services" [ref=e110]
+              - cell "" [ref=e111]:
+                - generic [ref=e113]: 
+              - cell "Active" [ref=e114]
+              - cell "22/01/2026" [ref=e115]
+              - cell " " [ref=e116]:
+                - link "" [ref=e117] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e118]: 
+                - link "" [ref=e119] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e120]: 
+            - row "- Spritle test user 101 Media, Entertainment & Publication  Active 22/01/2026  " [ref=e121]:
+              - cell "-" [ref=e122]
+              - cell "Spritle test user 101" [ref=e123]:
+                - strong [ref=e124]: Spritle test user 101
+              - cell "Media, Entertainment & Publication" [ref=e125]
+              - cell "" [ref=e126]:
+                - generic [ref=e128]: 
+              - cell "Active" [ref=e129]
+              - cell "22/01/2026" [ref=e130]
+              - cell " " [ref=e131]:
+                - link "" [ref=e132] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e133]: 
+                - link "" [ref=e134] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e135]: 
+            - row "983456789 Demo user for testing Information Technology  Active 27/03/2025  " [ref=e136]:
+              - cell "983456789" [ref=e137]
+              - cell "Demo user for testing" [ref=e138]:
+                - strong [ref=e139]: Demo user for testing
+              - cell "Information Technology" [ref=e140]
+              - cell "" [ref=e141]:
+                - generic [ref=e143]: 
+              - cell "Active" [ref=e144]
+              - cell "27/03/2025" [ref=e145]
+              - cell " " [ref=e146]:
+                - link "" [ref=e147] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e148]: 
+                - link "" [ref=e149] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e150]: 
+            - row "- testing march 14 2 Automobiles & Auto Components  Active 01/04/2025  " [ref=e151]:
+              - cell "-" [ref=e152]
+              - cell "testing march 14 2" [ref=e153]:
+                - strong [ref=e154]: testing march 14 2
+              - cell "Automobiles & Auto Components" [ref=e155]
+              - cell "" [ref=e156]:
+                - generic [ref=e158]: 
+              - cell "Active" [ref=e159]
+              - cell "01/04/2025" [ref=e160]
+              - cell " " [ref=e161]:
+                - link "" [ref=e162] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e163]: 
+                - link "" [ref=e164] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e165]: 
+            - row "- karthick - 3 FMCG   Due for approval --  " [ref=e166]:
+              - cell "-" [ref=e167]
+              - cell "karthick - 3" [ref=e168]:
+                - strong [ref=e169]: karthick - 3
+              - cell "FMCG" [ref=e170]
+              - cell " " [ref=e171]:
+                - button "" [ref=e172] [cursor=pointer]:
+                  - generic [ref=e173]: 
+                - button "" [ref=e174] [cursor=pointer]:
+                  - generic [ref=e175]: 
+              - cell "Due for approval" [ref=e176]
+              - cell "--" [ref=e177]
+              - cell " " [ref=e178]:
+                - link "" [ref=e179] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e180]: 
+                - link "" [ref=e181] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e182]: 
+            - row "- karthick 2 FMCG  Active 14/03/2025  " [ref=e183]:
+              - cell "-" [ref=e184]
+              - cell "karthick 2" [ref=e185]:
+                - strong [ref=e186]: karthick 2
+              - cell "FMCG" [ref=e187]
+              - cell "" [ref=e188]:
+                - generic [ref=e190]: 
+              - cell "Active" [ref=e191]
+              - cell "14/03/2025" [ref=e192]
+              - cell " " [ref=e193]:
+                - link "" [ref=e194] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e195]: 
+                - link "" [ref=e196] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e197]: 
+            - row "- karthick FMCG  Active 14/03/2025  " [ref=e198]:
+              - cell "-" [ref=e199]
+              - cell "karthick" [ref=e200]:
+                - strong [ref=e201]: karthick
+              - cell "FMCG" [ref=e202]
+              - cell "" [ref=e203]:
+                - generic [ref=e205]: 
+              - cell "Active" [ref=e206]
+              - cell "14/03/2025" [ref=e207]
+              - cell " " [ref=e208]:
+                - link "" [ref=e209] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e210]: 
+                - link "" [ref=e211] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e212]: 
+            - row "- karthick FMCG  Active 14/03/2025  " [ref=e213]:
+              - cell "-" [ref=e214]
+              - cell "karthick" [ref=e215]:
+                - strong [ref=e216]: karthick
+              - cell "FMCG" [ref=e217]
+              - cell "" [ref=e218]:
+                - generic [ref=e220]: 
+              - cell "Active" [ref=e221]
+              - cell "14/03/2025" [ref=e222]
+              - cell " " [ref=e223]:
+                - link "" [ref=e224] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e225]: 
+                - link "" [ref=e226] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e227]: 
+            - row "- Spritle testing account Information Technology   Due for approval --  " [ref=e228]:
+              - cell "-" [ref=e229]
+              - cell "Spritle testing account" [ref=e230]:
+                - strong [ref=e231]: Spritle testing account
+              - cell "Information Technology" [ref=e232]
+              - cell " " [ref=e233]:
+                - button "" [ref=e234] [cursor=pointer]:
+                  - generic [ref=e235]: 
+                - button "" [ref=e236] [cursor=pointer]:
+                  - generic [ref=e237]: 
+              - cell "Due for approval" [ref=e238]
+              - cell "--" [ref=e239]
+              - cell " " [ref=e240]:
+                - link "" [ref=e241] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e242]: 
+                - link "" [ref=e243] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e244]: 
+        - dialog [ref=e245]:
+          - document:
+            - generic [ref=e246]:
+              - paragraph [ref=e248]: Are you sure you want to approve?
+              - generic [ref=e249]:
+                - button "Yes" [active] [ref=e250] [cursor=pointer]
+                - button "No" [ref=e251] [cursor=pointer]
+        - navigation [ref=e253]:
+          - list [ref=e254]:
+            - listitem [ref=e255]:
+              - generic: ←
+            - listitem [ref=e256]:
+              - generic [ref=e257]: "1"
+            - listitem [ref=e258]:
+              - link "2" [ref=e259] [cursor=pointer]:
+                - /url: /service/basic_subscription?page=2
+            - listitem [ref=e260]:
+              - link "3" [ref=e261] [cursor=pointer]:
+                - /url: /service/basic_subscription?page=3
+            - listitem [ref=e262]:
+              - link "4" [ref=e263] [cursor=pointer]:
+                - /url: /service/basic_subscription?page=4
+            - listitem [ref=e264]:
+              - link "→" [ref=e265] [cursor=pointer]:
+                - /url: /service/basic_subscription?page=2
+      - contentinfo [ref=e266]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e268]
+        - heading "Privacy Policy" [level=6] [ref=e270] [cursor=pointer]
+  - img
+```

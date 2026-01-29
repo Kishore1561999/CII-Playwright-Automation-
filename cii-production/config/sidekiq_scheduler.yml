@@ -1,0 +1,22 @@
+ReminderMailerJob:
+  cron: '0 0 * * *'
+  enabled: true
+  class: ReminderMailerJob
+
+# PeerbenchmarkYearUpdateJob:
+#   # cron: "30 0 1 1 *" # Runs at 12:30 AM on January 1st every year
+#   cron: "30 0 1 4 *" # Runs at 12:30 AM on April 1st every year
+#   class: PeerbenchmarkYearUpdateJob
+#   enabled: true
+
+# DatacollectionYearUpdateJob:
+#   # cron: "30 0 1 1 *" # Runs at 12:30 AM on January 1st every year
+#   cron: "30 0 1 4 *" # Runs at 12:30 AM on April 1st every year
+#   class: DatacollectionYearUpdateJob
+#   enabled: true
+
+EsgAprilUpdateYearJob:
+  cron: "30 0 1 4 *" # Runs at 12:30 AM on April 1st every year
+  # cron: "0 15 * * *" # Runs at 3:00 PM every day
+  class: EsgAprilUpdateYearJob
+  enabled: true

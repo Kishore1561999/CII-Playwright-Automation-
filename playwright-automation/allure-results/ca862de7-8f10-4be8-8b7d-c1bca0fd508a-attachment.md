@@ -1,0 +1,238 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /esgadmin/company_users
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "ESG - Premium Subscription" [ref=e15] [cursor=pointer]:
+            - /url: /service/premium_subscription
+            - generic [ref=e16]: ESG - Premium Subscription
+        - listitem [ref=e17]:
+          - link "ESG - Basic Subscription" [ref=e18] [cursor=pointer]:
+            - /url: /service/basic_subscription
+            - generic [ref=e19]: ESG - Basic Subscription
+        - listitem [ref=e20]:
+          - link "PB Data Management" [ref=e21] [cursor=pointer]:
+            - /url: /service/peer_benchmark
+            - generic [ref=e22]: PB Data Management
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "CII Data Collection" [ref=e25] [cursor=pointer]:
+                - /url: /service/data_collection?subscription_type=premium
+                - generic [ref=e26]: CII Data Collection
+            - listitem [ref=e27]:
+              - link "Data Analytics" [ref=e28] [cursor=pointer]:
+                - /url: /service/data_analytics
+                - generic [ref=e29]: Data Analytics
+        - listitem [ref=e30]:
+          - link "User Management" [ref=e31] [cursor=pointer]:
+            - /url: /esgadmin/users
+            - generic [ref=e32]: User Management
+        - listitem [ref=e33]:
+          - link "Email Content" [ref=e34] [cursor=pointer]:
+            - /url: /esgadmin/emails
+            - generic [ref=e35]: Email Content
+    - generic [ref=e36]:
+      - navigation [ref=e37]:
+        - generic [ref=e38]:
+          - list [ref=e39]:
+            - listitem [ref=e40]:
+              - link [ref=e42] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e44]
+          - list [ref=e45]:
+            - listitem [ref=e46]:
+              - link [ref=e48] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e50]
+            - listitem [ref=e51]:
+              - link " Kishore Admin" [ref=e52] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e53]:
+                  - generic [ref=e56]: 
+                  - generic [ref=e57]:
+                    - generic [ref=e58]: Kishore
+                    - text: Admin
+              - text:   
+      - generic [ref=e60]:
+        - generic [ref=e65]:
+          - textbox "Filter by Sector" [ref=e68] [cursor=pointer]
+          - textbox "Search by Name" [ref=e70]
+          - combobox [ref=e72]:
+            - option "Select Year" [selected]
+            - option "2026"
+            - option "2025"
+            - option "2024"
+            - option "2023"
+            - option "2022"
+            - option "2021"
+            - option "2020"
+            - option "2019"
+            - option "2018"
+            - option "2017"
+            - option "2016"
+          - button "Apply" [ref=e74] [cursor=pointer]
+          - button "Clear" [ref=e76] [cursor=pointer]
+        - table [ref=e80]:
+          - rowgroup [ref=e81]:
+            - row "ISIN Company Name Sector Admin Approval to use data Recent Analytics" [ref=e82]:
+              - columnheader "ISIN" [ref=e83]
+              - columnheader "Company Name" [ref=e84]
+              - columnheader "Sector" [ref=e85]
+              - columnheader "Admin Approval to use data" [ref=e86]
+              - columnheader "Recent Analytics" [ref=e87]
+          - rowgroup [ref=e88]:
+            - row "983456789 Demo user for testing Information Technology  " [ref=e89]:
+              - cell "983456789" [ref=e90]
+              - cell "Demo user for testing" [ref=e91]:
+                - strong [ref=e92]: Demo user for testing
+              - cell "Information Technology" [ref=e93]
+              - cell "" [ref=e94]:
+                - generic [ref=e96]: 
+              - cell "" [ref=e97]:
+                - link "":
+                  - /url: "#"
+                  - generic: 
+            - row "35494656 Test user July 01 Information Technology  " [ref=e98]:
+              - cell "35494656" [ref=e99]
+              - cell "Test user July 01" [ref=e100]:
+                - strong [ref=e101]: Test user July 01
+              - cell "Information Technology" [ref=e102]
+              - cell "" [ref=e103]:
+                - generic [ref=e105]: 
+              - cell "" [ref=e106]:
+                - link "" [ref=e107] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBdElEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--14b598a1cdbb759e719c1dd67e18cdf3e396019a/Test%20user%20July%20012025-01-06.pdf?disposition=attachment
+                  - generic [ref=e108]: 
+            - row "9631541111... July 03 user FMCG   " [ref=e109]:
+              - cell "9631541111..." [ref=e110]
+              - cell "July 03 user" [ref=e111]:
+                - strong [ref=e112]: July 03 user
+              - cell "FMCG" [ref=e113]
+              - cell " " [ref=e114]:
+                - button "" [ref=e115] [cursor=pointer]:
+                  - generic [ref=e116]: 
+                - button "" [ref=e117] [cursor=pointer]:
+                  - generic [ref=e118]: 
+              - cell "" [ref=e119]:
+                - link "" [ref=e120] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBc3dEIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--2e44ed59a2a9d1a4c51b65a6773b342055486dc2/July%2003%20user2024-12-13.pdf?disposition=attachment
+                  - generic [ref=e121]: 
+            - row "9846541323... Test july 02 Capital Goods   " [ref=e122]:
+              - cell "9846541323..." [ref=e123]
+              - cell "Test july 02" [ref=e124]:
+                - strong [ref=e125]: Test july 02
+              - cell "Capital Goods" [ref=e126]
+              - cell " " [ref=e127]:
+                - button "" [ref=e128] [cursor=pointer]:
+                  - generic [ref=e129]: 
+                - button "" [ref=e130] [cursor=pointer]:
+                  - generic [ref=e131]: 
+              - cell "" [ref=e132]:
+                - link "" [ref=e133] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBc29EIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--041dcada6165e699834d7cc01926a6372076db93/Test%20july%20022024-12-12.pdf?disposition=attachment
+                  - generic [ref=e134]: 
+            - row "235235322c... Test june 24 03 FMCG  " [ref=e135]:
+              - cell "235235322c..." [ref=e136]
+              - cell "Test june 24 03" [ref=e137]:
+                - strong [ref=e138]: Test june 24 03
+              - cell "FMCG" [ref=e139]
+              - cell "" [ref=e140]:
+                - generic [ref=e142]: 
+              - cell "" [ref=e143]:
+                - link "" [ref=e144] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBYkE9IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--4e3df6fde9edeb47d28d586fbe68644a01c1c621/Test%20june%2024%20032024-06-26.pdf?disposition=attachment
+                  - generic [ref=e145]: 
+            - row "- demo user 102 FMCG   " [ref=e146]:
+              - cell "-" [ref=e147]
+              - cell "demo user 102" [ref=e148]:
+                - strong [ref=e149]: demo user 102
+              - cell "FMCG" [ref=e150]
+              - cell " " [ref=e151]:
+                - button "" [ref=e152] [cursor=pointer]:
+                  - generic [ref=e153]: 
+                - button "" [ref=e154] [cursor=pointer]:
+                  - generic [ref=e155]: 
+              - cell "" [ref=e156]:
+                - link "" [ref=e157] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcTREIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8836ea20662ca50aa6b5cddfe1ac68c19fc9022d/demo%20user%201022024-10-23.pdf?disposition=attachment
+                  - generic [ref=e158]: 
+            - row "987687456 Demo user 01 Constructions   " [ref=e159]:
+              - cell "987687456" [ref=e160]
+              - cell "Demo user 01" [ref=e161]:
+                - strong [ref=e162]: Demo user 01
+              - cell "Constructions" [ref=e163]
+              - cell " " [ref=e164]:
+                - button "" [ref=e165] [cursor=pointer]:
+                  - generic [ref=e166]: 
+                - button "" [ref=e167] [cursor=pointer]:
+                  - generic [ref=e168]: 
+              - cell "" [ref=e169]:
+                - link "":
+                  - /url: "#"
+                  - generic: 
+            - row "- CII_Polycab India Limited Capital Goods  " [ref=e170]:
+              - cell "-" [ref=e171]
+              - cell "CII_Polycab India Limited" [ref=e172]:
+                - strong [ref=e173]: CII_Polycab India Limited
+              - cell "Capital Goods" [ref=e174]
+              - cell "" [ref=e175]:
+                - generic [ref=e177]: 
+              - cell "" [ref=e178]:
+                - link "" [ref=e179] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaU1EIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--35f2d36518cb025d17d2b5fc40eba072febc776e/CII_Polycab%20India%20Limited2024-08-20.pdf?disposition=attachment
+                  - generic [ref=e180]: 
+            - row "34543533 Test user July1901 Capital Goods   " [ref=e181]:
+              - cell "34543533" [ref=e182]
+              - cell "Test user July1901" [ref=e183]:
+                - strong [ref=e184]: Test user July1901
+              - cell "Capital Goods" [ref=e185]
+              - cell " " [ref=e186]:
+                - button "" [ref=e187] [cursor=pointer]:
+                  - generic [ref=e188]: 
+                - button "" [ref=e189] [cursor=pointer]:
+                  - generic [ref=e190]: 
+              - cell "" [ref=e191]:
+                - link "" [ref=e192] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBanNDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--65eb7267813a08ea33ce04f683a10779eaf88441/Test%20user%20July19012024-08-08.pdf?disposition=attachment
+                  - generic [ref=e193]: 
+            - row "- july 12 04 user Chemicals   " [ref=e194]:
+              - cell "-" [ref=e195]
+              - cell "july 12 04 user" [ref=e196]:
+                - strong [ref=e197]: july 12 04 user
+              - cell "Chemicals" [ref=e198]
+              - cell " " [ref=e199]:
+                - button "" [ref=e200] [cursor=pointer]:
+                  - generic [ref=e201]: 
+                - button "" [ref=e202] [cursor=pointer]:
+                  - generic [ref=e203]: 
+              - cell "" [ref=e204]:
+                - link "" [ref=e205] [cursor=pointer]:
+                  - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBaDBDIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--affefbca6b65f892cf37f79b754dce302c36e406/july%2012%2004%20user2024-08-07.pdf?disposition=attachment
+                  - generic [ref=e206]: 
+        - navigation [ref=e208]:
+          - list [ref=e209]:
+            - listitem [ref=e210]:
+              - generic: ←
+            - listitem [ref=e211]:
+              - generic [ref=e212]: "1"
+            - listitem [ref=e213]:
+              - link "2" [ref=e214] [cursor=pointer]:
+                - /url: /service/peer_benchmark?page=2
+            - listitem [ref=e215]:
+              - link "→" [ref=e216] [cursor=pointer]:
+                - /url: /service/peer_benchmark?page=2
+      - contentinfo [ref=e217]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e219]
+        - heading "Privacy Policy" [level=6] [ref=e221] [cursor=pointer]
+  - img
+```

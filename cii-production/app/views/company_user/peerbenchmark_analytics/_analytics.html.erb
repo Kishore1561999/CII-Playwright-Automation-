@@ -1,0 +1,59 @@
+<div style='padding-bottom:1rem;'>
+ 
+<!--<div>Your answer: <%= answer[data['name']] %></div>  -->
+<% case data['analytics1']
+  when 'average'
+    average = calculate_average(total_answers_data, data['name'], answer)[:average]
+    %><div>Average: <%= average %></div><%
+  when 'option_percentage'
+    %><div>Percentage value: <%= calculate_percentage(total_answers_data, data, q_id) %></div><%
+  when 'percentage_option1_choosen'
+    %><div>Percentage value: <%= calculate_percentage_seventhquestion(total_answers_data, data, q_id) %></div><%
+  when 'total'
+    total_value = calculate_total_value(total_answers_data, data['name'], answer)
+    %><div>Total value: <%= total_value %></div><%
+  when 'ethics'
+    ethics = calculate_ethics(total_answers_data, data['name'], q_id)
+    ethics.each do |category, total|
+      %><p><span style="text-transform: capitalize;"><%= category %></span>: <%= total %></p><%
+    end
+  when 'find_two_values'
+    sorted_totals = find_two_values(total_answers_data, data['name'], answer)%>
+    <table class="margins-adjustment" style="margin-top: -25px;">
+    <% sorted_totals.take(2).each do |category, total|
+      %>
+        <tr>
+            <th class="about_indicator" style="text-transform: capitalize;"><%= category %></th>
+        </tr>
+    <% end %>
+    </table>
+  <% when 'lca'
+    %><div>Percentage value: <%= calculate_lca_percentage(total_answers_data, data['name'], q_id) %></div><%
+  when 'percentage_3options_choosen'
+    %><div>Percentage value: <%= calculate_threeoptions_choosen_percentage(total_answers_data, data['name'], q_id) %></div><%
+  when 'percentage_option2_choosen'
+    %><div>Percentage value: <%= calculate_optiontwo_choosen_percentage(total_answers_data, data['name'], q_id, qvalue) %></div><%
+  when 'increasing_trend'
+    %><div>Increasing trend: <%= calculate_trend(total_answers_data, data['name'], answer, q_id, position) %></div><%
+end %>
+
+
+<% case data['analytics2']
+  when 'maximum'
+    %><div>Maximum: <%= calculate_average(total_answers_data, data['name'], answer)[:maximum] %></div><%
+  when 'companies_investing'
+    %><div>Companies investing: <%= calculate_investing(total_answers_data, data['name'], answer, q_id, position) %></div><%
+  when 'coc_company'
+    %><div>COC: <%= calculate_coc(total_answers_data, data['name'], q_id) %></div><%
+end %>
+
+<% case data['analytics3']
+  when 'minimum'
+    %><div>Minimum: <%= calculate_average(total_answers_data, data['name'], answer)[:minimum] %></div><%
+  when 'full_commitment'
+    %><div>100% commitment: <%= calculate_commitment(total_answers_data, data['name'], answer, q_id, position) %></div><%
+  when 'employee_coc'
+    %><div>COC: <%= calculate_empcoc(total_answers_data, data['name'], q_id) %></div><%
+end %>
+
+</div>

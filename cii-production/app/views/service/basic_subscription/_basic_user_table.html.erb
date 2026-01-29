@@ -1,0 +1,70 @@
+<table class="table table-hover">
+  <thead class="sticky-top" style="background-color:#fff;">
+  <tr class="text-nowrap">
+    <th class="text-center">ISIN</th>
+    <th>Company Name</th>
+    <th class="text-center">Sector</th>
+    <th class="text-center">Access Approval</th>
+    <th class="text-center">Registration Status</th>
+    <th class="text-center">Date of subscription</th>
+    <th class="text-center">Action</th>
+  </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+  <% if company_users.length > 0 %>
+    <% company_users.each do |company_user| %>
+      <tr>
+        <td class="text-center" title="<%= company_user.company_isin_number %>">
+          <%= company_user.company_isin_number.present? ? (company_user.company_isin_number.length > 10 ? "#{company_user.company_isin_number[0, 10]}..." : company_user.company_isin_number) : '-' %>
+        </td>
+       <% company_name = company_user.company_name.match(/\s/) ? "break" : "no-break" %>
+        <% if company_name == "break" %>
+          <td class="text-wrap"><strong id="companyNameId_<%= company_user.id %>"><%= "#{company_user.company_name}" %></strong></td>
+        <% else %>
+          <td><strong id="companyNameId_<%= company_user.id %>"><%= "#{company_user.company_name}" %></strong></td>
+        <% end %>
+        <% company_sector = company_user.company_sector.match(/\s/) ? "break" : "no-break" %>
+        <% if company_sector == "break" %>
+          <td class="text-wrap text-center"><%= "#{company_user.company_sector}" %></td>
+        <% else %>
+          <td class="text-center"><%= "#{company_user.company_sector}" %></td>
+        <% end %>
+        <td class="text-center">
+          <% if ApplicationRecord::SUBSCRIPTION.include?(company_user.subscription_approved) %>
+            <span class="badge bg-success p-1" ><i class='bx bx-check fs-4'></i></span>
+          <% elsif company_user.subscription_approved == ApplicationRecord::REJECTED %>
+            <span class="badge bg-danger p-1"><i class='bx bx-x fs-4'></i></span>
+          <% else %>
+            <button type="button" value="<%= company_user.id %>" class="btn btn-xs btn-success approve_button" data-bs-toggle="modal" data-bs-target="#modalbasicApprove"><i class='bx bx-check fs-4'></i></button>
+            <button type="button" value="<%= company_user.id %>" class="btn btn-xs btn-danger reject_button " data-bs-toggle="modal" data-bs-target="#modalbasicReject"><i class='bx bx-x fs-4'></i></button>
+          <% end %>
+        </td>
+        <td class="text-center">
+          <% status_info = subscription_status(company_user) %>
+          <span class="<%= status_info[:class] %>"><%= status_info[:status] %></span>
+        </td>
+        <td class="text-center">
+          <% if company_user.subscription_approved_at.present? %>
+            <%= company_user.subscription_approved_at.strftime("%d/%m/%Y") %>
+          <% else %>
+            --
+          <% end %>
+        </td>
+        <td>
+        <%= link_to "#", class: "btn btn-sm btn-primary icon-default-size me-1", 'data-bs-toggle': "modal", 'data-bs-target': "#modalEditCompany", 'data-user-id': company_user.id, 'data-company-isin': company_user.company_isin_number, 'data-company-name': company_user.company_name, 'data-company-sector': company_user.company_sector do %>
+          <i class="bx bx-edit-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+        <% end %>
+        <%= link_to "#", class: "btn btn-sm btn-danger icon-default-size me-1 delete_button", 'data-bs-toggle': "modal", 'data-bs-target': "#modalDelete", name: company_user.id do %>
+          <i class="bx bx-trash icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="9" class="text-center">No data available!</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

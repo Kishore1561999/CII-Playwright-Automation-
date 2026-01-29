@@ -1,0 +1,2 @@
+class PeerBenchmarkingQuestionnaire < ApplicationRecord
+end

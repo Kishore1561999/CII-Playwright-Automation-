@@ -1,0 +1,272 @@
+<style>
+.sub-menu-item {
+  display: none;
+}
+
+.rotate {
+  transform: rotate(220deg) !important;
+}
+
+</style>
+
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  <div class="app-brand demo mb-5">
+    <div class="app-brand-link px-2">
+      <a href="https://www.cii.in/" class="app-brand-link" target="_blank">
+        <span class="app-brand-logo demo"><%= image_tag asset_path('cii_logo_blue.png') %></span>
+      </a>   
+    </div>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+   <% if current_user.is_analyst? %>
+      <ul class="menu-inner pt-2 py-1">
+        <li class="menu-item pb-3 <%= is_analyst_dashboard_controller? ? 'active' : '' %>">
+          <%= link_to analyst_dashboard_path, class: "menu-link list-items bg-menu-default" do %>
+            <div data-i18n="Basic">ESG Diagnostics</div>
+          <% end %> 
+        </li>
+        <li class="menu-item <%= is_analyst_data_collection_controller? ? 'active' : '' %>">
+          <%= link_to analyst_data_collection_path, class: "menu-link list-items bg-menu-default dropdown-btn" do %>
+            <div data-i18n="Basic">CII Data Collection</div>
+          <% end %>
+        </li>
+      </ul>   
+  <% end %>
+
+  <ul class="menu-inner py-1">
+  <% if current_user.is_admin? || current_user.is_manager? %>
+    <li class="menu-item pb-3 <%= (is_dashboard_controller? || is_company_controller?) ? 'active' : '' %>">
+      <%= link_to current_user_dashboard, class: "menu-link list-items list-items-disable dropdown-btn" do %>
+        <div class="mr-auto" data-i18n="Basic">ESG Diagnostics</div>
+      <% end %>
+    </li>
+  <% end %>   
+
+  <% if current_user.is_company_user? %>
+
+  <li class="menu-item <%= (current_user.subscription_esg_diagnostic && current_user.approved? && is_assessment_controller?) || (current_user.subscription_esg_diagnostic && current_user.approved? && is_dashboard_controller?) ? 'active' : '' %>">
+    <%= link_to current_user.subscription_esg_diagnostic && current_user.approved? && current_user.diagonsitics_delete_status.nil? ? current_user_dashboard : '#', class: "menu-link list-items #{current_user.subscription_esg_diagnostic && current_user.approved? && current_user.diagonsitics_delete_status.nil? ? '' : 'sidebar-disabled'}", data: { bs_toggle: current_user.subscription_esg_diagnostic && current_user.approved? && current_user.diagonsitics_delete_status.nil?  ? nil : 'modal', bs_target: current_user.subscription_esg_diagnostic && current_user.approved? && current_user.diagonsitics_delete_status.nil?  ? nil : '#modalDignostics' } do %>
+      <div data-i18n="Basic">ESG Diagnostics <% unless current_user.subscription_esg_diagnostic && current_user.approved? && current_user.diagonsitics_delete_status.nil? %> <i class="fa fa-lock" style="margin-left: 53px;"></i> <% end %></div>
+    <% end %>
+  </li>
+
+  <% active_menu_basics = '' %>
+  <% active_menu_premium = '' %>
+  <% if !current_user.subscription_esg_diagnostic %>
+    <% active_menu_basics = 'active' if current_user.subscription_services == 'Basics' && is_peer_benchmark_controller? %>
+    <% active_menu_premium = 'active' if current_user.subscription_services == 'Premium' && is_peer_benchmark_controller? %>
+    <% active_menu_premium_learning = 'active' if current_user.subscription_services == 'Premium' && is_esg_learning_controller? %>
+    <% active_menu_premium_publication = 'active' if current_user.subscription_services == 'Premium' && is_publication_controller? %>
+  <% else %>
+    <% active_menu_basics = 'active' if is_peer_benchmark_controller? %>
+    <% active_menu_premium = 'active' if is_peer_benchmark_controller? %>
+    <% active_menu_premium_learning = 'active' if is_esg_learning_controller? %>
+    <% active_menu_premium_publication = 'active' if is_publication_controller? %>
+  <% end %>
+
+  <% if params[:upgrade] == "true" %>
+      <% active_menu_basics = 'active' %>
+  <% end %>
+<% if ApplicationRecord::SUBSCRIPTION.include?(current_user.subscription_approved) && current_user.subscription_approved_at.present? && current_user.subscription_approved_at > 1.year.ago && current_user.basic_delete_status.nil? %>
+  <% case current_user.subscription_services %>
+  <% when 'Basics' %>
+    <li class="menu-item <%= active_menu_basics %>">
+      <%= link_to peer_benchmarking_path, class: "menu-link list-items" do %>
+        <div data-i18n="Basic">Peer Benchmarking</div>
+      <% end %> 
+    </li>
+    <!-- If need to show the publication and esg -elearning means just remove the "d-none" class from the both list item -->
+    <li class="menu-item d-none">
+      <a class="menu-link sidebar-disabled" data-bs-toggle="modal" data-bs-target="#modalElearnings">
+        <div data-i18n="Basic">ESG E-Learnings <i class="fa fa-lock" style="margin-left: 49px;"></i></div>
+      </a>
+    </li>
+    <li class="menu-item d-none">
+      <a class="menu-link sidebar-disabled" data-bs-toggle="modal" data-bs-target="#modalPublications">
+        <div data-i18n="Basic">Publications <i class="fa fa-lock" style="margin-left: 79px;"></i></div>
+      </a>
+    </li>
+    <% when 'Premium' %>
+      <li class="menu-item <%= active_menu_premium %>">
+        <%= link_to peer_benchmarking_path, class: "menu-link list-items dropdown-btn" do %>
+          <div data-i18n="Basic">Peer Benchmarking</div>
+        <% end %> 
+      </li>
+      <li class="menu-item <%= active_menu_premium_learning %>">
+        <%= link_to esg_learnings_path, class: "menu-link list-items dropdown-btn" do %>
+          <div data-i18n="Basic">ESG E-Learnings</div>
+        <% end %> 
+      </li>
+      <li class="menu-item <%= active_menu_premium_publication %>">
+        <%= link_to publications_path, class: "menu-link list-items dropdown-btn"  do %>
+          <div data-i18n="Basic">Publications</div>
+        <% end %> 
+      </li>
+    <% end %>
+<% else %>
+    <li class="menu-item">
+      <a class="menu-link sidebar-disabled" data-bs-toggle="modal" data-bs-target="#modalPeerbenchmarking">
+        <div data-i18n="Basic">Peer Benchmarking <i class="fa fa-lock" style="margin-left: 30px;"></i> </div> 
+      </a>
+    </li>
+     <!-- If need to show the publication and esg -elearning means just remove the "d-none" class from the both list item -->
+    <li class="menu-item d-none">
+      <a class="menu-link sidebar-disabled" data-bs-toggle="modal" data-bs-target="#modalElearnings">
+        <div data-i18n="Basic">ESG E-Learnings <i class="fa fa-lock" style="margin-left: 49px;"></i></div>
+      </a>
+    </li>
+    <li class="menu-item d-none">
+      <a class="menu-link sidebar-disabled" data-bs-toggle="modal" data-bs-target="#modalPublications">
+        <div data-i18n="Basic">Publications <i class="fa fa-lock" style="margin-left: 79px;"></i></div>
+      </a>
+    </li>
+<% end %>
+
+  <% end %>
+
+  <% if current_user.is_admin? || current_user.is_manager? %>
+    <!--<li class="menu-item <%#= is_company_controller? ? 'active' : '' %>">
+        <%#= link_to current_company_user, class: "menu-link" do %>
+          <i class="menu-icon tf-icons bx bx-buildings"></i>
+          <div data-i18n="Basic">Company Lists</div>
+        <%# end %>
+      </li>-->
+  <% end %>
+
+  <% if current_user.is_admin? || current_user.is_manager? %>
+    <li class="menu-item pb-3 <%= (is_premium_controller? || is_admin_publication_controller? || is_admin_elearning_controller?) ? 'active' : '' %>">
+      <%= link_to premium_subscription_path, class: "menu-link list-items list-items-disable dropdown-toggle dropdown-btn", data: { toggle: "dropdown" } do %>
+        <div class="mr-auto target-new" style="font-size: 92%;" data-i18n="Basic">ESG - Premium Subscription<span class="dropdown-toggle-arrow"></span></div>
+      <% end %>
+      <ul class="sub-menu-item">
+         <li class="menu-item <%= is_admin_elearning_controller? ? 'active' : ''%>">
+          <%= link_to elearning_admin_dashboard_path, class: "menu-link sidebar-option-text list-menu-items dropdown-btn" do %>       
+          <div data-i18n="Basic">E-Learnings</div>
+          <% end %>
+        </li>
+         <li class="menu-item <%= is_admin_publication_controller? ? 'active' : ''%>">
+          <%= link_to publication_admin_dashboard_path, class: "menu-link sidebar-option-text list-menu-items dropdown-btn" do %>         
+          <div data-i18n="Basic">Publications</div>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+  <% end %>
+  <% if current_user.is_admin? || current_user.is_manager? %>
+    <li class="menu-item pb-3 <%= is_basic_controller? ? 'active' : '' %>">
+      <%= link_to basic_subscription_path, class: "menu-link list-items list-items-disable dropdown-btn" do %>
+        <div class="mr-auto" data-i18n="Basic">ESG - Basic Subscription</div>
+      <% end %>
+    </li>
+    <li class="menu-item pb-3 <%= (is_admin_peer_benchmark_controller? || is_data_collection_controller? || is_data_analytics_controller?) ? 'active' : '' %>">
+      <%= link_to cii_peer_benchmarking_path, { class: "menu-link list-items list-items-disable dropdown-toggle dropdown-btn", data: { toggle: "dropdown" } } do %>
+        <div class="mr-auto target-new" data-i18n="Basic">PB Data Management<span class="dropdown-toggle-arrow"></span></div>
+      <% end %>
+      <ul class="sub-menu-item sub-sub-menu premium-sidebar">
+        <li class="menu-item <%= is_data_collection_controller?  ? 'active' : '' %>">
+          <%= link_to data_collection_dashboard_path(subscription_type: 'premium'), class: "menu-link sidebar-option-text list-menu-items dropdown-btn" do %>
+            <div data-i18n="Basic">CII Data Collection</div> 
+          <% end %>
+        </li>
+        <li class="menu-item <%= is_data_analytics_controller?  ? 'active' : '' %>">
+          <%= link_to data_analytics_path, class: "menu-link sidebar-option-text list-menu-items" do %>
+            <div data-i18n="Basic">Data Analytics</div>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+  <% end %>
+  <% if current_user.is_admin? %>
+    <li class="menu-item pb-3  <%= is_user_controller? ? 'active' : '' %>">
+      <%= link_to users_path, class: "menu-link list-items list-items-disable dropdown-btn" do %>
+      <div data-i18n="Basic">User Management</div>
+      <% end %>
+    </li>
+    <li class="menu-item pb-3 <%= is_email_controller? ? 'active' : '' %>">
+      <%= link_to emails_path, class: "menu-link list-items list-items-disable dropdown-btn" do %>         
+      <div data-i18n="Basic">Email Content</div>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+  <% if current_user.is_company_user? && current_user.subscription_approved.in?(["premium", "basics"]) %>
+    <ul class="mb-20 user-guide-ul">
+    <li class="menu-item user-guide d-flex align-items-center <%= is_email_controller? ? 'active' : '' %>">
+        <a href="#" class="menu-link font-red user-guide-link">
+          <i class="menu-icon tf-icons bx bx-help-circle"></i>
+          <div id="userGuide" data-i18n="Basic">User Guide</div>
+        </a>
+      </li>
+    </ul>
+  <% end %>      
+</aside>
+
+<% if current_user.is_company_user? && current_user.subscription_approved.in?(["premium", "basics"]) %>
+<%= render partial: 'company_user/peer_benchmark/user_guide_modal' %>
+<% end %>
+
+<script>
+$(document).ready(function(){
+  var currentPath = window.location.pathname;
+  if (currentPath === '/company_user/peer_benchmarking') {
+  var cookies = '<%= cookies[:modal_opened] %>';
+  if(!cookies) {
+    $('#userGuideModal').modal({ backdrop: 'static', keyboard: false });
+    $('#userGuideModal').modal('show');
+  }
+  $('.create-cookies').click(function(){
+    $.ajax({
+      type: 'POST',
+      beforeSend: function (xhr) {
+  			xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+  		},
+      url: "/company_user/set_cookie",
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  });
+}
+
+  $('#userGuideModal').modal({ backdrop: 'static', keyboard: false });
+
+  $('.user-guide-link').click(function(e){
+      e.preventDefault(); 
+      showModal();
+  });
+});
+
+function showModal() {
+    $('#userGuideModal').modal('show');
+}
+
+$(document).ready(function() {
+  var currentUrl = window.location.href;
+  var parts = currentUrl.split('/');
+  var lastPart = parts.pop(); 
+  setTimeout(function() {
+    if(lastPart == 'premium_subscription') {
+      $('.premium-sidebar').hide();
+    } else if (lastPart == 'basic_subscription') {
+      $('.basic-sidebar').hide();
+    }
+  }, 5);
+  $(".sub-menu-item").hide();
+  $(".menu-item.active .sub-menu-item").show();
+
+  $(".dropdown-btn").click(function(event) {
+    event.preventDefault();
+    $(this).toggleClass("active").next().slideToggle();
+     var target = $(this).attr('href');
+    if (target !== '#') {
+        setTimeout(function() {
+            window.location.href = target;
+        }, 500);
+    }
+  });
+});
+</script>

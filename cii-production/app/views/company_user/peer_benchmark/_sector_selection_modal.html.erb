@@ -1,0 +1,20 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalInstructions" style="display: none" id="instructionsModalPeer">Option 2</button>
+
+<div class="modal fade" id="modalInstructions" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered peer-modal-confirmation" role="document">
+		<div class="modal-content" style="border-radius: 1.5rem;">
+			<div class="modal-body">
+      <button type="button" class="btn-close float-right" style="margin-top: 20px; margin-right: 10px; box-shadow: revert;" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="">
+            <div class="modal_header_text mb-2">Please re-confirm the sector for Peer Benchmarking analysis</div>
+             <div class="mb-4 d-flex">
+              <label class="form-label" style="margin-top: 5%">Select Sector</label>
+                <%= select_tag(nil, options_for_select(Sector.pluck(:sector_name)), include_blank: "Select sector", class: "form-control form-select mw-fit-content ms-3 mt-3", id: "modalSector") %>
+              </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn login-btn peer-summit modal_popup_btn" id="updateUserDataBtn">Ok</button>
+            </div>
+			</div>
+		</div>
+	</div>
+</div>

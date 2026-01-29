@@ -1,0 +1,28 @@
+<% disable = (params[:action] == "view_providedata") ? true : false %>
+<div class="top-header my-2">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="d-flex align-items-center gap-2 mt-0">
+        <p class="m-0">Company Name: <span class="assessment-header-color"><%= @company.company_name %></span> </p>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <p class="m-0">Sector: <span class="assessment-header-color"><%= @company.company_sector %></span> </p>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <p class="m-0">No of Questions: <span class="assessment-header-color"><%= @questions.length %></span> </p>
+      </div>
+    </div>
+    <% if params[:action] != "view_providedata" %>
+      <div class="col-md-6">
+        <div class="d-flex align-items-center gap-2" style="float: right">
+          <button class="btn mx-1 clear-btn clear_data <%= disable || !@answer_present ? 'disabled' : '' %>">Clear</button>
+          <button class="btn btn-success mx-1 save_assessment save-btn-color <%= disable ? 'disabled' : '' %>">Save</button>
+          <button class="btn btn-primary mx-1 submit_assessment <%= disable ? 'disabled' : '' %>" data-bs-toggle="modal" data-bs-target="#modalSubmit">Submit</button>
+          <button class="btn btn-primary mx-1 <%= disable ? 'disabled' : '' %>" data-bs-toggle="modal" data-bs-target="#modalUploadXML">Upload XML</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+

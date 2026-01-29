@@ -1,0 +1,932 @@
+<style>
+    .marginPadding {
+        margin-left: 100px !important;
+        margin-right: 100px !important;
+    }
+
+    .remove_border {
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom: none !important;
+        border-top: none !important;
+    }
+</style>
+
+<div style="margin-top: 0 !important;">
+  <a href="<%= ENV['APPLICATION_URL'] %>">
+    <%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/first_page.jpg', size: "793x1120") %>
+  </a>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<p>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/> &nbsp;
+</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="marginPadding">
+  <p style="margin-left:0; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+  <p style="margin-left:0cm; margin-right:0cm; text-align:justify">
+    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><strong><span style="font-size:8.0pt"><span style="color:#404040">Copyright &copy; <%= Date.today.year %>
+      Confederation of Indian Industry (CII).</span></span></strong></span></span>
+  </p>
+
+  <p style="margin-left:0cm; margin-right:0cm; text-align:justify">
+    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:8.0pt"><span style="color:#404040">All rights reserved. No part of this publication may be reproduced, stored in, or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording or otherwise), in part or full in any manner whatsoever, or translated into any language, without the prior written permission of the copyright owner. CII has made every effort to ensure the accuracy of the information and material presented in this document, based on the provision of information by the second party involved and secondary information. Nonetheless, all information, estimates, and opinions contained in this publication are subject to change without notice and do not constitute professional advice in any manner. Neither CII nor any of its office bearers or analysts or employees accept or assume any responsibility or liability in respect of the information provided herein. However, any discrepancy or error found in this publication may please be brought to the notice of CII for appropriate correction. </span></span></span></span>
+  </p>
+
+  <p style="margin-left:0cm; margin-right:0cm; text-align:justify">
+    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:8.0pt"><span style="color:#404040">Published by Confederation of Indian Industry (CII), The Mantosh Sondhi Centre; 23, Institutional Area, Lodi Road, New Delhi 110003, India Tel: +91-11-24629994-7; Email: </span></span><a href="mailto:info@cii.in" style="color:#0563c1; text-decoration:underline"><span style="font-size:8.0pt"><span style="color:#404040">info@cii.in</span></span></a><span style="font-size:8.0pt"><span style="color:#404040">; Web: </span></span><a href="http://www.cii.in" style="color:#0563c1; text-decoration:underline"><span style="font-size:8.0pt"><span style="color:#404040">www.cii.in</span></span></a></span></span>
+  </p>
+</div>
+
+<div class="marginPadding">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <p style="text-align: center !important; ">
+    <span style="margin-left:0cm; margin-right:0cm; text-align:center">
+    <strong><span style=" font-family:Calibri,sans-serif; font-size:26.0pt; color:#002060">ESG Diagnostics</span></strong>
+  </span>
+    <br>
+    <% @company_score.created_at ? @report_year = @company_score.created_at.strftime('%Y') : "" %>
+    <span style=" margin-top: 0cm !important; margin-left:0cm; margin-right:0cm; text-align:center">
+  <strong>
+    <s style=" font-size:20.0pt; font-family: Calibri Light,sans-serif; color: #c9c9c9 !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</s>&nbsp;&nbsp;&nbsp;
+    <span style=" font-size:14.0pt; font-family: Calibri Light,sans-serif; color:#70ad47">R e p o r t&nbsp;&nbsp;
+      <% if @report_year.present? %>
+        <%= @report_year[0] %>&nbsp;<%= @report_year[1] %>&nbsp;<%= @report_year[2] %>&nbsp;<%= @report_year[3] %>
+        <% end %>
+    </span>
+      &nbsp;&nbsp;&nbsp;<s style=" font-size:20.0pt; font-family: Calibri Light,sans-serif; color: #c9c9c9 !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</s>
+  </strong>
+  </span>
+  </p>
+
+  <br>
+  <br>
+    <strong><span style=" font-size:16pt; font-family: Calibri Light,sans-serif; color:#70ad47;">&nbsp;<%= @company_details.company_name ? @company_details.company_name : '-' %></span></strong>
+  <br>
+  <br>
+  <table border="1" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse; border: none !important;">
+    <tbody>
+    <tr style="">
+      <td rowspan="2" style="height:100pt !important; vertical-align:top; width:150.25pt; border: solid #a8d08d 1.0pt !important;">
+        <p style="margin-left:0cm; margin-right:0cm; margin-top: 3px !important; text-align:center">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><em><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:#70ad47">
+            <img src="<%= @company_details.company_logo.present? ? ENV['APPLICATION_URL'] + "/word_doc_images/company_logos/company_logo_#{@company_user_id}.jpg" : ENV['APPLICATION_URL'] + "/word_doc_images/no-image.png" %>" width="130" height="130">
+          </span></span></span></em></span></span>
+          &nbsp;
+        </p>
+      </td>
+      <td style="background-color:#70ad47; height:49.2pt; width:150.25pt; border: solid #a8d08d 1.0pt !important;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <strong><span style="font-size:12.0pt; font-family: Calibri Light,sans-serif; color:white;">&nbsp;&nbsp;Industry</span></strong>
+        </p>
+      </td>
+      <td style="background-color:#e2efd9; height:49.2pt; width:150.3pt; border: solid #a8d08d 1.0pt !important;">
+        <p style="margin-left:0cm; margin-right:0cm; font-family: Calibri Light,sans-serif;">&nbsp;<%= @company_details.company_sector ? @company_details.company_sector : '-' %></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#70ad47; height:49.15pt; width:150.25pt; border: solid #a8d08d 1.0pt !important;">
+        <strong><span style="font-size:12.0pt; font-family:  Calibri Light,sans-serif; color:white">&nbsp;&nbsp;ESG Diagnostics Score</span></strong>
+      </td>
+      <td style="background-color:#e2efd9; height:49.15pt; width:150.3pt; border: solid #a8d08d 1.0pt !important;">
+        <p style="margin-left:0cm; margin-right:0cm; font-family: Calibri Light,sans-serif;">&nbsp;<%= @company_score.avg_score ? @company_score.avg_score.round(2) : 0 %>
+          /100 </p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+  <hr style="color: #a9d18e;">
+  <p style="margin-top: 20px !important;">&nbsp;</p>
+    <strong><span style="color:#70ad47; font-size:16pt; font-family: Calibri Light,sans-serif;">Performance Summary</span></strong>
+  <hr style="color: #ffffff !important;">
+  <span style="font-size:11pt; font-family: Calibri Light,sans-serif; color:#262626;">Material issues identified:</span>
+  <br>
+  <br>
+  <br>
+
+  <table cellspacing="1" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border: 1px solid white; font-family: Calibri Light,sans-serif !important; max-width: 100% !important;">
+    <tbody>
+    <tr style="">
+      <td style="width:120.1px;">
+        <div style=" background-color: #0065b7;">
+          <p style="text-align: center !important;">
+            <span style=" color: #ffffff !important; font-family: Calibri,sans-serif; font-size:12pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #009c40;">
+          <p style="text-align: center !important;">
+            <span style=" color: #ffffff !important; font-family: Calibri,sans-serif; font-size:12pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #00a8eb;">
+          <p style="text-align: center !important;">
+            <span style=" color: #ffffff !important; font-family: Calibri,sans-serif; font-size:12pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #7ebe3c;">
+          <p style="text-align: center !important;">
+            <span style=" color: #ffffff !important; font-family: Calibri,sans-serif; font-size:12pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #9e7300;">
+          <p style="text-align: center !important;">
+            <span style=" color: #ffffff !important; font-family: Calibri,sans-serif; font-size:12pt;">&nbsp;</span></p>
+        </div>
+      </td>
+    </tr>
+    <tr style="border: none !important; font-family: Calibri,sans-serif; font-size:11pt;">
+      <td style="width:120.1px;">
+        <div style=" background-color: #dae3f3; max-width: 100% !important;">
+          <p style="text-align: center !important; padding: 0 !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important; padding: 0 !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt; width: 120px !important;">text</span>
+          </p>
+          <p style="text-align: center !important; padding: 0 !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important; padding: 0 !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #e2f0d9;">
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">text</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #deebf7;">
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">text</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #e2f0d9;">
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">text</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+        </div>
+      </td>
+      <td style="width:120.1px;">
+        <div style=" margin-left: 8px !important; background-color: #fff2cc;">
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">text</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+          <p style="text-align: center !important;">
+            <span style=" color: #808080 !important; font-family: Calibri,sans-serif; font-size:11pt;">&nbsp;</span></p>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+  <br>
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="margin-top: 100px !important; border-collapse:collapse; border:none;">
+    <tbody>
+    <tr>
+      <td style="background-color:#70ad47; width:84.8pt;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm; margin-right:0cm; margin-bottom: 10px !important;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Dimension</span></span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="background-color:#70ad47; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm; margin-right:0cm; margin-bottom: 10px !important;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Aspect</span></span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="background-color:#70ad47; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm; margin-right:0cm; margin-bottom: 10px !important;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Question</span></span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="background-color:#70ad47; width:195.9pt">
+        <p style="margin-left:0cm; margin-right:0cm; margin-bottom: 10px !important;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Major Gap</span></span></span></strong></span></span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#e2efd9; width:84.8pt;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm; margin-bottom: 10px !important;">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:195.9pt">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; width:84.8pt;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm; margin-bottom: 10px !important;">&nbsp;</p>
+      </td>
+      <td style="vertical-align:top; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="vertical-align:top; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="vertical-align:top; width:195.9pt">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#e2efd9; width:84.8pt;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm; margin-bottom: 10px !important;">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:195.9pt">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top; width:84.8pt;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm; margin-bottom: 10px !important;">&nbsp;</p>
+      </td>
+      <td style="vertical-align:top; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="vertical-align:top; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="vertical-align:top; width:195.9pt">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#e2efd9; width:84.8pt; border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm; margin-bottom: 10px !important;">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:3.0cm;border-right: 1px solid #c5e0b3;">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style="background-color:#e2efd9; width:195.9pt">
+        <p style="margin-left:0cm;font-family: Calibri Light,sans-serif; font-size:11pt; margin-right:0cm">&nbsp;</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+</div>
+<div>
+  <div style="margin-top: 17.5px !important;">
+    <%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/page_end_border.jpg', size: "800x65") %>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<div class="marginPadding">
+  <br>
+  <div style="background-color: #f4f9f1; width: 700px !important; height: 400px !important; margin-top: 18px !important;">
+    <em style="">
+      <%= image_tag(ENV['APPLICATION_URL'] + "/graph_images/score_chart_#{@company_user_id}.jpg", size: "590x350") %>
+    </em>
+  </div>
+  <p style=" text-align:center !important;">
+    <br><%= image_tag(ENV['APPLICATION_URL'] + "/word_doc_images/score_color.png", size: "520x55") %></p>
+  <p style="margin-top: 39px !important; margin-left:0cm; margin-right:0cm">
+    <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:16.0pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:#00b050">Understanding the Graph</span></span></span></strong></span></span>
+  </p>
+
+  <table style="">
+    <tbody>
+    <tr>
+      <td style="background-color:#f4f9f1; vertical-align:top">
+        <table style="width:100%;">
+          <tbody>
+          <tr>
+            <td>
+              <p style=" font-family: Calibri Light,sans-serif; font-size:11.0pt;">
+                <span style="color:#00b050;">&bull;</span><span style="color:#262626">&nbsp;&nbsp;&nbsp; y-axis : Score in the aspect (0-100)</span>
+                <br>
+                <span style="color:#00b050">&bull;</span><span style="color:#262626; padding-top: 100px !important; ">&nbsp;&nbsp;&nbsp; x- axis : Name of the aspects.</span>
+                <br>
+                <span style="color:#00b050">&bull;</span><span style="color:#262626">&nbsp;&nbsp;&nbsp; The aspects have been arranged in the decreasing order of the score and hence, the increasing </span>
+                <br>
+                <span style="color:#262626">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; order of the risk exposure.</span>
+                <br>
+                <span style="color:#00b050">&bull;</span><span style="color:#262626">&nbsp;&nbsp;&nbsp; Of the high to medium risk areas, following are the material issues:</span>
+              </p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+  <p style=" margin-top: 21px !important; margin-left:0cm; margin-right:0cm">
+    <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:16.0pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:#00b0f0">Understanding the Total Score</span></span></span></strong></span></span>
+  </p>
+
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border:none">
+    <tbody>
+    <tr style=" height: 25px !important;">
+      <td style=" background-color:#00b0f0; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm">&nbsp;</p>
+      </td>
+      <td style=" background-color:#00b0f0; width:156.2pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white;">Score</span></span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" background-color:#00b0f0; width:167.5pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">Risk Outlook</span></span></span></strong></span></span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style=" background-color:#deeaf6; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Governance Dimension</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" background-color:#deeaf6; width:156.2pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;"><%= ((@category_score_hash["cg"] + @category_score_hash["be"] + @category_score_hash["rm"] + @category_score_hash["td"]) / 4).round(2) %></p>
+      </td>
+      <td style=" background-color:#deeaf6; width:167.5pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-size:22pt"><span style="font-family: Calibri Light,sans-serif;"><span style="font-family: Calibri Light,sans-serif;">
+            <span style="color: <%= case ((@category_score_hash["cg"] + @category_score_hash["be"] + @category_score_hash["rm"] + @category_score_hash["td"])/4).round(2)
+               when (96..100)
+                 'forestgreen'
+               when (86..95.99)
+                 'lightgreen'
+               when (76..85.99)
+                 'darkseagreen'
+               when (71..75.99)
+                 'yellow'
+               when (61..70.99)
+                 'khaki'
+               when (51..60.99)
+                 'lemonchiffon'
+               when (36..50.99)
+                 'salmon'
+               when (21..35.99)
+                 'tomato'
+               when (0..20.99)
+                 'red'
+               else
+                 'red'
+               end %> !important;">&bull;</span></span></span></span>
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="  width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Environment Dimension</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" width:156.2pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;"><%= ((@category_score_hash["pr"] + @category_score_hash["bd"] + @category_score_hash["em"]) / 3).round(2) %></p>
+      </td>
+      <td style="  width:167.5pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+
+          <span style="font-size:22pt"><span style="font-family: Calibri Light,sans-serif;"><span style="font-family: Calibri Light,sans-serif;">
+            <span style="color: <%= case ((@category_score_hash["pr"] + @category_score_hash["bd"] + @category_score_hash["em"])/3).round(2)
+              when (96..100)
+                 'forestgreen'
+               when (86..95.99)
+                 'lightgreen'
+               when (76..85.99)
+                 'darkseagreen'
+               when (71..75.99)
+                 'yellow'
+               when (61..70.99)
+                 'khaki'
+               when (51..60.99)
+                 'lemonchiffon'
+               when (36..50.99)
+                 'salmon'
+               when (21..35.99)
+                 'tomato'
+               when (0..20.99)
+                 'red'
+               else
+                 'red'
+               end %> !important;">&bull;</span></span></span></span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style=" background-color:#deeaf6; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Social Dimension</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" background-color:#deeaf6; width:156.2pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;"><%= ((@category_score_hash["ohs"] + @category_score_hash["hc"] + @category_score_hash["csr"] + @category_score_hash["sc"] + @category_score_hash["hr"]) / 5).round(2) %></p>
+      </td>
+      <td style=" background-color:#deeaf6; width:167.5pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-size:22pt"><span style="font-family: Calibri Light,sans-serif;"><span style="font-family: Calibri Light,sans-serif;">
+            <span style="color: <%= case ((@category_score_hash["ohs"] + @category_score_hash["hc"] + @category_score_hash["csr"] + @category_score_hash["sc"] + @category_score_hash["hr"])/5).round(2)
+              when (96..100)
+                 'forestgreen'
+               when (86..95.99)
+                 'lightgreen'
+               when (76..85.99)
+                 'darkseagreen'
+               when (71..75.99)
+                 'yellow'
+               when (61..70.99)
+                 'khaki'
+               when (51..60.99)
+                 'lemonchiffon'
+               when (36..50.99)
+                 'salmon'
+               when (21..35.99)
+                 'tomato'
+               when (0..20.99)
+                 'red'
+               else
+                 'red'
+               end %> !important;">&bull;</span></span></span></span>
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style=" background-color:#00b0f0; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#ffffff">&nbsp;&nbsp;Total Score</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" background-color:#00b0f0; width:156.2pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; color: #ffffff; font-family: Calibri Light,sans-serif; font-size:11pt;">
+          <strong><%= @company_score.avg_score ? @company_score.avg_score.round(2) : 0 %></strong></p>
+      </td>
+      <td style=" background-color:#00b0f0; width:167.5pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-size:22pt"><span style="font-family: Calibri Light,sans-serif;"><span style="font-family: Calibri Light,sans-serif;"><span style="color:red">&nbsp;</span></span></span></span>
+        </p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<br>
+<br>
+<%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/page_end_border.jpg', size: "800x65") %>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="marginPadding">
+  <strong><span style="color:#70ad47; font-size:16pt; font-family: Calibri Light,sans-serif;">Gap Assessment</span></strong>
+  <br>
+  <br>
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border:none;">
+    <tbody>
+    <tr>
+      <td style="width:40px;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <img src="<%= ENV['APPLICATION_URL'] + '/word_doc_images/gd_icon.png' %>" style="height:25px; width:25px"/>
+        </p>
+      </td>
+      <td style="width:300px;">
+        <p style="margin-left:0cm; margin-right:0cm">
+        <span style="font-size:11pt">
+        <span style="font-family: Calibri Light,sans-serif;">
+        <strong>
+        <span style="font-size:16.0pt">
+        <span style="font-family: Calibri Light,sans-serif;">
+        <span style="color: #3d85c6;">&nbsp;&nbsp;Governance Dimension</span></span></span></strong></span></span>
+        </p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border:none">
+    <tbody>
+    <tr style=" height: 29px !important;">
+      <td style="vertical-align:top; background-color:#0070c0; width:155.7pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Aspect</span></span></span></strong></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; background-color:#0070c0; width:295.1pt;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">Observations</span></span></span></strong></span>
+        </p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style="vertical-align:top; background-color:#deeaf6; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Corporate Governance</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; background-color:#deeaf6; width:156.2pt;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr style=" height: 26px !important;">
+      <td style="vertical-align:top;  width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Business Ethics</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; width:156.2pt;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style="vertical-align:top; background-color:#deeaf6; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Risk Management</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; background-color:#deeaf6; width:156.2pt;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr style=" height: 26px !important;">
+<!--      <td style=" vertical-align:top; width:127.6pt; border-right: 1px solid #9cc2e5; border-bottom: 1px solid #9cc2e5;">-->
+      <td style=" vertical-align:top; width:127.6pt; border-right: 1px solid #9cc2e5;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Transparency and Disclosure</span></span></strong></span></span>
+        </p>
+      </td>
+<!--      <td style="vertical-align:top; width:156.2pt; border-bottom: 1px solid #9cc2e5;">-->
+      <td style="vertical-align:top; width:156.2pt;">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+
+  <hr style="color: #acd292;">
+  <br>
+  <br>
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border:none">
+    <tbody>
+    <tr>
+      <td style="width:40px;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <img src="<%= ENV['APPLICATION_URL'] + '/word_doc_images/ed_icon.png' %>" style="height:25px; width:25px !important;">
+        </p>
+      </td>
+      <td style="width:300px;">
+        <p style="margin-left:0cm; margin-right:0cm">
+      <span style="font-size:11pt;">
+      <span style="font-family: Calibri Light,sans-serif;">
+      <strong>
+      <span style="font-size:16.0pt">
+      <span style="font-family: Calibri Light,sans-serif;"><span style="color: #00b050;">&nbsp;&nbsp;Environment Dimension</span></span></span></strong></span></span>
+        </p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border:none">
+    <tbody>
+    <tr style=" height: 29px !important;">
+      <td style="vertical-align:top; background-color:#00b050; width:155.7pt; border-right: 1px solid #a8d08d;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Aspect</span></span></span></strong></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; background-color:#00b050; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">Observations</span></span></span></strong></span>
+        </p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style="vertical-align:top; background-color:#e2efd9; width:155.7pt; border-right: 1px solid #a8d08d;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Environment Management</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; background-color:#e2efd9; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style="vertical-align:top; width:155.7pt; border-right: 1px solid #a8d08d;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Biodiversity</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style="vertical-align:top; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style="vertical-align:top; background-color:#e2efd9; width:155.7pt; border-right: 1px solid #a8d08d;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Product Responsibility</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top; background-color:#e2efd9; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+
+  <hr style="color: #acd292;">
+
+  <br>
+  <br>
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent6" style="border-collapse:collapse; border:none">
+    <tbody>
+    <tr>
+      <td style="width:40px;">
+        <p style="margin-left:0cm; margin-right:0cm">
+          <img src="<%= ENV['APPLICATION_URL'] + '/word_doc_images/sd_icon.png' %>" style="height:25px; width:25px"/>
+        </p>
+      </td>
+      <td style="width:300px;">
+        <p style="margin-left:0cm; margin-right:0cm">
+      <span style="font-size:11pt">
+      <span style="font-family: Calibri Light,sans-serif;">
+      <strong>
+      <span style="font-size:16.0pt">
+      <span style="font-family: Calibri Light,sans-serif;"><span style="color: #c55a11;">&nbsp;&nbsp;Social Dimension</span></span></span></strong></span></span>
+        </p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table cellspacing="0" class="MsoTable15Grid6ColorfulAccent2" style="border-collapse:collapse; border:none">
+    <tbody>
+    <tr style=" height: 29px !important;">
+      <td style=" vertical-align:top; background-color:#c45911; width:155.7pt; border-right: 1px solid #f4b083;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">&nbsp;&nbsp;Aspect</span></span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top; background-color:#c45911; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-size:12.5pt"><span style="font-family: Calibri Light,sans-serif;"><span style="color:white">Observations</span></span></span></strong></span></span>
+        </p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style=" vertical-align:top; background-color:#fbe4d5; width:155.7pt; border-right: 1px solid #f4b083;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Human Capital</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top; background-color:#fbe4d5; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style=" vertical-align:top;  width:155.7pt; border-right: 1px solid #f4b083;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Human Rights</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top;  width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style=" vertical-align:top; background-color:#fbe4d5; width:155.7pt; border-right: 1px solid #f4b083;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Occupational Health &amp; Safety</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top; background-color:#fbe4d5; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style=" vertical-align:top;  width:155.7pt; border-right: 1px solid #f4b083;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Corporate Social Responsibility</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top;  width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    <tr style=" height: 26px !important;">
+      <td style=" vertical-align:top; background-color:#fbe4d5; width:155.7pt; border-right: 1px solid #f4b083;">
+        <p style="margin-left:0cm; margin-right:0cm;">
+          <span style="font-size:11pt"><span style="font-family: Calibri Light,sans-serif;"><strong><span style="font-family: Calibri Light,sans-serif;"><span style="color:#404040">&nbsp;&nbsp;Supply Chain</span></span></strong></span></span>
+        </p>
+      </td>
+      <td style=" vertical-align:top; background-color:#fbe4d5; width:295.1pt">
+        <p style="margin-left:0cm; margin-right:0cm; text-align:center; font-family: Calibri Light,sans-serif; font-size:11pt;">&nbsp;</p>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<p style="margin-top: 115.5px !important;">&nbsp;</p>
+
+<%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/page_end_border.jpg', size: "800x65") %>
+
+<div style="">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <p style="text-align: center !important;">
+    <%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/cesd_cii.png', size: "310x90") %>
+  </p>
+  <br>
+  <br>
+  <p style=""><span style="font-family:Calibri,sans-serif"><span style="font-size:10pt !important;">
+    <span style="">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      CII-ITC Centre of Excellence for Sustainable Development is a not-for-profit, industry-led institution that helps
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        business become sustainable organisations. It is on a mission to catalyse innovative ideas and solutions, in India,
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        and globally, to enable business, and its stakeholders, in sustainable value creation. It&rsquo;s knowledge, action and
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        recognition activities enable companies to be future ready, improve footprints profiles, and advocate
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        policymakers and legislators to improve standards of sustainable business through domestic and global policy
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        interventions.
+    </span></span></span>
+  </p>
+
+  <p style=""><span style="font-family:Calibri,sans-serif"><span style="font-size:10pt !important;">
+    <span style="">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      CESD leverages its role of all-inclusive ecosystem player, partnering industry, government, and civil society. It
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        has been a pioneer of environment management systems, biodiversity mapping, sustainability reporting,
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        integrated reporting, and social &amp; natural capital valuation in India, thus upgrading business in India to
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        sustainable competitiveness.
+    </span></span></span>
+  </p>
+
+  <p style=""><span style="font-family:Calibri,sans-serif"><span style="font-size:10pt !important;">
+    <span style="">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      CESD operates across the country and has also been active in parts of South and South East Asia, Middle East,
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        and Africa. It has held institutional partnerships and memberships of the United Nations Global Compact,
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Global Reporting Initiative, International Integrated Reporting Council, Carbon Disclosure Project,
+      <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        development agencies of Canada, the USA, the UK, and Germany.
+    </span></span></span>
+  </p>
+  <br>
+  <br>
+  <br>
+  <br>
+  <p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><strong><span style="font-size:10.0pt"><span style="">CII-ITC Centre of Excellence for Sustainable Development</span></span></strong><br/>
+<span style="font-size:10.0pt"><span style="">3rd Floor, Andhra Association, 24/25 Institutional Area,<br/>
+Lodhi Road, New Delhi 110003</span></span></span></span></p>
+
+  <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:10.0pt"><span style=""><a href="tel:+911141502301" style="text-decoration: none !important; color: black !important;">T: +91 11 41502301</a></span></span></span></span>
+  </p>
+  <p style="margin-left:0cm; margin-right:0cm; text-align:center">
+    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><span style="font-size:10.0pt"><span style="">&nbsp;W: </span></span><a href="http://www.sustainabledevelopment.in" style="color:#0563c1; text-decoration:underline"><span style="font-size:10.0pt"><span style="">www.sustainabledevelopment.in</span></span></a></span></span>
+  </p>
+  <p style=" margin-left:0cm; margin-right:0cm; text-align:center">
+    <br>
+    <span style="font-family:Calibri,sans-serif; font-size:12.0pt"><s>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</s> &nbsp;&nbsp; Follow us on &nbsp;&nbsp; <s> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</s></span>
+    <br>
+    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><a href="https://www.linkedin.com/company/cii-itc-centre-of-excellence-for-sustainable-development/"><%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/linkedIn.png', size: "90x90") %></a> <a href="https://twitter.com/ciicesd"><%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/twitter.png', size: "90x90") %></a> <a href="https://www.facebook.com/ciicesd"><%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/fb.png', size: "90x90") %></a> <a href="https://www.youtube.com/user/ciicesd"><%= image_tag(ENV['APPLICATION_URL'] + '/word_doc_images/youtube.png', size: "90x90") %></a> </span></span>
+  </p>
+
+<!--  <p style=" margin-left:0cm; margin-right:0cm; text-align:center">-->
+<!--    <span style="font-size:11pt"><span style="font-family:Calibri,sans-serif"><a href="https://www.linkedin.com/company/cii-itc-centre-of-excellence-for-sustainable-development/"><img id="Picture_x0020_5" src="<%#= ENV['APPLICATION_URL'] + '/word_doc_images/linkedIn.png' %>" style="height:16.1pt !important; left:0; margin-left:309.35pt; margin-top:6.1pt; position:absolute; text-align:left; width:23.95pt !important; z-index:251668480"/></a> <a href="https://twitter.com/ciicesd"><img id="Picture_x0020_10" src="<%#= ENV['APPLICATION_URL'] + '/word_doc_images/twitter.png' %>" style="height:16.1pt !important; left:0; margin-left:173.5pt; margin-top:6.35pt; position:absolute; text-align:left; width:18pt !important; z-index:251670528"/></a> <a href="https://www.facebook.com/ciicesd"><img id="Picture_x0020_15" src="<%#= ENV['APPLICATION_URL'] + '/word_doc_images/fb.png' %>" style="height:16.1pt !important; left:0; margin-left:81.45pt; margin-top:5.95pt; position:absolute; text-align:left; width:29.9pt !important; z-index:251671552"/></a> <a href="https://www.youtube.com/user/ciicesd"><img id="Picture_x0020_9" src="<%#= ENV['APPLICATION_URL'] + '/word_doc_images/youtube.png' %>" style="height:16.1pt !important; left:0; margin-left:236.9pt; margin-top:5.75pt; position:absolute; text-align:left; width:21.2pt !important; z-index:251669504"/></a> </span></span>-->
+<!--  </p>-->
+  <p style=" margin-top: 59px !important;">&nbsp;</p>
+  <br>
+  <br>
+  <br>
+  <br>
+</div>

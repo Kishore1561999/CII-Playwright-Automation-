@@ -1,0 +1,594 @@
+wb = xlsx_package.workbook
+
+# Define styles
+header_style = wb.styles.add_style(
+  bg_color: "F5B041", 
+  fg_color: "000000", 
+  sz: 12, 
+  b: true, 
+  alignment: { horizontal: :center, vertical: :center, wrap_text: true }, 
+  border: { style: :thin, color: "000000" }
+)
+sub_header_style = wb.styles.add_style(
+  bg_color: "F5B041", 
+  fg_color: "000000", 
+  sz: 10, 
+  alignment: { horizontal: :center, vertical: :center, wrap_text: true }, 
+  border: { style: :thin, color: "000000" }
+)
+answer_style = wb.styles.add_style(
+  fg_color: "000000", 
+  sz: 10, 
+  alignment: { horizontal: :center, vertical: :center, wrap_text: true }, 
+  border: { style: :thin, color: "000000" }
+)
+regular_style = wb.styles.add_style(
+  alignment: { horizontal: :center, vertical: :center, wrap_text: true },
+  border: { style: :thin, color: "000000" }
+)
+
+# Add the worksheet
+wb.add_worksheet(name: "Raw Data") do |sheet|
+
+# First header row
+sheet.add_row [nil, nil, 
+"PB-3",nil,
+"PB-5",nil,nil,nil,nil,nil,
+"PB-6",nil,nil,nil,nil,nil,
+"PB-7",nil,nil,nil,
+"PB-8",nil,nil,nil,nil,nil,nil,
+"PB-9",nil,nil,nil,nil,
+"PB-10",nil,nil,
+"PB-14",nil,nil,
+"PB-15",nil,nil,
+"PB-19",nil,nil,nil,nil,
+"PB-22",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,
+"PB-26",nil,
+"PB-27",nil,nil,nil,nil,
+"PB-35",nil,nil,], style: header_style
+
+# Merge cells
+sheet.merge_cells("A1:B1")
+sheet.merge_cells("C1:D1")  # PB-3
+sheet.merge_cells("E1:J1")# PB-5
+sheet.merge_cells("K1:P1")# PB-6
+sheet.merge_cells("Q1:T1")# PB-7
+sheet.merge_cells("U1:AA1")# PB-8
+sheet.merge_cells("AB1:AF1")# PB-9
+sheet.merge_cells("AG1:AI1")# PB-10
+sheet.merge_cells("AJ1:AL1")# PB-14
+sheet.merge_cells("AM1:AO1")# PB-15
+sheet.merge_cells("AP1:AT1")# PB-19
+sheet.merge_cells("AU1:BF1")# PB-22
+sheet.merge_cells("BG1:BH1")# PB-26
+sheet.merge_cells("BI1:BM1")# PB-27
+sheet.merge_cells("BN1:BP1")# PB-35
+
+
+# Second header row
+sheet.add_row [nil, nil, 
+  "Please indicate the % of women among", nil,
+  "Is grievance mechanism in place for following stakeholders",nil,nil,nil,nil,nil,
+  "Does the company have code of conduct/ethics policy?",nil,nil,nil,nil,nil,
+  "Does the company have human rights policy?",nil,nil,nil,
+  "Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?",nil,nil,nil,nil,nil,nil,
+  "Please report the coverage of Code of Ethics (P1) training programs",nil,nil,nil,nil,
+  "Does the company have corruption policy",nil,nil,
+  "Spending on Measures Towards Well-being of Employees and Workers (Including Permanent and Other Than Permanent) in the Following Format",nil,nil,
+  "Equal Opportunity Policy in Place",nil,nil,
+  "Health and safety management system",nil,nil,nil,nil,
+  "% Employees and workers who have been provided training on human rights issues and policy(ies) of the entity under different categories",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,
+  "Do human rights requirements form part of your business agreements and contracts?",nil,
+  "% of your plants and offices that were assessed (by entity or statutory authorities or third parties)",nil,nil,nil,nil,
+  "Does the entity have a framework/ policy on cyber security and risks related to data privacy?",nil,nil,], style: sub_header_style
+  
+sheet.merge_cells("A2:B2")
+sheet.merge_cells("C2:D2")#pb-03
+sheet.merge_cells("E2:J2")# PB-5
+sheet.merge_cells("K2:P2")# PB-6
+sheet.merge_cells("Q2:T2")# PB-7
+sheet.merge_cells("U2:AA2")# PB-8
+sheet.merge_cells("AB2:AF2")# PB-9
+sheet.merge_cells("AG2:AI2")# PB-10
+sheet.merge_cells("AJ2:AL2")# PB-14
+sheet.merge_cells("AM2:AO2")# PB-15
+sheet.merge_cells("AP2:AT2")# PB-19
+sheet.merge_cells("AU2:BF2")# PB-22
+sheet.merge_cells("BG2:BH2")# PB-26
+sheet.merge_cells("BI2:BM2")# PB-27
+sheet.merge_cells("BN2:BP2")# PB-35
+  
+
+# Third header row
+sheet.add_row [nil, nil, 
+  "", "",
+  nil, nil,nil, nil,nil,nil,
+  nil, nil,nil, nil,nil,nil,
+  nil, nil,nil, nil,
+  nil,nil,nil,nil,nil,nil,nil,
+  nil,nil,nil,nil,nil,
+  nil,nil,nil,
+  nil,nil,nil,
+  nil,nil,nil,
+  nil,nil,nil,nil,nil,
+  "Employees", nil, nil, nil, nil, nil,"Workers", nil, nil, nil, nil, nil,
+  nil,nil,
+  nil,nil,nil,nil,nil,
+  nil,nil,nil,], style: sub_header_style
+
+sheet.merge_cells("A3:B3")
+sheet.merge_cells("C3:D3")#pb-03
+sheet.merge_cells("E3:J3")# PB-5
+sheet.merge_cells("K3:P3")# PB-6
+sheet.merge_cells("Q3:T3")# PB-7
+sheet.merge_cells("U3:AA3")# PB-8
+sheet.merge_cells("AB3:AF3")# PB-9
+sheet.merge_cells("AG3:AI3")# PB-10
+sheet.merge_cells("AJ3:AK3")# PB-14
+sheet.merge_cells("AL3")# PB-14
+sheet.merge_cells("AM3:AO3")# PB-15
+sheet.merge_cells("AP3:AT3")# PB-19
+sheet.merge_cells("AU3:AZ3")# PB-22
+sheet.merge_cells("BA3:BF3")# PB-22
+sheet.merge_cells("BG3:BH3")# PB-26
+sheet.merge_cells("BI3:BM3")# PB-27
+sheet.merge_cells("BN3:BP3")# PB-35
+
+
+# Fourth header row
+sheet.add_row [nil, nil, 
+  nil,nil,
+  nil, nil,nil, nil,nil,nil,
+  "Code of conduct for Board of Directors/KMPs", nil,"Code of conduct for employees", nil, nil, nil,
+  nil, nil,nil, nil,
+  nil,nil,nil,nil,nil,nil,nil,
+  nil,nil,nil,nil,nil,
+  nil,nil,nil,
+ "Cost incurred on well-being measures as % of total revenue",nil,nil,
+  nil,nil,nil,
+  nil,nil,nil,nil,nil,
+  "Permanent", nil, "Other than Permanent",nil, "Total",nil, "Permanent", nil, "Other than Permanent",nil, "Total",nil,
+  nil,nil,
+  nil,nil,nil,nil,nil,
+  nil,nil,nil,], style: sub_header_style
+
+sheet.merge_cells("A4:B4") 
+sheet.merge_cells("C4:D4")#pb-03
+sheet.merge_cells("E4:J4")# PB-5
+sheet.merge_cells("K4:L4")# PB-6
+sheet.merge_cells("M4:N4")# PB-6
+sheet.merge_cells("Q4:T4")# PB-7
+sheet.merge_cells("U4:AA4")# PB-8
+sheet.merge_cells("AB4:AF4")# PB-9
+sheet.merge_cells("AG4:AI4")# PB-10
+sheet.merge_cells("AJ4:AK4")# PB-14
+sheet.merge_cells("AL4")# PB-14
+sheet.merge_cells("AM4:AO4")# PB-15
+sheet.merge_cells("AP4:AT4")# PB-19
+sheet.merge_cells("AU4:AV4")# PB-22
+sheet.merge_cells("AW4:AX4")# PB-22
+sheet.merge_cells("AY4:AZ4")# PB-22
+sheet.merge_cells("BA4:BB4")# PB-22
+sheet.merge_cells("BC4:BD4")# PB-22
+sheet.merge_cells("BE4:BF4")# PB-22
+sheet.merge_cells("BG4:BH4")# PB-26
+sheet.merge_cells("BI4:BM4")# PB-27
+sheet.merge_cells("BN4:BP4")# PB-35
+
+
+
+# Fifth header row
+sheet.add_row ["S.no.", "Company Name", 
+  "Board of Directors", "Senior Management/Key Management Personnel",
+  "Employees", "Workers", "Communities", "Value chain partners", "Customers", "No information available",
+  "Internal Policy", "Publicly available Policy", "Internal Policy", "Publicly available Policy", "No such policies in place", "No clear information",
+  "Internal Policy", "Publicly available Policy", "No such policy in place", "No clear information",
+  "Dedicated Board ESG/Sustainability committee", "ESG/Sustainability function part of other board committee", "No board level committee, but CSO or dedicated executive director for sustainability issues", "No dedicated board committee, but MD/CEO/CFO/COO or any other executive with multiple responsibilities is also responsible for sustainability issues", "No dedicated board committee but a Non-executive director is responsible for sustainability issues", "No board level, only operational level ESG committee/Individual", "Company reports to have not defined the responsibility in BRSR",
+  "Board of Directors", "Key Managerial Personnel", "Employees Other Than Bods and Kmps", "Workers", "Value Chain Partners",
+  "Internal Policy", "Publicly available Policy", "Company reported to have no such policy",
+  ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR, 'Third party verification',
+  "Internal Policy", "Publicly available Policy", "Company has no such policy in place",
+  "Company has OHS management system but no further details","Company has OHS management system & process to identify risks","Company has OHS management system and process to report risk","Company has OHS management system, process to identify & process to report risks","Company does not have OHS management system in place",
+  ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR,ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR,ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR,ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR,ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR,ApplicationRecord::CURRENT_YEAR, ApplicationRecord::PREVIOUS_YEAR,
+  "Yes, it does","No it doesn’t",
+  "Child labour", "Forced/involuntary labour", "Sexual harassment", "Discrimination at workplace", "wages",
+  "Internal Policy","Publicly available Policy","Company reported to have no such policy"], style: sub_header_style
+
+# Fifth answer row
+@general_data.each_with_index do |datacollection, index|
+    @data = DataCollectionAnswer.find_by(company_id: datacollection.id, version: ApplicationRecord::CURRENT_YEAR)
+    if @data.present?
+      @general_specific_data = DataCollectionAnswer.find_by(company_id: datacollection.id, version: ApplicationRecord::CURRENT_YEAR)
+    else
+      @general_specific_data = DataCollectionAnswer.where(company_id: datacollection.id).order(version: :desc).first
+    end
+  serial_number = index + 1
+  if @general_specific_data.present?
+    @user_answers = @general_specific_data.user_answers
+    if @general_specific_data.version != ApplicationRecord::CURRENT_YEAR
+      @user_answers = interchange_table_data(@user_answers, [4, 11, 14, 20, 24, 26, 28, 29, 30, 31, 32])
+      @user_answers = interchange_table_data(@user_answers, [16, 17, 18, 22, 23], same_row: false )
+    end
+    processed_answers = process_user_answers(@user_answers)
+
+    if @user_answers['pb_03'] == 'information_available'
+      pb_03_values_1 = @user_answers['pb_03_option_number1'] 
+      pb_03_values_2 = @user_answers['pb_03_option_number2']
+    else
+      pb_03_values_1 = nil
+      pb_03_values_2 = nil
+    end
+
+    if @user_answers['pb_05'] == 'information_available' || @user_answers['pb_05'] == 'Yes, there is a grievance mechanism in place for following stakeholders'
+      pb_05_values_1 = @user_answers['pb_05_option_checkbox1'] 
+      pb_05_values_2 = @user_answers['pb_05_option_checkbox2']
+      pb_05_values_3 = @user_answers['pb_05_option_checkbox3']
+      pb_05_values_4 = @user_answers['pb_05_option_checkbox4'] 
+      pb_05_values_5 = @user_answers['pb_05_option_checkbox5'] 
+      pb_05_values_6 = '-'
+    else
+      pb_05_values_1 = nil
+      pb_05_values_2 = nil
+      pb_05_values_3 = nil
+      pb_05_values_4 = nil
+      pb_05_values_5 = nil
+      pb_05_values_6 = processed_answers[:pb_05]
+    end
+    
+    if @user_answers['pb_06'] == 'Information Available'
+      pb_06_values_1 = processed_answers[:pb_06_checkbox_1]
+      pb_06_values_2 = processed_answers[:pb_06_checkbox_2]
+      pb_06_values_3 = processed_answers[:pb_06_checkbox_2_1]
+      pb_06_values_4 = processed_answers[:pb_06_checkbox_2_2]
+      pb_06_values_5 = processed_answers[:pb_06_1]
+      pb_06_values_6 = processed_answers[:pb_06_2]
+    else
+      pb_06_values_1 = nil
+      pb_06_values_2 = nil
+      pb_06_values_3 = nil
+      pb_06_values_4 = nil
+      pb_06_values_5 = processed_answers[:pb_06_1]
+      pb_06_values_6 = processed_answers[:pb_06_2]
+    end
+
+    if @user_answers['pb_07'] == 'Information available'
+      pb_07_values_1 = processed_answers[:pb_07_1]
+      pb_07_values_2 = processed_answers[:pb_07_2]
+      pb_07_values_3 = processed_answers[:pb_07_3]
+      pb_07_values_4 = processed_answers[:pb_07]
+    else
+      pb_07_values_1 = nil
+      pb_07_values_2 = nil
+      pb_07_values_3 = nil
+      pb_07_values_4 = processed_answers[:pb_07]
+    end
+    
+    if @user_answers['pb_08'] == 'information_available'
+      pb_08_values_1 = processed_answers[:pb_08_1]
+      pb_08_values_2 = processed_answers[:pb_08_2]
+      pb_08_values_3 = processed_answers[:pb_08_3]
+      pb_08_values_4 = processed_answers[:pb_08_4]
+      pb_08_values_5 = processed_answers[:pb_08_5]
+      pb_08_values_6 = processed_answers[:pb_08_6]
+      pb_08_values_7 = processed_answers[:pb_08_7]
+    else
+      pb_08_values_1 = nil
+      pb_08_values_2 = nil
+      pb_08_values_3 = nil
+      pb_08_values_4 = nil
+      pb_08_values_5 = nil
+      pb_08_values_6 = nil
+      pb_08_values_7 = nil
+    end
+
+    if @user_answers['pb_09'] == 'Information available'
+      pb_09_values_1 = @user_answers['pb_09_table_row1_number1']
+      pb_09_values_2 = @user_answers['pb_09_table_row2_number1']
+      pb_09_values_3 = @user_answers['pb_09_table_row3_number1']
+      pb_09_values_4 = @user_answers['pb_09_table_row4_number1']
+      pb_09_values_5 = @user_answers['pb_09_table_row5_number1']
+    else
+      pb_09_values_1 = nil
+      pb_09_values_2 = nil
+      pb_09_values_3 = nil
+      pb_09_values_4 = nil
+      pb_09_values_5 = nil
+    end
+
+    if @user_answers['pb_10'] == 'information_available'
+      pb_10_values_1 = processed_answers[:pb_10_1]
+      pb_10_values_2 = processed_answers[:pb_10_2]
+      pb_10_values_3 = processed_answers[:pb_10_3]
+    else
+      pb_10_values_1 = nil
+      pb_10_values_2 = nil
+      pb_10_values_3 = nil
+    end
+
+    if @user_answers['pb_14'] == 'information_available'
+      pb_14_values_1 = @user_answers['pb_14_table_row1_number1']
+      pb_14_values_2 = @user_answers['pb_14_table_row1_number2']
+      pb_14_values_3 = processed_answers[:pb_14]
+    else
+      pb_14_values_1 = nil
+      pb_14_values_2 = nil
+      pb_14_values_3 = nil
+    end
+
+    if @user_answers['pb_15'] == 'information_available'
+      pb_15_values_1 = processed_answers[:pb_15_1]
+      pb_15_values_2 = processed_answers[:pb_15_2]
+      pb_15_values_3 = processed_answers[:pb_15_3]
+    else
+      pb_15_values_1 = nil
+      pb_15_values_2 = nil
+      pb_15_values_3 = nil
+    end
+
+    if @user_answers['pb_19'] == 'information_available'
+      pb_19_values_1 = processed_answers[:pb_19_1]
+      pb_19_values_2 = processed_answers[:pb_19_2]
+      pb_19_values_3 = processed_answers[:pb_19_3]
+      pb_19_values_4 = processed_answers[:pb_19_4]
+      pb_19_values_5 = processed_answers[:pb_19]
+    else
+      pb_19_values_1 = nil
+      pb_19_values_2 = nil
+      pb_19_values_3 = nil
+      pb_19_values_4 = nil
+      pb_19_values_5 = nil
+    end
+
+    if @user_answers['pb_22'] == 'information_available'
+      pb_22_values_1 = @user_answers['pb_22_table_row1_number1'] 
+      pb_22_values_2 = @user_answers['pb_22_table_row1_number2']
+      pb_22_values_3 = @user_answers['pb_22_table_row2_number1']
+      pb_22_values_4 = @user_answers['pb_22_table_row2_number2'] 
+      pb_22_values_5 = @user_answers['pb_22_table_row3_number1'] 
+      pb_22_values_6 = @user_answers['pb_22_table_row3_number2'] 
+      pb_22_values_7 = @user_answers['pb_22_table_row1_number3'] 
+      pb_22_values_8 = @user_answers['pb_22_table_row1_number4'] 
+      pb_22_values_9 = @user_answers['pb_22_table_row2_number3']
+      pb_22_values_10 = @user_answers['pb_22_table_row2_number4'] 
+      pb_22_values_11 = @user_answers['pb_22_table_row3_number3'] 
+      pb_22_values_12 = @user_answers['pb_22_table_row3_number4'] 
+    else
+      pb_22_values_1 = nil
+      pb_22_values_2 = nil
+      pb_22_values_3 = nil
+      pb_22_values_4 = nil
+      pb_22_values_5 = nil
+      pb_22_values_6 = nil
+      pb_22_values_7 = nil
+      pb_22_values_8 = nil
+      pb_22_values_9 = nil
+      pb_22_values_10 = nil
+      pb_22_values_11 = nil
+      pb_22_values_12 = nil
+    end
+
+    if @user_answers['pb_26'] == 'information_available'
+      pb_26_values_1 =  processed_answers[:pb_26_1]
+      pb_26_values_2 =  processed_answers[:pb_26_2]
+    else
+      pb_26_values_1 = nil
+      pb_26_values_2 = nil
+    end
+
+    if @user_answers['pb_27'] == 'information_available'
+      pb_27_values_1 = @user_answers['pb_27_table_row1_number1'] 
+      pb_27_values_2 = @user_answers['pb_27_table_row2_number1']
+      pb_27_values_3 = @user_answers['pb_27_table_row3_number1']
+      pb_27_values_4 = @user_answers['pb_27_table_row4_number1'] 
+      pb_27_values_5 = @user_answers['pb_27_table_row5_number1'] 
+    else
+      pb_27_values_1 = nil
+      pb_27_values_2 = nil
+      pb_27_values_3 = nil
+      pb_27_values_4 = nil
+      pb_27_values_5 = nil
+    end
+    
+    if @user_answers['pb_35'] == 'information_available'
+      pb_35_values_1 = processed_answers[:pb_35_1]
+      pb_35_values_2 = processed_answers[:pb_35_2]
+      pb_35_values_3 = processed_answers[:pb_35_3]
+    else
+      pb_35_values_1 = nil
+      pb_35_values_2 = nil
+      pb_35_values_3 = nil
+    end
+
+    sheet.add_row [serial_number, datacollection.company_name, 
+    pb_03_values_1, pb_03_values_2, 
+    pb_05_values_1, pb_05_values_2, pb_05_values_3, pb_05_values_4, pb_05_values_5, pb_05_values_6,
+    pb_06_values_1,pb_06_values_2,pb_06_values_3,pb_06_values_4,pb_06_values_5,pb_06_values_6,
+    pb_07_values_1, pb_07_values_2, pb_07_values_3, pb_07_values_4,
+    pb_08_values_1,pb_08_values_2,pb_08_values_3,pb_08_values_4,pb_08_values_5,pb_08_values_6,pb_08_values_7,
+    pb_09_values_1, pb_09_values_2, pb_09_values_3, pb_09_values_4, pb_09_values_5,
+    pb_10_values_1, pb_10_values_2, pb_10_values_3,
+    pb_14_values_1, pb_14_values_2, pb_14_values_3,
+    pb_15_values_1, pb_15_values_2, pb_15_values_3,
+    pb_19_values_1, pb_19_values_2, pb_19_values_3, pb_19_values_4, pb_19_values_5,
+    pb_22_values_1,pb_22_values_2,pb_22_values_3,pb_22_values_4,pb_22_values_5,pb_22_values_6,pb_22_values_7,pb_22_values_8,pb_22_values_9,pb_22_values_10,pb_22_values_11,pb_22_values_12,
+    pb_26_values_1,pb_26_values_2,
+    pb_27_values_1,pb_27_values_2,pb_27_values_3,pb_27_values_4,pb_27_values_5,
+    pb_35_values_1,pb_35_values_2,pb_35_values_3], style: answer_style
+  else
+    sheet.add_row [serial_number, datacollection.company_name, 
+    nil, nil, 
+    nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil,
+    nil, nil, nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil,
+    nil, nil, nil,
+    nil, nil,
+    nil, nil, nil,
+    nil, nil, nil, nil, nil,
+    nil, nil, nil, nil, nil,nil,nil, nil,nil, nil,nil, nil,
+    nil, nil,
+    nil, nil, nil, nil,nil, 
+    nil, nil, nil], style: answer_style
+  end
+end
+  
+
+  sheet.column_widths 10,20,30,40, 20,20,20,20,20,20, 20,20,20,20,20,20, 20,20,20,20, 20,20,20,20,20,20,20, 20,20,20,20, 20,20,20, 20,20,20, 20,20,20, 40,40,40,40,40, 20,20,20,20,20,20,20,20,20,20,20,20,20, 33,33, 25,25,25,25,25, 30,30,33
+  
+end
+
+
+wb = xlsx_package.workbook
+wb.styles do |s|
+
+  first_row_style = s.add_style(bg_color: "2874A6", fg_color: "FFFFFFFF",  sz: 12,b: true, border: { style: :thin, color: "000000" } )
+  #question_style = s.add_style(alignment: { horizontal: :center })
+  question_subheading_style = s.add_style(bg_color: "B9770E", fg_color: "FFFFFFFF" ,  sz: 10,b: false, border: { style: :thin, color: "000000" }, alignment: { horizontal: :center, wrap_text: true })
+  header_style = s.add_style(bg_color: "EDBB99", fg_color: "FF000000",  sz: 10,b: false, border: { style: :thin, color: "000000" }, alignment: { horizontal: :center, wrap_text: true })
+  questions = s.add_style(sz: 10,b: false, border: { style: :thin, color: "000000" }, alignment: { horizontal: :center, wrap_text: true })
+
+  wb.add_worksheet(name: "Analytics") do |sheet|
+    # First row with different color
+    sheet.add_row ["Q. No.", "Question Name", "Particulars", "Analytics",nil,nil,nil], style: first_row_style
+    # Second row as a continuation of header with different style
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil]
+
+    # Header for PB 03 section
+    analytics_three = average_analytics(@general_analytics_data, @questions, 'PB-03')
+    sheet.add_row ["PB 03", "Please indicate the % of women among", "Women Representation", "Average %", "Highest", "Lowest", nil], style: header_style
+    sheet.add_row [nil, nil, "Board of Directors", analytics_three[:percentage][0][:values][:average], analytics_three[:percentage][0][:values][:maximum], analytics_three[:percentage][0][:values][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Senior Management", analytics_three[:percentage][1][:values][:average], analytics_three[:percentage][1][:values][:maximum], analytics_three[:percentage][1][:values][:minimum], nil], style: questions
+
+    analytics_five = average_analytics(@general_analytics_data, @questions, 'PB-05')
+    sheet.add_row ["PB 05", "Is grievance mechanism in place for following stakeholders", "Grievance mechanism for different stakeholders", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "Employees", analytics_five[:percentage][0][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Workers", analytics_five[:percentage][1][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Communities", analytics_five[:percentage][2][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Value chain partners", analytics_five[:percentage][3][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Customers", analytics_five[:percentage][4][:percentage], nil, nil, nil], style: questions
+
+    analytics_six = average_analytics(@general_analytics_data, @questions, 'PB-06')
+    sheet.add_row ["PB 06", "Does the company have code of conduct/ethics policy?", "Code of Conduct/Ethics Policy for Employee /or BoD", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies with Ethics Policy/CoC for Board of Directors/KMPs", analytics_six[:valuesix][0][:ethics][:percent_option_a], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with Ethics Policy/ CoC for employees", analytics_six[:valuesix][0][:ethics][:percent_option_b], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with Ethics Policy/ CoC for both BoD/KMPs and employees", analytics_six[:valuesix][0][:ethics][:percent_both_a_and_b], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no Ethics Policy/ CoC", analytics_six[:valuesix][0][:ethics][:percent_option_2], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no clear information", analytics_six[:valuesix][0][:ethics][:percent_option_3], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Companies with Code of Conduct for Board of Directors/ KMPs", "% of companies with Internal Policy", "% of companies with Publicly available policy", nil, nil], style: question_subheading_style
+    sheet.add_row [nil, nil, nil, analytics_six[:valuesix][1][:coc][:option1], analytics_six[:valuesix][1][:coc][:option2], nil, nil], style: questions    
+    sheet.add_row [nil, nil, "Companies with Code of Conduct for Employees", "% of companies with Internal Policy", "% of companies with Publicly available policy", nil, nil], style: question_subheading_style
+    sheet.add_row [nil, nil, nil, analytics_six[:valuesix][1][:empcoc][:option1], analytics_six[:valuesix][1][:empcoc][:option2], nil, nil], style: questions    
+
+    analytics_seven = average_analytics(@general_analytics_data, @questions, 'PB-07')
+    sheet.add_row ["PB 07", "Does the company have human rights policy?", "Companies with Human Rights Policy", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies with Internal Policy", analytics_seven[:percentage][0][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with Publicly available policy", analytics_seven[:percentage][1][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no such Policy", analytics_seven[:percentage][2][:percentage], nil, nil, nil], style: questions
+
+    analytics_eight = average_analytics(@general_analytics_data, @questions, 'PB-08')
+    pb_values = {}
+
+    analytics_eight[:percentage].each_with_index do |percentage_data, index|
+      key = "pb8_#{index + 1}".to_sym
+      pb_values[key] = percentage_data[:percentage] == 0 ? 'NA' : percentage_data[:percentage]
+    end
+
+    sheet.add_row ["PB 08", "Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?", "Allocation of ESG responsibilities at top level", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies with dedicated Board ESG/Sustainability committee", pb_values[:pb8_1], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies where ESG/Sustainability function part of other board committee", pb_values[:pb8_2], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no dedicated board committee, but CSO or dedicated executive director for sustainability issues", pb_values[:pb8_3], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no dedicated board committee, but MD/CEO/CFO/COO or any other executive with multiple responsibilities is also responsible for sustainability issues", pb_values[:pb8_4], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no dedicated board committee but a non-executive director is responsible for sustainability issues", pb_values[:pb8_5], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no board level responsibility but an operational level ESG committee/Individual", pb_values[:pb8_6], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies which have not defined the responsibility", pb_values[:pb8_7], nil, nil, nil], style: questions
+
+    analytics_nine = average_analytics(@general_analytics_data, @questions, 'PB-09')
+    # Add the header row
+    sheet.add_row ["PB 09", "Please report the coverage of Code of Ethics (P1) training programs", "Code of Ethics training programs: Coverage", "Average%", "Highest", "Lowest", nil], style: header_style
+    # Define the labels for the rows
+    labels = [
+      "Board of directors",
+      "Key managerial personnel",
+      "Employees other than bods and Kmps",
+      "Workers",
+      "Value chain partners"
+    ]
+    # Iterate over the analytics_nine data and add rows dynamically
+    analytics_nine[:company_data].each_with_index do |data, index|
+      if data[:average] == 0
+        average = max = min = 'NA'
+      else
+        average = data[:average]
+        max = data[:maximum]
+        min = data[:minimum]
+      end
+      
+      sheet.add_row [nil, nil, labels[index], average, max, min, nil], style: questions
+    end
+
+    analytics_ten = average_analytics(@general_analytics_data, @questions, 'PB-10')
+    sheet.add_row ["PB 10", "Does the company have corruption policy", "Companies with Anti-Corruption Policy", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies with Internal Policy", analytics_ten[:percentage][0][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with Publicly available policy", analytics_ten[:percentage][1][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no such Policy",  analytics_ten[:percentage][2][:percentage], nil, nil, nil], style: questions
+
+    analytics_fourteen = average_analytics(@general_analytics_data, @questions, 'PB-14')
+    sheet.add_row ["PB 14", "Spending on Measures Towards Well-being of Employees and Workers (Including Permanent and Other Than Permanent) in the Following Format", "Proportion of spending towards employees/ workers well-being", "Average %", "Highest", "Lowest", nil], style: header_style
+    sheet.add_row [nil, nil, " #{ApplicationRecord::CURRENT_YEAR}", analytics_fourteen[:company_data][0][:average], analytics_fourteen[:company_data][0][:maximum], analytics_fourteen[:company_data][0][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, " #{ApplicationRecord::PREVIOUS_YEAR}", analytics_fourteen[:company_data][1][:average], analytics_fourteen[:company_data][1][:maximum], analytics_fourteen[:company_data][1][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Companies for which the above data was third party verified", "%", nil, nil, nil], style: question_subheading_style
+    sheet.add_row [nil, nil, "Verified", analytics_fourteen[:company_data][3][:percentage][:percent_option_1], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Not verified", analytics_fourteen[:company_data][3][:percentage][:percent_option_2], nil, nil, nil], style: questions
+
+    analytics_fifteen = average_analytics(@general_analytics_data, @questions, 'PB-15')
+    sheet.add_row ["PB 15", "Equal Opportunity Policy in Place", "Companies with Equal Opportunity Policy", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies with Internal Policy", analytics_fifteen[:percentage][0][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with Publicly available policy", analytics_fifteen[:percentage][1][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no such Policy",  analytics_fifteen[:percentage][2][:percentage], nil, nil, nil], style: questions
+
+    analytics_nineteen = average_analytics(@general_analytics_data, @questions, 'PB-19')
+    sheet.add_row ["PB 19", "Health and safety management system", "Percentage of companies with OHS management system", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "OHS management system in place", format_value(analytics_nineteen[:percentage][0][:graphone][:percent_option_1]), nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "No management system", format_value(analytics_nineteen[:percentage][0][:graphone][:percent_option_2]), nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "No information", format_value(analytics_nineteen[:percentage][0][:graphone][:percent_option_3]), nil, nil, nil], style: questions
+
+    sheet.add_row [nil, nil, "Elements of OHS management system", "Average %", nil, nil, nil], style: question_subheading_style
+
+    sheet.add_row [nil, nil, "No further details", format_value(analytics_nineteen[:percentage][0][:graphtwo]), nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Covers process to identify risk", format_value(analytics_nineteen[:percentage][1][:graphtwo]), nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Covers process to report risks", format_value(analytics_nineteen[:percentage][2][:graphtwo]), nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "Covers both processes, to identify & to report risks", format_value(analytics_nineteen[:percentage][3][:graphtwo]), nil, nil, nil], style: questions
+
+    analytics_twenty_two = average_analytics(@general_analytics_data, @questions, 'PB-22')
+    sheet.add_row ["PB 22", "% Employees and workers who have been provided training on human rights issues and policy(ies) of the entity under different categories", "Human rights training programs: Coverage", "Average %", "Highest", "Lowest", nil], style: header_style
+    sheet.add_row [nil, nil, "Permanent Employees #{ApplicationRecord::CURRENT_YEAR}", analytics_twenty_two[:company_data][0][:average], analytics_twenty_two[:company_data][0][:maximum], analytics_twenty_two[:company_data][0][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Other Than Permanent Employees #{ApplicationRecord::CURRENT_YEAR}", analytics_twenty_two[:company_data][4][:average], analytics_twenty_two[:company_data][4][:maximum], analytics_twenty_two[:company_data][4][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Total Employees #{ApplicationRecord::CURRENT_YEAR}", analytics_twenty_two[:company_data][8][:average], analytics_twenty_two[:company_data][8][:maximum], analytics_twenty_two[:company_data][8][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Permanent Workers #{ApplicationRecord::CURRENT_YEAR}", analytics_twenty_two[:company_data][2][:average], analytics_twenty_two[:company_data][2][:maximum], analytics_twenty_two[:company_data][2][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Other Than Permanent Workers #{ApplicationRecord::CURRENT_YEAR}", analytics_twenty_two[:company_data][6][:average], analytics_twenty_two[:company_data][6][:maximum], analytics_twenty_two[:company_data][6][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Total Workers #{ApplicationRecord::CURRENT_YEAR}", analytics_twenty_two[:company_data][10][:average], analytics_twenty_two[:company_data][10][:maximum], analytics_twenty_two[:company_data][10][:minimum], nil], style: questions
+
+    analytics_twenty_six = average_analytics(@general_analytics_data, @questions, 'PB-26')
+    sheet.add_row ["PB 26", "Do human rights requirements form part of your business agreements and contracts?", "Integration of Human Rights clause in business agreements", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies that have integrated", analytics_twenty_six[:percentage][0][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies that have not integrated", analytics_twenty_six[:percentage][1][:percentage], nil, nil, nil], style: questions
+
+    analytics_twenty_seven = average_analytics(@general_analytics_data, @questions, 'PB-27')
+    sheet.add_row ["PB 27", "% of your plants and offices that were assessed (by entity or statutory authorities or third parties)", "Human Rights Risk assessment: Coverage", "Average %", "Highest", "Lowest", nil], style: header_style
+    sheet.add_row [nil, nil, "Child labour", analytics_twenty_seven[:company_data][0][:average], analytics_twenty_seven[:company_data][0][:maximum], analytics_twenty_seven[:company_data][0][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Forced labour", analytics_twenty_seven[:company_data][1][:average], analytics_twenty_seven[:company_data][1][:maximum], analytics_twenty_seven[:company_data][1][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Sexual harassment", analytics_twenty_seven[:company_data][2][:average], analytics_twenty_seven[:company_data][2][:maximum], analytics_twenty_seven[:company_data][2][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Discrimination", analytics_twenty_seven[:company_data][3][:average], analytics_twenty_seven[:company_data][3][:maximum], analytics_twenty_seven[:company_data][3][:minimum], nil], style: questions
+    sheet.add_row [nil, nil, "Wages", analytics_twenty_seven[:company_data][4][:average], analytics_twenty_seven[:company_data][4][:maximum], analytics_twenty_seven[:company_data][4][:minimum], nil], style: questions
+
+    analytics_thirty_five = average_analytics(@general_analytics_data, @questions, 'PB-35')
+    sheet.add_row ["PB 35", "Does the entity have a framework/ policy on cyber security and risks related to data privacy?", "Cyber-security policy", "Average %", nil, nil, nil], style: header_style
+    sheet.add_row [nil, nil, "% of companies with internally policy", analytics_thirty_five[:percentage][0][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with publicly available policy", analytics_thirty_five[:percentage][1][:percentage], nil, nil, nil], style: questions
+    sheet.add_row [nil, nil, "% of companies with no policy",  analytics_thirty_five[:percentage][2][:percentage], nil, nil, nil], style: questions
+       
+    sheet.column_widths 06,68,52,20,16,16,16
+  end
+end
+

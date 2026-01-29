@@ -1,0 +1,41 @@
+<% content_for :title, "Change Password | Secure Your Account Easily" %>
+<% content_for :description, "Update your password to maintain secure access. Change your password easily to ensure your account remains protected and secure." %>
+<div class="card">
+  <div class="card-body col-md-10 offset-1">
+    <h4>Change Password</h4>
+
+    <%= form_with(model: @user, url: update_profile_password_path(@user), local: true, html: { method: :patch, class: "mb-3", id: "password-form" }) do |f|  %>
+      <%= render "shared/error_messages", resource: current_user %>
+
+      <div class="row">
+        <div class="col-md-6 offset-3">
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label">Current Password</label>
+            <div class="input-group input-group-merge" id="current_password_field">
+              <%= f.password_field :current_password, class: "form-control", placeholder: "Enter current password" %>
+              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+          </div>
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label">New Password</label>
+            <div class="input-group input-group-merge" id="password_field">
+              <%= f.password_field :password, class: "form-control", placeholder: "Enter new password" %>
+              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+          </div>
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label">Password Confirmation</label>
+            <div class="input-group input-group-merge" id="confirm_password_field">
+              <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Re-enter password" %>
+              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 offset-5">
+        <%= f.submit "Change password", class: "btn btn-primary d-grid" %>
+      </div>
+    <% end %>
+  </div>
+</div>

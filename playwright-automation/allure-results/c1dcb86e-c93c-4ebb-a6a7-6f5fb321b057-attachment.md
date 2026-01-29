@@ -1,0 +1,117 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /esgadmin/company_users
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "ESG - Premium Subscription" [ref=e15] [cursor=pointer]:
+            - /url: /service/premium_subscription
+            - generic [ref=e16]: ESG - Premium Subscription
+        - listitem [ref=e17]:
+          - link "ESG - Basic Subscription" [ref=e18] [cursor=pointer]:
+            - /url: /service/basic_subscription
+            - generic [ref=e19]: ESG - Basic Subscription
+        - listitem [ref=e20]:
+          - link "PB Data Management" [ref=e21] [cursor=pointer]:
+            - /url: /service/peer_benchmark
+            - generic [ref=e22]: PB Data Management
+        - listitem [ref=e23]:
+          - link "User Management" [ref=e24] [cursor=pointer]:
+            - /url: /esgadmin/users
+            - generic [ref=e25]: User Management
+        - listitem [ref=e26]:
+          - link "Email Content" [ref=e27] [cursor=pointer]:
+            - /url: /esgadmin/emails
+            - generic [ref=e28]: Email Content
+    - generic [ref=e29]:
+      - navigation [ref=e30]:
+        - generic [ref=e31]:
+          - list [ref=e32]:
+            - listitem [ref=e33]:
+              - link [ref=e35] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e37]
+          - list [ref=e38]:
+            - listitem [ref=e39]:
+              - link [ref=e41] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e43]
+            - listitem [ref=e44]:
+              - link " Kishore Admin" [ref=e45] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e46]:
+                  - generic [ref=e49]: 
+                  - generic [ref=e50]:
+                    - generic [ref=e51]: Kishore
+                    - text: Admin
+              - text:   
+      - generic [ref=e53]:
+        - generic [ref=e55]:
+          - generic [ref=e58]:
+            - textbox "Filter by Sector" [ref=e61] [cursor=pointer]
+            - textbox "Search by Name" [ref=e63]: PB_Co_1769579283653
+            - combobox [ref=e65]:
+              - option "Select Year" [selected]
+              - option "2026"
+              - option "2025"
+              - option "2024"
+              - option "2023"
+              - option "2022"
+              - option "2021"
+              - option "2020"
+              - option "2019"
+              - option "2018"
+              - option "2017"
+              - option "2016"
+            - button "Apply" [ref=e67] [cursor=pointer]
+            - button "Clear" [ref=e69] [cursor=pointer]
+          - list [ref=e70]:
+            - listitem [ref=e71]:
+              - link "Export Export" [ref=e73] [cursor=pointer]:
+                - /url: /service/basic_subscription/export_excel.xlsx
+                - img "Export" [ref=e74]
+                - text: Export
+        - table [ref=e78]:
+          - rowgroup [ref=e79]:
+            - row "ISIN Company Name Sector Access Approval Registration Status Date of subscription Action" [ref=e80]:
+              - columnheader "ISIN" [ref=e81]
+              - columnheader "Company Name" [ref=e82]
+              - columnheader "Sector" [ref=e83]
+              - columnheader "Access Approval" [ref=e84]
+              - columnheader "Registration Status" [ref=e85]
+              - columnheader "Date of subscription" [ref=e86]
+              - columnheader "Action" [ref=e87]
+          - rowgroup [ref=e88]:
+            - row "- PB_Co_1769579283653 Automobiles & Auto Components   Due for approval --  " [ref=e89]:
+              - cell "-" [ref=e90]
+              - cell "PB_Co_1769579283653" [ref=e91]:
+                - strong [ref=e92]: PB_Co_1769579283653
+              - cell "Automobiles & Auto Components" [ref=e93]
+              - cell " " [ref=e94]:
+                - button "" [ref=e95] [cursor=pointer]:
+                  - generic [ref=e96]: 
+                - button "" [ref=e97] [cursor=pointer]:
+                  - generic [ref=e98]: 
+              - cell "Due for approval" [ref=e99]
+              - cell "--" [ref=e100]
+              - cell " " [ref=e101]:
+                - link "" [ref=e102] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e103]: 
+                - link "" [ref=e104] [cursor=pointer]:
+                  - /url: "#"
+                  - generic [ref=e105]: 
+      - contentinfo [ref=e106]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e108]
+        - heading "Privacy Policy" [level=6] [ref=e110] [cursor=pointer]
+  - img
+```

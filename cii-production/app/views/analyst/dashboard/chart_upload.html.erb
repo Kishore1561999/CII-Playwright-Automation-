@@ -1,0 +1,167 @@
+<h1>Chart</h1>
+<img src="" id="graphImage">
+
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+<script>
+
+    var dataURL = "";
+
+    function chartToImage() {
+        var canvas = document.getElementById("myChart");
+        document.getElementById("graphImage").src = canvas.toDataURL("image/jpg");
+
+        //Usage example:
+        var file = dataURLtoFile(canvas.toDataURL("image/jpg"), 'image.jpg');
+        // Create new form data
+        var fd = new FormData();
+        // Append our Canvas image file to the form data
+        fd.append("image", file);
+        $.ajax({
+            url: "/analyst/graph_image_upload/<%= @company_user_id %>",
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                window.location.replace('<%= analyst_word_download_path(@company_user_id) %>');
+            }
+        });
+    }
+
+    function dataURLtoFile(dataurl, filename) {
+
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, {type: mime});
+    }
+
+
+    function loadChart() {
+        return new Promise(function (resolve, reject) {
+            try {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                                    <% ['Corporate Governance', 'Business Ethics', 'Risk Management', 'Occupational Health & Safety',
+                                    'Human Capital', 'Biodiversity', 'Product Responsibility', 'Human rights', 'Transparency and Disclosure',
+                                    'Corporate Social Responsibility', 'Supply Chain', 'Environment Management'].each do |value| %>
+                                        '<%= value %>',
+                                    <% end %>
+                        ],
+                        datasets: [{
+                            label: 'Risk Categorisation',
+                            data: [96, 88, 78, 62, 60, 59, 40, 36, 34, 30, 20, 19],
+                            backgroundColor: [
+                                <% [96, 88, 78, 62, 60, 59, 40, 36, 34, 30, 20, 19].each do |value| %>
+                                    '<%= case value
+                                              when (96..100)
+                                                      'rgba(39, 78, 19, 1)'
+                                              when (86..95)
+                                                  'rgba(141, 217, 121, 1)'
+                                              when (71..85)
+                                                  'rgba(179, 229, 166, 1)'
+                                              when (61..70)
+                                                  'rgba(255, 255, 102, 1)'
+                                              when (51..60)
+                                                  'rgba(252, 245, 162, 1)'
+                                              when (36..50)
+                                                  'rgba(244, 204, 204, 1)'
+                                              when (21..35)
+                                                  'rgba(224, 102, 102, 1)'
+                                              when (0..20)
+                                                  'rgba(225, 0, 0, 1)'
+                                              else
+                                                  'rgba(225, 0, 0, 1)'
+                                         end %>',
+                               <% end %>
+                            ],
+                        }]
+                    },
+                    options: {
+                        layout: {
+                            padding: {
+                                right: 20,
+                                top: 10,
+                            }
+                        },
+                        scales: {
+                            pointLabels :{
+                                fontStyle: "bold",
+                            },
+                            y: {
+                                beginAtZero: true
+                            },
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Score',
+                                    fontSize: 13,
+                                    // fontStyle: 'bold'
+                                }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Aspects',
+                                    fontSize: 13,
+                                    // fontStyle: 'bold'
+                                }
+                            }]
+                        },
+                        // legend: {
+                        //     display: false
+                        // },
+                        // tooltips: {
+                        //     callbacks: {
+                        //         label: function(tooltipItem) {
+                        //             return tooltipItem.yLabel;
+                        //         }
+                        //     }
+                        // }
+                        legend: {
+                            labels: {
+                                boxWidth: 0,
+                                fontSize: 25,
+                                // fontStyle: 'bold'
+                            },
+                            onClick: (e) => e.stopPropagation(),
+                            displayColors: false
+                        },
+                    }
+                });
+                resolve("Working")
+            } catch (err) {
+                console.log(err)
+                reject(err)
+
+            }
+        });
+
+    }
+
+
+    loadChart().then(data => {
+        setTimeout(function () {
+            chartToImage()
+        }, 800);
+
+    }).catch(err => {
+        console.log(err)
+    })
+
+
+</script>-

@@ -1,0 +1,57 @@
+<% content_for :title, "Comprehensive ESG Diagnostics for Sustainable Growth" %>
+<% content_for :description, "Gain actionable insights into your environmental, social, and governance performance with advanced ESG diagnostics. Enhance sustainability and drive responsible growth." %>
+<div class="row g-4 mb-4">
+  <div class="d-flex align-items-start justify-content-between" id="icons-container">
+    <div class="card icon-card text-center mb-4 col-md-3">
+      <% take_assessment_url = !current_user.has_assessment_status? ? take_assessment_path : '#' %>
+      <% ta_class_name = current_user.has_assessment_status? ? 'tile-disabled' : '' %>
+      <%= link_to take_assessment_url, class: "#{ta_class_name}" do %>
+        <div class="card-body">
+          <span class="badge bg-label-primary rounded p-2"><i class="bx bx-notepad"></i></span>
+          <p class="icon-name text-capitalize text-truncate mb-2 mt-2 company-user-primary-text-color">Take Assessment</p>
+        </div>
+      <% end %>
+    </div>
+    <div class="card icon-card text-center mb-4 col-md-3">
+      <% view_assessment_url = current_user.has_assessment_status? ? view_assessment_path : '#' %>
+      <% ta_class_name = !current_user.has_assessment_status? ? 'tile-disabled' : '' %>
+      <% if current_user.has_assessment_status? %>
+        <%= link_to view_assessment_url, class: "#{ta_class_name}" do %>
+          <div class="card-body">
+            <span class="badge bg-label-secondary rounded p-2"><i class='bx bx-book-reader'></i></span>
+            <p class="icon-name text-capitalize text-truncate mb-2 mt-2 company-user-primary-text-color">View Assessment</p>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="card-body tile-disabled">
+          <span class="badge bg-label-secondary rounded p-2"><i class='bx bx-book-reader'></i></span>
+          <p class="icon-name text-capitalize text-truncate mb-2 mt-2 company-user-primary-text-color" style="color: #696CFF;">View Assessment</p>
+        </div>
+      <% end %>
+    </div>
+    <div class="card icon-card text-center mb-4 col-md-3">
+      <!-- <div class="card-body <%= (@has_score > 0) ? 'csv_download cursor-pointer' : 'tile-disabled' %>"> -->
+        <div class="card-body <%= (@has_score > 0) ? 'tile-disabled' : 'tile-disabled' %>">
+        <span class="badge bg-label-success rounded p-2"><i class="bx bx-medal"></i></span>
+        <p class="icon-name text-capitalize text-truncate mb-2 mt-2 company-user-primary-text-color" style="color: #696CFF;">View Scorecard</p>
+      </div>
+    </div>
+    <div class="card icon-card text-center mb-4 col-md-3">
+      <div class="card-body <%= (@report.present? && (@report.upload_by == "admin" || @report.upload_by == "manager") && (@has_score > 0) && @report.analyst_report.attachments.present?) ? 'report_download cursor-pointer' : 'tile-disabled' %>">
+        <span class="badge bg-label-danger rounded p-2"><i class="bx bx-bar-chart-alt-2"></i></span>
+        <p class="icon-name text-capitalize text-truncate mb-2 mt-2 company-user-primary-text-color" style="color: #696CFF;">View Report</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(".csv_download").click(function () {
+        window.location.replace('/download_excel/company/<%= current_user.id %>')
+    });
+
+    <% if @report.present? && (@report.upload_by == "admin" || @report.upload_by == "manager") && @has_score == 1 && @report.analyst_report.attachments.present? %>
+    $(".report_download").click(function () {
+        window.location.replace('<%= rails_blob_path(@report&.analyst_report, disposition: "attachment") %>')
+    });
+    <% end %>
+</script>

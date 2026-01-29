@@ -1,0 +1,39 @@
+<div class="card show-profile">
+	<h5 class="card-header">View User</h5>
+
+  <div class="card-body col-md-10 offset-1">
+    <div class="col-md-12 row g-3">
+      <div class="mb-3 col-md-4">
+        <label class="form-label">First Name</label>
+        <p class="mb-0"><%= @user.first_name %></p>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Last Name</label>
+        <p class="mb-0"><%= @user.last_name %></p>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Email</label>
+        <p class="mb-0"><%= @user.email %></p>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Mobile</label>
+        <p class="mb-0"><%= @user.mobile %></p>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Role</label>
+        <p class="mb-0"><%= @user.role.role_name.humanize.titleize %></p>
+      </div>
+    </div>
+
+    <div class="col-md-4 offset-4">
+      <center>
+        <div class="row">
+          <div class="col-md-12">
+            <%= link_to 'Edit', edit_user_path(@user.id), class: "btn btn-primary" %>
+            <%= link_to 'Back', users_path, class: "btn btn-secondary" %>
+          </div>
+        </div>
+      </center>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,208 @@
+<% content_for :title, "ESG Peer Benchmarking | Choose Your Company Sector" %>
+<% content_for :description, "Access ESG peer benchmarking instructions and select your company sector to compare and improve ESG performance. Optimize your ESG strategy today." %>
+<div class="row col-md-11 bg-white sector-section mb-4">
+  <div class="col-md-6">
+    <div class="mb-4 mx-2 d-flex">
+        <label class="form-label" style="margin-top: 5%">Select Sector</label>
+        <%= select_tag(:company_sector, options_for_select(Sector.pluck(:sector_name), current_user.company_sector), include_blank: "Select sector", class: "form-control form-select mw-fit-content ms-3 mt-3", id: "companySector", data: { disabled: current_user.subscription_approved_at.present? && current_user.subscription_approved_at > 1.year.ago }) %>
+    </div>
+   <%= render partial: 'company_user/peer_benchmark/peer_benchmark_answer_exist_modal' %>
+  </div>
+    <div class="mb-4 mx-2">
+        <input type="checkbox" class="form-check-input checked-color consent-update-form" id="consent_form" <%= current_user.consent_form ? 'checked' : '' %> <%= current_user.subscription_approved_at.present? && current_user.subscription_approved_at > 1.year.ago ? '' : 'disabled' %>>
+        <span class="mx-2">We provide CII team consent to use our ESG data, populated in the questionnaire, for analytics purpose</span>
+    </div>
+</div>
+<div class="row col-md-11 sector-section center-card-section">
+  <div class="d-flex align-items-start justify-content-between" id="peer-icons-container">
+    <% if current_user.subscription_approved_at.present? && current_user.subscription_approved_at > 1.year.ago %>
+        <div class="card icon-card text-center mb-4 col-md-6 provide_data_bg ">
+        <div class="card-body text-clr-black cursor-pointer data-validate" id="provideDataCard" data-toggle="tooltip" title="This button allows you to view and edit the provided data." data-placement="bottom">
+            <span><%= image_tag asset_path('provide_data.png'), alt: "provide_data", width: "60", class: "img-fluid" %></span>
+            <p class="icon-name text-capitalize text-truncate mb-2 mt-2 ">Provide & Edit Data</p>
+        </div>
+        </div>
+    <% else %>
+      <div class="card icon-card text-center mb-4 col-md-6 provide_data_bg ">
+        <div class="card-body text-clr-black" data-toggle="tooltip" data-placement="bottom">
+            <span><%= image_tag asset_path('provide_data.png'), alt: "provide_data", width: "60", class: "img-fluid" %></span>
+            <p class="icon-name text-capitalize text-truncate mb-2 mt-2 ">Provide & Edit Data</p>
+        </div>
+        </div>
+    <% end %>
+    <div class="card icon-card text-center mb-4 col-md-6 view_report_bg">
+        <% if @answer && @answer.pdfreportfile&.attached? && current_user.subscription_approved_at.present? && current_user.subscription_approved_at > 1.year.ago %>
+            <%= link_to rails_blob_path(@answer.pdfreportfile, disposition: "attachment"), class: "stretched-link" do %>
+            <div class="card-body text-clr-black cursor-pointer">
+                <span><%= image_tag asset_path('view_report.png'), alt: "view_report", width: "60", class: "img-fluid" %></span>
+                <p class="icon-name text-capitalize text-truncate mb-2 mt-2">View Report</p>
+            </div>
+            <% end %>
+        <% else %>
+           <div class="card-body text-clr-black cursor-not-allowed">
+            <span><%= image_tag asset_path('view_report.png'), alt: "view_report_disabled", width: "60", class: "img-fluid" %></span>
+            <p class="icon-name text-capitalize text-truncate mb-2 mt-2">View Report</p>
+            </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+<div class="row col-md-11 bg-white sector-section">
+    <div class="mb-4">
+      <p class="mt-3" style="margin-left: 11px;"><b>Instructions :</b></p>
+        <ol class="text-align-justify">
+        <% steps = ApplicationRecord::PEER_BENCHMARK_STEPS %>
+         <% steps.each do |step| %>
+                <li class="mt-3 px-2" style="word-spacing: 2px;">
+                    <%= raw step.gsub("[PROVIDE_DATA_IMAGE]", image_tag(asset_path('provide_data.png'), alt: "provide_data", width: "30", class: "img-fluid")) %>
+                </li>
+          <% end %>
+        </ol>
+    </div>
+</div>
+
+<%= render partial: 'company_user/peer_benchmark/sector_selection_modal' %>
+
+<script>
+    $(document).ready(function() {
+     let selectedSector = null;
+     $('[data-toggle="tooltip"]').tooltip();
+
+    $('#modalInstructions, #modalPeerBenchMarkAnswer').modal({ backdrop: 'static', keyboard: false });
+
+    $("#provideDataCard").click(function() {
+        var userId = <%= current_user.id %>;
+
+        $.ajax({
+            url: '/company_user/peer_benchmark_answer_exist',
+            method: 'GET',
+            success: function(response) {
+                if (!response.status) {
+                      var selectedSector = $("#companySector").val();
+                      $("#modalSector").val(selectedSector);
+                      $("#instructionsModalPeer").click();
+                }
+                else {
+                  window.location.href = '<%= peer_benchmark_assessment_path %>';
+                }
+            },
+            error: function(error) {
+                console.error('Error occurred:', error);
+            }
+        });
+    });
+
+     var isDisabled = $('#companySector').data('disabled');
+        if (!isDisabled) {
+            $('#companySector').prop('disabled', true);
+        }
+
+    $("#modalInstructions").on("click", "#updateUserDataBtn", function() {
+        $("#modalInstructions").modal('toggle');
+        var selectedSector = $("#modalSector").val();
+        var consentFormChecked = $("#consent_form").is(":checked");
+        consentFormChecked = consentFormChecked ? true : false;
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: "/company_user/update_user_sector",
+            method: "PATCH",
+            data: {
+                sector: selectedSector,
+                consent_form: consentFormChecked
+            },
+            headers: {
+                'X-CSRF-Token': csrfToken
+            },
+            success: function(response) {
+                console.log("User table updated successfully.");
+            },
+            error: function(xhr, status, error) {
+                console.error("Error occurred while updating user table:", error);
+            }
+        });
+    });
+
+    $('#existingSectorCancel').click(function() {
+        $('#modalPeerBenchMarkAnswer').modal('hide');
+        var selectedSector = "<%= current_user.company_sector %>";
+        $('#companySector').val(selectedSector);
+    });
+
+      $('#companySector').change(function() {
+        selectedSector = $(this).val();
+        $.ajax({
+            url: '/company_user/peer_benchmark_answer_exist',
+            method: 'GET',
+            success: function(response) {
+                if (response.status) {
+                    $('#modalPeerBenchMarkAnswer').modal('show');
+                }
+            },
+            error: function(error) {
+                console.error('Error occurred:', error);
+            }
+        });
+    });
+
+    $('#updatePeerBenchmarkAnswer').click(function() {
+         var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '/company_user/update_peer_benchmark_answer',
+            method: 'PATCH',
+            data: { sector: selectedSector },
+             headers: {
+                'X-CSRF-Token': csrfToken
+            },
+            success: function(response) {
+                $('#modalPeerBenchMarkAnswer').modal('hide');
+            },
+            error: function(error) {
+                console.error('Error occurred:', error);
+            }
+        });
+    });
+
+     $('#deletePeerBenchmarkAnswer').click(function() {
+         var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '/company_user/delete_peer_benchmark_answer',
+            method: 'DELETE',
+            data: { sector: selectedSector },
+             headers: {
+                'X-CSRF-Token': csrfToken
+            },
+            success: function(response) {
+                $('#modalPeerBenchMarkAnswer').modal('hide');
+            },
+            error: function(error) {
+                console.error('Error occurred:', error);
+            }
+        });
+    });
+
+    $('.consent-update-form').change(function() {
+        var consentValue = $(this).is(':checked');
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            url: '/company_user/update_consent',
+            method: 'PATCH',
+            headers: {
+                'X-CSRF-Token': csrfToken
+            },
+            data: { 
+                user: { consent_form: consentValue }
+            },
+            success: function(response) {
+            },
+            error: function(xhr) {
+                console.log('An error occurred while updating consent.');
+            }
+        });
+    });
+});
+
+</script>

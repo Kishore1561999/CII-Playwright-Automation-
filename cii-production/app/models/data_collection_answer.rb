@@ -1,0 +1,2 @@
+class DataCollectionAnswer < ApplicationRecord
+end

@@ -1,0 +1,39 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Users") do |sheet|
+  style_header = wb.styles.add_style(
+    bg_color: "CCE6FF",
+    sz: 12,
+    b: true,
+    font_name: 'Calibri',
+    border: { style: :thin, color: "000000" },
+    alignment: { horizontal: :left, vertical: :center, wrap_text: true } # Changed alignment to left
+  )
+  style_center = wb.styles.add_style(
+    alignment: { horizontal: :left, vertical: :center, wrap_text: true } # Changed alignment to left
+  )
+
+  sheet.column_widths 50, 30, 30, 30, 30, 30, 30, 30, 30, 30
+  sheet.add_row ["ISIN NUMBER", "COMPANY NAME", "PAN", "ADDRESS", "GST", "DATE OF SUBSCRIPTION", "END DATE OF SUBSCRIPTION", "SECTOR", "STATUS"], style: style_header
+
+  @users.each do |user|
+    isin_number = user.company_isin_number.presence || "-"
+    isin_number = " " + isin_number if isin_number != "-"
+    country_full = CS.countries[user.company_country.to_sym] || user.company_country
+    states = CS.states(user.company_country.to_sym)
+    state_full = states[user.company_state.to_sym] || user.company_state
+    address = "#{user.company_address_line1}, #{user.company_city}, #{state_full}, #{country_full}, #{user.company_zip}"
+    subscription_date = user.subscription_approved_at
+    end_subscription_date = subscription_date ? (subscription_date + 1.year - 1.day).strftime("%d/%m/%Y") : "-"
+    sheet.add_row [
+      isin_number,
+      user.company_name.presence || "-",
+      user.pan_no.presence || "-",
+      address.presence || "-",
+      user.gst.presence || "-",
+      (user.subscription_approved_at ? user.subscription_approved_at.strftime("%d/%m/%Y") : "-"),
+      end_subscription_date,
+      user.company_sector.presence || "-",
+      subscription_status(user)[:status]
+    ], style: style_center
+  end
+end

@@ -81,9 +81,19 @@ class AdminPage extends BasePage {
     async navigateToESGDiagnostic() {
         // Ensure any lingering modals or backdrops are cleared first
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-        await this.esgDiagnosticsLink.click({ force: true });
+
+        // Ensure the link is visible and scrolled into view
+        await this.esgDiagnosticsLink.scrollIntoViewIfNeeded();
+
+        try {
+            await this.esgDiagnosticsLink.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`\u26A0 Standard click failed on ESG Diagnostic link: ${error.message}. Attempting JS click.`);
+            await this.esgDiagnosticsLink.dispatchEvent('click');
+        }
+
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Admin: Navigated to ESG Diagnostic');
+        console.log('\u2713 Admin: Navigated to ESG Diagnostic');
     }
 
     async filterByYear(year) {
@@ -150,9 +160,21 @@ class AdminPage extends BasePage {
     async navigateToBasicSubscription() {
         // Ensure any lingering modals or backdrops are cleared first
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-        await this.basicSubLink.click({ force: true });
+
+        // Ensure the link is visible and scrolled into view
+        await this.basicSubLink.scrollIntoViewIfNeeded();
+
+        try {
+            // Attempt normal click first
+            await this.basicSubLink.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`\u26A0 Standard click failed on Basic Subscription link: ${error.message}. Attempting JS click.`);
+            // Fallback to JS click if viewport issues persist
+            await this.basicSubLink.dispatchEvent('click');
+        }
+
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Admin: Navigated to Basic Subscription');
+        console.log('\u2713 Admin: Navigated to Basic Subscription');
     }
 
     async searchBasicSubscription(sector, year) {
@@ -192,9 +214,19 @@ class AdminPage extends BasePage {
     async navigateToPBDataManagement() {
         // Ensure any lingering modals or backdrops are cleared first
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-        await this.pbDataLink.click({ force: true });
+
+        // Ensure the link is visible and scrolled into view
+        await this.pbDataLink.scrollIntoViewIfNeeded();
+
+        try {
+            await this.pbDataLink.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`\u26A0 Standard click failed on PB Data Management link: ${error.message}. Attempting JS click.`);
+            await this.pbDataLink.dispatchEvent('click');
+        }
+
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
-        console.log('✓ Admin: Navigated to PB Data Management');
+        console.log('\u2713 Admin: Navigated to PB Data Management');
     }
 
     async approvePBData(companyName) {

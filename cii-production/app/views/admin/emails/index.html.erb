@@ -1,0 +1,202 @@
+<% content_for :title, "Manage Email Content Efficiently | Admin Dashboard" %>
+<% content_for :description, "Streamline email content management with ease. Admins can oversee and organize all email content in one centralized location for better efficiency." %>
+<div class="pb-4">
+	<div class="navbar-nav-right d-flex align-items-center">
+		<div class="navbar-nav align-items-center">
+			<div class="nav-item d-flex align-items-center">
+					<div class="col-12 d-flex">
+						<div id="dropdownFilter" class="col-3 mx-1 navbar-dropdown dropdown-user dropdown" style="width: 35% !important">
+							<a class="filter-icon">
+								<input type="text" name="sector" id="sectorFilter" class="form-control cursor-pointer" value="" placeholder="Filter by Status" style="background-color: white;" readonly>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end filter-container">
+								<%= form_tag("#") do %>
+									<div class="checkbox-list">
+										<% status_map_1 = {
+											"basic_premium" => "Subscribers",
+											"admin_manager" => "CII Users_ESG Subscription",
+											"esg_diagnostics" => "ESG Diagnostics",
+										} %>
+										<% status_map_1.each do |key, value| %>
+											<div class="form-check" style="padding: 0 0 0 2rem;">
+												<%= check_box_tag "checkbox_#{key}", key, @selected_filters.include?(key), { class: "form-check-input sector-checkbox" } %>
+												<%= label_tag "checkbox_#{key}", value, { class: "form-check-label" } %>
+											</div>
+										<% end %>
+									</div>
+								<% end %>
+							</div> 
+						</div>
+						<div class="col-2 mx-1" style="width: auto">
+						<%= button_tag "Apply", class: "btn btn-md btn-primary", id: "apply-filter" %>
+						</div>
+						<div class="col-4 mx-1">
+						<%= button_tag "Clear", class: "btn btn-md btn-secondary", id: "clear-filter" %>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card">
+  <div class="mt-3">
+	<div class="table-responsive text-nowrap">
+		<table class="table table-hover">
+			<thead>
+				<tr class="text-nowrap">
+					<th>Email Title</th>
+					<th>Email Content</th>
+					<th>Services</th>
+					<th class="text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody class="table-border-bottom-0">
+				<% if @emails.length > 0 %>
+					<% @emails.each do |email| %>
+						<tr>
+							<td><%= email.email_title %></td>
+<!--							<td><%#= email.email_content %></td>-->
+							<td><%= truncate(email.email_content, :length => 80)  %></td>
+							<% status_map = {
+								"basic_premium" => "Subscribers",
+								"admin_manager" => "CII Users_ESG Subscription",
+								"esg_diagnostics" => "ESG Diagnostics"
+								} %>
+								<td><%= status_map[email.status] || "Common Email" %></td>
+							<td>
+								<%= link_to email_path(email.id), class: "btn btn-sm btn-primary icon-default-size me-1" do %>
+									<i class="bx bx-show-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+								<% end %>
+								<%= link_to edit_email_path(email.id), class: "btn btn-sm btn-primary icon-default-size me-1 delete_button" do %>
+									<i class="bx bx-edit-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+				<% else %>
+					<tr>
+						<td colspan="3" class="text-center">No data available!</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="alert alert-danger alert-dismissible" role="alert"></div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete?</p>
+				<input type="hidden" id="delete_email_id">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="delete_button">Yes</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+  $(document).on('turbolinks:load', function () {
+		$(document).on("click", "#clear-filter", function (event) {
+			event.stopPropagation();
+			window.location.replace("<%= emails_path %>");
+		});
+
+		$(document).on("click", "#apply-filter", function (event) {
+			event.stopPropagation();
+
+			$(".filter-container").hide();
+
+			applyFilter(event);
+		});
+
+		$(document).on("change", "#multi-select", function (event) {
+			event.stopPropagation();
+
+			if ($(this).is(':checked')) {
+				$(".multi-select:checkbox:not(:disabled)").prop('checked', true);
+			} else {
+				$(".multi-select:checkbox:not(:disabled)").prop('checked', false);
+			}
+
+			getCheckedIds();
+		});
+
+		$(document).on("change", ".multi-select", function (event) {
+			event.stopPropagation();
+
+			getCheckedIds();
+	    });
+
+		function applyFilter(event) {
+            event.preventDefault();
+
+            $(".filter-container").hide();
+
+            let sectorIds = [];
+            let companyName = $("#companyNameFilter").val();
+            let searchYear = $("#year-picker").val();
+            $(".sector-checkbox:checkbox:checked").each(function () {
+                sectorIds.push((this.value));
+            });
+            window.location.replace("<%= emails_path %>?email_filter="+sectorIds)
+        }
+    })
+  
+    $(document).ready(function() {
+		$(".alert-dismissible").hide();
+
+		 $(document).on("click", ".filter-icon", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").toggle();
+        });   
+
+		$(".delete_button").click(function() {
+			$("#delete_email_id").val(this.name);
+		});
+
+		$("#delete_button").click(function() {
+			let email_id = $("#delete_email_id").val();
+
+			$.ajax({
+				type: "DELETE",
+				url: `/esgadmin/emails/${email_id}`,
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+				},
+				processData: false,
+				success: function(data) {
+					$(".modalCenter").hide();
+				},
+				error: function(err) {
+					$(".alert-dismissible").html("Unable to delete.").show().delay(3000).fadeOut(300);
+				}
+			});
+    });
+
+	$(document).ready(function() {
+		$(document).on('click', function(event) {
+			var $dropdown = $('#dropdownFilter');
+			if (!$dropdown.is(event.target) && $dropdown.has(event.target).length === 0) {
+				var $dropdownMenu = $dropdown.find('.dropdown-menu');
+				if ($dropdownMenu.hasClass('show')) {
+					$dropdownMenu.removeClass('show');
+				}
+			}
+		});
+
+		$('#sectorFilter').on('click', function(event) {
+			event.stopPropagation();
+			var $dropdownMenu = $('#dropdownFilter .dropdown-menu');
+			$dropdownMenu.toggleClass('show');
+		});
+	});
+});
+</script>
