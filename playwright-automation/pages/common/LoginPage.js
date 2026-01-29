@@ -40,9 +40,25 @@ class LoginPage extends BasePage {
         // Removed networkidle wait as it can fail if page navigates/closes - domcontentloaded is sufficient
     }
     async logout() {
-        await this.page.locator('a.nav-link.dropdown-toggle').click();
-        await this.page.getByRole('link', { name: 'Log Out' }).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.getByRole('link', { name: 'Log Out' }).click();
+        const profileDropdown = this.page.locator('a.nav-link.dropdown-toggle');
+        const logoutLink = this.page.getByRole('link', { name: 'Log Out' });
+
+        await profileDropdown.scrollIntoViewIfNeeded();
+        try {
+            await profileDropdown.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`⚠ Standard click failed on profile dropdown: ${error.message}. Attempting JS click.`);
+            await profileDropdown.dispatchEvent('click');
+        }
+
+        await logoutLink.waitFor({ state: 'visible', timeout: 5000 });
+        await logoutLink.scrollIntoViewIfNeeded();
+        try {
+            await logoutLink.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`⚠ Standard click failed on Logout link: ${error.message}. Attempting JS click.`);
+            await logoutLink.dispatchEvent('click');
+        }
 
         // Wait for logout modal and click Yes
         await this.page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });

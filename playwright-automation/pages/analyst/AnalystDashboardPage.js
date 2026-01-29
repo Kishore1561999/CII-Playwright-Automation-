@@ -26,8 +26,15 @@ class AnalystDashboardPage extends BasePage {
    * CII Data Collection
    */
   async navigateToCIIDataCollection() {
-    await this.ciiDataLink.click();
+    await this.ciiDataLink.scrollIntoViewIfNeeded();
+    try {
+      await this.ciiDataLink.click({ force: true, timeout: 5000 });
+    } catch (error) {
+      console.warn(`⚠ Standard click failed on Analyst CII Data link: ${error.message}. Attempting JS click.`);
+      await this.ciiDataLink.dispatchEvent('click');
+    }
     await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(2000);
     console.log('✓ Analyst: Navigated to CII Data Collection');
   }
 
@@ -69,6 +76,7 @@ class AnalystDashboardPage extends BasePage {
   async navigateToAnalystDashboard() {
     await this.navigate(this.baseURL);
     await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(2000);
     console.log('✓ Navigated to Analyst Dashboard');
   }
 

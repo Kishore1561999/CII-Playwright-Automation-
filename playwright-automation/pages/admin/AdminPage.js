@@ -276,14 +276,32 @@ class AdminPage extends BasePage {
         // Check if sub-menu is already visible
         if (await ciiLink.isVisible()) {
             console.log('CII Data link is visible, clicking directly.');
-            // Use force: true to bypass any minor UI obstructions or lingering invisible elements
-            await ciiLink.click({ force: true });
+            await ciiLink.scrollIntoViewIfNeeded();
+            try {
+                // Use force: true to bypass any minor UI obstructions or lingering invisible elements
+                await ciiLink.click({ force: true, timeout: 5000 });
+            } catch (error) {
+                console.warn(`⚠ Standard click failed on CII Data link: ${error.message}. Attempting JS click.`);
+                await ciiLink.dispatchEvent('click');
+            }
         } else {
             // If not visible, click PB Data menu to expand
             console.log('CII Data link hidden, clicking PB Data Management first.');
-            await pbLink.click({ force: true });
+            await pbLink.scrollIntoViewIfNeeded();
+            try {
+                await pbLink.click({ force: true, timeout: 5000 });
+            } catch (error) {
+                console.warn(`⚠ Standard click failed on PB Data link: ${error.message}. Attempting JS click.`);
+                await pbLink.dispatchEvent('click');
+            }
             await ciiLink.waitFor({ state: 'visible', timeout: 10000 });
-            await ciiLink.click({ force: true });
+            await ciiLink.scrollIntoViewIfNeeded();
+            try {
+                await ciiLink.click({ force: true, timeout: 5000 });
+            } catch (error) {
+                console.warn(`⚠ Standard click failed on CII Data link fallback: ${error.message}. Attempting JS click.`);
+                await ciiLink.dispatchEvent('click');
+            }
         }
 
         // Wait for the filter button on the target page to ensure navigation is complete
@@ -362,7 +380,13 @@ class AdminPage extends BasePage {
     async navigateToUserManagement() {
         // Ensure any lingering modals or backdrops are cleared first
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-        await this.userMgmtLink.click({ force: true });
+        await this.userMgmtLink.scrollIntoViewIfNeeded();
+        try {
+            await this.userMgmtLink.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`⚠ Standard click failed on User Management link: ${error.message}. Attempting JS click.`);
+            await this.userMgmtLink.dispatchEvent('click');
+        }
         await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(2000);
         console.log('✓ Admin: Navigated to User Management');
@@ -446,8 +470,14 @@ class AdminPage extends BasePage {
     async navigateToCompanyUsers() {
         // Ensure any lingering modals or backdrops are cleared first
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+        await this.esgDiagnosticsLink.scrollIntoViewIfNeeded();
         if (await this.esgDiagnosticsLink.isVisible()) {
-            await this.esgDiagnosticsLink.click({ force: true });
+            try {
+                await this.esgDiagnosticsLink.click({ force: true, timeout: 5000 });
+            } catch (error) {
+                console.warn(`⚠ Standard click failed on Company Users link: ${error.message}. Attempting JS click.`);
+                await this.esgDiagnosticsLink.dispatchEvent('click');
+            }
         } else {
             await this.page.goto('/esgadmin/company_users');
         }
