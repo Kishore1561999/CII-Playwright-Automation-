@@ -1,0 +1,5 @@
+✓ Analyst: Navigated to CII Data Collection
+✓ Analyst: Searched for company: PB_Co_1769667940872
+✓ Analyst: Clicking Edit for PB_Co_1769667940872
+✓ Clicked Submit button
+✓ Confirmed submission (Clicked Yes)

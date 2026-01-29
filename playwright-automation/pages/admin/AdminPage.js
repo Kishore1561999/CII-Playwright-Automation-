@@ -93,6 +93,7 @@ class AdminPage extends BasePage {
         }
 
         await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
         console.log('\u2713 Admin: Navigated to ESG Diagnostic');
     }
 
@@ -174,6 +175,7 @@ class AdminPage extends BasePage {
         }
 
         await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
         console.log('\u2713 Admin: Navigated to Basic Subscription');
     }
 
@@ -226,6 +228,7 @@ class AdminPage extends BasePage {
         }
 
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
+        await this.page.waitForTimeout(2000);
         console.log('\u2713 Admin: Navigated to PB Data Management');
     }
 
@@ -285,6 +288,7 @@ class AdminPage extends BasePage {
 
         // Wait for the filter button on the target page to ensure navigation is complete
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
+        await this.page.waitForTimeout(2000);
         console.log('✓ Admin: Navigated to CII Data Collection');
     }
 
@@ -360,6 +364,7 @@ class AdminPage extends BasePage {
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
         await this.userMgmtLink.click({ force: true });
         await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
         console.log('✓ Admin: Navigated to User Management');
     }
 
@@ -447,6 +452,7 @@ class AdminPage extends BasePage {
             await this.page.goto('/esgadmin/company_users');
         }
         await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
         console.log('✓ Admin: Navigated to Company Users / ESG Diagnostic page');
     }
 
