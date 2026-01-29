@@ -11,24 +11,27 @@ class DashboardPage extends BasePage {
         this.viewAssessmentLink = page.locator('.card:has(p.icon-name:text("View Assessment"))').locator('a, .card-body').first();
     }
 
-    async clickTakeAssessment() {
-        await this.takeAssessmentCard.scrollIntoViewIfNeeded();
+    async _robustClick(locator, name) {
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await locator.scrollIntoViewIfNeeded();
         try {
-            await this.takeAssessmentCard.click({ force: true, timeout: 5000 });
+            await locator.click({ force: true, timeout: 5000 });
+            console.log(`\u2713 Clicked: ${name}`);
         } catch (error) {
-            console.warn(`⚠ Standard click failed on Take Assessment card: ${error.message}. Attempting JS click.`);
-            await this.takeAssessmentCard.dispatchEvent('click');
+            console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+            await locator.dispatchEvent('click');
+            console.log(`\u2713 JS clicked: ${name}`);
         }
     }
 
+    async clickTakeAssessment() {
+        await this._robustClick(this.takeAssessmentCard, 'Take Assessment card');
+    }
+
     async clickViewAssessment() {
-        await this.viewAssessmentCard.scrollIntoViewIfNeeded();
-        try {
-            await this.viewAssessmentCard.click({ force: true, timeout: 5000 });
-        } catch (error) {
-            console.warn(`⚠ Standard click failed on View Assessment card: ${error.message}. Attempting JS click.`);
-            await this.viewAssessmentCard.dispatchEvent('click');
-        }
+        await this._robustClick(this.viewAssessmentCard, 'View Assessment card');
     }
 
     async isTakeAssessmentDisabled() {

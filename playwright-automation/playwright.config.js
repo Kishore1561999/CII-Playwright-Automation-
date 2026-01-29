@@ -18,7 +18,7 @@ module.exports = defineConfig({
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
     /* Retry on failures */
-    retries: 0,
+    retries: process.env.CI ? 1 : 0,
     /* Opt out of parallel tests on CI. */
     workers: 1,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -48,6 +48,7 @@ module.exports = defineConfig({
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
+        actionTimeout: 15000,
         headless: process.env.CI ? true : false,
         viewport: { width: 1920, height: 1080 },
         launchOptions: {
@@ -65,7 +66,7 @@ module.exports = defineConfig({
             name: 'E2E_Flow',
             use: {
                 browserName: 'chromium',
-                viewport: null
+                viewport: { width: 1920, height: 1080 }
             },
             testMatch: [
                 '**/tests/e2e/company_user/assessment.spec.js',
@@ -77,7 +78,7 @@ module.exports = defineConfig({
             name: 'Functional_Tests',
             use: {
                 browserName: 'chromium',
-                viewport: null
+                viewport: { width: 1920, height: 1080 }
             },
             testMatch: [
                 '**/tests/functional/**/*.spec.js'

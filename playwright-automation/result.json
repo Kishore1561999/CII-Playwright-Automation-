@@ -107,6 +107,53 @@
           "column": 6,
           "specs": [
             {
+              "title": "ESG Diagnostic - Search and Filter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Functional_Tests",
+                  "projectName": "Functional_Tests",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11647,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: ESG Diagnostic link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Filtered by Year: 2025\n"
+                        },
+                        {
+                          "text": "✓ Admin: Filtered by Sector: Information Technology\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: Demo user for testing\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T08:46:31.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "67bb5f0f16b6c07ef839-86b4e83972e58d8367c0",
+              "file": "functional/admin_workflows.spec.js",
+              "line": 27,
+              "column": 5
+            },
+            {
               "title": "Basic Subscription - Search and Filter",
               "ok": true,
               "tags": [],
@@ -122,11 +169,11 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 8702,
+                      "duration": 5589,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✓ Admin: Navigated to Basic Subscription\n"
+                          "text": "✓ Clicked: Basic Subscription link\n"
                         },
                         {
                           "text": "✓ Admin: Filtered by Year: 2025\n"
@@ -140,7 +187,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-01-29T07:18:44.066Z",
+                      "startTime": "2026-01-29T08:46:53.583Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -152,6 +199,159 @@
               "file": "functional/admin_workflows.spec.js",
               "line": 43,
               "column": 5
+            },
+            {
+              "title": "PB Data Management - Search and Filter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Functional_Tests",
+                  "projectName": "Functional_Tests",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5545,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: PB Data Management link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Filtered by Year: 2025\n"
+                        },
+                        {
+                          "text": "✓ Admin: Filtered by Sector: Information Technology\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: Demo user for testing\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T08:46:59.190Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "67bb5f0f16b6c07ef839-abc2463d6ef35960362a",
+              "file": "functional/admin_workflows.spec.js",
+              "line": 59,
+              "column": 5
+            },
+            {
+              "title": "CII Data Collection - Search and Filter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Functional_Tests",
+                  "projectName": "Functional_Tests",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7728,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "CII Data link is visible, clicking directly.\n"
+                        },
+                        {
+                          "text": "✓ Clicked: CII Data link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Navigated to CII Data Collection\n"
+                        },
+                        {
+                          "text": "✓ Admin: Filtered by Year: 2024\n"
+                        },
+                        {
+                          "text": "✓ Admin: Filtered by Sector: Automobiles & Auto Components\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: CII_CEAT Limited\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T08:47:04.749Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "67bb5f0f16b6c07ef839-44f158b103500fe73442",
+              "file": "functional/admin_workflows.spec.js",
+              "line": 75,
+              "column": 5
+            },
+            {
+              "title": "User Management - Create and Edit User",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Functional_Tests",
+                  "projectName": "Functional_Tests",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9487,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: User Management link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Created user: testuser_1769676434554@example.com\n"
+                        },
+                        {
+                          "text": "✓ Admin: Editing user: testuser_1769676434554@example.com\n"
+                        },
+                        {
+                          "text": "✓ Admin: Get updated user: testuser_1769676434554@example.com\n"
+                        },
+                        {
+                          "text": "✓ Admin: Deleting user: testuser_1769676434554@example.com\n"
+                        },
+                        {
+                          "text": "✓ Admin: Deleted user: testuser_1769676434554@example.com\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-29T08:47:12.492Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "67bb5f0f16b6c07ef839-69fbcbdec3eb8bf63362",
+              "file": "functional/admin_workflows.spec.js",
+              "line": 91,
+              "column": 5
             }
           ]
         }
@@ -160,9 +360,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-29T07:18:42.399Z",
-    "duration": 27146.547,
-    "expected": 1,
+    "startTime": "2026-01-29T08:46:30.225Z",
+    "duration": 52556.397,
+    "expected": 5,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

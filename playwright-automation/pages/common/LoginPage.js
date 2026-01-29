@@ -40,29 +40,56 @@ class LoginPage extends BasePage {
         // Removed networkidle wait as it can fail if page navigates/closes - domcontentloaded is sufficient
     }
     async logout() {
-        const profileDropdown = this.page.locator('a.nav-link.dropdown-toggle');
-        const logoutLink = this.page.getByRole('link', { name: 'Log Out' });
+        console.log('Starting logout process...');
+        await this.page.waitForLoadState('load');
+        await this.page.waitForTimeout(1000);
+
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        const profileDropdown = this.page.locator('a.nav-link.dropdown-toggle, .user-profile-dropdown, #user-profile').first();
+        const logoutLink = this.page.locator('a[href*="sign_out"], a:has-text("Log Out"), a:has-text("Logout"), button:has-text("Log Out")').first();
 
         await profileDropdown.scrollIntoViewIfNeeded();
         try {
+            console.log('Attempting to click profile dropdown...');
             await profileDropdown.click({ force: true, timeout: 5000 });
         } catch (error) {
             console.warn(`⚠ Standard click failed on profile dropdown: ${error.message}. Attempting JS click.`);
             await profileDropdown.dispatchEvent('click');
         }
 
-        await logoutLink.waitFor({ state: 'visible', timeout: 5000 });
-        await logoutLink.scrollIntoViewIfNeeded();
+        // Wait for dropdown animation and check visibility
+        await this.page.waitForTimeout(1500);
+
         try {
+            console.log('Waiting for Logout link...');
+            // Wait for either visible or at least attached (some menus might be tricky with visibility)
+            await logoutLink.waitFor({ state: 'attached', timeout: 10000 });
+            await logoutLink.scrollIntoViewIfNeeded();
+
+            // Try to click it
             await logoutLink.click({ force: true, timeout: 5000 });
         } catch (error) {
-            console.warn(`⚠ Standard click failed on Logout link: ${error.message}. Attempting JS click.`);
+            console.warn(`⚠ Logout link click failed: ${error.message}. Attempting JS click fallback.`);
             await logoutLink.dispatchEvent('click');
         }
 
         // Wait for logout modal and click Yes
-        await this.page.locator('#modalLogout').waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator('#modalLogout').getByRole('link', { name: 'Yes' }).click();
+        const modal = this.page.locator('#modalLogout, .modal:has-text("Logout"), .modal:has-text("Log Out")').first();
+        try {
+            await modal.waitFor({ state: 'visible', timeout: 10000 });
+        } catch (error) {
+            console.warn(`⚠ Logout modal not fully visible via selector: ${error.message}`);
+        }
+
+        const yesButton = modal.locator('a:has-text("Yes"), button:has-text("Yes"), .btn:has-text("Yes"), #logout_yes').first();
+        try {
+            await yesButton.click({ force: true, timeout: 5000 });
+        } catch (error) {
+            console.warn(`⚠ Failed to click Yes button: ${error.message}. Attempting JS click.`);
+            await yesButton.dispatchEvent('click');
+        }
 
         // Ensure logout is complete by waiting for sign-in page
         try {

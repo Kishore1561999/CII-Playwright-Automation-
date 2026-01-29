@@ -18,6 +18,21 @@ class AnalystDashboardPage extends BasePage {
     this.applyFilterBtn = page.locator('#apply-filter, button:has-text("Search")');
   }
 
+  async _robustClick(locator, name) {
+    // Ensure any lingering modals or backdrops are cleared first
+    await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+    await locator.scrollIntoViewIfNeeded();
+    try {
+      await locator.click({ force: true, timeout: 5000 });
+      console.log(`\u2713 Clicked: ${name}`);
+    } catch (error) {
+      console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+      await locator.dispatchEvent('click');
+      console.log(`\u2713 JS clicked: ${name}`);
+    }
+  }
+
   async verifyDashboardLoaded() {
     await expect(this.page).toHaveURL(/.*analyst\/dashboard/);
   }
@@ -26,16 +41,9 @@ class AnalystDashboardPage extends BasePage {
    * CII Data Collection
    */
   async navigateToCIIDataCollection() {
-    await this.ciiDataLink.scrollIntoViewIfNeeded();
-    try {
-      await this.ciiDataLink.click({ force: true, timeout: 5000 });
-    } catch (error) {
-      console.warn(`⚠ Standard click failed on Analyst CII Data link: ${error.message}. Attempting JS click.`);
-      await this.ciiDataLink.dispatchEvent('click');
-    }
+    await this._robustClick(this.ciiDataLink, 'Analyst CII Data link');
     await this.page.waitForLoadState('networkidle');
     await this.page.waitForTimeout(2000);
-    console.log('✓ Analyst: Navigated to CII Data Collection');
   }
 
   async searchCompany(companyName) {
@@ -74,7 +82,7 @@ class AnalystDashboardPage extends BasePage {
   }
 
   async navigateToAnalystDashboard() {
-    await this.navigate(this.baseURL);
+    await this.page.goto(this.baseURL);
     await this.page.waitForLoadState('networkidle');
     await this.page.waitForTimeout(2000);
     console.log('✓ Navigated to Analyst Dashboard');

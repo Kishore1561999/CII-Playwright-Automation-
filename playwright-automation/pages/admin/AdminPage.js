@@ -72,6 +72,21 @@ class AdminPage extends BasePage {
 
     }
 
+    async _robustClick(locator, name) {
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await locator.scrollIntoViewIfNeeded();
+        try {
+            await locator.click({ force: true, timeout: 5000 });
+            console.log(`\u2713 Clicked: ${name}`);
+        } catch (error) {
+            console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+            await locator.dispatchEvent('click');
+            console.log(`\u2713 JS clicked: ${name}`);
+        }
+    }
+
     async verifyDashboardLoaded() {
         await expect(this.page).toHaveURL(/.*esgadmin\/company_users/);
     }
@@ -79,22 +94,9 @@ class AdminPage extends BasePage {
  * ESG Diagnostic
  */
     async navigateToESGDiagnostic() {
-        // Ensure any lingering modals or backdrops are cleared first
-        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-
-        // Ensure the link is visible and scrolled into view
-        await this.esgDiagnosticsLink.scrollIntoViewIfNeeded();
-
-        try {
-            await this.esgDiagnosticsLink.click({ force: true, timeout: 5000 });
-        } catch (error) {
-            console.warn(`\u26A0 Standard click failed on ESG Diagnostic link: ${error.message}. Attempting JS click.`);
-            await this.esgDiagnosticsLink.dispatchEvent('click');
-        }
-
+        await this._robustClick(this.esgDiagnosticsLink, 'ESG Diagnostic link');
         await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(2000);
-        console.log('\u2713 Admin: Navigated to ESG Diagnostic');
     }
 
     async filterByYear(year) {
@@ -159,24 +161,9 @@ class AdminPage extends BasePage {
      * Basic Subscription
      */
     async navigateToBasicSubscription() {
-        // Ensure any lingering modals or backdrops are cleared first
-        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-
-        // Ensure the link is visible and scrolled into view
-        await this.basicSubLink.scrollIntoViewIfNeeded();
-
-        try {
-            // Attempt normal click first
-            await this.basicSubLink.click({ force: true, timeout: 5000 });
-        } catch (error) {
-            console.warn(`\u26A0 Standard click failed on Basic Subscription link: ${error.message}. Attempting JS click.`);
-            // Fallback to JS click if viewport issues persist
-            await this.basicSubLink.dispatchEvent('click');
-        }
-
+        await this._robustClick(this.basicSubLink, 'Basic Subscription link');
         await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(2000);
-        console.log('\u2713 Admin: Navigated to Basic Subscription');
     }
 
     async searchBasicSubscription(sector, year) {
@@ -214,22 +201,9 @@ class AdminPage extends BasePage {
      * PB Data Management
      */
     async navigateToPBDataManagement() {
-        // Ensure any lingering modals or backdrops are cleared first
-        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-
-        // Ensure the link is visible and scrolled into view
-        await this.pbDataLink.scrollIntoViewIfNeeded();
-
-        try {
-            await this.pbDataLink.click({ force: true, timeout: 5000 });
-        } catch (error) {
-            console.warn(`\u26A0 Standard click failed on PB Data Management link: ${error.message}. Attempting JS click.`);
-            await this.pbDataLink.dispatchEvent('click');
-        }
-
+        await this._robustClick(this.pbDataLink, 'PB Data Management link');
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
         await this.page.waitForTimeout(2000);
-        console.log('\u2713 Admin: Navigated to PB Data Management');
     }
 
     async approvePBData(companyName) {
@@ -276,32 +250,13 @@ class AdminPage extends BasePage {
         // Check if sub-menu is already visible
         if (await ciiLink.isVisible()) {
             console.log('CII Data link is visible, clicking directly.');
-            await ciiLink.scrollIntoViewIfNeeded();
-            try {
-                // Use force: true to bypass any minor UI obstructions or lingering invisible elements
-                await ciiLink.click({ force: true, timeout: 5000 });
-            } catch (error) {
-                console.warn(`⚠ Standard click failed on CII Data link: ${error.message}. Attempting JS click.`);
-                await ciiLink.dispatchEvent('click');
-            }
+            await this._robustClick(ciiLink, 'CII Data link');
         } else {
             // If not visible, click PB Data menu to expand
             console.log('CII Data link hidden, clicking PB Data Management first.');
-            await pbLink.scrollIntoViewIfNeeded();
-            try {
-                await pbLink.click({ force: true, timeout: 5000 });
-            } catch (error) {
-                console.warn(`⚠ Standard click failed on PB Data link: ${error.message}. Attempting JS click.`);
-                await pbLink.dispatchEvent('click');
-            }
+            await this._robustClick(pbLink, 'PB Data Management (parent) link');
             await ciiLink.waitFor({ state: 'visible', timeout: 10000 });
-            await ciiLink.scrollIntoViewIfNeeded();
-            try {
-                await ciiLink.click({ force: true, timeout: 5000 });
-            } catch (error) {
-                console.warn(`⚠ Standard click failed on CII Data link fallback: ${error.message}. Attempting JS click.`);
-                await ciiLink.dispatchEvent('click');
-            }
+            await this._robustClick(ciiLink, 'CII Data link');
         }
 
         // Wait for the filter button on the target page to ensure navigation is complete
@@ -378,18 +333,9 @@ class AdminPage extends BasePage {
      * User Management
      */
     async navigateToUserManagement() {
-        // Ensure any lingering modals or backdrops are cleared first
-        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-        await this.userMgmtLink.scrollIntoViewIfNeeded();
-        try {
-            await this.userMgmtLink.click({ force: true, timeout: 5000 });
-        } catch (error) {
-            console.warn(`⚠ Standard click failed on User Management link: ${error.message}. Attempting JS click.`);
-            await this.userMgmtLink.dispatchEvent('click');
-        }
+        await this._robustClick(this.userMgmtLink, 'User Management link');
         await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(2000);
-        console.log('✓ Admin: Navigated to User Management');
     }
 
     async createUser(firstName, lastName, email, mobile, roleValue, password) {
@@ -468,22 +414,15 @@ class AdminPage extends BasePage {
      * Navigation methods
      */
     async navigateToCompanyUsers() {
-        // Ensure any lingering modals or backdrops are cleared first
         await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
-        await this.esgDiagnosticsLink.scrollIntoViewIfNeeded();
         if (await this.esgDiagnosticsLink.isVisible()) {
-            try {
-                await this.esgDiagnosticsLink.click({ force: true, timeout: 5000 });
-            } catch (error) {
-                console.warn(`⚠ Standard click failed on Company Users link: ${error.message}. Attempting JS click.`);
-                await this.esgDiagnosticsLink.dispatchEvent('click');
-            }
+            await this._robustClick(this.esgDiagnosticsLink, 'Company Users / ESG Diagnostic link');
         } else {
+            console.log('ESG link not visible, using goto fallback for Company Users');
             await this.page.goto('/esgadmin/company_users');
         }
         await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(2000);
-        console.log('✓ Admin: Navigated to Company Users / ESG Diagnostic page');
     }
 
     /**
