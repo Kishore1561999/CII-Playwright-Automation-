@@ -1,0 +1,6 @@
+✓ Clicked: Company Users / ESG Diagnostic link
+✓ Admin: Approving company: E2E_Company_1769756159509
+✓ Admin: Searched for company: E2E_Company_1769756159509
+✓ Approval confirmed for: E2E_Company_1769756159509
+✓ Clicked approve and confirm for: E2E_Company_1769756159509
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

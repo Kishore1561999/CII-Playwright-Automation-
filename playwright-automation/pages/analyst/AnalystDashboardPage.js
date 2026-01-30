@@ -20,7 +20,7 @@ class AnalystDashboardPage extends BasePage {
 
   async _robustClick(locator, name) {
     // Ensure any lingering modals or backdrops are cleared first
-    await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+    // await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
 
     await locator.scrollIntoViewIfNeeded();
     try {

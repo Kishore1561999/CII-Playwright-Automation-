@@ -24,7 +24,8 @@ class AnalystAssessmentReviewPage extends BasePage {
 
     await locator.scrollIntoViewIfNeeded();
     try {
-      await locator.click({ force: true, timeout: 5000 });
+      // Remove force: true to respect actionability checks (waits for overlays to disappear)
+      await locator.click({ timeout: 5000 });
       console.log(`\u2713 Clicked: ${name}`);
     } catch (error) {
       console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
@@ -51,7 +52,13 @@ class AnalystAssessmentReviewPage extends BasePage {
   }
 
   async clickEdit() {
-    await this._robustClick(this.editButton, 'Edit button');
+    console.log('Attempting to click Edit and navigate...');
+    // Use Promise.all to prevent race conditions between click and navigation
+    await Promise.all([
+      this.page.waitForURL(/.*edit_assessment.*/),
+      this._robustClick(this.editButton, 'Edit button')
+    ]);
+
     // Wait for the Update button to appear, which indicates we are in edit mode
     await this.updateButton.waitFor({ state: 'visible', timeout: 10000 });
     // Aggressive wait to ensure transition from readonly to editable

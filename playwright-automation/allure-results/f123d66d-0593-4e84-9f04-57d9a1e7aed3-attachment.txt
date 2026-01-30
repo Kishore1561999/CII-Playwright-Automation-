@@ -1,0 +1,6 @@
+✓ Clicked: User Management link
+✓ Admin: Created user: testuser_1769758045467@example.com
+✓ Admin: Editing user: testuser_1769758045467@example.com
+✓ Admin: Get updated user: testuser_1769758045467@example.com
+✓ Admin: Deleting user: testuser_1769758045467@example.com
+✓ Admin: Deleted user: testuser_1769758045467@example.com

@@ -50,7 +50,6 @@ module.exports = defineConfig({
         video: 'retain-on-failure',
         actionTimeout: 15000,
         headless: process.env.CI ? true : false,
-        viewport: { width: 1920, height: 1080 },
         launchOptions: {
             args: ["--start-maximized"]
         }
@@ -66,7 +65,6 @@ module.exports = defineConfig({
             name: 'E2E_Flow',
             use: {
                 browserName: 'chromium',
-                viewport: { width: 1920, height: 1080 }
             },
             testMatch: [
                 '**/tests/e2e/company_user/assessment.spec.js',
@@ -78,7 +76,6 @@ module.exports = defineConfig({
             name: 'Functional_Tests',
             use: {
                 browserName: 'chromium',
-                viewport: { width: 1920, height: 1080 }
             },
             testMatch: [
                 '**/tests/functional/**/*.spec.js'

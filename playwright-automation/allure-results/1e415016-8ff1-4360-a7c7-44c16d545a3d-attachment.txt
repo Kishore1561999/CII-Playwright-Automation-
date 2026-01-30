@@ -1,0 +1,5 @@
+✓ Clicked: Analyst CII Data link
+✓ Analyst: Searched for company: PB_Co_1769773285579
+✓ Analyst: Clicking Edit for PB_Co_1769773285579
+✓ Clicked: Submit button
+✓ Confirmed submission (Clicked Yes)

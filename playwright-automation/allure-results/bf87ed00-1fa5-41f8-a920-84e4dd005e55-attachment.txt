@@ -1,0 +1,7 @@
+
+📋 STEP 6: Analyst Review Workflow
+✓ Navigated to Analyst Dashboard
+✓ Clicked View Response -> CII user response for: E2E_Company_1769750939995
+✓ Assessment review page loaded (Aspects list visible)
+✓ Clicked: Edit button
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

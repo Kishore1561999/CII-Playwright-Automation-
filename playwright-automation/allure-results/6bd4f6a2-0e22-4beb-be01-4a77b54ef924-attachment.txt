@@ -1,0 +1,38 @@
+⚠ Logout failed, retrying once... locator.click: Target page, context or browser has been closed
+Call log:
+  - waiting for locator('a.nav-link.dropdown-toggle')
+    - locator resolved to <a data-bs-toggle="dropdown" href="javascript:void(0);" class="nav-link dropdown-toggle hide-arrow">…</a>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="toast-progress"></div> from <div id="toast-container" class="toast-top-right">…</div> subtree intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="toast-progress"></div> from <div id="toast-container" class="toast-top-right">…</div> subtree intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="toast-progress"></div> from <div id="toast-container" class="toast-top-right">…</div> subtree intercepts pointer events
+    - retrying click action
+      - waiting 500ms
+    5 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div aria-live="polite" class="toast toast-info">…</div> from <div id="toast-container" class="toast-top-right">…</div> subtree intercepts pointer events
+    - retrying click action
+      - waiting 500ms
+    - waiting for element to be visible, enabled and stable
+    - element is visible, enabled and stable
+    - scrolling into view if needed
+    - done scrolling
+

@@ -94,20 +94,20 @@
   },
   "suites": [
     {
-      "title": "functional\\analyst_workflows.spec.js",
-      "file": "functional/analyst_workflows.spec.js",
+      "title": "e2e\\company_user\\assessment.spec.js",
+      "file": "e2e/company_user/assessment.spec.js",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Analyst Functional Workflows",
-          "file": "functional/analyst_workflows.spec.js",
-          "line": 6,
+          "title": "Company User Assessment Workflow",
+          "file": "e2e/company_user/assessment.spec.js",
+          "line": 16,
           "column": 6,
           "specs": [
             {
-              "title": "CII Data Collection - Search and Filter",
+              "title": "Step 1: Company Registration",
               "ok": true,
               "tags": [],
               "tests": [
@@ -115,16 +115,1079 @@
                   "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
-                  "projectId": "Functional_Tests",
-                  "projectName": "Functional_Tests",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
                   "results": [
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 12682,
+                      "duration": 20048,
                       "errors": [],
                       "stdout": [
+                        {
+                          "text": "Registered company: E2E_Company_1769772983594\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:36:23.610Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-0671c5cb361822327976",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 47,
+              "column": 5
+            },
+            {
+              "title": "Step 2: Admin Approval",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 28519,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: Company Users / ESG Diagnostic link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Approving company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Approval confirmed for: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Clicked approve and confirm for: E2E_Company_1769772983594\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:36:46.199Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-0659ab2edc92ff72139e",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 77,
+              "column": 5
+            },
+            {
+              "title": "Step 3: Company User Login & Assessment",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 129676,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Starting Step 3: Company User Login & Assessment\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Take Assessment card\n"
+                        },
+                        {
+                          "text": "Waiting for instructions modal (#modalInstructions)...\n"
+                        },
+                        {
+                          "text": "Instructions modal visible, clicking close button...\n"
+                        },
+                        {
+                          "text": "Instructions modal closed and hidden.\n"
+                        },
+                        {
+                          "text": "Checking if aspect link exists...\n"
+                        },
+                        {
+                          "text": "Aspect link count: 1\n"
+                        },
+                        {
+                          "text": "Clicking aspect link...\n"
+                        },
+                        {
+                          "text": "Aspect link clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Clicking aspect next button...\n"
+                        },
+                        {
+                          "text": "Aspect next button clicked.\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "Radio button checked status: true\n"
+                        },
+                        {
+                          "text": "DEBUG: Submit button disabled state before submit(): false\n"
+                        },
+                        {
+                          "text": "Submit button is now enabled, proceeding with submit...\n"
+                        },
+                        {
+                          "text": "Clicked submit and confirmed assessment submission.\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:37:14.736Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-3916007a4b3f41ab2b47",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 92,
+              "column": 5
+            },
+            {
+              "title": "Step 4: Verify Dashboard After Submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1694,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Starting Step 4: Verify Dashboard After Submission\n"
+                        },
+                        {
+                          "text": "Dashboard button states verified.\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:39:24.434Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-98d6f661b6965274d447",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 248,
+              "column": 5
+            },
+            {
+              "title": "Step 5: Admin Login and Assign Analyst",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15060,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📋 STEP 5: Admin Assignment Workflow\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Company Users / ESG Diagnostic link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Assigning analyst Kishore Analyst to company E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Assignment successful: E2E_Company_1769772983594 → Kishore Analyst\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:39:26.150Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-ced3281dac38012fc393",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 269,
+              "column": 5
+            },
+            {
+              "title": "Step 6: Analyst Login and Review Assessment",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 27741,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📋 STEP 6: Analyst Review Workflow\n"
+                        },
+                        {
+                          "text": "✓ Navigated to Analyst Dashboard\n"
+                        },
+                        {
+                          "text": "✓ Clicked View Response -> CII user response for: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Assessment review page loaded (Aspects list visible)\n"
+                        },
+                        {
+                          "text": "Attempting to click Edit and navigate...\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Edit button\n"
+                        },
+                        {
+                          "text": "✓ Found 95 comment fields\n"
+                        },
+                        {
+                          "text": "  - Filled comment field 1\n"
+                        },
+                        {
+                          "text": "  - Filled comment field 2\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Update button\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Submit button\n"
+                        },
+                        {
+                          "text": "✓ Confirmed submission (Clicked Yes)\n"
+                        },
+                        {
+                          "text": "✓ Redirected to analyst dashboard - Submission successful\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "⚠ Success notification not seen, proceeding...\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:39:41.227Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-b39dd18d59a13ab9b3f6",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 286,
+              "column": 5
+            },
+            {
+              "title": "Step 7: Admin Login and complete Review Assessment",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 57924,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📋 STEP 7: Admin Review Workflow\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Company Users / ESG Diagnostic link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Assigning analyst Kishore admin to company E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Assignment successful: E2E_Company_1769772983594 → Kishore admin\n"
+                        },
+                        {
+                          "text": "✓ Clicked View Response -> CII user response for: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Assessment review page loaded (Aspects list visible)\n"
+                        },
+                        {
+                          "text": "Attempting to click Edit and navigate...\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Edit button\n"
+                        },
+                        {
+                          "text": "✓ Found 95 comment fields\n"
+                        },
+                        {
+                          "text": "  - Filled comment field 1\n"
+                        },
+                        {
+                          "text": "  - Filled comment field 2\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Update button\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Submit button\n"
+                        },
+                        {
+                          "text": "✓ Confirmed submission (Clicked Yes)\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Company Users / ESG Diagnostic link\n"
+                        },
+                        {
+                          "text": "Generating scorecard for: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Scorecard generated (clicked Yes)\n"
+                        },
+                        {
+                          "text": "Clicking Generate Template for: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Clicked Generate Template\n"
+                        },
+                        {
+                          "text": "Uploading report for: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Report uploaded and Upload button clicked\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "⚠ Success notification not seen, proceeding...\n"
+                        },
+                        {
+                          "text": "⚠ Did not see redirect to analyst dashboard\n"
+                        },
+                        {
+                          "text": "⚠ Template button still has disabled class. Status might not have updated. Attempting to force click.\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:40:08.984Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-edce16bc4f596233259e",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 310,
+              "column": 5
+            },
+            {
+              "title": "Step 8: Company User Login and Download Scorecard/Report",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3730,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📋 STEP 8: User Download Workflow\n"
+                        },
+                        {
+                          "text": "Attempting to download report...\n"
+                        },
+                        {
+                          "text": "✓ Report downloaded to: C:\\Users\\SPRITLE\\AppData\\Local\\Temp\\playwright-artifacts-FnKGhd\\4a415fed-2e0d-43c1-8a29-317abc16afa3\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:41:06.928Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-3ea09a2989fda8c2f98a",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 347,
+              "column": 5
+            },
+            {
+              "title": "Step 9: Admin Login and Delete Test Company",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14620,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\n📋 STEP 9: Cleanup Workflow\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Company Users / ESG Diagnostic link\n"
+                        },
+                        {
+                          "text": "Deleting company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Deleted test company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "✓ Deleted test company: E2E_Company_1769772983594\n"
+                        },
+                        {
+                          "text": "Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:41:10.675Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00d5493fa089aef90778-2f76f8ed2e540c2c35ca",
+              "file": "e2e/company_user/assessment.spec.js",
+              "line": 370,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\company_user\\peer_benchmarking.spec.js",
+      "file": "e2e/company_user/peer_benchmarking.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Peer Benchmarking Phase 2 Flow",
+          "file": "e2e/company_user/peer_benchmarking.spec.js",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Step 1: Company Registration (Basic Subscription)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9148,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "Registered company: PB_Co_1769773285579\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:41:25.582Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08d5760dfa1bc8c556b7-d483c42dd4a9b35b1ca4",
+              "file": "e2e/company_user/peer_benchmarking.spec.js",
+              "line": 44,
+              "column": 5
+            },
+            {
+              "title": "Step 2: Admin Approval (Basic Subscription)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25396,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: Basic Subscription link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Approving Basic Subscription for: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Approved Basic Subscription for: PB_Co_1769773285579\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:41:34.916Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08d5760dfa1bc8c556b7-109dabee6ad09c600ba9",
+              "file": "e2e/company_user/peer_benchmarking.spec.js",
+              "line": 76,
+              "column": 5
+            },
+            {
+              "title": "Step 3: Company User Peer Benchmarking Flow",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 140328,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Closed User Guide Modal\n"
+                        },
+                        {
+                          "text": "✓ Accepted Consent\n"
+                        },
+                        {
+                          "text": "✓ Clicked Provide & Edit Data\n"
+                        },
+                        {
+                          "text": "✓ Confirmed Sector\n"
+                        },
+                        {
+                          "text": "✓ Verified navigation to peer_benchmark_assessment\n"
+                        },
+                        {
+                          "text": "Waiting for analytics to complete...\n"
+                        },
+                        {
+                          "text": "✓ Analytics completed and navigated to dashboard\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:42:00.331Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08d5760dfa1bc8c556b7-6878459481cb4965e0dc",
+              "file": "e2e/company_user/peer_benchmarking.spec.js",
+              "line": 95,
+              "column": 5
+            },
+            {
+              "title": "Step 4: Admin Data Management and Assignment",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22732,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: PB Data Management link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Approving PB Data for: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Approved PB Data for: PB_Co_1769773285579\n"
+                        },
                         {
                           "text": "CII Data link is visible, clicking directly.\n"
                         },
@@ -135,18 +1198,18 @@
                           "text": "✓ Admin: Navigated to CII Data Collection\n"
                         },
                         {
-                          "text": "✓ Admin: Filtered by Year: 2024\n"
+                          "text": "✓ Admin: Searched for Company: PB_Co_1769773285579\n"
                         },
                         {
-                          "text": "✓ Admin: Filtered by Sector: Automobiles & Auto Components\n"
+                          "text": "✓ Admin: Assigning analyst Kishore Analyst to company PB_Co_1769773285579\n"
                         },
                         {
-                          "text": "✓ Admin: Searched for Company: CII_CEAT Limited\n"
+                          "text": "✓ Assignment successful: PB_Co_1769773285579 → Kishore Analyst\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-01-29T10:03:41.494Z",
+                      "startTime": "2026-01-30T11:44:20.678Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -154,9 +1217,133 @@
                   "status": "expected"
                 }
               ],
-              "id": "c9e4eb3c74cf4e8a741d-5c1b295d1b1b8d5e6af0",
-              "file": "functional/analyst_workflows.spec.js",
-              "line": 26,
+              "id": "08d5760dfa1bc8c556b7-7d309b754e3461533e31",
+              "file": "e2e/company_user/peer_benchmarking.spec.js",
+              "line": 155,
+              "column": 5
+            },
+            {
+              "title": "Step 5: Analyst Data Collection Submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15323,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: Analyst CII Data link\n"
+                        },
+                        {
+                          "text": "✓ Analyst: Searched for company: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Analyst: Clicking Edit for PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Submit button\n"
+                        },
+                        {
+                          "text": "✓ Confirmed submission (Clicked Yes)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:44:43.428Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08d5760dfa1bc8c556b7-a9f016bee66a8010c334",
+              "file": "e2e/company_user/peer_benchmarking.spec.js",
+              "line": 179,
+              "column": 5
+            },
+            {
+              "title": "Step 6: Admin Data Deletion (Cleanup)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "E2E_Flow",
+                  "projectName": "E2E_Flow",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24082,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✓ Clicked: PB Data Management link\n"
+                        },
+                        {
+                          "text": "CII Data link is visible, clicking directly.\n"
+                        },
+                        {
+                          "text": "✓ Clicked: CII Data link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Navigated to CII Data Collection\n"
+                        },
+                        {
+                          "text": "✓ Admin: Verifying status for PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Status verified: Submitted\n"
+                        },
+                        {
+                          "text": "✓ Admin: Deleting from CII Data Collection: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Admin: Deleted successfully on CII Data Collection page\n"
+                        },
+                        {
+                          "text": "✓ Clicked: Basic Subscription link\n"
+                        },
+                        {
+                          "text": "✓ Admin: Deleting Basic Subscription for: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Admin: Searched for Company: PB_Co_1769773285579\n"
+                        },
+                        {
+                          "text": "✓ Admin: Deleted Basic Subscription for: PB_Co_1769773285579\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-01-30T11:44:58.772Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08d5760dfa1bc8c556b7-de49549493e51e787323",
+              "file": "e2e/company_user/peer_benchmarking.spec.js",
+              "line": 200,
               "column": 5
             }
           ]
@@ -166,9 +1353,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-01-29T10:03:40.372Z",
-    "duration": 23165.644999999997,
-    "expected": 1,
+    "startTime": "2026-01-30T11:36:21.992Z",
+    "duration": 541831.463,
+    "expected": 15,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

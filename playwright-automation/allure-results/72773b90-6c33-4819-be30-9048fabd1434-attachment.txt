@@ -1,0 +1,13 @@
+✓ Clicked: PB Data Management link
+CII Data link is visible, clicking directly.
+✓ Clicked: CII Data link
+✓ Admin: Navigated to CII Data Collection
+✓ Admin: Verifying status for PB_Co_1769772457463
+✓ Admin: Searched for Company: PB_Co_1769772457463
+✓ Status verified: Submitted
+✓ Admin: Deleting from CII Data Collection: PB_Co_1769772457463
+✓ Admin: Deleted successfully on CII Data Collection page
+✓ Clicked: Basic Subscription link
+✓ Admin: Deleting Basic Subscription for: PB_Co_1769772457463
+✓ Admin: Searched for Company: PB_Co_1769772457463
+✓ Admin: Deleted Basic Subscription for: PB_Co_1769772457463

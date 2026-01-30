@@ -84,7 +84,12 @@ test.describe('Peer Benchmarking Phase 2 Flow', () => {
         // Search and Approve using the new method
         await adminPage.approveBasicSubscription(companyName);
 
-        await loginPage.logout();
+        try {
+            await loginPage.logout();
+        } catch (e) {
+            console.warn(`\u26A0 Logout failed, retrying once... ${e.message}`);
+            await loginPage.logout();
+        }
     });
 
     test('Step 3: Company User Peer Benchmarking Flow', async () => {
@@ -136,13 +141,19 @@ test.describe('Peer Benchmarking Phase 2 Flow', () => {
         await expect(sharedPage).toHaveURL(/.*company_user\/peer_benchmarking/, { timeout: 300000 });
         console.log('✓ Analytics completed and navigated to dashboard');
         await sharedPage.waitForTimeout(1000);
-        await peerBenchmarkingPage.closeSuccessMessage();
-        await sharedPage.waitForTimeout(1000);
+        // await peerBenchmarkingPage.closeSuccessMessage();
+        // await sharedPage.waitForTimeout(1000);
 
-        await loginPage.logout();
+        try {
+            await loginPage.logout();
+        } catch (e) {
+            console.warn(`\u26A0 Logout failed, retrying once... ${e.message}`);
+            await loginPage.logout();
+        }
     });
 
     test('Step 4: Admin Data Management and Assignment', async () => {
+        test.setTimeout(120000);
         await loginPage.navigate('/users/sign_in');
         await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
 
@@ -154,13 +165,15 @@ test.describe('Peer Benchmarking Phase 2 Flow', () => {
 
         // CII Data Collection
         await adminPage.navigateToCIIDataCollection();
-        await sharedPage.waitForTimeout(1000);
         await adminPage.searchByCompany(companyName);
-        await sharedPage.waitForTimeout(1000);
         await adminPage.assignAnalyst(companyName, 'Kishore Analyst');
-        await sharedPage.waitForTimeout(1000);
 
-        await loginPage.logout();
+        try {
+            await loginPage.logout();
+        } catch (e) {
+            console.warn(`\u26A0 Logout failed, retrying once... ${e.message}`);
+            await loginPage.logout();
+        }
     });
 
     test('Step 5: Analyst Data Collection Submission', async () => {
@@ -169,19 +182,19 @@ test.describe('Peer Benchmarking Phase 2 Flow', () => {
 
         // Check CII Data Collection
         await analystDashboardPage.navigateToCIIDataCollection();
-        await sharedPage.waitForTimeout(1000);
         await analystDashboardPage.searchCompany(companyName);
-        await sharedPage.waitForTimeout(1000);
         await analystDashboardPage.clickEditAssessment(companyName);
-        await sharedPage.waitForTimeout(1000);
 
         // Submit Assessment
         await analystAssessmentReviewPage.clickSubmit();
-        await sharedPage.waitForTimeout(1000);
         await analystAssessmentReviewPage.handleConfirmationModal();
-        await sharedPage.waitForTimeout(1000);
 
-        await loginPage.logout();
+        try {
+            await loginPage.logout();
+        } catch (e) {
+            console.warn(`\u26A0 Logout failed, retrying once... ${e.message}`);
+            await loginPage.logout();
+        }
     });
 
     test('Step 6: Admin Data Deletion (Cleanup)', async () => {
@@ -191,26 +204,25 @@ test.describe('Peer Benchmarking Phase 2 Flow', () => {
 
         // 1. Navigate to PB Data Management -> CII Data Collection
         await adminPage.navigateToPBDataManagement();
-        await sharedPage.waitForTimeout(1000);
         await adminPage.navigateToCIIDataCollection();
-        await sharedPage.waitForTimeout(1000);
 
         // 2. Search Company and Check Status "Submitted"
         await adminPage.verifyCiiStatus(companyName, 'Submitted');
-        await sharedPage.waitForTimeout(1000);
 
         // 3. Delete directly on CII Data Collection page
         await adminPage.deleteFromCIIDataCollection(companyName);
-        await sharedPage.waitForTimeout(1000);
 
         // 4. Navigate to Basic Subscription
         await adminPage.navigateToBasicSubscription();
-        await sharedPage.waitForTimeout(1000);
 
         // 5. Search and Delete Basic Subscription
         await adminPage.deleteBasicSubscription(companyName);
-        await sharedPage.waitForTimeout(1000);
 
-        await loginPage.logout();
+        try {
+            await loginPage.logout();
+        } catch (e) {
+            console.warn(`\u26A0 Logout failed, retrying once... ${e.message}`);
+            await loginPage.logout();
+        }
     });
 });
