@@ -1,0 +1,120 @@
+<div class="card card-loader" style="filter: blur(10px)">
+	<div class="card-header">
+		<%= render 'assessment_info', locals: { params: params } %>
+	</div>
+
+	<hr>
+
+	<div class="card-body">
+		<%= render 'assessment_form', locals: { params: params } %>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		let navbarHeight = $("#layout-navbar").outerHeight();
+		onPageLoad();
+
+		$(".previous").click(function(event) {
+			event.preventDefault();
+
+			let previousId;
+
+			$("#aspects-list a").each(function(e) {
+				if($(this).hasClass("active")) {
+					previousId = $(this).prev().attr('id');
+				}
+			});
+
+			$("#" + previousId)[0].click();
+
+			window.scrollTo({ top: navbarHeight, behavior: 'smooth' });
+		});
+
+		$(".next").click(function(event) {
+			event.preventDefault();
+
+			let nextId;
+
+			$("#aspects-list a").each(function(e) {
+				if($(this).hasClass("active")) {
+					nextId = $(this).next().attr('id');
+				}
+			});
+
+			$("#" + nextId)[0].click();
+
+			window.scrollTo({ top: navbarHeight, behavior: 'smooth' });
+		});
+
+		$(".list-group-item-action").click(function() {
+			showHidePreviousNextButton();
+			window.scrollTo({ top: navbarHeight, behavior: 'smooth' });
+		});
+
+		function onPageLoad() {
+			$("input[type=radio]:checked, input[type=checkbox]:checked").each(function() {
+				$("." + this.name).addClass("d-none");
+
+				if($(this).attr('title')) {
+					$("#" + this.title).removeClass("d-none");
+				}
+			});
+
+			loadAnswerCount();
+			showHidePreviousNextButton();
+		}
+
+		function loadAnswerCount() {
+			$(".choice").each(function () {
+				let tabId = $(this).closest('.tab-pane').attr("id");
+				let inputName = [];
+				let checkCount = 0;
+	
+				$("#" + tabId).find('.choice').each(function () {
+					if((!inputName.includes($(this).attr("name")) && ($(this).attr("type") == 'radio'))) {
+						inputName.push($(this).attr("name"));
+					}
+				});
+	
+				for(let i = 0; i < inputName.length; i++) {
+					if($('input[name=' + inputName[i] + ']:checked').length == 0) {
+						checkCount += 1;
+					}
+				}
+	
+				tabId = '#' + tabId;
+				$("a[href$= '" + tabId + "'] span").text(checkCount);
+	
+				if(checkCount == 0) {
+					$("a[href$= '" + tabId + "'] span").removeClass("bg-danger");
+					$("a[href$= '" + tabId + "'] span").addClass("bg-success");
+					$("a[href$= '" + tabId + "'] span").text(inputName.length);
+				}
+			});
+		}
+
+		function showHidePreviousNextButton() {
+			let tabId = $('.list-group-item-action.active').attr("id");
+
+			if(tabId == "faq-list") {
+				$(".previous").css({display: 'none'});
+				$(".next").css({display: 'none'});
+			} else {
+				$(".previous").css({display: 'block'});
+				$(".next").css({display: 'block'});
+
+				if(tabId == "0-list") {
+					$(".previous").attr('disabled', 'disabled');
+					$(".next").removeAttr('disabled');
+				} else if(tabId == "11-list") {
+					$(".previous").removeAttr('disabled');
+					$(".next").attr('disabled', 'disabled');
+				} else {
+					$(".previous").removeAttr('disabled');
+					$(".next").removeAttr('disabled');
+				}
+			}
+		}
+	});
+</script>

@@ -1,0 +1,104 @@
+<table class="table table-hover">
+  <thead class="sticky-top" style="background-color: #fff;">
+    <tr class="text-nowrap">
+      <th><input type="checkbox" class="form-check-input" id="multi-select"></th>
+      <th class="text-center">ISIN</th>
+      <th>Company Name</th>
+      <th>Sector</th>
+      <th>Assign Analyst</th>
+      <th class="table-scroll-padding text-center">BRSR Report</th>
+      <th class="text-center">Status</th>
+      <th class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+    <% if @company_detail.length > 0 %>
+      <% @company_detail.each do |company_details| %>
+        <tr>
+          <td><%= check_box_tag "", company_details.id, false, { class: "form-check-input multi-select checkBoxId_#{company_details.id}" } %></td>
+          <td class="text-center" title="<%= company_details.company_isin_number %>">
+            <%= company_details.company_isin_number.present? ? company_details.company_isin_number.length > 10 ? "#{company_details.company_isin_number[0, 10]}..." : company_details.company_isin_number : '-' %>
+          </td>
+          <% truncated_company_name = company_details.company_name.length > 20 ? company_details.company_name[0, 20] + '...' : company_details.company_name %>
+           <td style="width: 10%;" class="" title="<%= company_details.company_name %>"><%= truncated_company_name %></td>
+          <% company_sector = company_details.company_sector.match(/\s/) ? "break" : "no-break" %>
+          <% if company_sector == "break" %>
+            <td class="text-wrap"><%= "#{company_details.company_sector}" %></td>
+          <% else %>
+            <td class=""><%= "#{company_details.company_sector}" %></td>
+          <% end %>
+          <td class="text-center">
+          <% if company_details.analyst_user_id.present? %>
+            <% user = User.find_by_id(company_details.analyst_user_id) %>
+            <% if user %>
+              <%= user.first_name %> <%= user.last_name %>
+            <% else %>
+              - 
+            <% end %>
+          <% else %>
+            -
+          <% end %>
+          </td>
+          <td class="text-center">
+          <% if company_details.pdffile.attached? %>
+            <%= link_to rails_blob_path(company_details.pdffile, disposition: "attachment"), class: "btn btn-sm btn-primary icon-default-size", title: "Download BRSR Report" do %>
+              <i class="bx bxs-download icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+          <% else %>
+            <%= link_to "#", class: "btn btn-sm btn-primary icon-default-size disabled", title: "Download BRSR Report" do %>
+              <i class="bx bxs-download icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+          <% end %>
+          </td>
+          <td class="text-center">
+          <% if company_details.user_type == 'company_user' && company_details.status.nil? %>
+            <span style="color:#4BB543">Pre-Fill</span>
+          <% elsif company_details.status == 'wip'  || company_details.status.nil? %>
+            <span style="color:#E59700">In Progress</span>
+          <% elsif company_details.status == 'submitted' %>
+            <span style="color:#4BB543">Submitted</span>
+          <% elsif company_details.status == 'push_back' %>
+            <span style="color:#6335F2">Push Back</span>
+          <% end %>
+          </td>
+          <td class="text-center">
+          <% edit_class = (company_details.status == 'wip' || company_details.status.nil? || company_details.status == 'push_back') ? '' : 'disabled' %>
+          <% view_class = company_details.status == 'submitted' ? '' : 'disabled' %>
+          <% pushback_class = company_details.status == 'submitted' ? '' : 'disabled' %>
+          
+          <% if current_user.id == company_details.analyst_user_id  %>
+            <%= link_to data_collection_assessment_path(company_id: company_details.id, subscription_type: params[:subscription_type]), class: "btn btn-sm btn-primary icon-default-size me-1 #{edit_class}", title: "Edit Questionnaire" do %>
+              <i class="bx bx-edit-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+            <%= link_to view_providedata_path(company_id: company_details.id, subscription_type: params[:subscription_type]), class: "btn btn-sm btn-primary icon-default-size me-1 #{view_class}", title: "View" do %>
+              <i class="bx bx-show me-1 icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+          <% else %>
+            <%= link_to data_collection_assessment_path(company_id: company_details.id, subscription_type: params[:subscription_type]), class: "btn btn-sm btn-primary disabled icon-default-size me-1", title: "Edit Questionnaire" do %>
+              <i class="bx bx-edit-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>  
+            <%= link_to view_providedata_path(company_id: company_details.id, subscription_type: params[:subscription_type]), class: "btn btn-sm btn-primary icon-default-size me-1 #{view_class}", title: "View" do %>
+              <i class="bx bx-show me-1 icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %> 
+          <% end %>
+            <span class="btn btn-sm btn-pushback btn-primary icon-default-size me-1 <%= pushback_class %>" title ="Pushback" onclick="pushbackChanges('<%= company_details.id %>');">
+              <i class="bx bx-arrow-back icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            </span> 
+          <% if company_details.user_type == 'cii_user' || company_details.user_type == 'company_user'  %>
+            <span class="btn btn-sm btn-primary icon-default-size me-1" title ="Edit" onclick="editCompany('<%= company_details.id %>');">
+              <i class="bx bx-edit icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            </span>
+            <span class="btn btn-sm btn-danger icon-default-size me-1" title= "Delete" onclick="deleteCompany('<%= company_details.id %>');">
+              <i class="bx bx-trash icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            </span>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="9" class="text-center">No data available!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,4 @@
+✓ Clicked: Basic Subscription link
+✓ Admin: Approving Basic Subscription for: PB_Co_1769748707463
+✓ Admin: Searched for Company: PB_Co_1769748707463
+✓ Approved Basic Subscription for: PB_Co_1769748707463

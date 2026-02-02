@@ -1,0 +1,38 @@
+<div class="authentication-wrapper authentication-basic container-p-y">
+  <div class="authentication-inner">
+    <div class="card">
+      <div class="card-body">
+        <h4>Reset password</h4>
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mb-3", id: "user-form" }) do |f| %>
+          <%= render "shared/error_messages", resource: resource %>
+          <%= f.hidden_field :reset_password_token %>
+
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label">New Password</label>
+            <div class="input-group input-group-merge" id="password_field">
+              <%= f.password_field :password, class: "form-control", placeholder: "Enter new password" %>
+              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+          </div>
+          <div class="mb-3 form-password-toggle">
+            <label class="form-label">Password Confirmation</label>
+            <div class="input-group input-group-merge" id="confirm_password_field">
+              <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Re-enter password" %>
+              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+            </div>
+          </div>
+          <%= f.submit "Change password", class: "btn btn-primary d-grid w-100" %>
+        <% end %>
+        <p class="text-center">
+          <span>Already have an account?</span>
+          <%= link_to "Sign in instead", new_user_session_path %>
+        </p>
+        <p class="text-center">
+          <span>New on our platform?</span>
+          <%= link_to "Create an account", new_user_registration_path %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

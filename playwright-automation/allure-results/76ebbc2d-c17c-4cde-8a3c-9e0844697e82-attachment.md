@@ -1,0 +1,114 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - link [ref=e7] [cursor=pointer]:
+      - /url: https://www.cii.in/
+      - img [ref=e9]
+    - list [ref=e10]:
+      - listitem [ref=e11]:
+        - link "ESG Diagnostics " [ref=e12] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=e13]:
+            - text: ESG Diagnostics
+            - generic [ref=e14]: 
+      - listitem [ref=e15]:
+        - link "Peer Benchmarking" [ref=e16] [cursor=pointer]:
+          - /url: /company_user/peer_benchmarking
+          - generic [ref=e17]: Peer Benchmarking
+      - text:  
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link " User Guide" [ref=e20] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=e21]: 
+          - generic [ref=e22]: User Guide
+  - text:   
+  - generic [ref=e23]:
+    - navigation [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e26]:
+          - listitem [ref=e27]:
+            - link [ref=e29] [cursor=pointer]:
+              - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+              - img [ref=e31]
+        - list [ref=e32]:
+          - listitem [ref=e33]:
+            - link [ref=e35] [cursor=pointer]:
+              - /url: https://sustainabledevelopment.in/
+              - img [ref=e37]
+          - listitem [ref=e38]:
+            - link " PB User Company user" [ref=e39] [cursor=pointer]:
+              - /url: javascript:void(0);
+              - generic [ref=e40]:
+                - generic [ref=e43]: 
+                - generic [ref=e44]:
+                  - generic [ref=e45]: PB User
+                  - text: Company user
+            - text:    
+    - generic [ref=e48]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - paragraph [ref=e54]: "Sector: Automobiles & Auto Components"
+          - paragraph [ref=e56]: "No of Questions: 35"
+        - generic [ref=e58]:
+          - button "Clear" [ref=e59] [cursor=pointer]
+          - button "Save" [ref=e60] [cursor=pointer]
+          - button "Run Analytics" [ref=e61] [cursor=pointer]
+      - separator [ref=e62]
+      - generic [ref=e65]:
+        - heading "Questions" [level=5] [ref=e66]
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - generic [ref=e71]: 31. Total Scope 3 GHG emissions (in metric tonnes) per crore-rupee of turnover
+              - generic [ref=e72]:
+                - radio "answer-PB-31-1" [ref=e73]
+                - generic [ref=e74]: Information available
+              - generic [ref=e75]:
+                - radio "answer-PB-31-2" [checked] [ref=e76]
+                - generic [ref=e77]: No information
+            - generic [ref=e78]:
+              - generic [ref=e79]: 32. Percentage of input material (inputs to total inputs by value) sourced from suppliers
+              - generic [ref=e80]:
+                - radio "answer-PB-32-1" [ref=e81]
+                - generic [ref=e82]: Information available
+              - generic [ref=e83]:
+                - radio "answer-PB-32-2" [checked] [ref=e84]
+                - generic [ref=e85]: No information
+            - generic [ref=e86]:
+              - generic [ref=e87]: 33. Percentage of input material (inputs to total inputs by value) sourced from marginalized /vulnerable groups
+              - generic [ref=e88]:
+                - radio "answer-PB-33-1" [ref=e89]
+                - generic [ref=e90]: Information available
+              - generic [ref=e91]:
+                - radio "answer-PB-33-2" [checked] [ref=e92]
+                - generic [ref=e93]: No clear information
+            - generic [ref=e94]:
+              - generic [ref=e95]: 34. Turnover of products and/ services as a percentage of turnover from all products/service that carry information about
+              - generic [ref=e96]:
+                - radio "answer-PB-34-1" [ref=e97]
+                - generic [ref=e98]: Information available
+              - generic [ref=e99]:
+                - radio "answer-PB-34-2" [checked] [ref=e100]
+                - generic [ref=e101]: No information
+              - generic [ref=e102]:
+                - radio "answer-PB-34-3" [ref=e103]
+                - generic [ref=e104]: Indicator is not relevant for the industry
+            - generic [ref=e105]:
+              - generic [ref=e106]: 35. Does the entity have a framework/ policy on cyber security and risks related to data privacy?
+              - generic [ref=e107]:
+                - radio "answer-PB-35-1" [ref=e108]
+                - generic [ref=e109]: Information available
+              - generic [ref=e110]:
+                - radio "answer-PB-35-2" [checked] [active] [ref=e111]
+                - generic [ref=e112]: No clear information
+          - generic [ref=e113]:
+            - button "Previous" [ref=e115] [cursor=pointer]
+            - generic [ref=e117]:
+              - button "Next" [disabled]
+    - contentinfo [ref=e118]:
+      - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e120]
+      - heading "Privacy Policy" [level=6] [ref=e122] [cursor=pointer]
+```

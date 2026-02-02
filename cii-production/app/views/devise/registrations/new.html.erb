@@ -1,0 +1,468 @@
+<% content_for :title, "Register for ESG Diagnostics & Subscription Services" %>
+<% content_for :description, "Join our portal for ESG Diagnostics and Subscription services. Register now to access peer benchmarking and improve your performance." %>
+<style>
+.form-check-reg {
+  align-items: center;
+  display: inline-table;
+  margin-right: 1rem;
+}
+
+.form-check-label {
+  margin-right: 10px; 
+}
+
+.rupee-text-basic {
+  margin-left: 5px;
+}
+
+li.color-green-bullet::marker {
+  color: #4BB543;
+}
+
+li.color-yellow-bullet::marker {
+  color: #E59700;
+}
+
+</style>
+<div class="authentication-wrapper authentication-basic container-p-y registration-bg">
+  <div class="authentication-inner authentication-registeration">
+    <div class="card">
+      <div class="card-body">
+        <h4>Registration</h4>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "mb-3", id: "registration_form" }) do |f| %>
+          <%= f.hidden_field :role_id, :value => Role.find_by(role_name: ApplicationRecord::COMPANY_USER)&.id %>
+          <%= f.hidden_field :user_status, :value => ApplicationRecord::REGISTRATION_SUBMITTED %>
+          <%= render "shared/error_messages", resource: resource %>
+
+          <div class="nav-align-top mb-4">
+            <ul class="nav nav-pills nav-fill" role="tablist">
+              <li class="nav-item">
+                <button type="button" id="company-info" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-company" aria-controls="navs-justified-company" aria-selected="true">
+                  <i class="tf-icons bx bx-buildings"></i> Company Info
+                </button>
+              </li>
+              <li class="nav-item">
+                <button type="button" id="contact-info" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-contact" aria-controls="navs-justified-contact" aria-selected="false">
+                  <i class="tf-icons bx bx-user"></i> Contact Info
+                </button>
+              </li>
+              <li class="nav-item">
+                <button type="button" id="login-info" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-login" aria-controls="navs-justified-login" aria-selected="false">
+                  <i class="tf-icons bx bx-log-in-circle"></i> Login Info
+                </button>
+              </li>
+              <li class="nav-item">
+                <button type="button" id="payment-info" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-payment" aria-controls="navs-justified-payment" aria-selected="false">
+                  <i class="tf-icons bx bx-cog"></i> Services
+                </button>
+              </li>
+              <%# <li class="nav-item payments-tab d-none">
+                <button type="button" id="billing-info" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-billing" aria-controls="navs-justified-billing" aria-selected="false">
+                  <i class="tf-icons bx bx-credit-card"></i> Payments
+                </button>
+              </li> %>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="navs-justified-company" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-2"><small class="text-light fw-semibold">Basic Info</small></h5>
+                    <div class="mb-3">
+                      <label class="form-label">Name <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :company_name, class: "form-control", placeholder: "Enter company name" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">ISIN Number</label>
+                      <%= f.text_field :company_isin_number, class: "form-control", placeholder: "Enter company isin number" %>
+                      <label id="isin_error_text" class="" for="user_company_isin_number" style="display: none; color: #ff3e1d; font-size: 85%; margin-top: 0.25rem;">Company
+                        ISIN number already exists</label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Sector <span class="text-danger fs-6">*</span></label>
+                      <%= f.select :company_sector, options_for_select(Sector.all.map { |sector| [sector.sector_name, sector.sector_name] }), { include_blank: "Select sector" }, { class: "form-control form-select" } %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Organization Scale <span class="text-danger fs-6">*</span></label>
+                      <%= f.select :company_scale, options_for_select(["Large", "Medium", "Small", "Micro"]), { include_blank: "Select Organization Scale" }, { class: "form-control form-select" } %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Business Description <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_area :company_description, class: "form-control textarea-input", placeholder: "" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">GST NO<span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :gst, class: "form-control", placeholder: "Enter GST Number" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Logo <span class="text-danger fs-6">*</span></label>
+                      <%= f.file_field :company_logo, class: "form-control company-logo", accept: "image/*" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="mb-2"><small class="text-light fw-semibold">Address Info</small></h5>
+                    <div class="mb-3">
+                      <label class="form-label">Address Line 1 <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :company_address_line1, class: "form-control", placeholder: "Enter address line 1" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Address Line 2</label>
+                      <%= f.text_field :company_address_line2, class: "form-control", placeholder: "Enter address line 2" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Country <span class="text-danger fs-6">*</span></label>
+                      <%= f.select :company_country, options_for_select(CS.countries.sort_by {|_key, value| value}.map { |country| [country[1], country[0]] }), { include_blank: "Select country" }, { class: "form-control form-select" } %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">State <span class="text-danger fs-6">*</span></label>
+                      <%= f.select :company_state, options_for_select([]), { include_blank: "Select state" }, { class: "form-control form-select" } %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">City <span class="text-danger fs-6">*</span></label>
+                      <%= f.select :company_city, options_for_select([]), { include_blank: "Select city" }, { class: "form-control form-select" } %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">ZIP Code <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :company_zip, class: "form-control number-input", placeholder: "Enter zip code" %>
+                    </div>
+                     <div class="mb-3">
+                      <label class="form-label">PAN NO<span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :pan_no, class: "form-control", placeholder: "Enter PAN Number" %>
+                    </div>
+                    <div class="mb-3">
+                    <div class="holder">
+                      <%= image_tag "no-image.png", class: "img-responsive img-thumbnail img-logo", id: "imgPreview" %>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="navs-justified-contact" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="mb-2"><small class="text-light fw-semibold">Primary Contact</small></h5>
+                    <div class="mb-3">
+                      <label class="form-label">Full Name <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :primary_name, class: "form-control", placeholder: "Enter full name" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :primary_email, class: "form-control", placeholder: "Enter email" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Designation <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :primary_designation, class: "form-control", placeholder: "Enter designation" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Contact Number <span class="text-danger fs-6">*</span></label>
+                      <%= f.text_field :primary_contact, class: "form-control number-input", placeholder: "Enter contact number" %>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="mb-2"><small class="text-light fw-semibold">Alternate Contact</small></h5>
+                    <div class="mb-3">
+                      <label class="form-label">Full Name</label>
+                      <%= f.text_field :alternate_name, class: "form-control", placeholder: "Enter full name" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <%= f.text_field :alternate_email, class: "form-control", placeholder: "Enter email" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Designation</label>
+                      <%= f.text_field :alternate_designation, class: "form-control", placeholder: "Enter designation" %>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Contact Number</label>
+                      <%= f.text_field :alternate_contact, class: "form-control number-input", placeholder: "Enter contact number" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="navs-justified-login" role="tabpanel">
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="form-label">Email ID</label>
+                      <%= f.email_field :email, class: "form-control", placeholder: "Enter email id", readonly: false %>
+                    </div>
+                    <div class="mb-3 form-password-toggle">
+                      <label class="form-label">Password Confirmation <span class="text-danger fs-6">*</span></label>
+                      <div class="input-group input-group-merge" id="confirm_password_field">
+                        <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Re-enter password" %>
+                        <span class="input-group-text cursor-pointer" id="confirm_password_span"><i class="bx bx-hide"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3 form-password-toggle">
+                      <label class="form-label">Password <span class="text-danger fs-6">*</span></label>
+                      <div class="input-group input-group-merge" id="password_field">
+                        <%= f.password_field :password, class: "form-control", placeholder: "Enter new password" %>
+                        <span class="input-group-text cursor-pointer" id="password_span"><i class="bx bx-hide"></i></span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+              <div class="tab-pane fade" id="navs-justified-payment" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5 class="mb-2"><small class="payments-header-style fw-semibold">Choose Services</small></h5><br>
+                    <div class="mb-3 services-border-style-subscription">
+                      <%= f.check_box :subscription_esg_diagnostic, class: "form-check-input validate-checkbox checked-color checkbox-right", id: "user_active", checked: false %> 
+                      <%= f.label :diagnostic, "ESG Diagnostic", class: "form-check-label", for: "diagnostic" %> 
+                      <div class="label-for-service">
+                      <h6 class="text-alignment-service">These services help organisations understand their status quo in the ESG space through an evaluation of their ESG policies and practices against the global and national best practices</h6>
+                      </div>
+                    </div>
+                    <div class="services-border-style-subscription" id="payment-checkbox-validation">
+                      <div>
+                        <div>
+                          <%= check_box_tag nil, nil, false, class: "form-check-input validate-checkbox checked-color checkbox-right", id: "services" %>
+                          <%= f.label :services, "Subscription services (One-year Subscription)", class: "form-check-label ", for: "services" %>
+                        </div>
+                        <div class="form-check-reg reg-checbox d-none">
+                          <%= f.radio_button :subscription_services, 'Basics', class: "radio-button", id: "basics", style:"margin-right: 5px;margin-left: 10px;" %>
+                          <%= f.label :basics, "ESG Basic Subscription", class: "form-check-label", for: "basics" %>
+                          <span class="rupee-text rupee-text-basic"><%= services_amount(35000) %></span>
+                            <ul style="margin-top: 10px;">
+                              <li class="color-green-bullet" style="margin-left: 10px;"> ESG - Peer Benchmarking</li>
+                            </ul>
+                        </div>
+                        <!-- if need to add premium subscription means add "reg-checbox" -->
+                        <div class="form-check-reg d-none" id= "subscrition_options_validate">
+                          <%= f.radio_button :subscription_services, 'Premium', class: "radio-button", id: "premium" %>
+                          <%= f.label :premium, "ESG Premium Subscription", class: "form-check-label ml-5", for: "premium" %>
+                          <span class="rupee-text rupee-text-premium"><%= services_amount(50000) %></span>
+                            <ul style="margin-top: 10px;">
+                              <li class="color-yellow-bullet mb-1"> ESG - Peer Benchmarking</li>
+                              <li class="color-yellow-bullet mb-1"> ESG E-Learning Modules</li>
+                              <li class="color-yellow-bullet"> ESG Publications </li>
+                            </ul>
+                        </div>
+                      </div> 
+                       <div class="label-for-service">
+                      <h6 class="text-alignment-service">*The subscription services can be renewed after a period of one year by making payment on this portal.</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="navs-justified-billing" role="tabpanel">
+                <div class="row mb-3">
+                  <div class="col-md-12 text-align-justify">
+                  <p class="fs-16"><span class="payments-header-style fw-semibold">Note:</span>  The company details and Contact details (email & phone number) provided for Primary contact on previous tabs will be used to generate invoice.</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5 class="mb-3"><small class="payments-header-style fw-semibold">CII Details</small></h5>
+                     <table>
+                        <tr>
+                            <td class="td-title-class">Address</td>
+                            <td class="data-class">CONFEDERATION OF INDIAN INDUSTRY, The Mantosh Sondhi Centre, 23, Institutional Area, Lodi Road, New Delhi - 110003, Delhi, India</td>
+                        </tr>
+                        <tr>
+                            <td>Telephone No</td>
+                            <td class="data-class">01124629994</td>
+                        </tr>
+                        <tr>
+                            <td>Email ID</td>
+                            <td class="data-class">manisha.chawla@cii.in</td>
+                        </tr>
+                        <tr>
+                            <td>Website</td>
+                            <td class="data-class">www.cii.in</td>
+                        </tr>
+                        <tr>
+                            <td>GSTIN</td>
+                            <td class="data-class">07AAATC0188R1ZB</td>
+                        </tr>
+                        <tr>
+                            <td>PAN No</td>
+                            <td class="data-class">AAATC0188R</td>
+                        </tr>
+                        <tr class="mt-10">
+                            <td></td>
+                            <td class="data-class"></td>
+                        </tr>
+                        <tr>
+                            <td><h5 class="mb-3"><small class="payments-header-style fw-semibold">Banking Details</small></h5></td>
+                            <td class="data-class"></td>
+                        </tr>
+                        <tr>
+                            <td>Account Holder Name</td>
+                            <td class="data-class">CONFEDERATION OF INDIAN INDUSTRY</td>
+                        </tr>
+                        <tr>
+                            <td class="td-title-class">Bank Name and Address</td>
+                            <td class="data-class">STANDARD CHARTERED BANK , 23 Barakhamba Road, Narain Manzil, New Delhi- 110001</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Account Number</td>
+                            <td class="data-class">522-0-503577-5</td>
+                        </tr>
+                        <tr>
+                            <td>IFSC Code</td>
+                            <td class="data-class">SCBL0036020</td>
+                        </tr>
+                        <tr>
+                            <td>Type of account</td>
+                            <td class="data-class">CURRENT ACCOUNT</td>
+                        </tr>
+                        <tr>
+                            <td>MICR</td>
+                            <td class="data-class">110036002</td>
+                        </tr>
+                     </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-12 text-center  mb-2 text-white" id="nav-btn">
+            <a class="btn btn-primary btnNext" id="next-btn">Next <i class='bx bx-right-arrow-alt'></i></a>
+          </div>
+          <div class="col-md-12 d-flex justify-content-center d-none mb-2" id="submit-btn">
+            <%= f.submit "Register", class: "btn btn-primary d-grid w-15 register-button" %>
+          </div>
+        <% end %>
+        <div class="mt-2">
+          <p class="text-center" style="margin: 0;">
+            <span>Have an account?</span>
+            <%= link_to "Login", new_user_session_path, class: "login-path" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).on('turbolinks:load', function () {
+
+        $("#user_primary_email").focusout(function () {
+            // $("#user_email").val($(this).val());
+        });
+
+        // $("#user_company_country").change(function () {
+        //     let input_state = $("#user_company_state");
+        //     let input_city = $("#user_company_city");
+
+        //     $.getJSON('/states/' + $(this).val(), function (data) {
+        //         input_state.empty();
+        //         input_state.append("<option value=''>Select state</option>");
+        //         input_city.empty();
+        //         input_city.append("<option value=''>Select city</option>");
+
+        //         $.each(data, function (key, value) {
+        //             var opt = '<option value=' + key + '>' + value + '</option>';
+        //             input_state.append(opt);
+        //         });
+        //     });
+        // });
+
+        // $("#user_company_state").change(function () {
+        //     let input_city = $("#user_company_city");
+
+        //     $.getJSON('/cities/' + $(this).val(), function (data) {
+        //         input_city.empty();
+        //         input_city.append("<option value=''>Select city</option>");
+
+        //         $.each(data, function (key, value) {
+        //             var opt = '<option value=' + value + '>' + value + '</option>';
+        //             input_city.append(opt);
+        //         });
+        //     });
+        // });
+
+        function populateDropdowns(countryDropdown, stateDropdown) {
+          $.getJSON('/states/' + countryDropdown.val(), function (data) {
+              stateDropdown.empty();
+              stateDropdown.append("<option value=''>Select state</option>");
+
+              $.each(data, function (key, value) {
+                  var opt = '<option value=' + key + '>' + value + '</option>';
+                  stateDropdown.append(opt);
+              });
+          });
+        }
+
+        function populateCities(stateDropdown, cityDropdown) {
+            $.getJSON('/cities/' + stateDropdown.val(), function (data) {
+                cityDropdown.empty();
+                cityDropdown.append("<option value=''>Select city</option>");
+
+                $.each(data, function (key, value) {
+                    var opt = '<option value=' + value + '>' + value + '</option>';
+                    cityDropdown.append(opt);
+                });
+            });
+        }
+
+        $("#user_company_country").change(function () {
+            populateDropdowns($(this), $("#user_company_state"));
+        });
+
+        $("#user_company_state").change(function () {
+            populateCities($(this), $("#user_company_city"));
+        });
+
+        $("#payment-country").change(function () {
+            populateDropdowns($(this), $("#payment-state"));
+        });
+
+        $("#payment-state").change(function () {
+            populateCities($(this), $("#payment-city"));
+        });
+
+        $("ul.nav-pills > li > button").click(function () {
+            var active = $(this).attr("data-bs-target").replace("#", "");
+            // var tab = $('#services').prop('checked') ? 'navs-justified-billing' : 'navs-justified-payment';
+            if (active == "navs-justified-payment") {
+                $("#nav-btn").hide();
+                $("#submit-btn").removeClass("d-none");
+            } else {
+                $("#nav-btn").show();
+                $("#submit-btn").addClass("d-none");
+            }
+        });
+
+        $("#user_company_isin_number").on('change keyup paste blur', function () {
+            var isin = $("#user_company_isin_number").val();
+            if (isin != '') {
+                $.post('/checkisin?isin=' + isin, function (data) {
+                    if (data.status == 200) {
+                        $("#isin_error_text").css("display", "block");
+                    } else {
+                        $("#isin_error_text").css("display", "none");
+                    }
+                });
+            } else {
+                $("#isin_error_text").css("display", "none");
+            }
+        });
+
+        $("#services").click(function () {
+          if ($('#services').prop('checked')) {
+            $('.reg-checbox, .consent-checbox, .payments-tab').removeClass('d-none');
+            $('.consent-checbox').css('margin-top','20px');
+            // $("#nav-btn").show();
+            // $("#submit-btn").addClass("d-none");      
+          } else {
+            $('.reg-checbox, .payments-tab, .consent-checbox').addClass('d-none');
+            $('.consent-checbox').css('margin-top','');
+            $('.radio-button, #consent_form').prop('checked', false);
+            // $("#nav-btn").hide();
+            // $("#submit-btn").removeClass("d-none");
+          }
+        });
+        
+        $(document).on('keypress', function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

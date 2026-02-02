@@ -1,0 +1,5 @@
+✓ Closed User Guide Modal
+✓ Accepted Consent
+✓ Clicked Provide & Edit Data
+✓ Confirmed Sector
+✓ Verified navigation to peer_benchmark_assessment

@@ -1,0 +1,94 @@
+wb = xlsx_package.workbook
+xlsx_package.use_autowidth = false
+
+wb.add_worksheet(name: "Aspect score") do |sheet|
+  style_title = wb.styles.add_style(:sz => 20, :b => "true", :font_name => 'Calibri', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+    style_header = wb.styles.add_style(:bg_color => "CCE6FF", :sz => 12, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+    style_company_score = wb.styles.add_style(:bg_color => "FFFFFF", :sz => 14, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+    style_header2 = wb.styles.add_style(:sz => 14, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :vertical => :center, :wrap_text => true })
+    style_border = wb.styles.add_style(:sz => 12, :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+    style_bold = wb.styles.add_style(:sz => 12, :b => "true", :font_name => 'Calibri', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+    style_score = wb.styles.add_style(:sz => 16, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+    style_aspect_line = wb.styles.add_style(:sz => 12, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+
+    sheet.column_widths 30, 18, 30, 18, 30, 18, 15, 30, 20, 20
+
+    title = "ESG Diagnostics Score Report"
+
+    sheet.add_row([title, "", "", "", "", ""], :height => 30, :style => style_title)
+    sheet.merge_cells sheet.rows.last.cells
+
+    sheet.add_row(["Company Name", @company_details.company_name], :types => [:string])
+    sheet.add_row(["ESG Diagnostics Score", (@company_score.avg_score ? @company_score.avg_score.round(2).to_s : '0') +'/100'], :types => [:string])
+    sheet.add_row()
+
+    sheet.add_row(["Governance", "", "Environmental", "", "Social", ""], :style => style_header, :types => [:string])
+    sheet.merge_cells "A5:B5"
+    sheet.merge_cells "C5:D5"
+    sheet.merge_cells "E5:F5"
+    sheet.add_row(["Aspect", "Score","Aspect", "Score","Aspect", "Score"], :style => style_aspect_line, :types => [:string])
+    sheet.add_row(["Corporate Governance", (@category_na_hash["cg"] == 1) ? "NA" : @category_score_hash["cg"],"Environmental Management", (@category_na_hash["em"] == 1) ? "NA" : @category_score_hash["em"],"Human Rights", (@category_na_hash["hr"] == 1) ? "NA" : @category_score_hash["hr"]], :style => style_border, :types => [:string])
+    sheet.add_row(["Risk Management", (@category_na_hash["rm"] == 1) ? "NA" : @category_score_hash["rm"],"Biodiversity", (@category_na_hash["bd"] == 1) ? "NA" : @category_score_hash["bd"],"Human Capital", (@category_na_hash["hc"] == 1) ? "NA" : @category_score_hash["hc"]], :style => style_border, :types => [:string])
+    sheet.add_row(["Business Ethics", (@category_na_hash["be"] == 1) ? "NA" : @category_score_hash["be"],"Product Responsibility", (@category_na_hash["pr"] == 1) ? "NA" : @category_score_hash["pr"],"Occupational Health & Safety", (@category_na_hash["ohs"] == 1) ? "NA" : @category_score_hash["ohs"]], :style => style_border, :types => [:string])
+    sheet.add_row(["Transparency & Disclosure", (@category_na_hash["td"] == 1) ? "NA" : @category_score_hash["td"],"", "","CSR", (@category_na_hash["csr"] == 1) ? "NA" : @category_score_hash["csr"]], :style => style_border, :types => [:string])
+    sheet.add_row(["", "","", "","Supply Chain", (@category_na_hash["sc"] == 1) ? "NA" : @category_score_hash["sc"]], :style => style_border, :types => [:string])
+
+
+    sheet.add_row(["Dimension Score", (@governance_na_status == 1) ? "NA" : (((@category_score_hash["cg"] ? @category_score_hash["cg"] : 0) + (@category_score_hash["rm"] ? @category_score_hash["rm"] : 0) + (@category_score_hash["be"] ? @category_score_hash["be"] : 0) + (@category_score_hash["td"] ? @category_score_hash["td"] : 0))/ @governance_div_value).round(2),
+      "Dimension Score", (@environmental_na_status == 1) ? "NA" : (((@category_score_hash["em"] ? @category_score_hash["em"] : 0) + (@category_score_hash["bd"] ? @category_score_hash["bd"] : 0) + (@category_score_hash["pr"] ? @category_score_hash["pr"] : 0))/ @environmental_div_value).round(2),
+      "Dimension Score", (@social_na_status == 1) ? "NA" : (((@category_score_hash["hr"] ? @category_score_hash["hr"] : 0) + (@category_score_hash["hc"] ? @category_score_hash["hc"] : 0) + (@category_score_hash["ohs"] ? @category_score_hash["ohs"] : 0) + (@category_score_hash["csr"] ? @category_score_hash["csr"] : 0) + (@category_score_hash["sc"] ? @category_score_hash["sc"] : 0))/ @social_div_value).round(2)], :style => style_aspect_line, :types => [:string])
+      sheet.add_row(["Company Score: #{(@company_score.avg_score ? @company_score.avg_score.round(2).to_s : '0') +'/100'}", "", "", "", "", ""], :height => 20, :style => style_score, :types => [:string])
+      sheet.merge_cells sheet.rows.last.cells
+end
+
+wb.add_worksheet(name: "Questions wise Score") do |sheet|
+  style_title = wb.styles.add_style(:sz => 20, :b => "true", :font_name => 'Calibri', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+  style_header = wb.styles.add_style(:bg_color => "CCE6FF", :sz => 12, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+  style_header2 = wb.styles.add_style(:sz => 14, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :vertical => :center, :wrap_text => true })
+  style_border = wb.styles.add_style(:sz => 12, :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+  style_bold = wb.styles.add_style(:sz => 12, :b => "true", :font_name => 'Calibri', :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+  style_score = wb.styles.add_style(:sz => 14, :b => "true", :font_name => 'Calibri', :border => { :style => :thin, :color => "000000" }, :alignment => { :horizontal => :center, :vertical => :center, :wrap_text => true })
+
+  sheet.column_widths 25, 40, 40, 20, 20, 20, 15, 30, 20, 20
+
+  title = "ESG Diagnostics Score Report"
+
+  sheet.add_row([title, "", ""], :height => 30, :style => style_title)
+  sheet.merge_cells sheet.rows.last.cells
+
+na_questions = ["hr_01", "csr_02", "em_04", "cg_08", "hr_08","rm_07"]
+ApplicationRecord::ASPECT_TYPE.each do |key, category|
+category_score = 0
+question_count = 0
+question_na_count = 0
+sheet.add_row()
+sheet.add_row()
+sheet.add_row([ApplicationRecord::ASPECT_TYPE[key], "", ""], :height => 20, :style => style_score)
+sheet.merge_cells sheet.rows.last.cells
+  sheet.add_row([
+    "Question No",
+    "Question Name",
+    "Score",
+  ], :style => style_header)
+@questionnaire_score.each_with_index do |question, index|
+
+if key.to_s == question.category_type
+question_count += 1
+category_score += (question.score).round(2)
+if (question.not_applicable_status == 1)
+            text = na_questions.include?(question.question_name) ? "NA" : "NAP"
+            question_na_count += 1
+   else
+            text = question.score ? (question.score).round(2) : 0
+end
+
+    sheet.add_row [
+            question.question_name.gsub('_', ' ').upcase,
+            @questions_hash["#{question.question_name}"],
+            text
+          ], :style => style_border, :types => [:string]
+end
+end
+sheet.add_row(["", "Total", ((question_na_count == question_count) ? "NA" : category_score)], :height => 24, :style => style_score)
+end
+end

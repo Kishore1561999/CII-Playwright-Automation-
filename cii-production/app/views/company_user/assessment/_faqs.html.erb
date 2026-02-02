@@ -1,0 +1,53 @@
+<%
+  faqs = [{
+    question: "How to change the password?",
+    answer: "Please go to change password by clicking profile icon on right top corner"
+  }, {
+    question: "How to fill in questionnaire?",
+    answer: "The option of opening & editing questionnaire is available on the dashboard. Clicking on <i class='badge bg-label-primary bx bx-notepad'>  </i> icon, will lead you to the questionnaire where you can also edit it."
+  }, {
+    question: "Why is the option for submitting the application not active?",
+    answer: "The option for submitting the application becomes active only once all questions are attempted. The aspect panel on left highlights the number of questions un-attempted in the aspect."
+  }, {
+    question: "Where can I download the scorecard & the report from?",
+    answer: "The options to download the report & scorecard are available on the dashboard."
+  }, {
+    question: "Why are the options to download the report & scorecard not active?",
+    answer: "The options to download the report & scorecard will become active only after the same have been prepared & uploaded by the CII-CESD team on the tool post the verification & assessment of responses."
+  }, {
+    question: "I can view the questionnaire, but I am not able to edit it.",
+    answer: "This happens when you have submitted the response. The questionnaire is now available in view only mode. For any changes, please refer to point 9."
+  }, {
+    question: "Do I need to manually save the answers?",
+    answer: "The tool has autosave functionality that automatically saves the response every one minute. So unless you make a change and switch over from the page within one minute, you do not need to manually save the answers."
+  }, {
+    question: "Are there any size restrictions for the documents that can be uploaded?",
+    answer: "No there are no size restrictions."
+  }, {
+    question: "I have submitted the response, but I need to make some changes to it. How do I do that?",
+    answer: "The response once submitted can not be edited by the applicant. However, you can send over the change in email to CII-CESD."
+  }, {
+    question: "Do we have to upload the main documents of the company like Annual Report, Sustainability Report in every aspect?",
+    answer: "No, for the main documents that are being used in the multiple aspects, you can upload them in the first aspect. However, in every question that they are used, please mention so in the comment box along with the page no."
+  }, {
+    question: "Can an account be accessed on multiple computers parallelly?",
+    answer: "Yes, the same account can be accessed on more than one system."
+  }]
+%>
+
+<% faqs.each_with_index do |faq, index| %>
+  <div class="accordion mt-3" id="faq<%= index+1 %>">
+    <div class="card accordion-item">
+      <h2 class="accordion-header" id="heading<%= index+1 %>">
+        <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordion<%= index+1 %>" aria-expanded="false" aria-controls="accordion<%= index+1 %>">
+          <%= index+1 %>. <%= faq[:question] %>
+        </button>
+      </h2>
+      <div id="accordion<%= index+1 %>" class="accordion-collapse collapse" aria-labelledby="heading<%= index+1 %>" data-bs-parent="#faq<%= index+1 %>">
+        <div class="accordion-body">
+          <%= faq[:answer].html_safe %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

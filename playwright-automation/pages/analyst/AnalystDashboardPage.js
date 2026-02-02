@@ -12,10 +12,25 @@ class AnalystDashboardPage extends BasePage {
     this.statusBadge = page.locator('[class*="badge"], [class*="status"]');
 
     // CII Data Collection (Analyst)
-    this.ciiDataLink = page.locator('a[href*="cii_data"]');
+    this.ciiDataLink = page.locator('a[href="/analyst/data_collection"]');
     this.sectorDropdown = page.locator('select#sector_id');
     this.yearDropdown = page.locator('select#year_id');
     this.applyFilterBtn = page.locator('#apply-filter, button:has-text("Search")');
+  }
+
+  async _robustClick(locator, name) {
+    // Ensure any lingering modals or backdrops are cleared first
+    // await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+    await locator.scrollIntoViewIfNeeded();
+    try {
+      await locator.click({ force: true, timeout: 5000 });
+      console.log(`\u2713 Clicked: ${name}`);
+    } catch (error) {
+      console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+      await locator.dispatchEvent('click');
+      console.log(`\u2713 JS clicked: ${name}`);
+    }
   }
 
   async verifyDashboardLoaded() {
@@ -26,9 +41,36 @@ class AnalystDashboardPage extends BasePage {
    * CII Data Collection
    */
   async navigateToCIIDataCollection() {
-    await this.ciiDataLink.click();
+    await this._robustClick(this.ciiDataLink, 'Analyst CII Data link');
     await this.page.waitForLoadState('networkidle');
-    console.log('✓ Analyst: Navigated to CII Data Collection');
+    await this.page.waitForTimeout(2000);
+  }
+
+  async searchCompany(companyName) {
+    // Assuming a search input exists, based on AdminPage it's often input#companyNameFilter or just a search box
+    // User request: "Search the company name in search box"
+    const searchInput = this.page.getByPlaceholder(/Search/i).or(this.page.locator('input[type="search"]')).or(this.page.locator('input#companyNameFilter'));
+    await searchInput.first().fill(companyName);
+
+    const applyBtn = this.page.locator('#apply-filter, button:has-text("Search"), button:has-text("Apply")');
+    if (await applyBtn.isVisible()) {
+      await applyBtn.click();
+    } else {
+      await searchInput.press('Enter');
+    }
+
+    await this.page.waitForLoadState('networkidle');
+    console.log(`✓ Analyst: Searched for company: ${companyName}`);
+  }
+
+  async clickEditAssessment(companyName) {
+    console.log(`✓ Analyst: Clicking Edit for ${companyName}`);
+    // Find row with company name (optional, if search is effectively filtering)
+    // Locator from request: <a ... href="/analyst/analyst_data_collection/320/provide_data">...<i class="bx bx-edit-alt ..."></i></a>
+    const editBtn = this.page.locator(`a[href*="provide_data"]`).first();
+    await editBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await editBtn.click();
+    await this.page.waitForLoadState('networkidle');
   }
 
   async searchCIIData(sector, year) {
@@ -40,8 +82,9 @@ class AnalystDashboardPage extends BasePage {
   }
 
   async navigateToAnalystDashboard() {
-    await this.navigate(this.baseURL);
+    await this.page.goto(this.baseURL);
     await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(2000);
     console.log('✓ Navigated to Analyst Dashboard');
   }
 

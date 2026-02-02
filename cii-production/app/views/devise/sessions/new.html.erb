@@ -1,0 +1,95 @@
+<div class="login-page-bg">
+  <div class="row row-margin-0">
+    <div class="col-md-12 px-5">
+      <div class="justify-text" style="max-width: 95%;" > 
+          <p class="mt-4 login-text-size-header-1 px-2" style="word-spacing: 2px;">
+            <h1 style="display: inline; font-weight: 500;color: white; font-size: 16px;">CII-ITC Centre of Excellence for Sustainable Development</h1> is committed to empowering organisations in their ESG journey through the <a href="https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/" target="_blank" class="underline-link"><span>ESG Intelligence & Analytics</span></a> portfolio.
+          </p>
+      </div>
+    </div>
+  </div>
+  <div class="row row-margin-0 login-height">
+      <div class="col-md-7 px-5 d-flex login-page-bg">
+        <div class="justify-text" >
+          <p class="mt-3 login-text-size-header-2 px-2" style="word-spacing: 3px;">
+              <span style="color: white;">This platform hosts two major services under this portfolio:</span>
+          </p>
+          <ol class="text-align-justify">
+           <li class="mt-3 login-text-size-header-2 px-2" style="word-spacing: 3px;">
+              <h2 style="display: inline; font-weight: bold;color: #E0E500; font-size: 16px;">ESG Diagnostics services:</h2> These services help organisations understand their status quo in the ESG space through an evaluation of their ESG policies and practices against the global and national best practices.
+            </li>
+            <li class="mt-3 login-text-size-header-2 px-2" style="word-spacing: 3px;"><h2 style="display: inline; font-weight: bold;color: #E0E500; font-size: 16px;">ESG Subscription services:</h2> The subscription services host a set of knowledge and analytics-based products that are designed to help organisations strategize their efforts in the ESG space.
+            </li>
+          </ol>
+          <ol class="alpha-list">
+            <li class="login-text-size-header-2 px-2" style="word-spacing: 3px;  margin-left: 15px;"><h2 style="display: inline; font-weight: bold;color: #E0E500; font-size: 16px;">ESG Peer Benchmarking:</h2>  It is an online platform that helps organisations compare their ESG performance to that of their peers on several ESG quantitative and qualitative indicators.
+            </li>
+            <li class="mt-2 login-text-size-header-2 px-2" style="word-spacing: 3px;  margin-left: 15px;"><h3 style="display: inline; font-weight: bold;color: #E0E500; font-size: 16px;">ESG E-Learning Modules:</h3> We have curated self-paced e-learning modules covering a range of topics, from basics of ESG to the more complex topics of developing framework on different ESG aspects.
+            </li>
+            <li class="mt-2 login-text-size-header-2 px-2" style="word-spacing: 3px;  margin-left: 15px;"><h4 style="display: inline; font-weight: bold;color: #E0E500; font-size: 16px;">ESG Publications:</h4> Our publications aim to improve the knowledge of the organisations on ESG ecosystem. It includes Annual industry reports covering ESG trends and performances; Publications on ESG mandates and on other major ESG developments.
+            </li>
+          </ol>
+          <p class=" login-text-size-header-2 px-2" style="word-spacing: 3px;">
+              You can choose between <span><b>Basic Subscription</b></span> and <span><b>Premium Subscription</b></span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-5 d-flex flex-column">
+        <div class="card login-card">
+          <div class="card-body login-form">
+            <h4>Subscribe / Sign In</h4>
+
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mb-3" }) do |f| %>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email ID</label>
+                <%= f.email_field :email, autocomplete: "email", class: "form-control input-height", placeholder: "Enter email" %>
+              </div>
+              <div class="mb-4 form-password-toggle">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-group input-group-merge input-height">
+                  <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Enter password" %>
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+              </div>
+              <%= f.submit "Sign In", class: "btn login-btn d-grid w-100 input-height font-large" %>
+            <% end %>
+            <p class="text-center text-dark mb-2">
+              <span>New on our platform?</span>
+            <%= link_to "Create an Account", new_user_registration_path, class: "create-account-link" %>
+            </p>
+            <p class="text-center mb-4">
+              <%= link_to "Forgot Password?", new_user_password_path, class: "create-account-link fw-normal" %>
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row px-5 row-margin-0 ml-57">
+    <div class="col-md-3 ">
+      <div class="card text-white card-height mb-3">
+        <div class="card-header login-basic-card"> Basic Subscription </div>
+          <div class="card-body" style="padding: 0">
+          <div class="text-center d-flex justify-content-center align-items-center" style="height: 100px">
+            <ul class="basic-login">
+              <li class="card-text text-clr-black"> ESG - Peer Benchmarking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white card-height mb-4">
+        <div class="card-header login-premium-card"> Premium Subscription </div>
+          <div class="card-body" style="padding: 0">
+          <div class="text-center d-flex justify-content-center align-items-center" style="height: 100px">
+            <ul class="premium-login">
+              <li class="card-text text-clr-black mt-1"> ESG - Peer Benchmarking</li>
+              <li class="card-text text-clr-black mt-1"> ESG E-Learning Modules</li>
+              <li class="card-text text-clr-black mr-50 mt-1"> ESG Publications</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

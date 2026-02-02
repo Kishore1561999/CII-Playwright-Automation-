@@ -1,0 +1,15 @@
+<div class="authentication-wrapper authentication-basic container-p-y registration-bg">
+  <div class="authentication-inner authentication-registeration">
+    <div class="card" style="margin-top:-90px">
+      <div class="card-body">
+        <%= form_tag(upgrading_path(user_id: current_user.id), multipart: true, id: "upgrade") do %>
+            <span style="text-align:justify;font-size:15px">You are already subscribed to the <b style="color:#392675">ESG Basic Subscription Plan</b>. If you want to upgrade to Premium, click the button below.</span>
+            <%# <br><br><center><span style="text-align:justify;font-size:15px">ESG Premium Subscription</span></center>
+            <center><span class="rupee-text rupee-text-premium"><%= services_amount(1200) %>
+            <br><br><center>
+        <%= button_tag "Pay & Upgrade", class: "btn btn-primary" %></center>
+        <% end %>
+    </div>
+    </div>
+  </div>
+</div>

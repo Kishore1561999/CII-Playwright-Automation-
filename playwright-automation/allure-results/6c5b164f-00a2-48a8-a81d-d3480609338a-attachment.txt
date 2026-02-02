@@ -1,0 +1,4 @@
+
+📋 STEP 8: User Download Workflow
+Attempting to download report...
+✓ Report downloaded to: C:\Users\SPRITLE\AppData\Local\Temp\playwright-artifacts-zrF9SI\8166b901-02c8-43b0-b99a-e2c0821bba4b

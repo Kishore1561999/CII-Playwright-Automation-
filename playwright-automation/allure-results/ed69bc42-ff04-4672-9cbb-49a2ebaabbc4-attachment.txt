@@ -1,0 +1,4 @@
+⚠ Logout failed, retrying once... locator.waitFor: Timeout 5000ms exceeded.
+Call log:
+  - waiting for getByRole('link', { name: 'Log Out' }) to be visible
+

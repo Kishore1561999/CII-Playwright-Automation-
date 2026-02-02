@@ -1,0 +1,1 @@
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

@@ -1,0 +1,1 @@
+✓ Company User successfully logged in after approval

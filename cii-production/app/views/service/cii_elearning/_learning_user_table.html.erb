@@ -1,0 +1,64 @@
+<table class="table table-hover">
+  <thead class="sticky-top" style="background-color:#fff;">
+  <tr class="text-nowrap">
+    <th class="text-center">S.No</th>
+    <th class="text-center">Uploaded Date</th>
+    <th>Title</th>
+    <th class="text-center">Number of Downloads</th>
+    <th class="text-center">Payment Approval</th>
+    <th class="text-center">Action</th>
+  </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+  <% current_page = params[:page].present? ? params[:page].to_i : 1 %>
+  <% per_page = 10 %>
+  <% starting_index = (current_page - 1) * per_page %>
+  <% if elearnings.length > 0 %>
+     <% elearnings.each_with_index do |elearning, index| %>
+      <tr>
+      <td class="text-center">
+       <%= starting_index + index + 1 %>
+      </td>
+      <td class="text-center">
+        <% if elearning.created_at.present? %>
+            <%= elearning.created_at.strftime("%d %b, %Y") %>
+        <% else %>
+        --
+        <% end %>
+      </td>
+       <% truncated_title = elearning.title.length > 25 ? elearning.title[0, 25] + '...' : elearning.title %>
+        <td style="width: 10%;" class="" title="<%= elearning.title %>"><%= truncated_title %></td>
+        <td class="text-center">
+          <%= elearning.no_of_downloads.present? ? elearning.no_of_downloads : '-' %>
+        </td>
+        <td class="text-center">
+        <% if elearning.service == "paid" %>
+            <%= link_to "#", class: "btn btn-sm btn-primary publication-icon-size payment-approval", title: "Payment Approval",  'data-bs-toggle': "modal", 'data-bs-target': "#modalElearningPayment", 'data-learning-id': elearning.id do %>
+              <i class="bx bx-rupee icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+        <% else %>
+            <span class="btn btn-sm btn-primary publication-icon-size disabled" title ="Payment">
+              <i class="bx bx-rupee icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            </span>
+        <% end %>
+        </td>
+        <td class="text-center">
+            <% if elearning.videofile.attached? %>
+            <span class="btn btn-sm btn-primary publication-icon-size me-1" title ="Edit" onclick="editCompany('<%= elearning.id %>');">
+              <i class="bx bx-edit-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            </span>
+            <% end %>
+            <%= link_to "#", class: "btn btn-sm btn-danger publication-icon-size delete_button publication-icon-adjustment-left", 'data-bs-toggle': "modal", 'data-bs-target': "#modalElearningDelete", name: elearning.id do %>
+            <i class="bx bx-trash icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="9" class="text-center">No data available!</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

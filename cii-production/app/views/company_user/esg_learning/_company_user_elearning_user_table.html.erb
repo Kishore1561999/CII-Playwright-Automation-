@@ -1,0 +1,85 @@
+<style>
+.card-img-top {
+  position: relative;
+  top: 15px;
+  left: 22px;
+  width: 85%;
+  height: 150px;
+  object-fit: cover;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.card {
+  margin: 10px; 
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+</style>
+
+<div class="card-container">
+  <% if elearnings.length > 0 %>
+    <% elearnings.each do |elearning| %>
+      <div class="card m-2" style="width: 17rem;">
+        <% if elearning.thumbnail.attached? %>
+           <%= link_to '#', class: 'thumbnail-link', data: { bs_toggle: 'modal', bs_target: '#videoModal', video_url: rails_blob_path(elearning.videofile), title: elearning.title } do %>
+            <%= image_tag elearning.thumbnail, class: 'card-img-top', alt: 'Card image cap' %>
+          <% end %>
+        <% else %>
+          <%= link_to '#', class: 'thumbnail-link', data: { bs_toggle: 'modal', bs_target: '#videoModal', video_url: rails_blob_path(elearning.videofile), title: elearning.title } do %>
+           <%= video_tag rails_blob_path(elearning.videofile, disposition: "attachment"), class: 'card-img-top', controls: false, alt: 'Card video cap' %>
+          <% end %>
+        <% end %>
+        <div class="card-body mt-3">
+          <div>
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              <% truncated_title = elearning.title.length > 14 ? elearning.title[0, 14] + '...' : elearning.title %>
+              <strong class="" title="<%= elearning.title %>" style="font-size: 18px"><%= truncated_title %></strong>
+              <% if elearning.service == "paid" %>
+              <% truncated_price = elearning.price.length > 8 ? elearning.price[0, 8] + '..' : elearning.price %>
+              <span title="<%= elearning.price %>" style="color: var(--primary-color);"><strong>₹<%= truncated_price %></strong></span>
+              <% else %>
+              <p class="card-text" style="color: var(--primary-color);"><strong>Free</strong></p>
+              <% end %>
+            </h5>
+          </div>
+          <p class="card-text" style="margin-bottom: 1.5rem;">Uploaded Date: <%= elearning.created_at.strftime('%d %b, %Y') %></p>
+          <% if elearning.service == "paid" %>
+            <% if EsgLearning.exists?(learning_id: elearning.id, company_user_id: current_user.id, status: ["pending", "approved"]) %>
+            <% ciilearning = EsgLearning.find_by(learning_id: elearning.id, company_user_id: current_user.id, status: ["pending", "approved"]) %>
+              <% if ciilearning.present? && ciilearning.status == "approved" %>
+                <%= link_to no_of_downloads_elearning_path(elearning.id), class: "btn btn-primary elearning_user_btn", style: "width: 100%;" do %>
+                  Download
+                <% end %>
+              <% else %>
+                 <button type="button" class="btn btn-primary elearning_user_btn" value="<%= elearning.id %>" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#elearningApprovalModal" disabled>Pay for Download</button>
+              <% end %>
+            <% else %>
+              <button type="button" class="btn btn-primary elearning_user_btn" value="<%= elearning.id %>" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#elearningApprovalModal">Pay for Download</button>
+            <% end %>
+          <% else %>
+              <%= link_to no_of_downloads_elearning_path(elearning.id), class: "btn btn-primary elearning_user_btn", style: "width: 100%;" do %>
+                Download
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="no-data text-center">
+      No data available!
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,7 @@
+✓ Closed User Guide Modal
+✓ Accepted Consent
+✓ Clicked Provide & Edit Data
+✓ Confirmed Sector
+✓ Verified navigation to peer_benchmark_assessment
+Waiting for analytics to complete...
+✓ Analytics completed and navigated to dashboard

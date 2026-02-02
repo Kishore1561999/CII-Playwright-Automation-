@@ -1,0 +1,121 @@
+<% content_for :title, "Download ESG Publications | ESG Diagnostics" %>
+<% content_for :description, "Access a wide range of ESG publications with our downloadable PDFs. Stay informed and up-to-date with essential ESG insights and resources." %>
+<style>
+input {
+  cursor: pointer;
+}
+
+input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+</style>
+<div class="pb-4">
+    <div class="navbar-nav-right d-flex align-items-center">
+        <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center">
+        <div class="col-12 d-flex">
+        <div class="col-4 mx-1 filter-width-publication">
+            <input type="text" name="search" id="companyNameFilter" class="form-control date-filter-text" placeholder="Search by Name" value="<%= @company_name ? @company_name : "" %>">
+        </div>
+        <div class="col-3 mx-1 filter-width-publication">
+            <input type="date" class="form-control date-filter-text" id="year-picker" data-placeholder="Select a date" style="cursor: text;" webkitdirectory />
+        </div>
+        <div class="col-1 mx-1" style="width: auto">
+            <%= button_tag "Apply", class: "btn btn-md btn-primary", id: "apply-filter" %>
+        </div>
+        <div class="col-3 mx-1">
+            <%= button_tag "Clear", class: "btn btn-md btn-secondary", id: "clear-filter" %>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+<div class="tab-content">
+	<div class="table-responsive text-nowrap set-height" id="users-table">
+		<%= render 'company_user/publication/company_user_publication_user_table', publications: @company_users %>
+	</div>
+</div>
+</div>
+
+<div class="col-md-12 pagination-alignments">
+    <%= will_paginate @company_users %>
+</div>
+
+<script>
+  var year_value = `<%= params[:year] %>`
+    $(document).on('turbolinks:load', function () {
+        $(".alert-dismissible").hide();  
+
+        $(document).on("click", "#clear-filter", function (event) {
+            event.stopPropagation();
+            window.location.replace("<%= publications_path %>");
+        });
+
+        $(document).on("click", "#apply-filter", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").hide();
+
+            applyFilter(event);
+        });
+
+        function applyFilter(event) {
+            event.preventDefault();
+
+            $(".filter-container").hide();
+
+            let companyName = $("#companyNameFilter").val();
+            let searchYear = $("#year-picker").val();
+            $(".sector-checkbox:checkbox:checked").each(function () {
+                sectorIds.push(Number(this.value));
+            });
+            window.location.replace("<%= publications_path %>?companyName="+companyName+"&year="+searchYear)
+        }
+
+        function setDateFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const year = params.get('year');
+            if (year) {
+                $("#year-picker").val(year);
+            }
+        }
+
+        $(document).ready(function() {
+            setDateFromURL();
+        });
+
+    });
+
+    $(document).ready(function() {
+
+        $(document).on("click", ".filter-icon", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").toggle();
+        });   
+    });
+
+    if (year_value != "") {
+      $('.select-year-font').css("color", "black")
+    }; 
+
+    $(document).on('click', '[data-bs-toggle="modal"]', function () {
+      var userId = $(this).data('user-id');
+      $('#company_user_id').val(userId);
+    });
+
+
+function debounce(func, wait) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+</script>

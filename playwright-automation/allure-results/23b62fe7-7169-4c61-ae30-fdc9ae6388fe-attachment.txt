@@ -1,0 +1,8 @@
+✓ Admin: Navigated to PB Data Management
+✓ Admin: Approving PB Data for: PB_Co_1769592652289
+✓ Admin: Searched for Company: PB_Co_1769592652289
+✓ Approved PB Data for: PB_Co_1769592652289
+CII Data link is visible, clicking directly.
+✓ Admin: Navigated to CII Data Collection
+✓ Admin: Searched for Company: PB_Co_1769592652289
+✓ Admin: Assigning analyst Kishore Analyst to company PB_Co_1769592652289

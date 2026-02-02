@@ -1,0 +1,33 @@
+<div class="top-header my-2">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="d-flex align-items-center gap-2 mt-0">
+        <p class="m-0">Sector: <span class="assessment-header-color"><%= current_user.company_sector %></span> </p>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <p class="m-0">No of Questions: <span class="assessment-header-color"><%= @questions.length %></span> </p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="d-flex align-items-center gap-2" style="float: right">
+        <button class="btn mx-1 clear-btn clear_data <%= !@answer_present ? 'disabled' : '' %>">Clear</button>
+        <button class="btn btn-success mx-1 save_assessment save-btn-color">Save</button>
+        <button class="btn btn-primary mx-1" id="runAnalytics_download">Run Analytics</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalSubmit" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to submit?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="submit_assessment">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>

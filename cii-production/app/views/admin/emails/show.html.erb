@@ -1,0 +1,27 @@
+<div class="card">
+	<h5 class="card-header">View Email Content</h5>
+
+  <div class="card-body col-md-10 offset-1">
+    <div class="col-md-12 row g-3">
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Email Title</label>
+        <p class="mb-0"><%= @email.email_title %></p>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label class="form-label">Email Content</label>
+        <p class="mb-0"><%= @email.email_content %></p>
+      </div>
+    </div>
+
+    <div class="col-md-4 offset-4">
+      <center>
+        <div class="row">
+          <div class="col-md-12" style="margin-top: 10px">
+            <%= link_to 'Edit', edit_email_path(@email.id), class: "btn btn-primary" %>
+           <%= link_to 'Back', emails_path, class: "btn btn-secondary", style: "margin-left: 10px", data: { turbolinks: false }, onclick: "window.location.href=this.href; return false;" %>
+          </div>
+        </div>
+      </center>
+    </div>
+  </div>
+</div>

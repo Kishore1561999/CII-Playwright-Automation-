@@ -1,0 +1,17 @@
+<div class="authentication-wrapper authentication-basic container-p-y registration-bg">
+  <div class="authentication-inner authentication-registeration">
+    <div class="card" style="margin-top:-90px">
+      <div class="card-body">
+        <%= form_tag(renew_upgrading_path(user_id: current_user.id), multipart: true, id: "upgrade") do %>
+            <center><span style="text-align:justify;font-size:15px"><b style="color:#392675">Subscription Renewal Notice</b></span>
+            <% service = current_user.subscription_services == "Basics" ? "Basic" : "Premium" %>
+            <% amount = current_user.subscription_services == "Basics" ? 35000 : 50000 %>
+            <br><br><span style="text-align:justify;font-size:15px">Your ESG <%= service %> Subscription is due for renewal.</span>
+            <br><br><span style="text-align:justify;font-size:15px">ESG <%= service %> Subscription</span></center>
+            <br><center><span class="rupee-text rupee-text-premium"><%= services_amount(amount) %></span><br>
+        <%= button_tag "Renew & Pay", class: "btn btn-primary" %></center>
+        <% end %>
+    </div>
+    </div>
+  </div>
+</div>

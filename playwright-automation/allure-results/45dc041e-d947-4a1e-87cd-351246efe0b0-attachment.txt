@@ -1,0 +1,5 @@
+✓ Admin: Navigated to Company Users / ESG Diagnostic page
+✓ Admin: Approving company: Func_Co_1769598952622
+✓ Admin: Searched for company: Func_Co_1769598952622
+✓ Approval confirmed for: Func_Co_1769598952622
+✓ Clicked approve and confirm for: Func_Co_1769598952622

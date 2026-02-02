@@ -1,0 +1,375 @@
+<% readonly = (params[:action] == "view_assessment") ? true : false %>
+<div class="row">
+  <div class="col-md-12 col-12">
+    <h5 class="card-title">Questions</h5>
+    <%= form_tag '#', multipart: true, id: "provide_data_form" do %>
+      <div class="tab-content p-0">
+        <% question_no = 1 %>
+          <div class="mb-3" >
+            <% @questions.each_with_index do |question, index| %>
+              <div class="form-group col-md mb-5 answerChangeCheck" id="<%= "question_no_#{question_no}" %>">
+                <% question_no = question_no+1 %>
+                <label class="form-label d-block"><%= "#{index+1}. #{question.question_name}" %></label>
+                <% (question.options).each_with_index do |option, option_index| %>
+                  <% if option['type'] == 'radio' %>
+                    <div class="form-check mt-3 left-align">
+                      <%= radio_button_tag option['name'], option['value'].present? ? option['value'] : option['label'], option['value'].present? ? @user_answers[option['name']] == option['value'] : @user_answers[option['name']] == option['label'], { class: "form-check-input choice", title: "answer-#{question.question_id}-#{option_index+1}", disabled: readonly } %>
+                      <%= label_tag option['name'], option['label'], { class: "form-check-label" } %>
+                    </div>
+                    <% if option['has_table'] %>
+                      <div class="row g-3 <%= option['name'] %> sub-answers d-none" id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                        <table class="left-align">
+                          <% option['table_data'].each_with_index do |row_data, index| %>
+                            <tr>
+                              <% row_data.each_with_index do |column_data, index| %>
+                                <td>
+                                  <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                    <% if column_data['type'] == 'text' %>
+                                      <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                    <% else %>
+                                      <% if (column_data['label'] == 'Percentage' || column_data['placeholder'] == 'Percentage') %>
+                                        <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                        <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                      <% else %>
+                                        <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                      <% end %>
+                                    <% end %>
+                                  <% elsif column_data['type'] == 'dropdown' %>
+                                    <div class="col-md-12" style="margin-top: 0">
+                                      <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                    </div>
+                                  <% elsif column_data['type'] == 'textarea' %>
+                                    <div class="col-md-12" style="margin-top: 0">
+                                      <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                    </div>
+                                  <% else %>
+                                    <label class="form-label d-block"><%= column_data['label'] %></label>
+                                  <% end %>
+                                </td>
+                              <% end %>
+                            </tr>
+                          <% end %>
+                        </table>
+                      </div>
+                    <% end %>
+                    <% if option['has_sub_answer'] %>
+                      <div class="row g-3 <%= option['name'] %> sub-answers d-none" id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                        <% option['sub_answers'].each_with_index do |sub_answer, sub_answer_index| %>
+                          <% if sub_answer['type'] == 'label' %>
+                            <% if sub_answer['has_table'] %>
+                              <table class="left-align">
+                                <% sub_answer['table_data'].each_with_index do |row_data, index| %>
+                                  <tr>
+                                    <% row_data.each_with_index do |column_data, index| %>
+                                      <%= table_custom_td_tag(column_data) %>
+                                        <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                          <% if column_data['type'] == 'text' %>
+                                            <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                          <% else %>
+                                            <% if (column_data['label'] == 'Percentage' || column_data['placeholder'] == 'Percentage') %>
+                                              <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                              <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                            <% else %>
+                                              <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                            <% end %>
+                                          <% end %>
+                                        <% elsif column_data['type'] == 'dropdown' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                          </div>
+                                        <% elsif column_data['type'] == 'textarea' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                          </div>
+                                        <% else %>
+                                          <label class="form-label d-block"><%= column_data['label'] %></label>
+                                        <% end %>
+                                      </td>
+                                    <% end %>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% end %>
+                          <% end %>
+                          <% if sub_answer['type'] == 'radio' || sub_answer['type'] == 'checkbox' %>
+                            <div class="form-check mt-3 left-align sub-form-check">
+                              <% if sub_answer['type'] == 'radio' %>
+                                <%= radio_button_tag sub_answer['name'], sub_answer['label'], @user_answers[sub_answer['name']] == sub_answer['label'], { class: "form-check-input", title: "sub_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}", disabled: readonly } %>
+                              <% else %>
+                                <%= check_box_tag sub_answer['name'], sub_answer['label'], @user_answers[sub_answer['name']] == sub_answer['label'], { class: "form-check-input", title: "sub_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}", disabled: readonly } %>
+                              <% end %>
+                              <%= label_tag sub_answer['name'], sub_answer['label'], { class: "form-check-label" } %>
+                            </div>
+                            <% if sub_answer['has_table'] %>
+                              <div class="row g-3 <%= sub_answer['name'] %> sub-answers d-none" id="sub_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>">
+                                <table class="left-align">
+                                  <% sub_answer['table_data'].each_with_index do |row_data, index| %>
+                                    <tr>
+                                      <% row_data.each_with_index do |column_data, index| %>
+                                        <%= table_custom_td_tag(column_data) %>
+                                          <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                            <% if column_data['type'] == 'text' %>
+                                              <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                            <% else %>
+                                              <% if (column_data['label'] == 'Percentage' || column_data['placeholder'] == 'Percentage') %>
+                                                <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                                <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                              <% else %>
+                                                <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                              <% end %>
+                                            <% end %>
+                                          <% elsif column_data['type'] == 'dropdown' %>
+                                            <div class="col-md-12" style="margin-top: 0">
+                                              <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                            </div>
+                                          <% elsif column_data['type'] == 'textarea' %>
+                                            <div class="col-md-12" style="margin-top: 0">
+                                              <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                            </div>
+                                          <% else %>
+                                            <label class="form-label d-block"><%= column_data['label'] %></label>
+                                          <% end %>
+                                        </td>
+                                      <% end %>
+                                    </tr>
+                                  <% end %>
+                                </table>
+                              </div>
+                            <% end %>
+                            <% if sub_answer['has_sub_answer'] %>
+                              <div class="row g-3 <%= sub_answer['name'] %> sub-answers d-none <%= sub_answer['name'] %>checkbox  sub-questions" id="sub_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>">
+                                <% sub_answer['sub_answers'].each_with_index do |inner_answer, inner_answer_index| %>
+                                  <% if inner_answer['type'] == 'label' %>
+                                    <div class="col-md-12">
+                                      <label class="form-label d-block"><%= inner_answer['label'] %></label>
+                                    </div>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'radio' || inner_answer['type'] == 'checkbox' %>
+                                    <div class="form-check mt-3 left-align">
+                                      <% if inner_answer['type'] == 'radio' %>
+                                        <%= radio_button_tag inner_answer['name'], inner_answer['label'], @user_answers[inner_answer['name']] == inner_answer['label'], { class: "form-check-input", title: "sub_inner_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{inner_answer_index+1}", disabled: readonly } %>
+                                      <% else %>
+                                        <%= check_box_tag inner_answer['name'], inner_answer['label'], @user_answers[inner_answer['name']] == inner_answer['label'], { class: "form-check-input", title: "sub_inner_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{inner_answer_index+1}", disabled: readonly } %>
+                                      <% end %>
+                                      <%= label_tag inner_answer['name'], inner_answer['label'], { class: "form-check-label" } %>
+                                    </div>
+                                    <% if inner_answer['has_table'] %>
+                                      <div class="row g-3 <%= inner_answer['name'] %> sub-sub-answers d-none" id="sub_inner_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>">
+                                        <table class="left-align">
+                                          <% inner_answer['table_data'].each_with_index do |row_data, index| %>
+                                            <tr>
+                                              <% row_data.each_with_index do |column_data, index| %>
+                                                <td>
+                                                  <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                                    <% if column_data['type'] == 'text' %>
+                                                      <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                                    <% else %>
+                                                      <% if (column_data['label'] == 'Percentage' || column_data['placeholder'] == 'Percentage') %>
+                                                        <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                                        <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                                      <% else %>
+                                                        <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                                      <% end %>
+                                                    <% end %>
+                                                  <% elsif column_data['type'] == 'dropdown' %>
+                                                    <div class="col-md-12" style="margin-top: 0">
+                                                      <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                                    </div>
+                                                  <% elsif column_data['type'] == 'textarea' %>
+                                                    <div class="col-md-12" style="margin-top: 0">
+                                                      <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                                    </div>
+                                                  <% else %>
+                                                    <label class="form-label d-block"><%= column_data['label'] %></label>
+                                                  <% end %>
+                                                </td>
+                                              <% end %>
+                                            </tr>
+                                          <% end %>
+                                        </table>
+                                      </div>
+                                    <% end %>
+                                    <% if inner_answer['has_sub_answer'] %>
+                                      <div class="row g-3 <%= inner_answer['name'] %> sub-answers d-none" id="sub_inner_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>">
+                                        <% inner_answer['sub_answers'].each_with_index do |sub_inner_answer, sub_inner_answer_index| %>
+                                          <% if sub_inner_answer['type'] == 'label' %>
+                                            <div class="col-md-12">
+                                              <label class="form-label d-block"><%= sub_inner_answer['label'] %></label>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'radio' || sub_inner_answer['type'] == 'checkbox' %>
+                                            <div class="form-check mt-3 left-align">
+                                              <% if sub_inner_answer['type'] == 'radio' %>
+                                                <%= radio_button_tag sub_inner_answer['name'], sub_inner_answer['label'], @user_answers[sub_inner_answer['name']] == sub_inner_answer['label'], { class: "form-check-input", disabled: readonly } %>
+                                              <% else %>
+                                                <%= check_box_tag sub_inner_answer['name'], sub_inner_answer['label'], @user_answers[sub_inner_answer['name']] == sub_inner_answer['label'], { class: "form-check-input", disabled: readonly } %>
+                                              <% end %>
+                                              <%= label_tag sub_inner_answer['name'], sub_inner_answer['label'], { class: "form-check-label" } %>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'text' || sub_inner_answer['type'] == 'number' %>
+                                            <div class="col-md-6" style="margin-top: 1rem">
+                                             <div class="d-flex flex-column h-100 justify-content-between">
+                                                <% if sub_inner_answer['type'] == 'text' %>
+                                                  <%= text_field_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: sub_inner_answer['label'], readonly: readonly } %>
+                                                <% else %>
+                                                  <% if (sub_inner_answer['label'] == 'Percentage' || sub_inner_answer['placeholder'] == 'Percentage') %>
+                                                    <input type="decimal" name="<%= sub_inner_answer['name'] %>" id="<%= sub_inner_answer['name'] %>" value="<%= @user_answers[sub_inner_answer['name']] %>" class="form-control" placeholder="<%= sub_inner_answer['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                                    <%#= number_field_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: sub_inner_answer['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                                  <% else %>
+                                                    <%= number_field_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: sub_inner_answer['label'], readonly: readonly, min: 0 } %>
+                                                  <% end %>
+                                                <% end %>
+                                              </div>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'dropdown' %>
+                                            <div class="col-md-4" style="margin-top: 1rem">
+                                              <%= select_tag sub_inner_answer['name'], options_for_select(sub_inner_answer['options'], @user_answers[sub_inner_answer['name']]), { class: "form-control form-select", include_blank: sub_inner_answer['label'], disabled: readonly } %>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'textarea' %>
+                                            <div class="col-md-12" style="margin-top: 1rem">
+                                              <%= text_area_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: "#{sub_inner_answer['label']}", readonly: readonly,  } %>
+                                            </div>
+                                          <% end %>
+                                        <% end %>
+                                      </div>
+                                    <% end %>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'text' || inner_answer['type'] == 'number' %>
+                                    <div class="col-md-6" style="margin-top: 1rem">
+                                      <div class="d-flex flex-column h-100 justify-content-between">
+                                        <% if inner_answer['type'] == 'text' %>
+                                          <%= text_field_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: inner_answer['label'], readonly: readonly } %>
+                                        <% else %>
+                                          <label class="form-label d-block"><%= "#{inner_answer['label']}" %></label>
+                                          <% if (inner_answer['label'] == 'Percentage' || inner_answer['placeholder'] == 'Percentage') %>
+                                            <input type="decimal" name="<%= inner_answer['name'] %>" id="<%= inner_answer['name'] %>" value="<%= @user_answers[inner_answer['name']] %>" class="form-control" placeholder="Percentage" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                            <%#= number_field_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: inner_answer['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                          <% else %>
+                                            <%= number_field_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: inner_answer['label'], readonly: readonly, min: 0 } %>
+                                          <% end %>
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'dropdown' %>
+                                    <div class="col-md-4" style="margin-top: 1rem">
+                                      <%= select_tag inner_answer['name'], options_for_select(inner_answer['options'], @user_answers[inner_answer['name']]), { class: "form-control form-select", include_blank: inner_answer['label'] } %>
+                                    </div>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'textarea' %>
+                                    <div class="col-md-12" style="margin-top: 1rem">
+                                      <% if inner_answer['has_label'].present? && inner_answer['has_label'] == 'true' %>
+                                        <%= label_tag inner_answer['name'], inner_answer['label'], { class: "form-check-label mb-2" } %>
+                                      <% end %>
+                                      <%= text_area_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: "#{inner_answer['label']}", readonly: readonly,  } %>
+                                    </div>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            <% end %>
+                          <% end %>
+                          <% if sub_answer['type'] == 'text' || sub_answer['type'] == 'number' %>
+                            <div class="col-md-6" style="margin-top: 1rem">
+                              <div class="d-flex flex-column h-100 justify-content-between">
+                                <% if sub_answer['type'] == 'text' %>
+                                  <%= text_field_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: sub_answer['label'], readonly: readonly } %>
+                                <% else %>
+                                  <label class="form-label d-block"><%= "#{sub_answer['label']}" %></label>
+                                  <% if (sub_answer['label'] == 'Percentage' ||  sub_answer['placeholder'] == 'Percentage') %>
+                                    <input type="decimal" name="<%= sub_answer['name'] %>" id="<%= sub_answer['name'] %>" value="<%= @user_answers[sub_answer['name']] %>" class="form-control" placeholder="Percentage" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                    <%#= number_field_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: sub_answer['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                  <% else %>
+                                    <%= number_field_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: sub_answer['label'], readonly: readonly, min: 0 } %>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            </div>
+                          <% end %>
+                          <% if sub_answer['type'] == 'dropdown' %>
+                            <div class="col-md-4" style="margin-top: 1rem">
+                              <%= select_tag sub_answer['name'], options_for_select(sub_answer['options'], @user_answers[sub_answer['name']]), { class: "form-control form-select", include_blank: sub_answer['label'], disabled: readonly } %>
+                            </div>
+                            <% if sub_answer['has_table'] %>
+                              <table class="left-align">
+                                <% sub_answer['table_data'].each_with_index do |row_data, index| %>
+                                  <tr>
+                                    <% row_data.each_with_index do |column_data, index| %>
+                                      <%= table_custom_td_tag(column_data) %>
+                                        <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                          <% if column_data['type'] == 'text' %>
+                                            <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                          <% else %>
+                                            <% if (column_data['label'] == 'Percentage' || column_data['placeholder'] == 'Percentage') %>
+                                              <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                              <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                            <% else %>
+                                              <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                            <% end %>
+                                          <% end %>
+                                        <% elsif column_data['type'] == 'dropdown' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                          </div>
+                                        <% elsif column_data['type'] == 'textarea' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                          </div>
+                                        <% else %>
+                                          <label class="form-label d-block"><%= column_data['label'] %></label>
+                                        <% end %>
+                                      </td>
+                                    <% end %>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% end %>
+                          <% end %>
+                          <% if sub_answer['type'] == 'textarea' %>
+                            <div class="col-md-12" style="margin-top: 1rem">
+                              <%= text_area_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: "#{sub_answer['label']}", readonly: readonly,  } %>
+                            </div>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                   
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <%= button_tag "Previous", class: "btn btn-primary previous" %>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-3">
+            <%= button_tag "Next", class: "btn btn-primary next float-right" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="modal fade" id="modalPopup" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="row">
+					<div class="col mb-3">
+						<textarea id="textarea_description" class="form-control" placeholder="Description"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="ok_button">Ok</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>

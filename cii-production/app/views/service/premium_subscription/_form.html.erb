@@ -1,0 +1,202 @@
+<div class="card">
+  <div class="card-body col-md-10 offset-1">
+    <%= form_with(model: company_user, url: premium_user_update_details_path(company_user), local: true, html: { method: :put, class: "mb-3" }) do |f|  %>
+      <%= f.hidden_field :email, :value => company_user.email, :id => "user_email" %>
+      <%= f.hidden_field :from, value: from %>
+
+      <div class="col-md-12 row g-3">
+        <%= render "shared/error_messages", resource: company_user %>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Basic Info</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Name</label>
+            <%= f.text_field :company_name, class: "form-control", placeholder: "Enter company name" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">ISIN Number</label>
+            <%= f.text_field :company_isin_number, class: "form-control", placeholder: "Enter company isin number" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Sector</label>
+            <%= f.select :company_sector, options_for_select(Sector.all.map { |sector| [sector.sector_name, sector.sector_name] }, company_user.company_sector), { include_blank: "Select sector" }, { class: "form-control form-select" } %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Description</label>
+            <%= f.text_area :company_description, class: "form-control", placeholder: "Enter company description" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Organization Scale <span class="text-danger fs-6">*</span></label>
+            <%= f.select :company_scale, options_for_select(["Large", "Medium", "Small", "Micro"], company_user.company_scale), { include_blank: "Select Organization Scale" }, { class: "form-control form-select" } %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Logo</label>
+            <%= f.file_field :company_logo, class: "form-control company-logo", accept: "image/*" %>
+            <div class="holder">
+              <%= image_tag company_user.company_logo.present? ? company_user.company_logo : "no-image.png", class: "img-responsive img-thumbnail img-logo", id: "imgPreview" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Address Info</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Address Line 1</label>
+            <%= f.text_field :company_address_line1, class: "form-control", placeholder: "Enter address line 1" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Address Line 2</label>
+            <%= f.text_field :company_address_line2, class: "form-control", placeholder: "Enter address line 2" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Country</label>
+            <%= f.select :company_country, options_for_select(CS.countries.map { |country| [country[1], country[0]] }, company_user.company_country), { include_blank: "Select country" }, { class: "form-control form-select" } %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">State</label>
+            <%= f.select :company_state, options_for_select(CS.states(company_user.company_country).map { |state| [state[1], state[0]] }, company_user.company_state), { include_blank: "Select state" }, { class: "form-control form-select" } %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">City</label>
+            <%= f.select :company_city, options_for_select(CS.cities(company_user.company_state, company_user.company_country).map { |city| [city, city] }, company_user.company_city), { include_blank: "Select city" }, { class: "form-control form-select" } %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">ZIP Code</label>
+            <%= f.text_field :company_zip, class: "form-control", placeholder: "Enter zip code" %>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Primary Contact</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Full Name</label>
+            <%= f.text_field :primary_name, class: "form-control", placeholder: "Enter full name" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Email</label>
+            <%= f.text_field :primary_email, class: "form-control", placeholder: "Enter email" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Designation</label>
+            <%= f.text_field :primary_designation, class: "form-control", placeholder: "Enter designation" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Contact Number</label>
+            <%= f.text_field :primary_contact, class: "form-control number-input", placeholder: "Enter contact number" %>
+          </div>
+        </div>
+
+        <div class="row">
+          <h5 class="mb-2"><small class="text-light fw-semibold">Alternate Contact</small></h5>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Full Name</label>
+            <%= f.text_field :alternate_name, class: "form-control", placeholder: "Enter full name" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Email</label>
+            <%= f.text_field :alternate_email, class: "form-control", placeholder: "Enter email" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Designation</label>
+            <%= f.text_field :alternate_designation, class: "form-control", placeholder: "Enter designation" %>
+          </div>
+          <div class="mb-3 col-md-4">
+            <label class="form-label">Contact Number</label>
+            <%= f.text_field :alternate_contact, class: "form-control", placeholder: "Enter contact number" %>
+          </div>
+        </div>
+       
+        <div class="row">
+          <h5 class="mb-2"><small class="payments-header-style text-light fw-semibold">Choose Services</small> <small class="offline-mode-text text-light">(Offline Payment Mode)</small></h5>
+          <div class="services-border-style-subscription ms-3 mb-3 col-md-7" style="border: solid 1px #eae1e1">
+            <%= f.check_box :subscription_esg_diagnostic, class: "form-check-input validate-checkbox checked-color checkbox-right", id: "user_active", checked: company_user.subscription_esg_diagnostic %> 
+            <%= f.label :diagnostic, "ESG Diagnostic", class: "form-check-label", for: "diagnostic" %> 
+          </div>
+          <div class="services-border-style-subscription ms-3 mb-3 col-md-7" id="payment-checkbox-validation" style="border: solid 1px #eae1e1">
+            <div>
+            <%= check_box_tag 'subscription_services_enabled', '1', (ApplicationRecord::SUBSCRIPTION).map(&:capitalize).include?(company_user.subscription_services), 
+                      class: "form-check-input validate-checkbox checked-color checkbox-right", 
+                      id: "services" %>
+            <%= f.label :subscription_services, "Subscription services", class: "form-check-label", for: "services" %>
+            </div>
+            <div class="form-check form-check-inline">
+              <%= f.radio_button :subscription_services, 'Basics', class: "radio-button", id: "basics", checked: company_user.subscription_services == 'Basics' %>
+              <%= f.label :basics, "ESG Basic Subscription", class: "form-check-label ml-5", for: "basics" %>
+              <span class="rupee-text rupee-text-basic"><%= services_amount(200) %></span>
+            </div>
+            <div class="form-check form-check-inline" id= "subscrition_options_validate">
+              <%= f.radio_button :subscription_services, 'Premium', class: "radio-button", id: "premium", checked: company_user.subscription_services == 'Premium' %>
+              <%= f.label :premium, "ESG Premium Subscription", class: "form-check-label ml-5", for: "premium" %>
+              <span class="rupee-text rupee-text-premium"><%= services_amount(1200) %></span>
+            </div> 
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 offset-4">
+        <center>
+          <div class="row">
+            <div class="col-md-12">
+              <%= f.submit class: "btn btn-primary" %>
+              <%= link_to 'Cancel', url_for(:back), class: "btn btn-secondary" %>
+            </div>
+          </div>
+        </center>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#user_primary_email").focusout(function() {
+      $("#user_email").val($(this).val());
+    });
+
+    $("#user_company_country").change(function() {
+      let input_state = $("#user_company_state");
+      let input_city = $("#user_company_city");
+
+      $.getJSON('/states/' + $(this).val(), function (data) {
+        input_state.empty();
+        input_state.append("<option value=''>Select state</option>");
+        input_city.empty();
+        input_city.append("<option value=''>Select city</option>");
+
+        $.each(data, function (key, value) {
+          var opt = '<option value='+ key +'>' + value + '</option>';
+          input_state.append(opt);
+        });
+      });
+    });
+
+    $("#services").click(function () {
+      if ($('#services').prop('checked')) {
+        $('.reg-checbox, .consent-checbox, .payments-tab').removeClass('d-none');
+        $('.consent-checbox').css('margin-top','20px');
+        $("#nav-btn").show();
+        $("#submit-btn").addClass("d-none");      
+      } else {
+        $('.reg-checbox, .payments-tab, .consent-checbox').addClass('d-none');
+        $('.consent-checbox').css('margin-top','');
+        $('.radio-button, #consent_form').prop('checked', false);
+        $("#nav-btn").hide();
+        $("#submit-btn").removeClass("d-none");
+      }
+    });
+
+    $("#user_company_state").change(function() {
+      let input_city = $("#user_company_city");
+
+      $.getJSON('/cities/' + $(this).val(), function (data) {
+        input_city.empty();
+        input_city.append("<option value=''>Select city</option>");
+
+        $.each(data, function (key, value) {
+          var opt = '<option value='+ value +'>' + value + '</option>';
+          input_city.append(opt);
+        });
+      });
+    });
+  });
+</script>

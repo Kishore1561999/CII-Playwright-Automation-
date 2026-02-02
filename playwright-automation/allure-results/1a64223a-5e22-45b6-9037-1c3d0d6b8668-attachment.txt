@@ -1,0 +1,25 @@
+
+📋 STEP 7: Admin Review Workflow
+✓ Admin: Navigated to Company Users / ESG Diagnostic page
+✓ Admin: Searched for company: E2E_Company_1769598391020
+✓ Admin: Assigning analyst Kishore admin to company E2E_Company_1769598391020
+✓ Assignment successful: E2E_Company_1769598391020 → Kishore admin
+✓ Clicked View Response -> CII user response for: E2E_Company_1769598391020
+✓ Assessment review page loaded (Aspects list visible)
+✓ Clicked Edit button
+✓ Found 95 comment fields
+  - Filled comment field 1
+  - Filled comment field 2
+✓ Clicked Update button
+✓ Clicked Submit button
+✓ Confirmed submission (Clicked Yes)
+✓ Admin: Navigated to Company Users / ESG Diagnostic page
+Generating scorecard for: E2E_Company_1769598391020
+✓ Admin: Searched for company: E2E_Company_1769598391020
+✓ Scorecard generated (clicked Yes)
+Clicking Generate Template for: E2E_Company_1769598391020
+✓ Admin: Searched for company: E2E_Company_1769598391020
+✓ Clicked Generate Template
+Uploading report for: E2E_Company_1769598391020
+✓ Admin: Searched for company: E2E_Company_1769598391020
+✓ Report uploaded and Upload button clicked

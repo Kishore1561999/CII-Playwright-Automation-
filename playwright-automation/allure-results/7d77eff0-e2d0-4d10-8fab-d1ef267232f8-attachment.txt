@@ -1,0 +1,2 @@
+⚠ Modal did not appear after standard click. Retrying with JS click.
+⚠ Logout UI failure. Navigating to /users/sign_out directly.

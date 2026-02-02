@@ -1,0 +1,6 @@
+
+📋 STEP 5: Admin Assignment Workflow
+✓ Clicked: Company Users / ESG Diagnostic link
+✓ Admin: Searched for company: E2E_Company_1769757035886
+✓ Admin: Assigning analyst Kishore Analyst to company E2E_Company_1769757035886
+✓ Assignment successful: E2E_Company_1769757035886 → Kishore Analyst

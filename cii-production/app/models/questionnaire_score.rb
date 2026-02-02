@@ -1,0 +1,2 @@
+class QuestionnaireScore < ApplicationRecord
+end

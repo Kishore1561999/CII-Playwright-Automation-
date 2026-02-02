@@ -1,0 +1,69 @@
+<table class="table table-hover">
+  <thead class="sticky-top" style="background-color: #fff;">
+    <tr class="text-nowrap">
+      <th class="text-center">ISIN</th>
+      <th>Company Name</th>
+      <th class="text-center">Sector</th>
+      <th class="text-center">BRSR Report</th>
+      <th class="text-center">Status</th>
+      <th class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+    <% if @company_detail.length > 0 %>
+      <% @company_detail.each do |company_details| %>
+        <tr>
+          <td class="text-center" title="<%= company_details.company_isin_number %>">
+            <%= company_details.company_isin_number.present? ? company_details.company_isin_number.length > 10 ? "#{company_details.company_isin_number[0, 10]}..." : company_details.company_isin_number : "-" %>
+          </td>
+          <% truncated_company_name = company_details.company_name.length > 20 ? company_details.company_name[0, 20] + '...' : company_details.company_name %>
+           <td style="width: 10%;" class="" title="<%= company_details.company_name %>"><%= truncated_company_name %></td>
+          <% company_sector = company_details.company_sector.match(/\s/) ? "break" : "no-break" %>
+          <% if company_sector == "break" %>
+            <td class="text-wrap text-center"><%= "#{company_details.company_sector}" %></td>
+          <% else %>
+            <td class="text-center"><%= "#{company_details.company_sector}" %></td>
+          <% end %>
+          <td class="text-center">
+          <% if company_details.pdffile.attached? %>
+            <%= link_to rails_blob_path(company_details.pdffile, disposition: "attachment"), class: "btn btn-sm btn-primary icon-default-size", title: "Download BRSR Report" do %>
+              <i class="bx bxs-download icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+          <% else %>
+            <%= link_to "#", class: "btn btn-sm btn-primary icon-default-size disabled", title: "Download BRSR Report" do %>
+              <i class="bx bxs-download icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+          <% end %>
+          </td>
+          <td class="text-center">
+          <% if company_details.status == 'wip' || company_details.status.nil? %>
+            <span style="color:#E59700">In Progress</span>
+          <% elsif company_details.status == 'submitted' %>
+            <span style="color:#4BB543">Submitted</span>
+          <% elsif company_details.status == 'push_back' %>
+            <span style="color:#6335F2">Push Back</span>
+          <% end %>
+          </td>
+          <td class="text-center">
+            <% edit_class = (company_details.status == 'wip' || company_details.status.nil? || company_details.status == 'push_back') ? '' : 'disabled' %>
+            <% view_class = company_details.status == 'submitted' ? '' : 'disabled' %>
+            <% edit_disabled = current_user.id != company_details.analyst_user_id %>
+            <%= link_to analyst_data_collection_assessment_path(company_id: company_details.id), class: "btn btn-sm me-2 btn-primary icon-default-size #{edit_disabled ? 'disabled' : edit_class}", title: "Edit Questionnaire" do %>
+              <i class="bx bx-edit-alt icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+            <%= link_to analyst_view_providedata_path(company_id: company_details.id), class: "btn btn-sm btn-primary me-2 icon-default-size #{view_class}", title: "View" do %>
+              <i class="bx bx-show me-1 icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+            <span class="btn btn-sm btn-primary icon-default-size me-2 <%= current_user.id != company_details.analyst_user_id ? "disabled" : "" %>" title ="Edit" onclick="editCompany('<%= company_details.id %>');">
+              <i class="bx bx-edit icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            </span>
+          </td> 
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="9" class="text-center">No data available!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

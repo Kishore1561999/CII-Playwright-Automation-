@@ -10,7 +10,27 @@ class BasePage {
         const Env = require('../utils/Env');
         const baseUrl = Env.BASE_URL;
         const fullUrl = path.startsWith('http') ? path : `${baseUrl}${path.replace(/^\//, '')}`;
-        await this.page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+
+        let attempts = 0;
+        const maxAttempts = 3;
+
+        while (attempts < maxAttempts) {
+            try {
+                await this.page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+                return; // Navigation successful
+            } catch (error) {
+                attempts++;
+                const isNetworkChange = error.message.includes('net::ERR_NETWORK_CHANGED');
+                const isInterrupted = error.message.includes('interrupted');
+
+                if ((isNetworkChange || isInterrupted) && attempts < maxAttempts) {
+                    console.warn(`⚠ Navigation attempt ${attempts} failed for ${fullUrl} (${error.message}). Retrying in 1s...`);
+                    await this.page.waitForTimeout(1000);
+                    continue;
+                }
+                throw error;
+            }
+        }
     }
 
     async pause() {

@@ -1,0 +1,497 @@
+<% content_for :title, "Efficient CII Data Collection & Approval | Streamline Your Data" %>
+<% content_for :description, "Manage CII data collection with ease. Add new companies, approve, save, and analyze data effectively in our comprehensive data review and analytics section." %>
+<div class="col-md-4">
+  <div class="nav-align-top mb-4">
+    <ul class="nav nav-pills nav-fill bg-white" role="tablist">
+      <li class="nav-item">
+        <button type="button" id="all-company-info" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-analyst-all-company" aria-controls="navs-analyst-all-company" aria-selected="true">
+           All Companies
+        </button>
+      </li>
+      <li class="nav-item">
+        <button type="button" id="analyst-company-info" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-analyst-my-company" aria-controls="navs-analyst-my-company" aria-selected="false">
+           My Companies
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="pb-4">
+  <div class="navbar-nav-right d-flex align-items-center">
+    <div class="navbar-nav align-items-center">
+      <div class="nav-item d-flex align-items-center">
+        <div class="col-12 d-flex">
+          <div id="dropdownFilter" class="col-3 mx-1 navbar-dropdown dropdown-user dropdown">
+            <a class="filter-icon">
+                  <input type="text" name="sector" id="sectorFilter" class="form-control cursor-pointer" value="" placeholder="Filter by Sector" style="background-color: white;" readonly>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end filter-container">
+              <%= form_tag("#") do %>
+                <div class="checkbox-list">
+                  <% Sector.all.each do |sector| %>
+                    <div class="form-check" style="padding: 0 0 0 2rem;">
+                      <%= check_box_tag "checkbox_#{sector.id}", sector.sector_name, @sector_ids.include?((sector.sector_name).to_s), { class: "form-check-input sector-checkbox" } %>
+                      <%= label_tag "checkbox_#{sector.id}", sector.sector_name, { class: "form-check-label" } %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-3 mx-1">
+            <input type="text" name="search" id="companyNameFilter" class="form-control" placeholder="Search by Name" value="<%= @company_name ? @company_name : "" %>">
+          </div>
+          <div class="col-3 mx-1 filter-width-reporting-year">
+            <%= select_tag :selected_year, options_for_select((Date.today.year.downto(Date.today.year - 2)).to_a, @search_year), prompt: "Filter by Reporting year", id: "year-picker", class: "form-control select-year-font" %>
+          </div>
+          <div class="col-1 mx-1" style="width: auto">
+            <%= button_tag "Apply", class: "btn btn-md btn-primary", id: "apply-filter" %>
+          </div>
+          <div class="col-1 mx-1">
+            <%= button_tag "Clear", class: "btn btn-md btn-secondary", id: "clear-filter" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+        <li class="nav-item lh-1" style="margin-left: 10px">
+          <div class="add-company-button" style="display: <%= @tab == 0 ? 'none' : '' %>;">
+              <%= button_tag "Add Company", class: "btn btn-primary", id: "add_company" %>
+          </div>
+        </li>
+    </ul>
+  </div>
+</div>
+<div class="card">
+  <div class="tab-content">
+    <div id="navs-analyst-all-company" class="tab-pane fade <%= @tab == 0 ? 'show active' : '' %>">
+      <div id="company-list" class="company-data-append table-responsive text-nowrap set-height">
+        <%= render 'analyst/analyst_data_collection/data_collection_user_table', company_detail: @company_detail %>
+      </div>
+    </div>
+    <div id="navs-analyst-my-company" class="tab-pane fade <%= @tab == 1 ? 'show active' : '' %>">
+      <div id="company-my-list" class="company-data-append table-responsive text-nowrap set-height">
+        <%= render 'analyst/analyst_data_collection/data_collection_user_table', company_detail: @company_detail %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAssign" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to assign?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="assign_button">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAddCompany" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+        <h5 class="modal-title add-company-text">Add Company</h5>
+      </div>
+      <div class="modal-body">
+      <button type="button" class="btn-close float-right create-cookies" style="box-shadow: revert;position: relative; bottom: 36px; right: 15px" data-bs-dismiss="modal" aria-label="Close"></button>
+        <%= form_tag(analyst_data_collection_company_creation_path, multipart: true, id: "cii_data_collection_user") do %>
+          <div class="mb-3">
+            <label class="form-label">ISIN Number</label>
+            <%= text_field_tag :company_isin_number, nil, class: "form-control", placeholder: "Enter company isin number", autocomplete: 'off' %>
+            <label id="isin_error_text" class="" for="user_company_isin_number" style="display: none; color: #ff3e1d; font-size: 85%; margin-top: 0.25rem;">Company
+              ISIN number already exists</label>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Company Name <span class="text-danger fs-6">*</span></label>
+            <%= text_field_tag :company_name, nil, class: "form-control mandatory-field", placeholder: "Enter company name", id: "company_name_field" %>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Sector <span class="text-danger fs-6">*</span></label>
+            <%= select_tag :company_sector, options_for_select(Sector.all.map { |sector| [sector.sector_name, sector.sector_name] }), include_blank: "Select sector", class: "form-control form-select mandatory-field", id: "company_sector_field" %>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Upload BRSR Report</label>
+            <%= file_field_tag "pdffile", class: "form-control ", accept: "application/pdf,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.jpg,.jpeg,.png" %> 
+            <div class="pdf-img d-none" style="margin-top:10px">
+            <span class="file-name" style="font-size:15px"></span>
+            </div>
+            <%= text_field_tag :company_id, nil, class: "form-control d-none", id: 'companydetails_id' %>
+          </div>
+          <div class="mb-3">
+          <label class="form-label">Select Reporting Year <span class="text-danger fs-6">*</span></label>
+          <%= select_tag :selected_year, options_for_select((Date.today.year.downto(Date.today.year - 2)).to_a, @search_year), prompt: "Select Year", id: "selected-year-company", class: "form-control form-select mandatory-field" %>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Select Analyst <span class="text-danger fs-6">*</span></label>
+          <% current_user_name = "#{current_user.first_name} #{current_user.last_name}" %>
+          <% current_user_id = current_user.id %>
+          <input type="text" value="<%= current_user_name %>" class="form-control mandatory-field form-select" readonly>
+          <input type="hidden" name="analyst_user_id" value="<%= current_user_id %>">
+        </div>
+          <input type="hidden" id="page_num" name="page_num" value="<%= @page %>">
+          <input type="hidden" id="page_tab" name="page_tab" value="<%= @tab %>">
+          <input type="hidden" id="hidden_company_name" name="hidden_company_name" value="">
+          <input type="hidden" id="hidden_company_sector" name="hidden_company_sector" value="">
+          <div class="modal-footer" style="justify-content: center !important">
+            <button type="submit" class="btn btn-primary save-company" data-value="Submit" id="add_company_submit">Submit</button>
+            <button type="button" class="btn btn-secondary company-cancel" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="multipleCompanyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 31%" role="document">
+    <div class="modal-content" style="border-radius: 12px;">
+      <div class="modal-body" style="font-size: 17px;">
+      <button type="button" class="btn-close float-right confirmNo" style="box-shadow: revert;position: relative; top: 12px; right: 12px" data-bs-dismiss="modal" aria-label="Close"></button>
+        Multiple entries exist on the CII data collection dahsboard with similar names and same sector. Please select yes to create a new entry. Review and management of duplicate companies is recommended on the dashboard.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary create_new_company_yes" id="company_yes">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 31%" role="document">
+    <div class="modal-content" style="border-radius: 12px;">
+      <div class="modal-body" style="font-size: 17px;">
+      <button type="button" class="btn-close float-right confirmNo" style="box-shadow: revert;position: relative; top: 12px; right: 12px" data-bs-dismiss="modal" aria-label="Close" ></button>
+         This company's details already exist in the system. Please select yes to create a new entry. Select No to cancel the Form?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary create_new_company_yes" id="create_new_company_yes">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="confirmYes">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to delete this company?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmDeleteButton">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 pagination-alignments">
+    <%= will_paginate @company_detail %>
+</div>
+
+<script>
+    var year_value = `<%= params[:year] %>`
+    $(document).on('turbolinks:load', function () {
+        $('#modalAddCompany').modal({ backdrop: 'static', keyboard: false });
+        $('#confirmationModal').modal({ backdrop: 'static', keyboard: false });
+        var tabIndex = "<%= @tab %>";
+        if (tabIndex === "1") {
+          $('#analyst-company-info').tab('show');
+        } else {
+          $('#all-company-info').tab('show');
+        }
+
+        $('#all-company-info').on('click', function() {
+          document.getElementById("loader-wrapper").style.display = "block";
+          $('.card').css('filter','blur(4px)');
+          fetchCompanies(false);
+          let activeTab = $(".nav-link.active").attr("data-bs-target");
+          let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+          window.location.replace("<%= analyst_data_collection_path %>?tab=" + tabIndex);
+        });
+        $('#analyst-company-info').on('click', function() {
+          document.getElementById("loader-wrapper").style.display = "block";
+          $('.card').css('filter','blur(4px)');
+          fetchCompanies(true);
+          let activeTab = $(".nav-link.active").attr("data-bs-target");
+          let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+          window.location.replace("<%= analyst_data_collection_path %>?tab=" + tabIndex);
+        });
+
+        function fetchCompanies(myCompanies) {
+          const url = myCompanies ? '<%= analyst_data_collection_path(my_companies: true) %>' : '<%= analyst_data_collection_path %>';
+
+          $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'script',
+            success: function(data) {
+              $('.company-data-append').html(data);
+            },
+            error: function(err) {
+              console.error('Error fetching companies:', err);
+            }
+          });
+        }
+        $("#analyst_id, #assign").attr('disabled', 'disabled');  
+        $(document).on("click", "#clear-filter", function (event) {
+            event.stopPropagation();
+            let activeTab = $(".nav-link.active").attr("data-bs-target"); 
+            let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+            window.location.replace("<%= analyst_data_collection_path %>?tab=" + tabIndex);
+        });
+
+        $(document).on("click", "#apply-filter", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").hide();
+
+            applyFilter(event);
+        });
+
+        $(document).on("change", "#multi-select", function (event) {
+            event.stopPropagation();
+
+            if ($(this).is(':checked')) {
+                $(".multi-select:checkbox:not(:disabled)").prop('checked', true);
+            } else {
+                $(".multi-select:checkbox:not(:disabled)").prop('checked', false);
+            }
+
+            getCheckedIds();
+        });
+
+        $(document).on("change", ".multi-select", function (event) {
+            event.stopPropagation();
+
+            getCheckedIds();
+        });
+
+        function applyFilter(event) {
+            event.preventDefault();
+
+            $(".filter-container").hide();
+            $("#analyst_id, #assign").attr('disabled', 'disabled');
+            $("#analyst_id").val('');
+
+            let sectorIds = [];
+            let companyName = $("#companyNameFilter").val();
+            let searchYear = $("#year-picker").val();
+            let activeTab = $(".nav-link.active").attr("data-bs-target"); // Get the currently active tab
+            let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0; // Determine tab index
+            $(".sector-checkbox:checkbox:checked").each(function () {
+                sectorIds.push(this.value);
+            });
+            sectorIds = sectorIds.map(encodeURIComponent).join(',');
+            window.location.replace("<%= analyst_data_collection_path %>?sector_ids=" + sectorIds + "&companyName=" + companyName + "&year=" + searchYear + "&tab=" + tabIndex);
+        }
+
+    });
+
+    $(document).ready(function(){
+      $("#analyst-company-info").click(function(){
+          $(".add-company-button").show();
+      });
+        $("#all-company-info").click(function(){
+          $(".add-company-button").hide();
+      });
+    });
+
+    $(document).ready(function() {
+        $(document).on("click", ".filter-icon", function (event) {
+            event.stopPropagation();
+            $(".filter-container").toggle();
+        });
+    });
+    $('#add_company').click(function() {
+      var $submitButton = $('#add_company_submit');
+      $submitButton.prop('disabled', true);
+      $('#companydetails_id').val('')
+      $('#company_name_field').val('')
+      $('#company_isin_number').val('')
+      $('#company_sector_field').val('')
+      $('#analyst_user_id').val('')
+      $('.add-company-text').text('Add Company')
+      $('.pdf-img').addClass('d-none')
+      $('.save-company').text('Submit')
+      $('#add_company_submit').attr('data-value', 'Submit');
+      $('#selected-year-company').val("");
+      $('#modalAddCompany').modal('show');
+    });
+    function editCompany(e){
+      var $submitButton = $('#add_company_submit');
+      $submitButton.prop('disabled', false);
+      $.ajax({
+  		type: "GET",
+  		url: "analyst_data_collection/fetch_companydata",
+      data: {company_id: e},
+  		success: function (result) {
+        $("#pdffile").prop("required", false);
+        $('#companydetails_id').val(result.company_data.id)
+        $('#company_name_field').val(result.company_data.company_name)
+        $('#company_isin_number').val(result.company_data.company_isin_number)
+        $('#company_sector_field').val(result.company_data.company_sector)
+        $('#analyst_user_id').val(result.company_data.analyst_user_id)
+        $('#selected-year-company').val(result.company_data.selected_year);
+        $('.file-name').text(result.filename)
+        if(result.filename != null){
+          $('.pdf-img').removeClass('d-none')
+        }
+        $('.save-company').text('Update')
+        $('.add-company-text').text('Update Company')
+        $('#hidden_company_name').val(result.company_data.company_name);
+        $('#hidden_company_sector').val(result.company_data.company_sector);
+        $('#add_company_submit').attr('data-value', 'Update');
+        $('#modalAddCompany').modal('show');
+  		}
+  		});
+    }
+
+    function deleteCompany(e){
+      $('#confirmDeleteButton').data('company-id', e);
+      $('#deleteConfirmationModal').modal('show');
+    }
+
+    $('#confirmDeleteButton').click(function() {
+      var companyId = $(this).data('company-id');
+      $.ajax({
+        type: "DELETE",
+        url: "analyst_data_collection/destroy",
+        data: { company_id: companyId },
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        },
+        data: { company_id: companyId },
+        success: function (result) {
+          $('#deleteConfirmationModal').modal('hide');
+        }
+      });
+    });
+
+  if (year_value != "") {
+      $('.select-year-font').css("color", "black")
+  };
+
+$(document).ready(function() {
+  var $form = $('#cii_data_collection_user');
+  var $companyNameField = $('#company_name_field');
+  var $companySectorField = $('#company_sector_field')
+  var $confirmationModal = $('#confirmationModal');
+  var $multipleCompanyModal = $('#multipleCompanyModal');
+  var $addCompanyModal = $('#modalAddCompany');
+  var $submitButton = $('#add_company_submit');
+  var $mandatoryFields = $('.mandatory-field');
+  var $companydetailsIdField = $('#companydetails_id');
+  var $companyCancel = $('.company-cancel');
+  var $hiddenCompanyName = $('#hidden_company_name')
+  var $hiddenCompanySector = $('#hidden_company_sector')
+
+  function checkMandatoryFields() {
+    var allFilled = true;
+    $mandatoryFields.each(function() {
+      if ($(this).val() === '') {
+        allFilled = false;
+        return false; 
+      }
+    });
+    $submitButton.prop('disabled', !allFilled);
+  }
+  $mandatoryFields.on('input', checkMandatoryFields);
+  checkMandatoryFields();
+  $form.on('submit', function(event) {
+    event.preventDefault();
+
+   var buttonText = $('#add_company_submit').attr('data-value').trim();
+    if (buttonText === "Submit" || buttonText === "Update") {
+      var companyName = $companyNameField.val().replace(/\s+/g, '');
+      var companySector = $companySectorField.val().replace(/\s+/g, '');
+      var hiddenCompanyName = $hiddenCompanyName.val().replace(/\s+/g, '');
+      var hiddenCompanySector = $hiddenCompanySector.val().replace(/\s+/g, '');
+      if (companyName === hiddenCompanyName && companySector === hiddenCompanySector) {
+        $form.off('submit').submit();
+      } else {
+        var companyNameExist = $companyNameField.val();
+        var companySectorExist = $companySectorField.val();
+        $.ajax({
+          url: '<%= analyst_data_collection_company_exists_path %>',
+          method: 'GET',
+          data: { company_name: companyNameExist, company_sector: companySectorExist, buttonText: buttonText, company_id: $companydetailsIdField.val() },
+          success: function(data) {
+              if (data.exists) {
+                $confirmationModal.modal('show');
+                $addCompanyModal.addClass('modal-blur');
+                $("#company_isin_number").blur(); 
+                $("#confirmYes").data('id', data.id)
+              } else if (data.multiple){
+                $multipleCompanyModal.modal('show');
+                $addCompanyModal.addClass('modal-blur');
+                $("#company_isin_number").blur();
+              } else {
+                $submitButton.prop('disabled', true);
+                $companyCancel.prop('disabled', true);
+                $form.off('submit').submit();
+              }
+          },
+          error: function() {
+            console.error('Error checking company name');
+          }
+        });
+    }
+  } else {
+      $form.off('submit').submit();
+      $submitButton.prop('disabled', true);
+      $companyCancel.prop('disabled', true);
+  }
+  });
+
+  $('#confirmYes').on('click', function() {
+   location.reload();
+  });
+
+  $('.confirmNo').on('click', function() {
+    $confirmationModal.modal('hide');
+    $addCompanyModal.removeClass('modal-blur');
+    $addCompanyModal.modal('show');
+  });
+
+  $('.create_new_company_yes').on('click', function() {
+    var $yesButton = $('.create_new_company_yes');
+    $companydetailsIdField.val("")
+    $form.off('submit').submit();
+    $yesButton.prop('disabled', true);
+  });
+});
+
+function debounce(func, wait) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+$(document).ready(function() {
+		$(document).on('click', function(event) {
+			var $dropdown = $('#dropdownFilter');
+			if (!$dropdown.is(event.target) && $dropdown.has(event.target).length === 0) {
+				var $dropdownMenu = $dropdown.find('.dropdown-menu');
+				if ($dropdownMenu.hasClass('show')) {
+					$dropdownMenu.removeClass('show');
+				}
+			}
+		});
+
+		$('#sectorFilter').on('click', function(event) {
+			event.stopPropagation();
+			var $dropdownMenu = $('#dropdownFilter .dropdown-menu');
+			$dropdownMenu.toggleClass('show');
+		});
+});
+</script>

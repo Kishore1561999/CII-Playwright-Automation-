@@ -1,0 +1,342 @@
+<% content_for :title, "Manage ESG Publications | Premium Subscription Upload" %>
+<% content_for :description, "Effortlessly manage and update ESG publications with premium subscription access. Keep your PDFs current and maintain content with ease." %>
+<style type="text/css">
+  input {
+    cursor: pointer;
+  }
+  
+  input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
+</style>
+
+<div class="pb-4">
+    <div class="navbar-nav-right d-flex align-items-center">
+        <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center">
+        <div class="col-12 d-flex">
+        <div class="col-4 mx-1 filter-width-publication">
+            <input type="text" name="search" id="companyNameFilter" class="form-control date-filter-text" placeholder="Search by Name" value="<%= @company_name ? @company_name : "" %>">
+        </div>
+        <div class="col-3 mx-1 filter-width-publication">
+            <input type="date" class="form-control date-filter-text" id="year-picker" data-placeholder="Select a date" style="cursor: text;" webkitdirectory />
+        </div>
+        <div class="col-1 mx-1" style="width: auto">
+            <%= button_tag "Apply", class: "btn btn-md btn-primary", id: "apply-filter" %>
+        </div>
+        <div class="col-3 mx-1">
+            <%= button_tag "Clear", class: "btn btn-md btn-secondary", id: "clear-filter" %>
+        </div>
+        </div>
+            </div>
+        </div>
+        <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <li class="nav-item lh-1" style="margin-left: 6px; margin-right: 6px;">
+                <div class="add-company-button">
+                <%= button_tag "Upload", class: "btn btn-primary", id: "add_company" %>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="card">
+<div class="tab-content">
+	<div class="table-responsive text-nowrap set-height" id="users-table">
+		<%= render 'service/cii_publication/publication_user_table', publications: @company_users %>
+	</div>
+</div>
+</div>
+
+<div class="modal fade" id="modalPublicationDelete" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="alert alert-danger alert-dismissible" role="alert"></div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this file?</p>
+        <input type="hidden" id="delete_user_id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="delete_button">Yes</button>
+        <button type="button" class="btn btn-secondary" id="delete_cancel" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAddPublication" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+        <h5 class="modal-title add-company-text">Add Publication</h5>
+      </div>
+      <div class="modal-body">
+        <%= form_tag(publication_creation_path, multipart: true, id: "publication_creation") do %>
+          <div class="mb-3">
+            <label class="">Title<span class="text-danger fs-6">*</span></label>
+            <%= text_field_tag :company_name, nil, class: "form-control mandatory-field", placeholder: "Enter the title", id: "publication_title_field" %>
+          </div>
+          <div class="mb-3">
+            <%= file_field_tag "pdffile", class: "form-control mandatory-field", accept: "application/pdf,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.jpg,.jpeg,.png" %>
+            <div class="pdf-img d-none" style="margin-top:10px">
+            <span class="file-name" style="font-size:15px"></span>
+            </div>
+          </div>
+          <div class="modal-footer" style="justify-content: center !important; padding: 0">
+            <button type="submit" class="btn btn-primary save-company" data-value="Submit" id="add_company_submit">Submit</button>
+            <button type="button" class="btn btn-secondary company-cancel" data-bs-dismiss="modal" id="publication_cancel">Cancel</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 pagination-alignments">
+    <%= will_paginate @company_users %>
+</div>
+
+<script>
+  var year_value = `<%= params[:year] %>`
+    $(document).on('turbolinks:load', function () {
+        $(".alert-dismissible").hide();  
+        $('#modalAddPublication').modal({ backdrop: 'static', keyboard: false });
+
+        $(document).on("click", "#clear-filter", function (event) {
+            event.stopPropagation();
+            window.location.replace("<%= publication_admin_dashboard_path %>");
+        });
+
+        $(document).on("click", "#apply-filter", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").hide();
+
+            applyFilter(event);
+        });
+
+        $(document).on("change", "#multi-select", function (event) {
+            event.stopPropagation();
+
+            if ($(this).is(':checked')) {
+                $(".multi-select:checkbox:not(:disabled)").prop('checked', true);
+            } else {
+                $(".multi-select:checkbox:not(:disabled)").prop('checked', false);
+            }
+
+            getCheckedIds();
+        });
+
+        $(document).on("change", ".multi-select", function (event) {
+            event.stopPropagation();
+
+            getCheckedIds();
+        });
+
+        $(document).on("change", "#analyst_id", function (event) {
+            event.stopPropagation();
+
+            analystId = Number($(this).val());
+
+            getCheckedIds();
+        });
+
+        $(document).on("click", ".delete_button", function (event) {
+            event.stopPropagation();
+
+            $("#delete_user_id").val(this.name);
+        });
+
+        $(document).on("click", ".approve_button", function (event) {
+            event.stopPropagation();
+
+            $("#approve_basic_user_id").val($(this).val());
+        });
+
+        $(document).on("click", ".reject_button", function (event) {
+            event.stopPropagation();
+
+            $("#reject_basic_user_id").val($(this).val());
+        });
+        
+        $(document).on("click", "#delete_button", function (event) {
+          event.stopPropagation();
+
+          let user_id = $("#delete_user_id").val();
+          let $deleteButton = $(this);
+          let $cancelButton = $("#delete_cancel")
+          $cancelButton.prop("disabled", true);
+          $deleteButton.prop("disabled", true);
+
+          $.ajax({
+              type: "DELETE",
+              url: '/service/cii_publication/destroy',
+              data: { user_id: user_id },
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+              },
+              processData: true,
+              success: function (data) {
+                  $("#modalDelete").hide();
+                  location.reload()
+              },
+              error: function (err) {
+                  $(".alert-dismissible").html("Unable to delete.").show().delay(3000).fadeOut(300);
+                  $deleteButton.prop("disabled", false);
+                }
+            });
+        });
+
+        function getCheckedIds() {
+            let totalCheckboxes = $('.multi-select:checkbox').length;
+            let checkedCheckboxes = $('.multi-select:checkbox:checked').length;
+            selectedCompanyUserIds = [];
+
+            if (totalCheckboxes == checkedCheckboxes) {
+                $("#multi-select" + this.id).prop('checked', true);
+            } else {
+                $("#multi-select" + this.id).prop('checked', false);
+            }
+
+            if (checkedCheckboxes == 0) {
+                $("#analyst_id").attr('disabled', 'disabled');
+            } else {
+                $("#analyst_id").removeAttr('disabled');
+            }
+
+            if (checkedCheckboxes == 0 || analystId == 0) {
+                $("#assign").attr('disabled', 'disabled');
+            } else {
+                $("#assign").removeAttr('disabled');
+            }
+
+            $(".multi-select:checkbox:checked").each(function () {
+                selectedCompanyUserIds.push(Number(this.value));
+            });
+        }
+
+        function applyFilter(event) {
+            event.preventDefault();
+
+            $(".filter-container").hide();
+            $("#analyst_id, #assign").attr('disabled', 'disabled');
+            $("#analyst_id").val('');
+
+            let companyName = $("#companyNameFilter").val();
+            let searchYear = $("#year-picker").val();
+            $(".sector-checkbox:checkbox:checked").each(function () {
+                sectorIds.push(Number(this.value));
+            });
+            window.location.replace("<%= publication_admin_dashboard_path %>?companyName="+companyName+"&year="+searchYear)
+        }
+
+        function setDateFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const year = params.get('year');
+            if (year) {
+                $("#year-picker").val(year);
+            }
+        }
+
+        // Call the function on page load
+        $(document).ready(function() {
+            setDateFromURL();
+        });
+
+    });
+
+    $(document).ready(function() {
+
+        $(document).on("click", ".filter-icon", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").toggle();
+        });   
+    });
+
+    $('#add_company').click(function() {
+      var $submitButton = $('#add_company_submit');
+      $submitButton.prop('disabled', true);
+      $('#publication_title_field').val('')
+      $('.pdf-img').addClass('d-none')
+      $('.save-company').text('Submit')
+      $('#modalAddPublication').modal('show');
+    });
+
+    if (year_value != "") {
+      $('.select-year-font').css("color", "black")
+    }; 
+
+    $(document).on('click', '[data-bs-toggle="modal"]', function () {
+      var userId = $(this).data('user-id');
+      $('#company_user_id').val(userId);
+    });
+
+    $('#modalEditCompany').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); 
+      var companyIsin = button.data('company-isin');
+      var companyName = button.data('company-name');
+      var companySector = button.data('company-sector');
+
+      var modal = $(this);
+      modal.find('#company_isin_number').val(companyIsin);
+      modal.find('#publication_title_field').val(companyName);
+      modal.find('#company_sector').val(companySector).change();
+    });
+
+$(document).ready(function() {
+  var $form = $('#publication_creation');
+  var $companyNameField = $('#publication_title_field');
+  var $submitButton = $('#add_company_submit');
+  var $mandatoryFields = $('.mandatory-field');
+  var $companyCancel = $('.company-cancel');
+
+  function checkMandatoryFields() {
+    var allFilled = true;
+    $mandatoryFields.each(function() {
+      if ($.trim($(this).val()) === '') {
+        allFilled = false;
+        return false; 
+      }
+    });
+    $submitButton.prop('disabled', !allFilled);
+  }
+  $mandatoryFields.on('input', checkMandatoryFields);
+  checkMandatoryFields();
+  $form.on('submit', function(event) {
+    var companyName = $.trim($companyNameField.val());
+    if (companyName === '') {
+      event.preventDefault();
+      alert('Title Name cannot be empty or just spaces.');
+      return false;
+    }
+    $form.off('submit').submit();
+    var $submitButton = $('#add_company_submit');
+    $submitButton.prop('disabled', true);
+     $('#publication_cancel').prop('disabled', true)
+     $('#modalAddPublication').modal('hide');
+    showLoader()
+  });
+});
+
+function debounce(func, wait) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+function showLoader() {
+    document.getElementById("loader-wrapper").style.display = "block";
+    $('.card').css('filter','blur(4px)');
+  }
+function hideLoader() {
+    document.getElementById("loader-wrapper").style.display = "none";
+    $('.card').css('filter','blur(0px)');
+}
+
+
+</script>

@@ -1,0 +1,3 @@
+class EsgLearning < ApplicationRecord
+   
+end

@@ -1,0 +1,124 @@
+Starting Step 3: Company User Login & Assessment
+Waiting for instructions modal (#modalInstructions)...
+Instructions modal visible, clicking close button...
+Instructions modal closed and hidden.
+Checking if aspect link exists...
+Aspect link count: 1
+Clicking aspect link...
+Aspect link clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Clicking aspect next button...
+Aspect next button clicked.
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Radio button checked status: true
+Assessment workflow completed. Cleanup/deletion will be handled by separate delete_user.spec.js

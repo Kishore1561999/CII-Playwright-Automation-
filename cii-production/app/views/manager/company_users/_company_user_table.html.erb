@@ -1,0 +1,128 @@
+<table class="table table-hover">
+	<thead class="sticky-top" style="background-color:#fff;">
+    <tr class="text-nowrap">
+      <th><input type="checkbox" class="form-check-input" id="multi-select"></th>
+      <th>ISIN</th>
+      <th>Company Name</th>
+      <th class="text-center">Sector</th>
+      <th>Approval</th>
+      <th class="text-center">Status</th>
+      <th>Analyst Assigned</th>
+      <th class="text-center">Assessment</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+    <% if company_users.length > 0 %>
+      <% company_users.each do |company_user| %>
+        <% has_assessment_status = (ApplicationRecord::ASSESSMENT_STATUS.include?(company_user.user_status)) ? true : false %>
+			<% has_checkbox_disable_status = (ApplicationRecord::CHECKBOX_DISABLE_STATUS.include?(company_user.user_status)) ? true : false %>
+			<% has_score = CompanyScore.where(company_user_id: company_user.id).count %>
+        <tr>
+          <td><%= check_box_tag "", company_user.id, false, { class: "form-check-input multi-select checkBoxId_#{company_user.id}", disabled: !has_assessment_status || has_checkbox_disable_status  } %></td>
+          <td><%= company_user.company_isin_number %></td>
+          <% company_name = company_user.company_name.match(/\s/) ? "break" : "no-break" %>
+			<% if company_name == "break" %>
+			  <td class="text-wrap"><strong id="companyNameId_<%= company_user.id %>"><%= "#{company_user.company_name}" %></strong></td>
+			<% else %>
+			  <td><strong id="companyNameId_<%= company_user.id %>"><%= "#{company_user.company_name}" %></strong></td>
+			<% end %>
+			<% company_sector = company_user.company_sector.match(/\s/) ? "break" : "no-break" %>
+			<% if company_sector == "break" %>
+			  <td class="text-wrap text-center"><%= "#{company_user.company_sector}" %></td>
+			<% else %>
+			  <td class="text-center"><%= "#{company_user.company_sector}" %></td>
+			<% end %>
+          <td class="text-center">
+            <% if company_user.approved == ApplicationRecord::TRUE %>
+              <span class="badge bg-success p-1" ><i class='bx bx-check fs-4'></i></span>
+            <% elsif company_user.approved == ApplicationRecord::FALSE %>
+              <span class="badge bg-danger p-1"><i class='bx bx-x fs-4'></i></span>
+            <% else %>
+              <button type="button" value="<%= company_user.id %>" class="btn btn-xs btn-success approve_button" data-bs-toggle="modal" data-bs-target="#modalApprove"><i class='bx bx-check fs-4'></i></button>
+              <button type="button" value="<%= company_user.id %>" class="btn btn-xs btn-danger reject_button" data-bs-toggle="modal" data-bs-target="#modalReject"><i class='bx bx-x fs-4'></i></button>
+            <% end %>
+          </td>
+          <td id="user_status_id_<%= company_user.id %>"><%= company_user.user_status %></td>
+          <td><%= assigned_analyst(company_user.id) %></td>
+          <td>
+						<div class="dropdown text-center" style=" display: inline-block;">
+							<button type="button" class="btn btn-sm btn-primary <% if !has_assessment_status %>disabled<% end %>" data-bs-toggle="dropdown" title="View response" aria-expanded="false">
+								<i class="bx bx-show me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+							</button>
+							<div class="dropdown-menu">
+								<%= link_to manager_view_assessment_path(company_user.id, ApplicationRecord::CII_USER), class: "dropdown-item" do %>
+									<i class="bx bx-show me-1" style="font-size: 1rem;margin: 0.125rem;"></i> CII user response
+								<% end %>
+								<%= link_to manager_view_assessment_path(company_user.id, ApplicationRecord::COMPANY_USER), class: "dropdown-item" do %>
+									<i class="bx bx-show me-1" style="font-size: 1rem;margin: 0.125rem;"></i> Company user response
+								<% end %>
+							</div>
+						</div>
+						<%= link_to "#", id: company_user.id, class: "btn btn-sm btn-primary score_button score_button_id_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_QC_COMPLETED == company_user.user_status ? (has_score > 0 ? 'disabled' : '') : 'disabled')}", title: "Generate score", 'data-bs-toggle': "modal", 'data-bs-target': "#modalScore" do %>
+              <i class="bx bx-medal me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+            <% end %>
+						<%#= link_to "#", class: "btn btn-sm btn-primary wReportButtonId_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_SCORE_GENERATED == company_user.user_status ? (has_score > 0 ? '' : 'disabled') : 'disabled')}", title: "Generate Template" do %>
+<!--              <i class="bx bx-bar-chart-alt-2 me-1" style="font-size: 1rem;margin: 0.125rem;"></i>-->
+            <%# end %>
+						<%= link_to has_assessment_status ? upload_chart_path(company_user.id) : "#", class: "btn btn-sm btn-primary wReportButtonId_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_SCORE_GENERATED == company_user.user_status ? (has_score > 0 ? '' : 'disabled') : 'disabled')}", title: "Generate Template" do %>
+							<i class="bx bx-bar-chart-alt-2 me-1" style="font-size: 1rem;margin: 0.125rem;"></i>
+						<% end %>
+						<%= link_to "#", id: "#{company_user.id}", class: "btn btn-sm btn-primary setfileUploadCuId fileUploadBtnId_#{company_user.id} #{(ApplicationRecord::ASSESSMENT_SCORE_GENERATED == company_user.user_status ? (has_score > 0 ? '' : 'disabled') : 'disabled')}", title: "Upload report", 'data-bs-toggle': "modal", 'data-bs-target': "#modalFileupload"  do %>
+							<i class="bx bx-upload" style="font-size: 1rem;margin: 0.125rem;"></i>
+						<% end %>
+            <%= link_to "#", class: "btn btn-sm btn-primary send-admin-btn send-comment #{!has_assessment_status ? 'disabled' : ''}", id: "#{company_user.id}", title: "Comments", 'data-bs-toggle': "modal", 'data-bs-target': "#modalComment" do %>
+                <i class="bx bx-comment-detail" style="font-size: 1rem;margin: 0.125rem;"></i>
+            <% end %>
+          </td>
+          <td>
+            <div class="dropdown text-center">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                <i class="bx bx-dots-vertical-rounded"></i>
+              </button>
+              <div class="dropdown-menu">
+								<% attachment = Report.find_by(company_user_id: company_user.id) %>
+								<% if !attachment.nil? && attachment.analyst_report.attachments.present? %>
+									<%= link_to rails_blob_path(attachment&.analyst_report, disposition: "attachment"), class: "dropdown-item #{(ApplicationRecord::REPORT_DOWNLOAD_ENABLE_STATUS.include?(company_user.user_status)) ? '' : 'disabled'}", title: "download report" do %>
+										<i class="bx bxs-download me-1"></i> Download Report
+									<% end %>
+								<% else %>
+									<%= link_to "#", class: "dropdown-item disabled" do %>
+										<i class="bx bxs-download me-1"></i> Download Report
+									<% end %>
+								<% end %>
+
+								<% if has_score > 0 %>
+									<a href="#" class="dropdown-item downloadCiiReport" id="<%= company_user.id %>"><i class="bx bxs-download me-1"></i>
+										Download Score Card</a>
+								<% else %>
+									<%= link_to "#", class: "dropdown-item disabled ciiReportButtonId_#{company_user.id}" do %>
+										<i class="bx bxs-download me-1"></i> Download Score Card
+									<% end %>
+								<% end %>
+                <%= link_to manager_company_user_path(company_user.id), class: "dropdown-item" do %>
+                  <i class="bx bx-show me-1"></i> View
+                <% end %>
+                <!--<% if !company_user.is_rejected? %>
+                  <%= link_to edit_manager_company_user_path(company_user.id), class: "dropdown-item" do %>
+                    <i class="bx bx-edit-alt me-1"></i> Edit
+                  <% end %>
+                <% end %>
+                <%= link_to "#", class: "dropdown-item delete_button", 'data-bs-toggle': "modal", 'data-bs-target': "#modalDelete", name: company_user.id do %>
+                  <i class="bx bx-trash me-1"></i> Delete
+                <% end %>-->
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="9" class="text-center">No data available!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @company_users %>
+

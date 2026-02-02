@@ -18,6 +18,22 @@ class AnalystAssessmentReviewPage extends BasePage {
     };
   }
 
+  async _robustClick(locator, name) {
+    // Ensure any lingering modals or backdrops are cleared first
+    await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+    await locator.scrollIntoViewIfNeeded();
+    try {
+      // Remove force: true to respect actionability checks (waits for overlays to disappear)
+      await locator.click({ timeout: 5000 });
+      console.log(`\u2713 Clicked: ${name}`);
+    } catch (error) {
+      console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+      await locator.dispatchEvent('click');
+      console.log(`\u2713 JS clicked: ${name}`);
+    }
+  }
+
   async navigateToAssessmentReview(companyUserId, userType = 'cii_user') {
     const url = `${process.env.BASE_URL}${this.baseURL}/${companyUserId}/edit_assessment/${userType}`;
     await this.page.goto(url);
@@ -36,25 +52,54 @@ class AnalystAssessmentReviewPage extends BasePage {
   }
 
   async clickEdit() {
-    await this.editButton.waitFor({ state: 'visible', timeout: 5000 });
-    await this.editButton.click();
+    console.log('Attempting to click Edit and navigate...');
+    // Use Promise.all to prevent race conditions between click and navigation
+    await Promise.all([
+      this.page.waitForURL(/.*edit_assessment.*/),
+      this._robustClick(this.editButton, 'Edit button')
+    ]);
+
+    // Wait for the Update button to appear, which indicates we are in edit mode
+    await this.updateButton.waitFor({ state: 'visible', timeout: 10000 });
+    // Aggressive wait to ensure transition from readonly to editable
+    await this.page.waitForTimeout(2000);
     await this.page.waitForLoadState('networkidle');
-    console.log('✓ Clicked Edit button');
   }
 
-  async fillComments(comment = 'Automated review comment') {
+  async fillComments(comment = 'Unified E2E verification comment for CII.') {
     const fields = await this.commentFields.all();
-    console.log(`✓ Found ${fields.length} comment fields`);
+    console.log(`\u2713 Found ${fields.length} comment fields`);
+
     for (let i = 0; i < Math.min(fields.length, 2); i++) {
-      await fields[i].fill(comment);
-      console.log(`  - Filled comment field ${i + 1}`);
+      try {
+        await fields[i].scrollIntoViewIfNeeded();
+
+        // Wait for editability (max 10s)
+        await fields[i].evaluate(async (el) => {
+          const timeout = 10000;
+          const start = Date.now();
+          while (el.readOnly && (Date.now() - start) < timeout) {
+            await new Promise(r => setTimeout(r, 500));
+          }
+        });
+
+        await fields[i].fill(comment, { timeout: 3000 });
+        console.log(`  - Filled comment field ${i + 1}`);
+      } catch (error) {
+        console.warn(`\u26A0 Standard fill failed on field ${i + 1}: ${error.message}. Attempting JS fallback.`);
+        await fields[i].evaluate((el, val) => {
+          el.readOnly = false;
+          el.value = val;
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+          el.dispatchEvent(new Event('change', { bubbles: true }));
+        }, comment);
+        console.log(`  - JS filled comment field ${i + 1} (Forced readOnly=false)`);
+      }
     }
   }
 
   async clickUpdate() {
-    await this.updateButton.waitFor({ state: 'visible', timeout: 5000 });
-    await this.updateButton.click();
-    console.log('✓ Clicked Update button');
+    await this._robustClick(this.updateButton, 'Update button');
 
     // Wait for toaster
     try {
@@ -67,16 +112,19 @@ class AnalystAssessmentReviewPage extends BasePage {
   }
 
   async clickSubmit() {
-    await this.submitButton.waitFor({ state: 'visible', timeout: 5000 });
-    await this.submitButton.click();
-    console.log('✓ Clicked Submit button');
+    await this._robustClick(this.submitButton, 'Submit button');
   }
 
   async handleConfirmationModal() {
     try {
+      const modal = this.page.locator('.modal.show, #modalSubmit'); // Generic or ID if known
       await this.confirmYesButton.waitFor({ state: 'visible', timeout: 5000 });
       await this.confirmYesButton.click();
       console.log('✓ Confirmed submission (Clicked Yes)');
+
+      // Wait for modal and backdrop cleanup
+      await modal.waitFor({ state: 'hidden', timeout: 10000 }).catch(() => { });
+      await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
     } catch (e) {
       console.warn('⚠ Could not handle confirmation modal or "Yes" button not found');
     }

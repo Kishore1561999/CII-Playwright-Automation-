@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body style="background: #eeeeee; font-family: Arial, Helvetica, sans-serif;">
+  	<div style="background: #fefefe; width: 70%; margin: 0 auto; line-height: 2rem">
+      <div style="padding: 20px;" align="center">
+        <div style="margin-left:-7px; border-collapse:collapse;">
+          <table cellspacing="0" style="border-collapse:collapse; width:638px;">
+            <tbody style="">
+            <tr style="">
+              <td style="vertical-align:middle; width:319px; border: none !important;">
+                <p>
+            <span style="font-size:11pt">
+              <span style="font-family:Calibri,sans-serif">
+                <span style="color:#000000">
+                  <strong>
+                    <a href="<%= ENV['APPLICATION_URL'] %>">
+                      <%= image_tag(ENV['APPLICATION_URL'] + '/mail_images/cii_logo.png', size: "170x50") %>
+                    </a>
+                  </strong>
+                </span>
+              </span>
+            </span>
+                </p>
+              </td>
+              <td style="vertical-align:middle; width:319px ; border: none !important;">
+                <p style="text-align:right">
+            <span style="font-size:11pt">
+              <span style="font-family:Calibri,sans-serif">
+                <span style="color:#000000">
+                  <strong>
+                    <a href="<%= ENV['APPLICATION_URL'] %>">
+                      <%= image_tag(ENV['APPLICATION_URL'] + '/mail_images/cesd_cii.png', size: "226x90") %>
+                    </a>
+                  </strong>
+                </span>
+              </span>
+            </span>
+                </p>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <%= image_tag(ENV['APPLICATION_URL'] + '/mail_images/esg_brochure_mail.png', size: "420x320") %>
+      </div>
+      <div style="padding: 0 20px; font-size: 14px;">
+        <h3 style="margin-bottom: 1.5rem; color: #666666;">Hi <%= @resource.first_name || @resource.primary_name %>!</h3>
+        <p style="color: #333333;"><%= @email_content.html_safe %>
+        </p>
+      </div>
+      <div style="padding: 20px; font-size: 14px;">
+        <p style="color: #333333;">
+          <b style="color: #666666;">Thanks and Regards,</b><br>
+          CII Team.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

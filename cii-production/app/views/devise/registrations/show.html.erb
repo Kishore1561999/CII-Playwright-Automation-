@@ -1,0 +1,174 @@
+<% content_for :title, "Manage Your Profile: Admin Details & Settings" %>
+<% content_for :description, "Access and manage admin details effortlessly. Update, review, and control profile settings to keep your information up to date." %>
+<div class="card show-profile">
+  <h5 class="card-header">Profile Details</h5>
+
+  <% if current_user.is_company_user? %>
+    <div class="card-body col-md-10 offset-1">
+      <div class="col-md-12 row g-3">
+        <h5 class="mb-2"><small class="text-light fw-semibold">Basic Info</small></h5>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Name</label>
+          <p class="mb-0"><%= current_user.company_name %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">ISIN Number</label>
+          <p class="mb-0"><%= current_user.company_isin_number %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Sector</label>
+          <p class="mb-0"><%= current_user.company_sector %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Description</label>
+          <p class="mb-0"><%= current_user.company_description %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Logo</label>
+          <p class="mb-0"><%= image_tag current_user.company_logo.present? ? current_user.company_logo : "no-image.png", class: "img-responsive img-thumbnail img-logo" %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">GST No</label>
+          <p class="mb-0"><%= current_user.gst %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">PAN</label>
+          <p class="mb-0"><%= current_user.pan_no %></p>
+        </div>
+
+        <h5 class="mb-2"><small class="text-light fw-semibold">Address Info</small></h5>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Address Line 1</label>
+          <p class="mb-0"><%= current_user.company_address_line1 %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Address Line 2</label>
+          <p class="mb-0"><%= current_user.company_address_line2.present? ? current_user.company_address_line2 : 'NA' %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Country</label>
+          <p class="mb-0"><%= CS.countries[current_user.company_country.to_sym] %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">State</label>
+          <p class="mb-0"><%= CS.states(current_user.company_country)[current_user.company_state.to_sym] %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">City</label>
+          <p class="mb-0"><%= current_user.company_city %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">ZIP Code</label>
+          <p class="mb-0"><%= current_user.company_zip %></p>
+        </div>
+
+        <h5 class="mb-2"><small class="text-light fw-semibold">Primary Contact</small></h5>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Full Name</label>
+          <p class="mb-0"><%= current_user.primary_name %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Email</label>
+          <p class="mb-0"><%= current_user.primary_email %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Designation</label>
+          <p class="mb-0"><%= current_user.primary_designation %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Contact Number</label>
+          <p class="mb-0"><%= current_user.primary_contact %></p>
+        </div>
+
+        <h5 class="mb-2"><small class="text-light fw-semibold">Alternate Contact</small></h5>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Full Name</label>
+          <p class="mb-0"><%= current_user.alternate_name.present? ? current_user.alternate_name : 'NA' %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Email</label>
+          <p class="mb-0"><%= current_user.alternate_email.present? ? current_user.alternate_email : 'NA' %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Designation</label>
+          <p class="mb-0"><%= current_user.alternate_designation.present? ? current_user.alternate_designation : 'NA' %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Contact Number</label>
+          <p class="mb-0"><%= current_user.alternate_contact.present? ? current_user.alternate_contact : 'NA' %></p>
+        </div>
+      </div>
+
+      <div class="col-md-4 offset-4">
+        <center>
+          <div class="row">
+            <div class="col-md-12">
+              <%= link_to 'Edit', edit_user_registration_path, class: "btn btn-primary" %>
+              <%= link_to 'Back', dashboard_path, class: "btn btn-secondary" %>
+            </div>
+          </div>
+        </center>
+      </div>
+    </div>
+  <% else %>
+    <div class="card-body col-md-10 offset-1">
+      <div class="col-md-12 row g-3">
+        <div class="mb-3 col-md-4">
+          <label class="form-label">First Name</label>
+          <p class="mb-0"><%= current_user.first_name %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Last Name</label>
+          <p class="mb-0"><%= current_user.last_name %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Email</label>
+          <p class="mb-0"><%= current_user.email %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Mobile</label>
+          <p class="mb-0"><%= current_user.mobile %></p>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Role</label>
+          <p class="mb-0"><%= current_user.role.role_name.humanize.titleize %></p>
+        </div>
+      </div>
+
+      <div class="col-md-4 offset-4">
+        <center>
+          <div class="row">
+            <div class="col-md-12">
+              <%= link_to 'Edit', edit_user_registration_path, class: "btn btn-primary" %>
+              <%= link_to 'Back', dashboard_path, class: "btn btn-secondary" %>
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+        </center>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+			<div class="modal-body text-center">
+				<img src="" class="image-preview d-block rounded">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".img-logo").click(function() {
+      $('.image-preview').attr('src', $(this).attr('src'));
+      $('#imageModal').modal('show');
+    });
+  });
+</script>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="light-style layout-menu-fixed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title><%= content_for?(:title) ? yield(:title) : "CII-ESG Diagnostics & Peer Benchmarking - Assess Your Performance" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Enhance your Corporate ESG performance with CII-ESG Diagnostics through peer benchmarking, gap analysis and tailored subscriptions." %>" />
+    <%= favicon_link_tag asset_path("favicon.ico") %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
+
+   <!-- Canonical URL -->
+   <link rel="canonical" href="<%= request.original_url %>" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <%= stylesheet_pack_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_pack_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_pack_tag "chart", "data-turbo-track": "reload" %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <style>
+      #loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 99999;
+        display: none; /* Initially hidden */
+      }
+
+      #loader {
+      width: 110px;
+      height: 110px;
+      position: absolute;
+      top: 50%;
+      left: 60%;
+      margin-top: -60px;
+      margin-left: -60px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .bg-menu-theme .menu-inner > .menu-item.active > .menu-link.list-items{
+        background-color: var(--sidebar-active-primary-color) !important;
+        color: #ffffff !important;
+        opacity: 100% !important;
+      }
+      .bg-menu-theme .menu-inner > .menu-item > .menu-link.list-items-disable {
+        background-color: #5E63661A;
+        opacity: 75%; 
+      }
+    </style>
+ </head>
+
+  <body>
+    <%= toastr_flash %>
+
+    <% if current_user != nil %>
+      <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+          <%= render 'layouts/application_sidebar' %>
+
+          <div class="layout-page">
+            <%= render 'layouts/application_navbar' %>
+
+            <div class="content-wrapper">
+              <div class="container-xxl flex-grow-1 container-p-y">
+              <div id="loader-wrapper">
+              <%= image_tag asset_path('ajax-loaderrr.gif'), id: "loader" %>
+              </div>
+                <%= yield %>
+              </div>
+
+              <!--<%= render 'layouts/application_footer' %>-->
+            </div>
+            <%= render 'layouts/application_footer' %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div>
+        <div class="navbar-nav-right d-flex align-items-center bg-white" style="height: 100px;">
+          <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center">
+              <ul class="navbar-nav flex-row align-items-center ms-auto p-5">
+                <li class="nav-item lh-1">
+                  <div class="app-brand-link">
+                    <a href="https://www.cii.in/" class="app-brand-link" target="_blank">
+                      <span class="app-brand-logo demo"><%= image_tag asset_path('cii_logo_blue.png'), alt: 'CII- confedaration of indian industry' %></span>
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <li class="nav-item lh-1">
+              <div class="app-brand-link" style="margin-left: 70px;">
+                <a href="https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/" class="app-brand-link" target="_blank">
+                  <span class="app-brand-esg-logo demo profile-logo"><%= image_tag asset_path('esg_ia_blue.png'), alt: 'ESG intelligence and analytics' %></span>
+                </a>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav flex-row align-items-center ms-auto px-5">
+            <li class="nav-item lh-1">
+              <div class="app-brand-link">
+                <a href="https://sustainabledevelopment.in/" class="app-brand-link" target="_blank">
+                  <span class="app-brand-logo demo profile-logo"><%= image_tag asset_path('cesd_cii_blue.png'), alt: 'CII-ITC Centre of Excellence for Sustainable Development' %></span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <%= yield %>
+      </div>
+      <%= render 'layouts/application_footer' %>
+    <% end %>
+<div class="modal fade" id="modalDignostics" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+         <button type="button" class="btn-close float-right" style="box-shadow: revert;position: relative; top: 6px;right: 5px;" data-bs-dismiss="modal" aria-label="Close"></button>
+         <p class="text-align-justify" style="position: relative; top: 16px;margin: 0; max-width: 94%;">Take ESG Diagnostic assessment to understand the ESG strengths of the company, the ESG high-risk areas, the areas of improvement and recommendations to bridge the identified gaps</p>
+      </div>
+      <div class="text-center" style="margin:20px;">
+        <button type="button" class="btn btn-primary" id="sendInquiryBtn">Send Enquiry</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalPeerbenchmarking" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+         <p>Compare your performance against the industry on a real-time platform on several ESG parameters</p>
+      </div>
+      <div class="text-center" style="margin:20px;">
+        <button type="button" class="btn btn-primary">Subscribe now</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalElearnings" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+       <button type="button" class="btn-close float-right" style="box-shadow: revert;position: relative; top: 6px;right: 5px;" data-bs-dismiss="modal" aria-label="Close"></button>
+         <p class="text-align-justify" style="position: relative; top: 16px; max-width: 94%;">Access online learning modules on various ESG topics that will help your company aim for better ESG goals by increasing knowledge and acceptance of ESG agendas across the company</p>
+      </div>
+      <div class="text-center" style="margin:20px;">
+        <button type="button" class="btn btn-primary" style="position: relative; bottom: 15px">Upgrade subscription to view & download</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalPublications" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="btn-close float-right" style="box-shadow: revert;position: relative; top: 6px;right: 5px;" data-bs-dismiss="modal" aria-label="Close"></button>
+         <p class="text-align-justify" style="position: relative; top: 16px; max-width: 94%;">Access Industry reports and Reports on National & International standards, that will give you insights into the existing and upcoming trends in the ESG space</p>
+      </div>
+      <div class="text-center" style="margin:20px;">
+        <button type="button" class="btn btn-primary" style="position: relative; bottom: 15px">Upgrade subscription to view & download</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <script>
+  function showLoader() {
+    if ($('.card').hasClass('card-loader')) $('#loader-wrapper').show();
+  }
+  function hideLoader() {
+    document.getElementById("loader-wrapper").style.display = "none";
+    $('.card-loader').css('filter','');
+  }
+
+  showLoader();
+  $(document).ready(function() {
+    const myTimeout = setTimeout(hideLoader, 700);
+  });
+  <% if current_user != nil %>
+      document.querySelector('.layout-menu-toggle').onclick = () => {
+          document.querySelector('.layout-menu-toggle').classList.toggle('narrow-menu-toggle');
+          document.querySelector('.layout-menu-toggle i').classList.toggle('bx-chevron-right');
+          document.querySelector('.layout-menu').classList.toggle('narrow');
+          document.querySelector('.layout-page').classList.toggle('wide');
+          document.querySelector('.app-menu-title-text').classList.toggle('d-none');
+          document.querySelector('.app-menu i').classList.toggle('narrow-app-menu');
+
+            document.querySelectorAll('.menu-item').forEach((menu_item) => {
+                menu_item.classList.toggle('narrow-menu-item');
+            });
+
+            document.querySelectorAll('.menu-link div').forEach((menu_link) => {
+                menu_link.classList.toggle('d-none');
+            });
+        }
+  <% end %>
+
+      if (window.location.pathname !== "/users/sign_in") {
+
+          var sessionTimeout;
+
+          function resetSessionTimeout() {
+              clearTimeout(sessionTimeout);
+              sessionTimeout = setTimeout(function () {
+                  $.ajax({
+                      url: "/users/sign_out",
+                      type: "DELETE",
+                      data: {
+                          session_time_out: true
+                      },
+                      headers: {
+                          "X-CSRF-Token": "<%= form_authenticity_token %>"
+                      },
+                      success: function (data) {},
+                      error: function (e) {
+                          console.log(e);
+                      }
+                  });
+              }, <%= ENV['SESSION_TIMEOUT_DURATION'] ? ENV['SESSION_TIMEOUT_DURATION'].to_i*60000 : 600000 %>);
+          }
+
+          resetSessionTimeout();
+
+          $(document).on('mousemove keydown', function () {
+              resetSessionTimeout();
+          });
+      }
+
+      function logoutSaveAssessmentCheck(){
+          if (document.getElementById("editAssessmentPageCheck")) {
+              if (document.querySelector('.update_assessment')) {
+                  $('.update_assessment').click();
+              } else {
+                  $('.save_assessment').click();
+              }
+          }
+      }
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#sendInquiryBtn').click(function() {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+          url: '/company_user/send_inquiry_email',
+          type: 'POST',
+          headers: {
+          'X-CSRF-Token': csrfToken
+          },
+          success: function(response) {
+          },
+          error: function(xhr, status, error) {
+          }
+        });
+      });
+    });
+  </script>
+  </body>
+</html>

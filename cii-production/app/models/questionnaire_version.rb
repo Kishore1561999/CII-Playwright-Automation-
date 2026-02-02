@@ -1,0 +1,2 @@
+class QuestionnaireVersion < ApplicationRecord
+end

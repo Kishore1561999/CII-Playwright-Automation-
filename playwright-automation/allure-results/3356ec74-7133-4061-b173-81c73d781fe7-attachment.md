@@ -1,0 +1,154 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - link [ref=e7] [cursor=pointer]:
+      - /url: https://www.cii.in/
+      - img [ref=e9]
+    - list [ref=e10]:
+      - listitem [ref=e11]:
+        - link "ESG Diagnostics " [ref=e12] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=e13]:
+            - text: ESG Diagnostics
+            - generic [ref=e14]: 
+      - listitem [ref=e15]:
+        - link "Peer Benchmarking" [ref=e16] [cursor=pointer]:
+          - /url: /company_user/peer_benchmarking
+          - generic [ref=e17]: Peer Benchmarking
+      - text:  
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link " User Guide" [ref=e20] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=e21]: 
+          - generic [ref=e22]: User Guide
+  - text:   
+  - generic [ref=e23]:
+    - navigation [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e26]:
+          - listitem [ref=e27]:
+            - link [ref=e29] [cursor=pointer]:
+              - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+              - img [ref=e31]
+        - list [ref=e32]:
+          - listitem [ref=e33]:
+            - link [ref=e35] [cursor=pointer]:
+              - /url: https://sustainabledevelopment.in/
+              - img [ref=e37]
+          - listitem [ref=e38]:
+            - link " PB User Company user" [ref=e39] [cursor=pointer]:
+              - /url: javascript:void(0);
+              - generic [ref=e40]:
+                - generic [ref=e43]: 
+                - generic [ref=e44]:
+                  - generic [ref=e45]: PB User
+                  - text: Company user
+            - text:    
+    - generic [ref=e48]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - paragraph [ref=e54]: "Sector: Automobiles & Auto Components"
+          - paragraph [ref=e56]: "No of Questions: 35"
+        - generic [ref=e58]:
+          - button "Clear"
+          - button "Save" [ref=e59] [cursor=pointer]
+          - button "Run Analytics" [ref=e60] [cursor=pointer]
+      - separator [ref=e61]
+      - generic [ref=e64]:
+        - heading "Questions" [level=5] [ref=e65]
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - generic [ref=e70]: 1. Please indicate the % of women in the workforce
+              - generic [ref=e71]:
+                - radio "answer-PB-01-1" [ref=e72]
+                - generic [ref=e73]: Information available
+              - generic [ref=e74]:
+                - radio "answer-PB-01-2" [ref=e75]
+                - generic [ref=e76]: No information
+            - generic [ref=e77]:
+              - generic [ref=e78]: 2. Please indicate the number of differently abled employees in workforce
+              - generic [ref=e79]:
+                - radio "answer-PB-02-1" [ref=e80]
+                - generic [ref=e81]: Information available
+              - generic [ref=e82]:
+                - radio "answer-PB-02-2" [ref=e83]
+                - generic [ref=e84]: No information
+            - generic [ref=e85]:
+              - generic [ref=e86]: 3. Please indicate the % of women among
+              - generic [ref=e87]:
+                - radio "answer-PB-03-1" [ref=e88]
+                - generic [ref=e89]: Information available
+              - generic [ref=e90]:
+                - radio "answer-PB-03-2" [ref=e91]
+                - generic [ref=e92]: No information
+            - generic [ref=e93]:
+              - generic [ref=e94]: 4. Turnover rate for permanent employees and workers
+              - generic [ref=e95]:
+                - radio "answer-PB-04-1" [ref=e96]
+                - generic [ref=e97]: Information available
+              - generic [ref=e98]:
+                - radio "answer-PB-04-2" [ref=e99]
+                - generic [ref=e100]: No information
+            - generic [ref=e101]:
+              - generic [ref=e102]: 5. Is grievance mechanism in place for following stakeholders
+              - generic [ref=e103]:
+                - radio "answer-PB-05-1" [ref=e104]
+                - generic [ref=e105]: Yes, there is a grievance mechanism in place for following stakeholders
+              - generic [ref=e106]:
+                - radio "answer-PB-05-2" [ref=e107]
+                - generic [ref=e108]: No information available
+            - generic [ref=e109]:
+              - generic [ref=e110]: 6. Does the company have code of conduct/ethics policy?
+              - generic [ref=e111]:
+                - radio "answer-PB-06-1" [ref=e112]
+                - generic [ref=e113]: Information Available
+              - generic [ref=e114]:
+                - radio "answer-PB-06-2" [ref=e115]
+                - generic [ref=e116]: No such policies in place
+              - generic [ref=e117]:
+                - radio "answer-PB-06-3" [ref=e118]
+                - generic [ref=e119]: No clear information
+            - generic [ref=e120]:
+              - generic [ref=e121]: 7. Does the company have human rights policy?
+              - generic [ref=e122]:
+                - radio "answer-PB-07-1" [ref=e123]
+                - generic [ref=e124]: Information available
+              - generic [ref=e125]:
+                - radio "answer-PB-07-2" [ref=e126]
+                - generic [ref=e127]: No clear information
+            - generic [ref=e128]:
+              - generic [ref=e129]: 8. Does the entity have a specified Committee of the Board/ Director responsible for decision making on sustainability related issues?
+              - generic [ref=e130]:
+                - radio "answer-PB-08-1" [ref=e131]
+                - generic [ref=e132]: Information available
+              - generic [ref=e133]:
+                - radio "answer-PB-08-2" [ref=e134]
+                - generic [ref=e135]: No information
+            - generic [ref=e136]:
+              - generic [ref=e137]: 9. Please report the coverage of Code of Ethics (P1) training programs
+              - generic [ref=e138]:
+                - radio "answer-PB-09-1" [ref=e139]
+                - generic [ref=e140]: Information available
+              - generic [ref=e141]:
+                - radio "answer-PB-09-2" [ref=e142]
+                - generic [ref=e143]: No clear information
+            - generic [ref=e144]:
+              - generic [ref=e145]: 10. Does the company have corruption policy
+              - generic [ref=e146]:
+                - radio "answer-PB-10-1" [ref=e147]
+                - generic [ref=e148]: Information available
+              - generic [ref=e149]:
+                - radio "answer-PB-10-2" [ref=e150]
+                - generic [ref=e151]: No clear information
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - button "Previous" [disabled]
+            - button "Next" [ref=e156] [cursor=pointer]
+    - contentinfo [ref=e157]:
+      - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e159]
+      - heading "Privacy Policy" [level=6] [ref=e161] [cursor=pointer]
+```

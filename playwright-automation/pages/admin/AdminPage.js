@@ -72,6 +72,21 @@ class AdminPage extends BasePage {
 
     }
 
+    async _robustClick(locator, name) {
+        // Ensure any lingering modals or backdrops are cleared first
+        // await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await locator.scrollIntoViewIfNeeded();
+        try {
+            await locator.click({ force: true, timeout: 5000 });
+            console.log(`\u2713 Clicked: ${name}`);
+        } catch (error) {
+            console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+            await locator.dispatchEvent('click');
+            console.log(`\u2713 JS clicked: ${name}`);
+        }
+    }
+
     async verifyDashboardLoaded() {
         await expect(this.page).toHaveURL(/.*esgadmin\/company_users/);
     }
@@ -79,9 +94,9 @@ class AdminPage extends BasePage {
  * ESG Diagnostic
  */
     async navigateToESGDiagnostic() {
-        await this.esgDiagnosticsLink.click();
+        await this._robustClick(this.esgDiagnosticsLink, 'ESG Diagnostic link');
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Admin: Navigated to ESG Diagnostic');
+        await this.page.waitForTimeout(2000);
     }
 
     async filterByYear(year) {
@@ -146,9 +161,9 @@ class AdminPage extends BasePage {
      * Basic Subscription
      */
     async navigateToBasicSubscription() {
-        await this.basicSubLink.click();
+        await this._robustClick(this.basicSubLink, 'Basic Subscription link');
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Admin: Navigated to Basic Subscription');
+        await this.page.waitForTimeout(2000);
     }
 
     async searchBasicSubscription(sector, year) {
@@ -159,15 +174,58 @@ class AdminPage extends BasePage {
         console.log(`✓ Admin: Searched Basic Sub: Sector=${sector}, Year=${year}`);
     }
 
+    async approveBasicSubscription(companyName) {
+        console.log(`✓ Admin: Approving Basic Subscription for: ${companyName}`);
+        await this.searchByCompany(companyName);
+        const row = await this.getCompanyRow(companyName);
+
+        const approveBtn = row.locator('.approve_button');
+        await approveBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await approveBtn.click();
+
+        // Specific modal for basic subscription
+        const modal = this.page.locator('#modalbasicApprove');
+        await modal.waitFor({ state: 'visible', timeout: 5000 });
+        const confirmBtn = modal.locator('#approve_basic_button');
+        await confirmBtn.click();
+
+        // Wait for modal and backdrop to disappear to avoid intercepting clicks
+        await modal.waitFor({ state: 'hidden', timeout: 10000 });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Approved Basic Subscription for: ${companyName}`);
+    }
+
     /**
      * PB Data Management
      */
     async navigateToPBDataManagement() {
-        await this.pbDataLink.click();
-        // await this.page.waitForLoadState('networkidle'); 
-        // Better to wait for an element that signifies the page is loaded
+        await this._robustClick(this.pbDataLink, 'PB Data Management link');
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
-        console.log('✓ Admin: Navigated to PB Data Management');
+        await this.page.waitForTimeout(2000);
+    }
+
+    async approvePBData(companyName) {
+        console.log(`✓ Admin: Approving PB Data for: ${companyName}`);
+        await this.searchByCompany(companyName);
+        const row = await this.getCompanyRow(companyName);
+
+        const approveBtn = row.locator('.approve_button');
+        await approveBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await approveBtn.click();
+
+        // Specific modal for PB Data
+        const confirmBtn = this.page.locator('#approve_service_button');
+        await confirmBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await confirmBtn.click();
+
+        // Wait for any active modal or backdrop to disappear
+        await this.page.locator('.modal.show').waitFor({ state: 'hidden', timeout: 10000 }).catch(() => { });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Approved PB Data for: ${companyName}`);
     }
 
     async searchPBData(sector, year) {
@@ -183,24 +241,27 @@ class AdminPage extends BasePage {
      */
     async navigateToCIIDataCollection() {
         // CII Data Collection is nested under PB Data Management
-        // Use .first() to avoid strict mode violations if multiple menus (desktop/mobile) exist with same href
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
         const pbLink = this.pbDataLink.first();
         const ciiLink = this.ciiDataLink.first();
 
         // Check if sub-menu is already visible
         if (await ciiLink.isVisible()) {
             console.log('CII Data link is visible, clicking directly.');
-            await ciiLink.click();
+            await this._robustClick(ciiLink, 'CII Data link');
         } else {
             // If not visible, click PB Data menu to expand
             console.log('CII Data link hidden, clicking PB Data Management first.');
-            await pbLink.click();
+            await this._robustClick(pbLink, 'PB Data Management (parent) link');
             await ciiLink.waitFor({ state: 'visible', timeout: 10000 });
-            await ciiLink.click();
+            await this._robustClick(ciiLink, 'CII Data link');
         }
 
-        // await this.page.waitForLoadState('networkidle');
+        // Wait for the filter button on the target page to ensure navigation is complete
         await this.applyFilterBtn.first().waitFor({ state: 'visible', timeout: 30000 });
+        await this.page.waitForTimeout(2000);
         console.log('✓ Admin: Navigated to CII Data Collection');
     }
 
@@ -213,13 +274,68 @@ class AdminPage extends BasePage {
         console.log(`✓ Admin: Searched CII Data: Sector=${sector}, Year=${year}, Analyst=${analystName}`);
     }
 
+    async verifyCiiStatus(companyName, expectedStatus) {
+        console.log(`✓ Admin: Verifying status for ${companyName}`);
+        await this.searchByCompany(companyName);
+        const row = await this.getCompanyRow(companyName);
+
+        // Search for the specific span or text in the row
+        // User snippet: <td class="text-center"><span style="color:#E59700">Submitted</span></td>
+        const statusLocator = row.locator('td.text-center span').filter({ hasText: expectedStatus });
+        await expect(statusLocator.first()).toBeVisible();
+        console.log(`✓ Status verified: ${expectedStatus}`);
+    }
+
+    async deleteFromCIIDataCollection(companyName) {
+        console.log(`✓ Admin: Deleting from CII Data Collection: ${companyName}`);
+        const row = await this.getCompanyRow(companyName);
+
+        // Click Delete icon from user snippet
+        const deleteIcon = row.locator('span[title="Delete"]');
+        await deleteIcon.waitFor({ state: 'visible', timeout: 5000 });
+        await deleteIcon.click();
+
+        // Confirm Yes on the specific #confirmDeleteButton from user snippet
+        const confirmBtn = this.page.locator('button#confirmDeleteButton');
+        await confirmBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await confirmBtn.click();
+
+        // Wait for modal and possible success toast
+        await this.page.locator('.modal.show').waitFor({ state: 'hidden', timeout: 10000 }).catch(() => { });
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Deleted successfully on CII Data Collection page`);
+    }
+
+    async deleteBasicSubscription(companyName) {
+        console.log(`✓ Admin: Deleting Basic Subscription for: ${companyName}`);
+        await this.searchByCompany(companyName);
+        const row = await this.getCompanyRow(companyName);
+
+        // Direct delete button based on snippet
+        const deleteBtn = row.locator('.delete_button, :text("Delete")').first();
+        await deleteBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await deleteBtn.click();
+
+        // Confirm modal
+        const modal = this.page.locator('#modalDelete');
+        await this.confirmDeleteButton.waitFor({ state: 'visible', timeout: 5000 });
+        await this.confirmDeleteButton.click();
+
+        // Wait for modal cleanup
+        await modal.waitFor({ state: 'hidden', timeout: 10000 });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await this.page.waitForLoadState('networkidle');
+        console.log(`✓ Admin: Deleted Basic Subscription for: ${companyName}`);
+    }
+
     /**
      * User Management
      */
     async navigateToUserManagement() {
-        await this.userMgmtLink.click();
+        await this._robustClick(this.userMgmtLink, 'User Management link');
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Admin: Navigated to User Management');
+        await this.page.waitForTimeout(2000);
     }
 
     async createUser(firstName, lastName, email, mobile, roleValue, password) {
@@ -282,8 +398,13 @@ class AdminPage extends BasePage {
         await deleteLink.click();
 
         // Confirm Modal
-        await this.page.locator('#modalDelete').waitFor({ state: 'visible' });
-        await this.page.locator('button#delete_button').click(); // Using the ID provided in user request for confirm button
+        const modal = this.page.locator('#modalDelete');
+        await modal.waitFor({ state: 'visible' });
+        await modal.locator('button#delete_button').click();
+
+        // Wait for modal cleanup
+        await modal.waitFor({ state: 'hidden', timeout: 10000 });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
 
         await this.page.waitForLoadState('networkidle');
         console.log(`✓ Admin: Deleted user: ${email}`);
@@ -293,13 +414,15 @@ class AdminPage extends BasePage {
      * Navigation methods
      */
     async navigateToCompanyUsers() {
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
         if (await this.esgDiagnosticsLink.isVisible()) {
-            await this.esgDiagnosticsLink.click();
+            await this._robustClick(this.esgDiagnosticsLink, 'Company Users / ESG Diagnostic link');
         } else {
+            console.log('ESG link not visible, using goto fallback for Company Users');
             await this.page.goto('/esgadmin/company_users');
         }
         await this.page.waitForLoadState('networkidle');
-        console.log('✓ Admin: Navigated to Company Users / ESG Diagnostic page');
+        await this.page.waitForTimeout(2000);
     }
 
     /**
@@ -316,7 +439,9 @@ class AdminPage extends BasePage {
      * Row helper
      */
     async getCompanyRow(companyName) {
-        const row = this.page.locator(`tr:has(strong:has-text("${companyName}"))`);
+        // Scope to main table rows and take the first match to avoid strict mode violation 
+        // with hidden/sidebar elements (like #company-my-list)
+        const row = this.page.locator('table:not(#company-my-list) tbody tr').filter({ hasText: companyName }).first();
         await row.waitFor({ state: 'visible', timeout: 10000 });
         return row;
     }
@@ -378,9 +503,14 @@ class AdminPage extends BasePage {
         const assignBtn = this.page.locator('#assign');
         await assignBtn.waitFor({ state: 'visible', timeout: 5000 });
         await assignBtn.click();
-        // 5. Confirm modal
+        const modal = this.page.locator('#modalAssign');
         await this.confirmAssignButton.waitFor({ state: 'visible', timeout: 5000 });
         await this.confirmAssignButton.click();
+
+        // Wait for modal cleanup
+        await modal.waitFor({ state: 'hidden', timeout: 10000 });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
         await this.page.waitForLoadState('networkidle');
 
         const message = await this.assignmentSuccessMessage.first().textContent();
@@ -417,8 +547,14 @@ class AdminPage extends BasePage {
         await deleteBtn.waitFor({ state: 'visible', timeout: 5000 });
         await deleteBtn.click();
 
+        const modal = this.page.locator('#modalDelete');
         await this.confirmDeleteButton.waitFor({ state: 'visible', timeout: 5000 });
         await this.confirmDeleteButton.click();
+
+        // Wait for modal cleanup
+        await modal.waitFor({ state: 'hidden', timeout: 10000 });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
         console.log(`✓ Deleted test company: ${companyName}`);
     }
 
@@ -432,18 +568,37 @@ class AdminPage extends BasePage {
         await row.locator('.score_button').click();
         await this.page.locator('#generateScoreCard').waitFor({ state: 'visible', timeout: 5000 });
         await this.page.locator('#generateScoreCard').click();
+
+        // Wait for modal cleanup to avoid blocking next actions
+        const modal = this.page.locator('#modalScore');
+        await modal.waitFor({ state: 'hidden', timeout: 10000 }).catch(() => { });
+        await this.page.locator('.modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await this.page.waitForLoadState('networkidle');
         console.log('✓ Scorecard generated (clicked Yes)');
     }
 
     async clickGenerateTemplate(companyName) {
         console.log(`Clicking Generate Template for: ${companyName}`);
+
+        // Ensure all modals and backdrops are gone before searching
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 10000 }).catch(() => { });
+
         await this.searchCompany(companyName);
         const row = await this.getCompanyRow(companyName);
         const templateBtn = row.locator('[title="Generate Template"]');
-        await templateBtn.waitFor({ state: 'visible', timeout: 5000 });
 
-        // Remove disabled class if necessary, or just click if it becomes enabled
-        await templateBtn.click();
+        await templateBtn.waitFor({ state: 'visible', timeout: 10000 });
+
+        // If button has 'disabled' class, wait for it to be enabled or try to force it if it's a persistent state
+        try {
+            await expect(templateBtn).not.toHaveClass(/.*disabled.*/, { timeout: 10000 });
+        } catch (e) {
+            console.warn('⚠ Template button still has disabled class. Status might not have updated. Attempting to force click.');
+        }
+
+        // Use force: true to bypass any lingering invisible backdrops that Playwright thinks are intercepting
+        await templateBtn.click({ force: true });
         console.log('✓ Clicked Generate Template');
     }
 

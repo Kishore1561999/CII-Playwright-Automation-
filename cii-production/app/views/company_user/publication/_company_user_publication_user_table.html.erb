@@ -1,0 +1,49 @@
+<table class="table table-hover">
+  <thead class="sticky-top" style="background-color:#fff;">
+  <tr class="text-nowrap">
+    <th class="text-center">S.No</th>
+    <th class="text-center">Uploaded Date</th>
+    <th>Title</th>
+    <th class="text-center">Action</th>
+  </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+  <% current_page = params[:page].present? ? params[:page].to_i : 1 %>
+  <% per_page = 10 %>
+  <% starting_index = (current_page - 1) * per_page %>
+  <% if publications.length > 0 %>
+     <% publications.each_with_index do |publication, index| %>
+      <tr>
+      <td class="text-center">
+       <%= starting_index + index + 1 %>
+      </td>
+      <td class="text-center">
+        <% if publication.created_at.present? %>
+            <%= publication.created_at.strftime("%d %b, %Y") %>
+        <% else %>
+        --
+        <% end %>
+      </td>
+        <% truncated_title = publication.title.length > 50 ? publication.title[0, 50] + '...' : publication.title %>
+        <td style="width: 25%;"class="text-wrap" title="<%= publication.title %>"><%= truncated_title %></td>
+        <td class="text-center">
+            <% if publication.pdffile.attached? %>
+            <%= link_to rails_blob_path(publication.pdffile, disposition: "attachment"), class: "btn btn-sm btn-primary publication-icon-size ", title: "Download Publication" do %>
+                <i class="bx bxs-download icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+            <% else %>
+            <%= link_to "#", class: "btn btn-sm btn-primary publication-icon-size disabled", title: "Download BRSR Report" do %>
+                <i class="bx bxs-download icon-align-center" style="font-size: 1rem; margin: 0.125rem;"></i>
+            <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="9" class="text-center">No data available!</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+

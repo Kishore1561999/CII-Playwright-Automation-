@@ -1,0 +1,5 @@
+✓ Clicked: Company Users / ESG Diagnostic link
+✓ Admin: Approving company: E2E_Company_1769750193897
+✓ Admin: Searched for company: E2E_Company_1769750193897
+✓ Approval confirmed for: E2E_Company_1769750193897
+✓ Clicked approve and confirm for: E2E_Company_1769750193897

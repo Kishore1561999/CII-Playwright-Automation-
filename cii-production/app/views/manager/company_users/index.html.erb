@@ -1,0 +1,563 @@
+<% content_for :title, "Assess ESG Diagnostics Submissions" %>
+<% content_for :description, "Streamline ESG Diagnostics. Assess user data, generate scorecards, and upload reports. Optimize ESG analysis through the manager dashboard." %>
+<div class="card">
+  <div class="card-header">
+    <div class="navbar-nav-right d-flex align-items-center">
+      <div class="navbar-nav align-items-center">
+        <div class="nav-item d-flex align-items-center">
+          <div class="col-12 d-flex">
+            <div class="col-3 mx-1 navbar-dropdown dropdown-user dropdown">
+              <a class="filter-icon">
+                <input type="text" name="sector" id="sectorFilter" class="form-control cursor-pointer" value="" placeholder="Filter by Sector" style="background-color: white;" readonly>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end filter-container">
+                <%= form_tag("#") do %>
+                  <div class="checkbox-list">
+                    <% Sector.all.each do |sector| %>
+                      <div class="form-check" style="padding: 0 0 0 2rem;">
+                        <%= check_box_tag "checkbox_#{sector.id}", sector.id, @sector_ids.include?((sector.id).to_s), { class: "form-check-input sector-checkbox" } %>
+                        <%= label_tag "checkbox_#{sector.id}", sector.sector_name, { class: "form-check-label" } %>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-3 mx-1">
+              <input type="text" name="search" id="companyNameFilter" class="form-control date-filter-text" placeholder="Search by Name" value="<%= @company_name ? @company_name : '' %>">
+            </div>
+            <div class="col-3 mx-1">
+            <%= select_tag :selected_year, options_for_select((Date.today.year - 10..Date.today.year).to_a.reverse, @search_year), prompt: "Select Year", id: "year-picker", class: "form-control select-year-font" %>
+          </div>
+            <div class="col-1 mx-1" style="width: auto">
+              <%= button_tag "Apply", class: "btn btn-md btn-primary", id: "apply-filter" %>
+            </div>
+            <div class="col-1 mx-1">
+              <%= button_tag "Clear", class: "btn btn-md btn-secondary", id: "clear-filter" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav flex-row align-items-center ms-auto" style="position: relative; top: 9px">
+        <li class="nav-item lh-1" style="margin-left: 1.5rem">
+          <div class="mb-3">
+            <%= select_tag "analyst_id", options_for_select(User.management_users.map { |analyst_user| ["#{analyst_user.first_name} #{analyst_user.last_name}", analyst_user.id] }), { include_blank: "Select analyst", class: "form-control form-select" } %>
+          </div>
+        </li>
+        <li class="nav-item lh-1" style="margin-left: 1.5rem">
+          <div class="mb-3">
+            <%= button_tag "Assign", class: "btn btn-primary", id: "assign", 'data-bs-toggle': "modal", 'data-bs-target': "#modalAssign" %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="table-responsive text-nowrap set-height" id="users-table">
+    <%= render 'manager/company_users/company_user_table', company_users: @company_users %>
+  </div>
+</div>
+
+<div class="modal fade" id="modalComment" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title commentModalTitle">Add your comments here</h5>
+			</div>
+			<div class="modal-body">
+				<textarea class="form-control" value="" id="comment_box" name="comment_box" rows="7" cols="50" placeholder="Comments here..."></textarea>
+			</div>
+			<div class="modal-footer mdl-bx">
+				<p id="comment_id"></p>
+				<div id="view-btn" style="display:none; margin:15px; overflow-y: auto;"></div>
+				<%= hidden_field_tag "company_user_id_comment" %>
+				<%= hidden_field_tag "current_user_id", @current_user_id %>
+			</div>
+			<div class="text-center" style="margin:20px;">
+				<button type="button" class="btn btn-primary" id="view-btn-admin">View</button>
+				<button type="button" class="btn btn-primary" id="save-btn-admin">Save</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalFileupload" tabindex="-1" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="alert alert-danger alert-dismissible" role="alert" style="display: none;"></div>
+      <div class="modal-body">
+        <p>File Upload</p>
+        <p>Company name: <span id="modalCompanyName"></span></p>
+          <div class="col-md-12">
+            <input type="file" name="fileUpload" id="fileUpload" class="form-control" accept = "application/pdf" onchange=" return showuploadbtn()">
+          </div>
+        <input type="hidden" id="file_upload_cu_id">
+      </div>
+      <div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-primary disabled uploadFileAjax" id="file-upload-manager-btn">Upload</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalApprove" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="alert alert-danger alert-dismissible" role="alert"></div>
+      <div class="modal-body">
+        <p>Are you sure you want to approve?</p>
+        <input type="hidden" id="approve_user_id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="approve_button">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalReject" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="alert alert-danger alert-dismissible" role="alert"></div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mb-3">
+            <label class="form-label">Reason for rejection</label>
+            <textarea id="reason_for_rejection" class="form-control" placeholder="Enter reason"></textarea>
+            <input type="hidden" id="reject_user_id">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="reject_button">Reject</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalAssign" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="alert alert-danger alert-dismissible" role="alert"></div>
+      <div class="modal-body">
+        <p>Are you sure you want to assign?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="assign_button">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalScore" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to generate score?</p>
+        <input type="hidden" id="company_user_id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="generateScoreCard">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="scoreErrorModel" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="text-danger">Something Went Wrong while Generating Score Card, Try Again!...</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    let scoreCardPrevAjaxId = 0
+    let reportPrevAjaxId = 0
+
+    $(document).on('turbolinks:load', function () {
+
+        $(".alert-dismissible").hide();
+        $("#analyst_id, #assign").attr('disabled', 'disabled');
+
+        let selectedCompanyUserIds = [];
+        let analystId = 0;
+
+        $(document).on("click", ".approve_button", function (event) {
+            event.stopPropagation();
+
+            $("#approve_user_id").val($(this).val());
+        });
+
+        $(document).on("click", ".reject_button", function (event) {
+            event.stopPropagation();
+
+            $("#reject_user_id").val($(this).val());
+        });
+
+        $(document).on("click", ".score_button", function (event) {
+            event.stopPropagation();
+
+            $("#company_user_id").val($(this).attr('id'));
+        });
+
+        $(document).on("click", "#approve_button", function (event) {
+            event.stopPropagation();
+
+            let user_id = $("#approve_user_id").val();
+
+            $.ajax({
+                type: "PATCH",
+                url: `/manager/company_users/${user_id}/update_status/true`,
+                processData: false,
+                success: function (data) {
+                    $("#modalApprove").hide();
+                },
+                error: function (err) {
+                    $(".alert-dismissible").html("Unable to approve.").show().delay(3000).fadeOut(300);
+                }
+            });
+        });
+
+        $(document).on("click", "#reject_button", function (event) {
+            event.stopPropagation();
+
+            let reason = $("#reason_for_rejection").val();
+            let user_id = $("#reject_user_id").val();
+
+            if (reason != "") {
+                $.ajax({
+                    type: "PATCH",
+                    url: `/manager/company_users/${user_id}/update_status/false?reason=${reason}`,
+                    processData: false,
+                    success: function (data) {
+                        $("#modalReject").hide();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                $(".alert-dismissible").html("Please enter reason for rejection.").show().delay(3000).fadeOut(300);
+            }
+        });
+
+        // $(document).on("click", ".filter-icon", function (event) {
+        //     event.stopPropagation();
+        //
+        //     $(".filter-container").toggle();
+        // });
+
+        $(document).on("click", "#clear-filter", function (event) {
+            event.stopPropagation();
+            window.location.replace("<%= manager_company_users_path %>");
+        });
+
+        $(document).on("click", "#apply-filter", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").hide();
+
+            applyFilter(event);
+        });
+
+        $(document).on("change", "#multi-select", function (event) {
+            event.stopPropagation();
+
+            if ($(this).is(':checked')) {
+                $(".multi-select:checkbox:not(:disabled)").prop('checked', true);
+            } else {
+                $(".multi-select:checkbox:not(:disabled)").prop('checked', false);
+            }
+
+            getCheckedIds();
+        });
+
+        $(document).on("change", ".multi-select", function (event) {
+            event.stopPropagation();
+
+            getCheckedIds();
+        });
+
+        $(document).on("change", "#analyst_id", function (event) {
+            event.stopPropagation();
+
+            analystId = Number($(this).val());
+
+            getCheckedIds();
+        });
+
+        $(document).on("click", "#assign_button", function (event) {
+            event.stopPropagation();
+
+            $.ajax({
+                type: "PATCH",
+                url: `/manager/company_users/${analystId}/assign_analyst?company_user_id=${selectedCompanyUserIds}`,
+                processData: false,
+                success: function (data) {
+                    $("#modalAssign").hide();
+                    window.location.reload();
+                },
+                error: function (err) {
+                    $(".alert-dismissible").html("Unable to delete.").show().delay(3000).fadeOut(300);
+                }
+            });
+        });
+
+        function getCheckedIds() {
+            let totalCheckboxes = $('.multi-select:checkbox').length;
+            let checkedCheckboxes = $('.multi-select:checkbox:checked').length;
+            selectedCompanyUserIds = [];
+
+            if (totalCheckboxes == checkedCheckboxes) {
+                $("#multi-select" + this.id).prop('checked', true);
+            } else {
+                $("#multi-select" + this.id).prop('checked', false);
+            }
+
+            if (checkedCheckboxes == 0) {
+                $("#analyst_id").attr('disabled', 'disabled');
+            } else {
+                $("#analyst_id").removeAttr('disabled');
+            }
+
+            if (checkedCheckboxes == 0 || analystId == 0) {
+                $("#assign").attr('disabled', 'disabled');
+            } else {
+                $("#assign").removeAttr('disabled');
+            }
+
+            $(".multi-select:checkbox:checked").each(function () {
+                selectedCompanyUserIds.push(Number(this.value));
+            });
+        }
+
+        function applyFilter(event) {
+            event.preventDefault();
+
+            $(".filter-container").hide();
+            $("#analyst_id, #assign").attr('disabled', 'disabled');
+            $("#analyst_id").val('');
+
+            let sectorIds = [];
+            let companyName = $("#companyNameFilter").val();
+            let searchYear = $("#year-picker").val();
+            $(".sector-checkbox:checkbox:checked").each(function () {
+                sectorIds.push(Number(this.value));
+            });
+            window.location.replace("/manager/company_users?sector_ids="+sectorIds+"&companyName="+companyName+"&year="+searchYear)
+        }
+
+        $(document).on("click", "#generateScoreCard", function (event) {
+            event.stopPropagation();
+            generateScoreCard();
+        });
+
+        function generateScoreCard(){
+            $('#modalScore').modal('toggle');
+
+            let user_id = $("#company_user_id").val();
+            var ciiReportButton = $(".ciiReportButtonId_" + user_id);
+            var wReportButton = $(".wReportButtonId_"+ user_id);
+            if (scoreCardPrevAjaxId !== user_id) {
+                scoreCardPrevAjaxId = user_id;
+                $.ajax({
+                    type: "PATCH",
+                    url: `/score/${user_id}/generate_score_card`,
+                    processData: false,
+                    success: function (data) {
+                        $(".score_button_id_" + user_id).addClass("disabled");
+                        $("#user_status_id_" + user_id).text("<%= ApplicationRecord::ASSESSMENT_SCORE_GENERATED %>");
+                        $(".checkBoxId_" + user_id).prop('disabled', true);
+                        $(".fileUploadBtnId_" + user_id).removeClass("disabled");
+                        ciiReportButton.removeClass("disabled");
+                        ciiReportButton.addClass("downloadCiiReport");
+                        ciiReportButton.attr('id', user_id);
+                        wReportButton.removeClass("disabled");
+                        // wReportButton.attr('href', '/upload_chart/'+user_id);
+                        toastr.success('Score card Generated!..');
+                        window.location.replace('/download_excel/cii/' + user_id)
+                    },
+                    error: function (err) {
+                        $('#scoreErrorModel').modal('toggle');
+                    }
+                });
+            }
+        }
+
+        $(document).on("click", ".downloadCiiReport", function (event) {
+            event.stopPropagation();
+            window.location.replace('/download_excel/cii/' + $(this).attr('id'))
+        });
+
+        $(document).on("click", ".setfileUploadCuId", function (event) {
+            event.stopPropagation();
+            $('#file_upload_cu_id').val($(this).attr('id'));
+            $('#modalCompanyName').text($('#companyNameId_'+ $(this).attr('id')).text());
+        });
+
+        $(document).on("click", ".uploadFileAjax", function (event) {
+            event.stopPropagation();
+            uploadFileAjax();
+        });
+
+        function uploadFileAjax(){
+            $("#modalFileupload").modal('toggle')
+            var company_user_id = $('#file_upload_cu_id').val();
+            var attachment = $("#fileUpload")[0].files[0]
+            var formData = new FormData();
+            formData.append("report[analyst_report]", attachment);
+            formData.append("report[company_user_id]", company_user_id);
+            if (reportPrevAjaxId !== company_user_id) {
+                reportPrevAjaxId = company_user_id;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/report/report_details_analyst",
+                    data: formData,
+                    success: function () {
+                        toastr.success('File updated');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        toastr.danger('file is not updated');
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+        }
+    });
+
+    let downloadCheck = 0;
+    $(document).ready(function() {
+
+        $(document).on("click", ".filter-icon", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").toggle();
+        });
+
+        var company_id = <%= @company_user_doc_id ? @company_user_doc_id : 0 %>;
+
+        if ((downloadCheck !== company_id) && (company_id > 0)){
+            downloadCheck = company_id;
+            window.location.replace('/download_word_document/'+company_id);
+        }
+    });
+
+     function showuploadbtn (){
+    $("#file-upload-manager-btn").toggleClass('disabled')
+  }
+
+  function setfileUploadCuId(company_id){
+    $('#file_upload_cu_id').val(company_id)
+  }
+
+
+  function showSendBtn(id) {
+      $(id).toggleClass('disabled');
+  }
+
+	$("#view-btn-admin").on("click", function(event) {
+		$('.mdl-bx').removeClass('modal-footer')
+		$("#comment_box, #save-btn-admin, #view-btn-admin").css("display", "none");
+		$("#view-btn").css("display", "block");
+		$(".commentModalTitle").text('Comments');
+	});
+	$('#modalComment').on('hidden.bs.modal', function () {
+		$('textarea[id="comment_box"]').val('');
+		$(".commentModalTitle").text('Add your comments here');
+		$('.mdl-bx').addClass('modal-footer')
+		$("#comment_box").css("display", "block");
+		$("#save-btn-admin, #view-btn-admin").show();
+		$("#view-btn").css("display", "none");
+	});
+
+	$(document).on("click", ".send-admin-btn", function (event) {
+		event.stopPropagation();
+		$("#company_user_id_comment").val(this.id)
+	});
+
+	$(document).on("click", ".send-admin-btn", function (event) {
+		event.stopPropagation();
+
+		var company_user_id = $("#company_user_id_comment").val()
+		var formData = new FormData();
+		formData.append("comments[user_id]", company_user_id);
+		var view_btn = $("#view-btn");
+
+		$.ajax({
+			type: "POST",
+			url: "/comments/show",
+			data: formData,
+			success: function (res) {
+				view_btn.empty()
+				$.each(res.company, function (indexes, company) {
+						html_values = `<h6 style='float: left;'>${company.user_type}:</h6><br><span style='line-height: 2.8;'>${company.comments}</span><br><br>`
+						view_btn.append(html_values)
+
+					}
+				);
+			},
+			error: function (error) {
+				console.log(error);
+				toastr.error('comment is not updated');
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	})
+
+	$(document).on("click", ".send-comment", function (event) {
+		event.stopPropagation();
+		$("#company_user_id_comment").val(this.id)
+	});
+
+	$(document).on("click", "#save-btn-admin", function (event) {
+		event.stopPropagation();
+		var current_user_id = $("#current_user_id").val()
+		var company_user_id = $("#company_user_id_comment").val()
+		var comments = $("#comment_box").val()
+		var formData = new FormData();
+		formData.append("comments[comment]", comments);
+		formData.append("comments[user_id]", company_user_id);
+		formData.append("comments[resource_id]", current_user_id);
+
+		$.ajax({
+			type: "POST",
+			url: "/comments/create",
+			data: formData,
+			success: function () {
+				toastr.success('comments added');
+				setTimeout(() => {
+					location.reload();
+				}, 2000);
+			},
+			error: function (error) {
+				console.log(error);
+				toastr.error('comment is not updated');
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});
+
+</script>

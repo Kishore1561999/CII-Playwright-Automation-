@@ -1,0 +1,433 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics" [ref=e12] [cursor=pointer]:
+            - /url: /esgadmin/company_users
+            - generic [ref=e13]: ESG Diagnostics
+        - listitem [ref=e14]:
+          - link "ESG - Premium Subscription" [ref=e15] [cursor=pointer]:
+            - /url: /service/premium_subscription
+            - generic [ref=e16]: ESG - Premium Subscription
+        - listitem [ref=e17]:
+          - link "ESG - Basic Subscription" [ref=e18] [cursor=pointer]:
+            - /url: /service/basic_subscription
+            - generic [ref=e19]: ESG - Basic Subscription
+        - listitem [ref=e20]:
+          - link "PB Data Management" [ref=e21] [cursor=pointer]:
+            - /url: /service/peer_benchmark
+            - generic [ref=e22]: PB Data Management
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "CII Data Collection" [ref=e25] [cursor=pointer]:
+                - /url: /service/data_collection?subscription_type=premium
+                - generic [ref=e26]: CII Data Collection
+            - listitem [ref=e27]:
+              - link "Data Analytics" [ref=e28] [cursor=pointer]:
+                - /url: /service/data_analytics
+                - generic [ref=e29]: Data Analytics
+        - listitem [ref=e30]:
+          - link "User Management" [ref=e31] [cursor=pointer]:
+            - /url: /esgadmin/users
+            - generic [ref=e32]: User Management
+        - listitem [ref=e33]:
+          - link "Email Content" [ref=e34] [cursor=pointer]:
+            - /url: /esgadmin/emails
+            - generic [ref=e35]: Email Content
+    - generic [ref=e36]:
+      - navigation [ref=e37]:
+        - generic [ref=e38]:
+          - list [ref=e39]:
+            - listitem [ref=e40]:
+              - link [ref=e42] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e44]
+          - list [ref=e45]:
+            - listitem [ref=e46]:
+              - link [ref=e48] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e50]
+            - listitem [ref=e51]:
+              - link " Kishore Admin" [ref=e52] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e53]:
+                  - generic [ref=e56]: 
+                  - generic [ref=e57]:
+                    - generic [ref=e58]: Kishore
+                    - text: Admin
+              - text:   
+      - generic [ref=e60]:
+        - tablist [ref=e63]:
+          - listitem [ref=e64]:
+            - tab "All Companies" [selected] [ref=e65] [cursor=pointer]
+          - listitem [ref=e66]:
+            - tab "My Companies" [ref=e67] [cursor=pointer]
+        - generic [ref=e69]:
+          - generic [ref=e72]:
+            - textbox "Sector" [ref=e75] [cursor=pointer]
+            - textbox "Name" [ref=e77]
+            - combobox [ref=e79]:
+              - option "Reporting year" [selected]
+              - option "2026"
+              - option "2025"
+              - option "2024"
+            - combobox [ref=e81]:
+              - option "Select Analyst" [selected]
+              - option "Kishore admin"
+              - option "Surabhi Singh"
+              - option "Karthick T"
+              - option "Ajith kumar"
+              - option "Aditi Sharma"
+              - option "sur raghuvanshi"
+              - option "Sri Vaish"
+              - option "mathan kumar"
+              - option "Kishore Analyst"
+              - option "Rishika Bhardwaj"
+              - option "Gokul Sanjeev"
+              - option "Kamakshi s"
+              - option "Jiyath limran"
+              - option "Manager T"
+              - option "kishore manager222 r"
+            - button "Apply" [ref=e83] [cursor=pointer]
+            - button "Clear" [ref=e85] [cursor=pointer]
+          - list [ref=e86]:
+            - listitem [ref=e87]:
+              - combobox [disabled] [ref=e89]:
+                - option "Select analyst" [selected]
+                - option "Kishore admin"
+                - option "Surabhi Singh"
+                - option "Karthick T"
+                - option "Ajith kumar"
+                - option "Aditi Sharma"
+                - option "sur raghuvanshi"
+                - option "Sri Vaish"
+                - option "mathan kumar"
+                - option "Kishore Analyst"
+                - option "Rishika Bhardwaj"
+                - option "Gokul Sanjeev"
+                - option "Kamakshi s"
+                - option "Jiyath limran"
+                - option "Manager T"
+                - option "kishore manager222 r"
+            - listitem [ref=e90]:
+              - generic [ref=e91]:
+                - button "Assign" [disabled]
+            - listitem
+        - generic [ref=e93]:
+          - table [ref=e96]:
+            - rowgroup [ref=e97]:
+              - row "ISIN Company Name Sector Assign Analyst BRSR Report Status Action" [ref=e98]:
+                - columnheader [ref=e99]:
+                  - checkbox [ref=e100]
+                - columnheader "ISIN" [ref=e101]
+                - columnheader "Company Name" [ref=e102]
+                - columnheader "Sector" [ref=e103]
+                - columnheader "Assign Analyst" [ref=e104]
+                - columnheader "BRSR Report" [ref=e105]
+                - columnheader "Status" [ref=e106]
+                - columnheader "Action" [ref=e107]
+            - rowgroup [ref=e108]:
+              - row "- PB_Co_1769591513559 Automobiles & Auto Components -  Pre-Fill     " [ref=e109]:
+                - cell [ref=e110]:
+                  - checkbox [ref=e111]
+                - cell "-" [ref=e112]
+                - cell "PB_Co_1769591513559" [ref=e113]
+                - cell "Automobiles & Auto Components" [ref=e114]
+                - cell "-" [ref=e115]
+                - cell "" [ref=e116]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "Pre-Fill" [ref=e117]
+                - cell "    " [ref=e118]:
+                  - link "":
+                    - /url: /service/data_collection/323/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "":
+                    - /url: /service/data_collection/323/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e119] [cursor=pointer]:
+                    - generic [ref=e120]: 
+                  - generic "Delete" [ref=e121] [cursor=pointer]:
+                    - generic [ref=e122]: 
+              - row "35494656 Test user July 01 Information Technology Kishore Analyst  In Progress     " [ref=e123]:
+                - cell [ref=e124]:
+                  - checkbox [ref=e125]
+                - cell "35494656" [ref=e126]
+                - cell "Test user July 01" [ref=e127]
+                - cell "Information Technology" [ref=e128]
+                - cell "Kishore Analyst" [ref=e129]
+                - cell "" [ref=e130]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "In Progress" [ref=e131]
+                - cell "    " [ref=e132]:
+                  - link "":
+                    - /url: /service/data_collection/320/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "":
+                    - /url: /service/data_collection/320/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e133] [cursor=pointer]:
+                    - generic [ref=e134]: 
+                  - generic "Delete" [ref=e135] [cursor=pointer]:
+                    - generic [ref=e136]: 
+              - row "1234567890 Jiyath_testing 1 Constructions Karthick T  In Progress     " [ref=e137]:
+                - cell [ref=e138]:
+                  - checkbox [ref=e139]
+                - cell "1234567890" [ref=e140]
+                - cell "Jiyath_testing 1" [ref=e141]
+                - cell "Constructions" [ref=e142]
+                - cell "Karthick T" [ref=e143]
+                - cell "" [ref=e144]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "In Progress" [ref=e145]
+                - cell "    " [ref=e146]:
+                  - link "":
+                    - /url: /service/data_collection/313/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "":
+                    - /url: /service/data_collection/313/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e147] [cursor=pointer]:
+                    - generic [ref=e148]: 
+                  - generic "Delete" [ref=e149] [cursor=pointer]:
+                    - generic [ref=e150]: 
+              - row "983456789 Demo user for testin... Information Technology Karthick T  In Progress     " [ref=e151]:
+                - cell [ref=e152]:
+                  - checkbox [ref=e153]
+                - cell "983456789" [ref=e154]
+                - cell "Demo user for testin..." [ref=e155]
+                - cell "Information Technology" [ref=e156]
+                - cell "Karthick T" [ref=e157]
+                - cell "" [ref=e158]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "In Progress" [ref=e159]
+                - cell "    " [ref=e160]:
+                  - link "":
+                    - /url: /service/data_collection/321/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "":
+                    - /url: /service/data_collection/321/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e161] [cursor=pointer]:
+                    - generic [ref=e162]: 
+                  - generic "Delete" [ref=e163] [cursor=pointer]:
+                    - generic [ref=e164]: 
+              - row "1236547890 Jiyath_testing 2 Healthcare Jiyath limran  Push Back     " [ref=e165]:
+                - cell [ref=e166]:
+                  - checkbox [ref=e167]
+                - cell "1236547890" [ref=e168]
+                - cell "Jiyath_testing 2" [ref=e169]
+                - cell "Healthcare" [ref=e170]
+                - cell "Jiyath limran" [ref=e171]
+                - cell "" [ref=e172]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "Push Back" [ref=e173]
+                - cell "    " [ref=e174]:
+                  - link "":
+                    - /url: /service/data_collection/314/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "":
+                    - /url: /service/data_collection/314/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e175] [cursor=pointer]:
+                    - generic [ref=e176]: 
+                  - generic "Delete" [ref=e177] [cursor=pointer]:
+                    - generic [ref=e178]: 
+              - row "983456789 Demo user for testin... Information Technology Kishore admin  In Progress     " [ref=e179]:
+                - cell [ref=e180]:
+                  - checkbox [ref=e181]
+                - cell "983456789" [ref=e182]
+                - cell "Demo user for testin..." [ref=e183]
+                - cell "Information Technology" [ref=e184]
+                - cell "Kishore admin" [ref=e185]
+                - cell "" [ref=e186]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "In Progress" [ref=e187]
+                - cell "    " [ref=e188]:
+                  - link "" [ref=e189] [cursor=pointer]:
+                    - /url: /service/data_collection/322/provide_data?subscription_type=premium
+                    - generic [ref=e190]: 
+                  - link "":
+                    - /url: /service/data_collection/322/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e191] [cursor=pointer]:
+                    - generic [ref=e192]: 
+                  - generic "Delete" [ref=e193] [cursor=pointer]:
+                    - generic [ref=e194]: 
+              - row "- Test user002 FMCG Kishore admin  In Progress     " [ref=e195]:
+                - cell [ref=e196]:
+                  - checkbox [ref=e197]
+                - cell "-" [ref=e198]
+                - cell "Test user002" [ref=e199]
+                - cell "FMCG" [ref=e200]
+                - cell "Kishore admin" [ref=e201]
+                - cell "" [ref=e202]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "In Progress" [ref=e203]
+                - cell "    " [ref=e204]:
+                  - link "" [ref=e205] [cursor=pointer]:
+                    - /url: /service/data_collection/301/provide_data?subscription_type=premium
+                    - generic [ref=e206]: 
+                  - link "":
+                    - /url: /service/data_collection/301/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e207] [cursor=pointer]:
+                    - generic [ref=e208]: 
+                  - generic "Delete" [ref=e209] [cursor=pointer]:
+                    - generic [ref=e210]: 
+              - row "- GoaCarbonLimited1 Services Karthick T  In Progress     " [ref=e211]:
+                - cell [ref=e212]:
+                  - checkbox [ref=e213]
+                - cell "-" [ref=e214]
+                - cell "GoaCarbonLimited1" [ref=e215]
+                - cell "Services" [ref=e216]
+                - cell "Karthick T" [ref=e217]
+                - cell "" [ref=e218]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "In Progress" [ref=e219]
+                - cell "    " [ref=e220]:
+                  - link "":
+                    - /url: /service/data_collection/297/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "":
+                    - /url: /service/data_collection/297/view_providedata?subscription_type=premium
+                    - generic: 
+                  - generic "Pushback":
+                    - generic: 
+                  - generic "Edit" [ref=e221] [cursor=pointer]:
+                    - generic [ref=e222]: 
+                  - generic "Delete" [ref=e223] [cursor=pointer]:
+                    - generic [ref=e224]: 
+              - row "69 Koushik_Test-2 Automobiles & Auto Components Sri Vaish  Submitted     " [ref=e225]:
+                - cell [ref=e226]:
+                  - checkbox [ref=e227]
+                - cell "69" [ref=e228]
+                - cell "Koushik_Test-2" [ref=e229]
+                - cell "Automobiles & Auto Components" [ref=e230]
+                - cell "Sri Vaish" [ref=e231]
+                - cell "" [ref=e232]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "Submitted" [ref=e233]
+                - cell "    " [ref=e234]:
+                  - link "":
+                    - /url: /service/data_collection/318/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "" [ref=e235] [cursor=pointer]:
+                    - /url: /service/data_collection/318/view_providedata?subscription_type=premium
+                    - generic [ref=e236]: 
+                  - generic "Pushback" [ref=e237] [cursor=pointer]:
+                    - generic [ref=e238]: 
+                  - generic "Edit" [ref=e239] [cursor=pointer]:
+                    - generic [ref=e240]: 
+                  - generic "Delete" [ref=e241] [cursor=pointer]:
+                    - generic [ref=e242]: 
+              - row "6969 Koushik_Test -1 Forest Materials Sri Vaish  Submitted     " [ref=e243]:
+                - cell [ref=e244]:
+                  - checkbox [ref=e245]
+                - cell "6969" [ref=e246]
+                - cell "Koushik_Test -1" [ref=e247]
+                - cell "Forest Materials" [ref=e248]
+                - cell "Sri Vaish" [ref=e249]
+                - cell "" [ref=e250]:
+                  - link "":
+                    - /url: "#"
+                    - generic: 
+                - cell "Submitted" [ref=e251]
+                - cell "    " [ref=e252]:
+                  - link "":
+                    - /url: /service/data_collection/317/provide_data?subscription_type=premium
+                    - generic: 
+                  - link "" [ref=e253] [cursor=pointer]:
+                    - /url: /service/data_collection/317/view_providedata?subscription_type=premium
+                    - generic [ref=e254]: 
+                  - generic "Pushback" [ref=e255] [cursor=pointer]:
+                    - generic [ref=e256]: 
+                  - generic "Edit" [ref=e257] [cursor=pointer]:
+                    - generic [ref=e258]: 
+                  - generic "Delete" [ref=e259] [cursor=pointer]:
+                    - generic [ref=e260]: 
+          - text:                                                            
+        - navigation [ref=e262]:
+          - list [ref=e263]:
+            - listitem [ref=e264]:
+              - generic: ←
+            - listitem [ref=e265]:
+              - generic [ref=e266]: "1"
+            - listitem [ref=e267]:
+              - link "2" [ref=e268] [cursor=pointer]:
+                - /url: /service/data_collection?page=2&subscription_type=premium
+            - listitem [ref=e269]:
+              - link "3" [ref=e270] [cursor=pointer]:
+                - /url: /service/data_collection?page=3&subscription_type=premium
+            - listitem [ref=e271]:
+              - link "4" [ref=e272] [cursor=pointer]:
+                - /url: /service/data_collection?page=4&subscription_type=premium
+            - listitem [ref=e273]:
+              - link "5" [ref=e274] [cursor=pointer]:
+                - /url: /service/data_collection?page=5&subscription_type=premium
+            - listitem [ref=e275]:
+              - link "6" [ref=e276] [cursor=pointer]:
+                - /url: /service/data_collection?page=6&subscription_type=premium
+            - listitem [ref=e277]:
+              - link "7" [ref=e278] [cursor=pointer]:
+                - /url: /service/data_collection?page=7&subscription_type=premium
+            - listitem [ref=e279]:
+              - link "8" [ref=e280] [cursor=pointer]:
+                - /url: /service/data_collection?page=8&subscription_type=premium
+            - listitem [ref=e281]:
+              - link "9" [ref=e282] [cursor=pointer]:
+                - /url: /service/data_collection?page=9&subscription_type=premium
+            - listitem [ref=e283]:
+              - generic: …
+            - listitem [ref=e284]:
+              - link "17" [ref=e285] [cursor=pointer]:
+                - /url: /service/data_collection?page=17&subscription_type=premium
+            - listitem [ref=e286]:
+              - link "18" [ref=e287] [cursor=pointer]:
+                - /url: /service/data_collection?page=18&subscription_type=premium
+            - listitem [ref=e288]:
+              - link "→" [ref=e289] [cursor=pointer]:
+                - /url: /service/data_collection?page=2&subscription_type=premium
+      - contentinfo [ref=e290]:
+        - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e292]
+        - heading "Privacy Policy" [level=6] [ref=e294] [cursor=pointer]
+  - img
+```

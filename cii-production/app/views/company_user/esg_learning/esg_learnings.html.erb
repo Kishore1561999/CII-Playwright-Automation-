@@ -1,0 +1,280 @@
+<% if @tab == 1 %>
+<% content_for :title, "Your ESG E-Learning Downloads | Access All Videos" %>
+<% content_for :description, "View and access all your downloaded ESG e-learning videos. Enhance your company's ESG knowledge with our comprehensive video resources. Start learning now!" %>
+<% else %>
+<% content_for :title, "Download ESG E-Learning Videos | Corporate ESG Education" %>
+<% content_for :description, "Explore our library of corporate ESG education resources. Choose from a wide selection of ESG e-learning videos and download to enhance your company's knowledge and skills." %>
+<% end %>
+<style>
+.wrap-text {
+  word-wrap: break-word;
+}
+
+input {
+  cursor: pointer;
+}
+
+input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+</style>
+
+<div class="col-md-4">
+  <div class="nav-align-top mb-4">
+    <ul class="nav nav-pills nav-fill bg-white" role="tablist">
+      <li class="nav-item">
+        <button type="button" id="all-company-info" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-analyst-all-company" aria-controls="navs-analyst-all-company" aria-selected="true">
+           All Learning
+        </button>
+      </li>
+      <li class="nav-item">
+        <button type="button" id="analyst-company-info" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-analyst-my-company" aria-controls="navs-analyst-my-company" aria-selected="false">
+           My Downloads
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="pb-4">
+    <div class="navbar-nav-right d-flex align-items-center">
+        <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center">
+        <div class="col-12 d-flex">
+        <div class="col-4 mx-1 filter-width-publication">
+            <input type="text" name="search" id="companyNameFilter" class="form-control date-filter-text" placeholder="Search by Name" value="<%= @company_name ? @company_name : "" %>">
+        </div>
+        <div class="col-3 mx-1 filter-width-publication">
+            <input type="date" class="form-control date-filter-text" id="year-picker" data-placeholder="Select a date" style="cursor: text;" webkitdirectory />
+        </div>
+        <div class="col-1 mx-1" style="width: auto">
+            <%= button_tag "Apply", class: "btn btn-md btn-primary", id: "apply-filter" %>
+        </div>
+        <div class="col-3 mx-1">
+            <%= button_tag "Clear", class: "btn btn-md btn-secondary", id: "clear-filter" %>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+  <div class="">
+  <% if @tab == 0 %>
+    <div id="navs-analyst-all-company" class="tab-pane fade <%= @tab == 0 ? 'show active' : '' %>">
+      <div id="company-list" class="company-data-append table-responsive text-nowrap">
+        <%= render 'company_user/esg_learning/company_user_elearning_user_table', elearnings: @company_users %>
+      </div>
+    </div>
+  <% else %>
+    <div id="navs-analyst-my-company" class="tab-pane fade <%= @tab == 1 ? 'show active' : '' %>">
+      <div id="company-my-list" class="company-data-append table-responsive text-nowrap">
+        <%= render 'company_user/esg_learning/company_user_elearning_user_table', elearnings: @company_users %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
+
+
+<div class="modal fade" id="elearningApprovalModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to proceed with the payment?</p>
+        <input type="hidden" id="user_learning_id">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="approval_learning_btn">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel_learning_btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="videoModalLabel">Preview</h5>
+      </div>
+      <div class="modal-body">
+       <button type="button" class="btn-close float-right" style="box-shadow: revert;position: relative; bottom: 40px; right: 15px" data-bs-dismiss="modal" aria-label="Close"></button>
+       <h5 class="modal-title wrap-text" id="videoPreviewTitle" style="font-weight: 700;position: relative;bottom: 15px;"></h5>
+        <video id="videoPreview" width="600" height="350" controls controlsList="nodownload"> 
+        </video> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12 pagination-alignments">
+    
+</div>
+<script>
+    var year_value = `<%= params[:year] %>`
+    var subscriptionType = `<%= params[:subscription_type] %>`
+    $(document).on('turbolinks:load', function () {  
+        var tabIndex = "<%= @tab %>";
+        if (tabIndex === "1") {
+          $('#analyst-company-info').tab('show');
+        } else {
+          $('#all-company-info').tab('show');
+        }
+
+        $('#all-company-info').on('click', function() {
+          document.getElementById("loader-wrapper").style.display = "block";
+          $('.card').css('filter','blur(4px)');
+          fetchCompanies(false);
+          let activeTab = $(".nav-link.active").attr("data-bs-target");
+          let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+          window.location.replace("<%= esg_learnings_path %>?tab=" + tabIndex);
+        });
+        $('#analyst-company-info').on('click', function() {
+          document.getElementById("loader-wrapper").style.display = "block";
+          $('.card').css('filter','blur(4px)');
+          fetchCompanies(true);
+          let activeTab = $(".nav-link.active").attr("data-bs-target");
+          let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+          window.location.replace("<%= esg_learnings_path %>?tab=" + tabIndex);
+        });
+        
+        function fetchCompanies(myCompanies) {
+          const url = myCompanies ? '<%= esg_learnings_path(my_companies: true) %>' : '<%= esg_learnings_path %>';
+          $.ajax({
+            url: url,
+            type: 'GET',
+            data: { subscription_type: subscriptionType },
+            dataType: 'script',
+            success: function(data) {
+              $('.company-data-append').html(data);
+            },
+            error: function(err) {
+              console.error('Error fetching companies:', err);
+            }
+          });
+        }
+        $('#modalAddCompany, #confirmationModal, #multipleCompanyModal').modal({ backdrop: 'static', keyboard: false });
+
+        $("#analyst_id, #assign").attr('disabled', 'disabled');  
+        $(document).on("click", "#clear-filter", function (event) {
+            event.stopPropagation();
+            let activeTab = $(".nav-link.active").attr("data-bs-target"); 
+            let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+            window.location.replace("<%= esg_learnings_path %>?tab=" + tabIndex);
+        });
+        $(document).on("click", "#apply-filter", function (event) {
+            event.stopPropagation();
+
+            $(".filter-container").hide();
+
+            applyFilter(event);
+        });
+
+        $(document).on("click", ".elearning_user_btn", function (event) {
+          event.stopPropagation();
+          $("#user_learning_id").val($(this).val());
+          $("#confirmation_learning_id").val($(this).val());
+        });
+
+        $(document).off("click", "#approval_learning_btn").on("click", "#approval_learning_btn", function (event) {
+          event.stopPropagation();
+          $("#approval_learning_btn").prop('disabled', true);
+          $("#cancel_learning_btn").prop('disabled', true);
+          let user_id = $("#user_learning_id").val();
+          $.ajax({
+              type: "POST",
+              url: '/company_user/esg_learning/approval',
+              data: { elearning_id: user_id },
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+              },
+              processData: true,
+              success: function (data) {
+                  $("#approval_learning_btn").prop('disabled', true);
+              },
+              error: function (err) {
+                  $(".alert-dismissible").html("Unable to approve.").show().delay(3000).fadeOut(300);
+              }
+          });
+        });
+
+        function applyFilter(event) {
+          event.preventDefault();
+
+          $(".filter-container").hide();
+          $("#analyst_id, #assign").attr('disabled', 'disabled');
+          $("#analyst_id").val('');
+
+          let companyName = $("#companyNameFilter").val();
+          let searchYear = $("#year-picker").val();
+          let activeTab = $(".nav-link.active").attr("data-bs-target");
+          let tabIndex = activeTab === "#navs-analyst-my-company" ? 1 : 0;
+          $(".sector-checkbox:checkbox:checked").each(function () {
+              sectorIds.push(Number(this.value));
+          });
+          window.location.replace("<%= esg_learnings_path %>?companyName="+companyName+"&year="+searchYear+ "&tab=" + tabIndex)
+        }
+
+        function setDateFromURL() {
+          const params = new URLSearchParams(window.location.search);
+          const year = params.get('year');
+          if (year) {
+              $("#year-picker").val(year);
+          }
+        }
+
+      $(document).ready(function() {
+            setDateFromURL();
+      });
+
+    });
+
+    $(document).ready(function(){
+      $("#analyst-company-info").click(function(){
+          $(".add-company-button").show();
+      });
+        $("#all-company-info").click(function(){
+          $(".add-company-button").hide();
+      });
+    });
+
+  if (year_value != "") {
+      $('.select-year-font').css("color", "black")
+  };
+
+function debounce(func, wait) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const videoModal = document.getElementById('videoModal');
+  const videoPreview = document.getElementById('videoPreview');
+  const videoPreviewTitle = document.getElementById('videoPreviewTitle');
+
+  videoModal.addEventListener('show.bs.modal', function(event) {
+    const button = event.relatedTarget;
+    const videoUrl = button.getAttribute('data-video-url');
+    const title = button.getAttribute('data-title');
+   
+    
+    videoPreview.src = videoUrl;
+    videoPreview.style.width = '100%';
+    videoPreview.style.height = 'auto';
+
+    videoPreviewTitle.textContent = title;
+  });
+
+  videoModal.addEventListener('hide.bs.modal', function() {
+    videoPreview.src = '';
+    videoPreviewTitle.textContent = '';
+  });
+});
+</script>

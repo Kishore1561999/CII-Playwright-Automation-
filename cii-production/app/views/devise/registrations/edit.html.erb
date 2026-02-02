@@ -1,0 +1,216 @@
+<div class="card">
+  <div class="card-body col-md-10 offset-1">
+    <h4>Edit Profile</h4>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "mb-3" }) do |f| %>
+      <%= render "shared/error_messages", resource: resource %>
+
+      <% if current_user.is_company_user? %>
+        <%= f.hidden_field :email, :value => current_user.email, :id => "user_email" %>
+
+        <div class="nav-align-top mb-4">
+          <ul class="nav nav-pills nav-fill" role="tablist">
+            <li class="nav-item">
+              <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-company" aria-controls="navs-justified-company" aria-selected="true">
+              <i class="tf-icons bx bx-buildings"></i> Company Info
+              </button>
+            </li>
+            <li class="nav-item">
+              <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-justified-contact" aria-controls="navs-justified-contact" aria-selected="false">
+              <i class="tf-icons bx bx-user"></i> Contact Info
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="navs-justified-company" role="tabpanel">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5 class="mb-2"><small class="text-light fw-semibold">Basic Info</small></h5>
+                  <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <%= f.text_field :company_name, class: "form-control", placeholder: "Enter company name" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">ISIN Number</label>
+                    <%= f.text_field :company_isin_number, class: "form-control", placeholder: "Enter company isin number" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Sector</label>
+                    <%= f.select :company_sector, options_for_select(Sector.all.map { |sector| [sector.sector_name, sector.sector_name] }, resource.company_sector), { include_blank: "Select sector" }, { class: "form-control form-select" } %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <%= f.text_area :company_description, class: "form-control textarea-input", placeholder: "Enter company description" %>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Organization Scale</label>
+                      <%= f.select :company_scale, options_for_select(["Large", "Medium", "Small", "Micro"], current_user.company_scale), { include_blank: "Select Organization Scale" }, { class: "form-control form-select" } %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">GST No</label>
+                    <%= f.text_field :gst, class: "form-control", placeholder: "Enter GST No" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Logo</label>
+                    <%= f.file_field :company_logo, class: "form-control company-logo", accept: "image/*" %>
+                    <div class="holder">
+                      <%= image_tag "no-image.png", class: "img-responsive img-thumbnail img-logo", id: "imgPreview" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h5 class="mb-2"><small class="text-light fw-semibold">Address Info</small></h5>
+                  <div class="mb-3">
+                    <label class="form-label">Address Line 1</label>
+                    <%= f.text_field :company_address_line1, class: "form-control", placeholder: "Enter address line 1" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Address Line 2</label>
+                    <%= f.text_field :company_address_line2, class: "form-control", placeholder: "Enter address line 2" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Country</label>
+                    <%= f.select :company_country, options_for_select(CS.countries.map { |country| [country[1], country[0]] }, current_user.company_country), { include_blank: "Select country" }, { class: "form-control form-select" } %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">State</label>
+                    <%= f.select :company_state, options_for_select(CS.states(current_user.company_country).map { |state| [state[1], state[0]] }, current_user.company_state), { include_blank: "Select state" }, { class: "form-control form-select" } %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">City</label>
+                    <%= f.select :company_city, options_for_select(CS.cities(current_user.company_state, current_user.company_country).map { |city| [city, city] }, current_user.company_city), { include_blank: "Select city" }, { class: "form-control form-select" } %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">ZIP Code</label>
+                    <%= f.text_field :company_zip, class: "form-control number-input", placeholder: "Enter zip code" %>
+                  </div>
+                   <div class="mb-3">
+                    <label class="form-label">PAN</label>
+                    <%= f.text_field :pan_no, class: "form-control", placeholder: "Enter PAN no" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="navs-justified-contact" role="tabpanel">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5 class="mb-2"><small class="text-light fw-semibold">Primary Contact</small></h5>
+                  <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <%= f.text_field :primary_name, class: "form-control", placeholder: "Enter full name" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <%= f.text_field :primary_email, class: "form-control", placeholder: "Enter email" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Designation</label>
+                    <%= f.text_field :primary_designation, class: "form-control", placeholder: "Enter designation" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Contact Number</label>
+                    <%= f.text_field :primary_contact, class: "form-control number-input", placeholder: "Enter contact number" %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h5 class="mb-2"><small class="text-light fw-semibold">Alternate Contact</small></h5>
+                  <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <%= f.text_field :alternate_name, class: "form-control", placeholder: "Enter full name" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <%= f.text_field :alternate_email, class: "form-control", placeholder: "Enter email" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Designation</label>
+                    <%= f.text_field :alternate_designation, class: "form-control", placeholder: "Enter designation" %>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Contact Number</label>
+                    <%= f.text_field :alternate_contact, class: "form-control number-input", placeholder: "Enter contact number" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="row">
+          <div class="col-md-6 offset-3">
+            <div class="mb-3">
+              <label class="form-label">First Name</label>
+              <%= f.text_field :first_name, class: "form-control", placeholder: "Enter first name" %>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Last Name</label>
+              <%= f.text_field :last_name, class: "form-control", placeholder: "Enter last name" %>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <%= f.email_field :email, class: "form-control", placeholder: "Enter email", readonly: !current_user.is_admin? ? true : false %>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Mobile</label>
+              <%= f.text_field :mobile, class: "form-control number-input", placeholder: "Enter mobile number" %>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <%= text_field_tag :role_name, current_user.role.role_name.humanize.titleize, class: "form-control", readonly: true %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="col-md-4 offset-4">
+        <center>
+          <div class="row">
+            <div class="col-md-12">
+              <%= f.submit "Update", class: "btn btn-primary" %>
+              <%= link_to "Cancel", url_for(:back), class: "btn btn-secondary" %>
+            </div>
+          </div>
+        </center>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#user_primary_email").focusout(function() {
+      // $("#user_email").val($(this).val());
+    });
+
+    $("#user_company_country").change(function() {
+      let input_state = $("#user_company_state");
+      let input_city = $("#user_company_city");
+
+      $.getJSON('/states/' + $(this).val(), function (data) {
+        input_state.empty();
+        input_state.append("<option value=''>Select state</option>");
+        input_city.empty();
+        input_city.append("<option value=''>Select city</option>");
+
+        $.each(data, function (key, value) {
+          var opt = '<option value='+ key +'>' + value + '</option>';
+          input_state.append(opt);
+        });
+      });
+    });
+
+    $("#user_company_state").change(function() {
+      let input_city = $("#user_company_city");
+
+      $.getJSON('/cities/' + $(this).val(), function (data) {
+        input_city.empty();
+        input_city.append("<option value=''>Select city</option>");
+
+        $.each(data, function (key, value) {
+          var opt = '<option value='+ value +'>' + value + '</option>';
+          input_city.append(opt);
+        });
+      });
+    });
+  });
+</script>

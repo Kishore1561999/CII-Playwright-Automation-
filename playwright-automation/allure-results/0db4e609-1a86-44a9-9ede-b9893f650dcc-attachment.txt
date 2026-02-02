@@ -1,0 +1,10 @@
+✓ Clicked: PB Data Management link
+✓ Admin: Approving PB Data for: PB_Co_1769773285579
+✓ Admin: Searched for Company: PB_Co_1769773285579
+✓ Approved PB Data for: PB_Co_1769773285579
+CII Data link is visible, clicking directly.
+✓ Clicked: CII Data link
+✓ Admin: Navigated to CII Data Collection
+✓ Admin: Searched for Company: PB_Co_1769773285579
+✓ Admin: Assigning analyst Kishore Analyst to company PB_Co_1769773285579
+✓ Assignment successful: PB_Co_1769773285579 → Kishore Analyst

@@ -1,0 +1,121 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: https://www.cii.in/
+        - img [ref=e9]
+      - list [ref=e10]:
+        - listitem [ref=e11]:
+          - link "ESG Diagnostics " [ref=e12] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e13]:
+              - text: ESG Diagnostics
+              - generic [ref=e14]: 
+        - listitem [ref=e15]:
+          - link "Peer Benchmarking" [ref=e16] [cursor=pointer]:
+            - /url: /company_user/peer_benchmarking
+            - generic [ref=e17]: Peer Benchmarking
+        - text:  
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link " User Guide" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=e21]: 
+            - generic [ref=e22]: User Guide
+    - text:   
+    - generic [ref=e23]:
+      - navigation [ref=e24]:
+        - generic [ref=e25]:
+          - list [ref=e26]:
+            - listitem [ref=e27]:
+              - link [ref=e29] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/brands/esg-intelligence-and-analytics/
+                - img [ref=e31]
+          - list [ref=e32]:
+            - listitem [ref=e33]:
+              - link [ref=e35] [cursor=pointer]:
+                - /url: https://sustainabledevelopment.in/
+                - img [ref=e37]
+            - listitem [ref=e38]:
+              - link " PB User Company user" [ref=e39] [cursor=pointer]:
+                - /url: javascript:void(0);
+                - generic [ref=e40]:
+                  - generic [ref=e43]: 
+                  - generic [ref=e44]:
+                    - generic [ref=e45]: PB User
+                    - text: Company user
+              - text:    
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - generic [ref=e50]:
+              - generic [ref=e51]: Select Sector
+              - combobox [ref=e52]:
+                - option "Select sector"
+                - option "Automobiles & Auto Components" [selected]
+                - option "Capital Goods"
+                - option "Chemicals"
+                - option "Consumer Durables"
+                - option "Consumer Services"
+                - option "Construction Materials"
+                - option "Constructions"
+                - option "Diversified"
+                - option "FMCG"
+                - option "Financial Services"
+                - option "Forest Materials"
+                - option "Healthcare"
+                - option "Information Technology"
+                - option "Media, Entertainment & Publication"
+                - option "Metals & Mining"
+                - option "Oil, Gas & Consumablefuels"
+                - option "Power"
+                - option "Realty"
+                - option "Services"
+                - option "Textiles"
+                - option "Telecommunications"
+                - option "Utilities"
+            - generic [ref=e53]:
+              - checkbox [checked] [ref=e54]
+              - text: We provide CII team consent to use our ESG data, populated in the questionnaire, for analytics purpose
+          - generic [ref=e56]:
+            - generic [ref=e58] [cursor=pointer]:
+              - img "provide_data" [ref=e60]
+              - paragraph [ref=e61]: Provide & Edit Data
+            - link "view_report View Report" [ref=e63] [cursor=pointer]:
+              - /url: /rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBcVFFIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--32309352316c93f0ff653b682ed0d79576ac8eb3/PB_Co_17695951863852026-01-28.pdf?disposition=attachment
+              - generic [ref=e64]:
+                - img "view_report" [ref=e66]
+                - paragraph [ref=e67]: View Report
+          - generic [ref=e69]:
+            - paragraph [ref=e70]: "Instructions :"
+            - list [ref=e71]:
+              - listitem [ref=e72]:
+                - text: The subscriber can provide their own data for the peer benchmarking indicators against which the industry averages will be presented. The questionnaire is accessible by clicking on the
+                - img "provide_data" [ref=e73]
+                - strong [ref=e74]: Click & Edit
+                - text: button on the dashboard.
+              - listitem [ref=e75]: The data can be provided for all indicators, some indicators, or no indicator. It is optional and the analytics can be run without providing any data by simply clicking on the run analytics button.
+              - listitem [ref=e76]: The questionnaire has an auto save functionality that saves data after every 2 mins. However, a manual save button has also been provided.
+              - listitem [ref=e77]:
+                - text: The pdf generated can be accessed from Downloads folder on your desktop/ from registered email/
+                - strong [ref=e78]: View report
+                - text: option on the dashboard.
+              - listitem [ref=e79]: The subscribers are suggested to re-check the sector for which they want to run analytics. It is set by-default as the sector chosen by the company in the registration form. It can, however, be changed on the dashboard of the Peer benchmarking services.
+              - listitem [ref=e80]: If the subscriber provides consent to CII team to use their ESG data, the data will only be added to the backend dataset based on which the industry analytics are generated, and their name or data will not be disclosed to any other subscriber.
+              - listitem [ref=e81]: The subscriber can run peer benchmarking analytics for different sectors using same/ different set of data.
+              - listitem [ref=e82]: The subscriber can run peer benchmarking analytics numerous times. When accessed to run for the second time, the default data in the questionnaire will be that was provided by the company during the previous run. It can be cleared by clicking on the clear option.
+              - listitem [ref=e83]:
+                - text: To understand the peer benchmarking analytics and the company performance in detail, please get in touch with us at
+                - link "Surabhi.singh@cii.in" [ref=e84] [cursor=pointer]:
+                  - /url: mailto:Surabhi.singh@cii.in
+                - text: .
+        - contentinfo [ref=e85]:
+          - heading "Copyright © 2026 CII-ITC-CESD. All rights reserved" [level=6] [ref=e87]
+          - heading "Privacy Policy" [level=6] [ref=e89] [cursor=pointer]
+  - generic [ref=e91]:
+    - button "×" [ref=e92] [cursor=pointer]
+    - generic [ref=e93]: Report generated successfully and report has been sent to your mail
+```

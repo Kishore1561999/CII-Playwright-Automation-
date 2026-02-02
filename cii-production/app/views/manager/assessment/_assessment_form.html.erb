@@ -1,0 +1,619 @@
+<% readonly = (params[:action] == "view_assessment") ? true : false %>
+
+<div class="row">
+  <div class="col-md-3 col-12 mb-3 mb-md-0">
+    <h5 class="card-title">Aspects</h5>
+    <div class="list-group" id="aspects-list">
+      <% @categories.each_with_index do |category, index| %>
+        <a class="list-group-item list-group-item-action <%= index == 0 ? 'active' : '' %>" id="<%= index %>-list" data-column="<%= ApplicationRecord::ASPECT_FOR_ASSESSMENT.key(category.category_name).to_s+"_answers" %>" data-bs-toggle="list" href="#list-category-<%= index + 1 %>"><%= category.category_name %><span class="badge bg-danger rounded-pill float-right"><%= @questions.where(category_id: category.id).length %></span></a>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-9 col-12">
+    <h5 class="card-title">Questions</h5>
+    <%= form_tag '#', multipart: true, id: "assessment_form" do %>
+      <div class="tab-content p-0">
+        <% question_no = 1 %>
+        <% @categories.each_with_index do |category, index| %>
+          <div class="tab-pane fade mb-3 <%= index == 0 ? 'active show' : '' %>" id="list-category-<%= index + 1 %>" data-column="<%= ApplicationRecord::ASPECT_FOR_ASSESSMENT.key(category.category_name).to_s+"_answers" %>">
+            <% @questions.where(category_id: category.id).each_with_index do |question, index| %>
+              <div class="form-group col-md mb-5 answerChangeCheck" id="<%= "question_no_#{question_no}" %>">
+                <% question_no = question_no+1 %>
+                <label class="form-label d-block"><%= "#{index+1}. #{question.question_name}" %></label>
+                <% (question.options).each_with_index do |option, option_index| %>
+                  <% if option['type'] == 'radio' %>
+                    <div class="form-check mt-3 left-align">
+                      <%= radio_button_tag option['name'], option['label'], @user_answers[option['name']] == option['label'], { class: "form-check-input choice", title: "answer-#{question.question_id}-#{option_index+1}", disabled: readonly } %>
+                      <%= label_tag option['name'], option['label'], { class: "form-check-label" } %>
+                    </div>
+                    <% if option['has_table'] %>
+                      <div class="row g-3 <%= option['name'] %> sub-answers d-none" id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                        <table class="left-align">
+                          <% option['table_data'].each_with_index do |row_data, index| %>
+                            <tr>
+                              <% row_data.each_with_index do |column_data, index| %>
+                                <td>
+                                  <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                    <% if column_data['type'] == 'text' %>
+                                      <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                    <% else %>
+                                      <% if column_data['label'] == 'Percentage' %>
+                                        <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                        <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                      <% else %>
+                                        <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                      <% end %>
+                                    <% end %>
+                                  <% elsif column_data['type'] == 'dropdown' %>
+                                    <div class="col-md-12" style="margin-top: 0">
+                                      <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                    </div>
+                                  <% elsif column_data['type'] == 'textarea' %>
+                                    <div class="col-md-12" style="margin-top: 0">
+                                      <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                    </div>
+                                  <% else %>
+                                    <label class="form-label d-block"><%= column_data['label'] %></label>
+                                  <% end %>
+                                </td>
+                              <% end %>
+                            </tr>
+                          <% end %>
+                        </table>
+                        <% if option['has_validation_box'] && params[:user_type] == ApplicationRecord::CII_USER %>
+                            <div class="validation-box answer-<%= question.question_id %>-<%= option_index+1 %>" data-id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                            <% option['validation_boxes'].each_with_index do |validation_box, validation_box_index| %>
+                              <% if validation_box['type'] == 'label' %>
+                                <div class="col-md-12" style="margin-top: 1rem">
+                                  <label class="form-label d-block"><%= validation_box['label'] %></label>
+                                </div>
+                              <% end %>
+                              <% if validation_box['type'] == 'radio' || validation_box['type'] == 'checkbox' %>
+                                <div class="form-check mt-3 left-align">
+                                  <% if validation_box['type'] == 'radio' %>
+                                    <%= radio_button_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "validation-#{question.question_id}-#{option_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                  <% else %>
+                                    <%= check_box_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "validation-#{question.question_id}-#{option_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                  <% end %>
+                                  <%= label_tag validation_box['name'], validation_box['label'], { class: "form-check-label" } %>
+                                </div>
+                                <% if validation_box['has_sub_answer'] %>
+                                  <div class="row g-3 <%= validation_box['name'] %> sub-answers d-none" id="validation-<%= question.question_id %>-<%= option_index+1 %>-<%= validation_box_index+1 %>">
+                                    <% validation_box['sub_answers'].each_with_index do |sub_validation_box, sub_validation_box_index| %>
+                                      <% if sub_validation_box['type'] == 'radio' || sub_validation_box['type'] == 'checkbox' %>
+                                        <div class="form-check mt-3 left-align">
+                                          <% if sub_validation_box['type'] == 'radio' %>
+                                            <%= radio_button_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                          <% else %>
+                                            <%= check_box_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                          <% end %>
+                                          <%= label_tag sub_validation_box['name'], sub_validation_box['label'], { class: "form-check-label" } %>
+                                        </div>
+                                      <% end %>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    <% if option['has_sub_answer'] %>
+                      <div class="row g-3 <%= option['name'] %> sub-answers d-none" id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                        <% option['sub_answers'].each_with_index do |sub_answer, sub_answer_index| %>
+                          <% if sub_answer['type'] == 'label' %>
+                            <div class="col-md-12">
+                              <label class="form-label d-block"><%= sub_answer['label'] %></label>
+                            </div>
+                            <% if sub_answer['has_table'] %>
+                              <table class="left-align">
+                                <% sub_answer['table_data'].each_with_index do |row_data, index| %>
+                                  <tr>
+                                    <% row_data.each_with_index do |column_data, index| %>
+                                      <td>
+                                        <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                          <% if column_data['type'] == 'text' %>
+                                            <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                          <% else %>
+                                            <% if column_data['label'] == 'Percentage' %>
+                                              <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                              <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                            <% else %>
+                                              <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                            <% end %>
+                                          <% end %>
+                                        <% elsif column_data['type'] == 'dropdown' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                          </div>
+                                        <% elsif column_data['type'] == 'textarea' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                          </div>
+                                        <% else %>
+                                          <label class="form-label d-block"><%= column_data['label'] %></label>
+                                        <% end %>
+                                      </td>
+                                    <% end %>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% end %>
+                          <% end %>
+                          <% if sub_answer['type'] == 'radio' || sub_answer['type'] == 'checkbox' %>
+                            <div class="form-check mt-3 left-align">
+                              <% if sub_answer['type'] == 'radio' %>
+                                <%= radio_button_tag sub_answer['name'], sub_answer['label'], @user_answers[sub_answer['name']] == sub_answer['label'], { class: "form-check-input", title: "sub_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}", disabled: readonly } %>
+                              <% else %>
+                                <%= check_box_tag sub_answer['name'], sub_answer['label'], @user_answers[sub_answer['name']] == sub_answer['label'], { class: "form-check-input", title: "sub_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}", disabled: readonly } %>
+                              <% end %>
+                              <%= label_tag sub_answer['name'], sub_answer['label'], { class: "form-check-label" } %>
+                            </div>
+                            <% if sub_answer['has_table'] %>
+                              <div class="row g-3 <%= sub_answer['name'] %> sub-answers d-none" id="sub_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>">
+                                <table class="left-align">
+                                  <% sub_answer['table_data'].each_with_index do |row_data, index| %>
+                                    <tr>
+                                      <% row_data.each_with_index do |column_data, index| %>
+                                        <td>
+                                          <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                            <% if column_data['type'] == 'text' %>
+                                              <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                            <% else %>
+                                              <% if column_data['label'] == 'Percentage' %>
+                                                <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                                <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                              <% else %>
+                                                <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                              <% end %>
+                                            <% end %>
+                                          <% elsif column_data['type'] == 'dropdown' %>
+                                            <div class="col-md-12" style="margin-top: 0">
+                                              <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                            </div>
+                                          <% elsif column_data['type'] == 'textarea' %>
+                                            <div class="col-md-12" style="margin-top: 0">
+                                              <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                            </div>
+                                          <% else %>
+                                            <label class="form-label d-block"><%= column_data['label'] %></label>
+                                          <% end %>
+                                        </td>
+                                      <% end %>
+                                    </tr>
+                                  <% end %>
+                                </table>
+                              </div>
+                            <% end %>
+                            <% if sub_answer['has_sub_answer'] %>
+                              <div class="row g-3 <%= sub_answer['name'] %> sub-answers d-none" id="sub_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>">
+                                <% sub_answer['sub_answers'].each_with_index do |inner_answer, inner_answer_index| %>
+                                  <% if inner_answer['type'] == 'label' %>
+                                    <div class="col-md-12">
+                                      <label class="form-label d-block"><%= inner_answer['label'] %></label>
+                                    </div>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'radio' || inner_answer['type'] == 'checkbox' %>
+                                    <div class="form-check mt-3 left-align">
+                                      <% if inner_answer['type'] == 'radio' %>
+                                        <%= radio_button_tag inner_answer['name'], inner_answer['label'], @user_answers[inner_answer['name']] == inner_answer['label'], { class: "form-check-input", title: "sub_inner_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{inner_answer_index+1}", disabled: readonly } %>
+                                      <% else %>
+                                        <%= check_box_tag inner_answer['name'], inner_answer['label'], @user_answers[inner_answer['name']] == inner_answer['label'], { class: "form-check-input", title: "sub_inner_answer-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{inner_answer_index+1}", disabled: readonly } %>
+                                      <% end %>
+                                      <%= label_tag inner_answer['name'], inner_answer['label'], { class: "form-check-label" } %>
+                                    </div>
+                                    <% if inner_answer['has_table'] %>
+                                      <div class="row g-3 <%= inner_answer['name'] %> sub-sub-answers d-none" id="sub_inner_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>">
+                                        <table class="left-align">
+                                          <% inner_answer['table_data'].each_with_index do |row_data, index| %>
+                                            <tr>
+                                              <% row_data.each_with_index do |column_data, index| %>
+                                                <td>
+                                                  <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                                    <% if column_data['type'] == 'text' %>
+                                                      <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                                    <% else %>
+                                                      <% if column_data['label'] == 'Percentage' %>
+                                                        <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                                        <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                                      <% else %>
+                                                        <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                                      <% end %>
+                                                    <% end %>
+                                                  <% elsif column_data['type'] == 'dropdown' %>
+                                                    <div class="col-md-12" style="margin-top: 0">
+                                                      <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                                    </div>
+                                                  <% elsif column_data['type'] == 'textarea' %>
+                                                    <div class="col-md-12" style="margin-top: 0">
+                                                      <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                                    </div>
+                                                  <% else %>
+                                                    <label class="form-label d-block"><%= column_data['label'] %></label>
+                                                  <% end %>
+                                                </td>
+                                              <% end %>
+                                            </tr>
+                                          <% end %>
+                                        </table>
+                                      </div>
+                                    <% end %>
+                                    <% if inner_answer['has_sub_answer'] %>
+                                      <div class="row g-3 <%= inner_answer['name'] %> sub-answers d-none" id="sub_inner_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>">
+                                        <% inner_answer['sub_answers'].each_with_index do |sub_inner_answer, sub_inner_answer_index| %>
+                                          <% if sub_inner_answer['type'] == 'label' %>
+                                            <div class="col-md-12">
+                                              <label class="form-label d-block"><%= sub_inner_answer['label'] %></label>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'radio' || sub_inner_answer['type'] == 'checkbox' %>
+                                            <div class="form-check mt-3 left-align">
+                                              <% if sub_inner_answer['type'] == 'radio' %>
+                                                <%= radio_button_tag sub_inner_answer['name'], sub_inner_answer['label'], @user_answers[sub_inner_answer['name']] == sub_inner_answer['label'], { class: "form-check-input", disabled: readonly } %>
+                                              <% else %>
+                                                <%= check_box_tag sub_inner_answer['name'], sub_inner_answer['label'], @user_answers[sub_inner_answer['name']] == sub_inner_answer['label'], { class: "form-check-input", disabled: readonly } %>
+                                              <% end %>
+                                              <%= label_tag sub_inner_answer['name'], sub_inner_answer['label'], { class: "form-check-label" } %>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'text' || sub_inner_answer['type'] == 'number' %>
+                                            <div class="col-md-4" style="margin-top: 1rem">
+                                              <div class="d-flex flex-column h-100 justify-content-between">
+                                                <% if sub_inner_answer['type'] == 'text' %>
+                                                  <%= text_field_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: sub_inner_answer['label'], readonly: readonly } %>
+                                                <% else %>
+                                                  <% if sub_inner_answer['label'] == 'Percentage' %>
+                                                    <input type="decimal" name="<%= sub_inner_answer['name'] %>" id="<%= sub_inner_answer['name'] %>" value="<%= @user_answers[sub_inner_answer['name']] %>" class="form-control" placeholder="<%= sub_inner_answer['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                                    <%#= number_field_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: sub_inner_answer['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                                  <% else %>
+                                                    <%= number_field_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: sub_inner_answer['label'], readonly: readonly, min: 0 } %>
+                                                  <% end %>
+                                                <% end %>
+                                              </div>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'dropdown' %>
+                                            <div class="col-md-4" style="margin-top: 1rem">
+                                              <%= select_tag sub_inner_answer['name'], options_for_select(sub_inner_answer['options'], @user_answers[sub_inner_answer['name']]), { class: "form-control form-select", include_blank: sub_inner_answer['label'], disabled: readonly } %>
+                                            </div>
+                                          <% end %>
+                                          <% if sub_inner_answer['type'] == 'textarea' %>
+                                            <div class="col-md-12" style="margin-top: 1rem">
+                                              <%= text_area_tag sub_inner_answer['name'], @user_answers[sub_inner_answer['name']], { class: "form-control", placeholder: "#{sub_inner_answer['label']}", readonly: readonly,  } %>
+                                            </div>
+                                          <% end %>
+                                        <% end %>
+                                        <% if inner_answer['has_validation_box'] && params[:user_type] == ApplicationRecord::CII_USER %>
+                                          <div class="validation-box sub_inner_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>" data-id="sub_inner_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>">
+                                            <% inner_answer['validation_boxes'].each_with_index do |validation_box, validation_box_index| %>
+                                              <% if validation_box['type'] == 'label' %>
+                                                <div class="col-md-12" style="margin-top: 1rem">
+                                                  <label class="form-label d-block"><%= validation_box['label'] %></label>
+                                                </div>
+                                              <% end %>
+                                              <% if validation_box['type'] == 'radio' || validation_box['type'] == 'checkbox' %>
+                                                <div class="form-check mt-3 left-align">
+                                                  <% if validation_box['type'] == 'radio' %>
+                                                    <%= radio_button_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "inner-validation-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{inner_answer_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                                  <% else %>
+                                                    <%= check_box_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "inner-validation-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{inner_answer_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                                  <% end %>
+                                                  <%= label_tag validation_box['name'], validation_box['label'], { class: "form-check-label" } %>
+                                                </div>
+                                                <% if validation_box['has_sub_answer'] %>
+                                                  <div class="row g-3 <%= validation_box['name'] %> sub-answers d-none" id="inner-validation-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= inner_answer_index+1 %>-<%= validation_box_index+1 %>">
+                                                    <% validation_box['sub_answers'].each_with_index do |sub_validation_box, sub_validation_box_index| %>
+                                                      <% if sub_validation_box['type'] == 'radio' || sub_validation_box['type'] == 'checkbox' %>
+                                                        <div class="form-check mt-3 left-align">
+                                                          <% if sub_validation_box['type'] == 'radio' %>
+                                                            <%= radio_button_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                                          <% else %>
+                                                            <%= check_box_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                                          <% end %>
+                                                          <%= label_tag sub_validation_box['name'], sub_validation_box['label'], { class: "form-check-label" } %>
+                                                        </div>
+                                                      <% end %>
+                                                    <% end %>
+                                                  </div>
+                                                <% end %>
+                                              <% end %>
+                                            <% end %>
+                                          </div>
+                                        <% end %>
+                                      </div>
+                                    <% end %>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'text' || inner_answer['type'] == 'number' %>
+                                    <div class="col-md-4" style="margin-top: 1rem">
+                                      <div class="d-flex flex-column h-100 justify-content-between">
+                                        <% if inner_answer['type'] == 'text' %>
+                                          <%= text_field_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: inner_answer['label'], readonly: readonly } %>
+                                        <% else %>
+                                        <label class="form-label d-block"><%= "#{inner_answer['label']}" %></label>
+                                          <% if(inner_answer['label'] == 'Percentage' || inner_answer['placeholder'] == 'Percentage') %>
+                                            <input type="decimal" name="<%= inner_answer['name'] %>" id="<%= inner_answer['name'] %>" value="<%= @user_answers[inner_answer['name']] %>" class="form-control" placeholder="<%= inner_answer['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                            <%#= number_field_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: inner_answer['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                          <% else %>
+                                            <%= number_field_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: inner_answer['label'], readonly: readonly, min: 0 } %>
+                                          <% end %>
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'dropdown' %>
+                                    <div class="col-md-4" style="margin-top: 1rem">
+                                      <%= select_tag inner_answer['name'], options_for_select(inner_answer['options'], @user_answers[inner_answer['name']]), { class: "form-control form-select", include_blank: inner_answer['label'] } %>
+                                    </div>
+                                  <% end %>
+                                  <% if inner_answer['type'] == 'textarea' %>
+                                    <div class="col-md-12" style="margin-top: 1rem">
+                                      <% if inner_answer['has_label'].present? && inner_answer['has_label'] == 'true' %>
+                                        <%= label_tag inner_answer['name'], inner_answer['label'], { class: "form-check-label mb-2" } %>
+                                      <% end %>
+                                      <%= text_area_tag inner_answer['name'], @user_answers[inner_answer['name']], { class: "form-control", placeholder: "#{inner_answer['label']}", readonly: readonly,  } %>
+                                    </div>
+                                  <% end %>
+                                <% end %>
+                                <% if sub_answer['has_validation_box'] && params[:user_type] == ApplicationRecord::CII_USER %>
+                                  <div class="validation-box sub_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>" data-id="sub_answer-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>">
+                                    <% sub_answer['validation_boxes'].each_with_index do |validation_box, validation_box_index| %>
+                                      <% if validation_box['type'] == 'label' %>
+                                        <div class="col-md-12" style="margin-top: 1rem">
+                                          <label class="form-label d-block"><%= validation_box['label'] %></label>
+                                        </div>
+                                      <% end %>
+                                      <% if validation_box['type'] == 'radio' || validation_box['type'] == 'checkbox' %>
+                                        <div class="form-check mt-3 left-align">
+                                          <% if validation_box['type'] == 'radio' %>
+                                            <%= radio_button_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "sub-validation-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                          <% else %>
+                                            <%= check_box_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "sub-validation-#{question.question_id}-#{option_index+1}-#{sub_answer_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                          <% end %>
+                                          <%= label_tag validation_box['name'], validation_box['label'], { class: "form-check-label" } %>
+                                        </div>
+                                        <% if validation_box['has_sub_answer'] %>
+                                          <div class="row g-3 <%= validation_box['name'] %> sub-answers d-none" id="sub-validation-<%= question.question_id %>-<%= option_index+1 %>-<%= sub_answer_index+1 %>-<%= validation_box_index+1 %>">
+                                            <% validation_box['sub_answers'].each_with_index do |sub_validation_box, sub_validation_box_index| %>
+                                              <% if sub_validation_box['type'] == 'radio' || sub_validation_box['type'] == 'checkbox' %>
+                                                <div class="form-check mt-3 left-align">
+                                                  <% if sub_validation_box['type'] == 'radio' %>
+                                                    <%= radio_button_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                                  <% else %>
+                                                    <%= check_box_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                                  <% end %>
+                                                  <%= label_tag sub_validation_box['name'], sub_validation_box['label'], { class: "form-check-label" } %>
+                                                </div>
+                                              <% end %>
+                                            <% end %>
+                                          </div>
+                                        <% end %>
+                                      <% end %>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                              </div>
+                            <% end %>
+                          <% end %>
+                          <% if sub_answer['type'] == 'text' || sub_answer['type'] == 'number' %>
+                            <div class="col-md-4" style="margin-top: 1rem">
+                              <div class="d-flex flex-column h-100 justify-content-between"> 
+                                <% if sub_answer['type'] == 'text' %>
+                                  <%= text_field_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: sub_answer['label'], readonly: readonly } %>
+                                <% else %>
+                                  <label class="form-label d-block"><%= "#{sub_answer['label']}" %></label>
+                                  <% if sub_answer['label'] == 'Percentage' %>
+                                    <input type="decimal" name="<%= sub_answer['name'] %>" id="<%= sub_answer['name'] %>" value="<%= @user_answers[sub_answer['name']] %>" class="form-control" placeholder="<%= sub_answer['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                    <%#= number_field_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: sub_answer['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                  <% else %>
+                                    <%= number_field_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: sub_answer['label'], readonly: readonly, min: 0 } %>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            </div>
+                          <% end %>
+                          <% if sub_answer['type'] == 'dropdown' %>
+                            <div class="col-md-4" style="margin-top: 1rem">
+                              <%= select_tag sub_answer['name'], options_for_select(sub_answer['options'], @user_answers[sub_answer['name']]), { class: "form-control form-select", include_blank: sub_answer['label'], disabled: readonly } %>
+                            </div>
+                            <% if sub_answer['has_table'] %>
+                              <table class="left-align">
+                                <% sub_answer['table_data'].each_with_index do |row_data, index| %>
+                                  <tr>
+                                    <% row_data.each_with_index do |column_data, index| %>
+                                      <td>
+                                        <% if column_data['type'] == 'text' || column_data['type'] == 'number' %>
+                                          <% if column_data['type'] == 'text' %>
+                                            <%= text_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly } %>
+                                          <% else %>
+                                            <% if column_data['label'] == 'Percentage' %>
+                                              <input type="decimal" name="<%= column_data['name'] %>" id="<%= column_data['name'] %>" value="<%= @user_answers[column_data['name']] %>" class="form-control" placeholder="<%= column_data['label'] %>" min="0" oninput="return check(event)" step="0.01" <%= readonly ? 'readonly' : '' %>>
+                                              <%#= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0, oninput: 'return check(event)', step: 0.01 } %>
+                                            <% else %>
+                                              <%= number_field_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control", placeholder: column_data['label'], readonly: readonly, min: 0 } %>
+                                            <% end %>
+                                          <% end %>
+                                        <% elsif column_data['type'] == 'dropdown' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= select_tag column_data['name'], options_for_select(column_data['options'], @user_answers[column_data['name']]), { class: "form-control form-select", include_blank: column_data['label'], disabled: readonly } %>
+                                          </div>
+                                        <% elsif column_data['type'] == 'textarea' %>
+                                          <div class="col-md-12" style="margin-top: 0">
+                                            <%= text_area_tag column_data['name'], @user_answers[column_data['name']], { class: "form-control text-popup",  placeholder: "#{column_data['label']}", readonly: readonly,  } %>
+                                          </div>
+                                        <% else %>
+                                          <label class="form-label d-block"><%= column_data['label'] %></label>
+                                        <% end %>
+                                      </td>
+                                    <% end %>
+                                  </tr>
+                                <% end %>
+                              </table>
+                            <% end %>
+                          <% end %>
+                          <% if sub_answer['type'] == 'textarea' %>
+                            <div class="col-md-12" style="margin-top: 1rem">
+                              <%= text_area_tag sub_answer['name'], @user_answers[sub_answer['name']], { class: "form-control", placeholder: "#{sub_answer['label']}", readonly: readonly,  } %>
+                            </div>
+                            <% if sub_answer['has_validation_box'] && params[:user_type] == ApplicationRecord::CII_USER %>
+                              <div class="validation-box answer-<%= question.question_id %>-<%= option_index+1 %>" data-id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                                <% sub_answer['validation_boxes'].each_with_index do |validation_box, validation_box_index| %>
+                                  <% if validation_box['type'] == 'label' %>
+                                    <div class="col-md-12" style="margin-top: 1rem">
+                                      <label class="form-label d-block"><%= validation_box['label'] %></label>
+                                    </div>
+                                  <% end %>
+                                  <% if validation_box['type'] == 'radio' || validation_box['type'] == 'checkbox' %>
+                                    <div class="form-check mt-3 left-align">
+                                      <% if validation_box['type'] == 'radio' %>
+                                        <%= radio_button_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "validation-#{question.question_id}-#{option_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                      <% else %>
+                                        <%= check_box_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "validation-#{question.question_id}-#{option_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                      <% end %>
+                                      <%= label_tag validation_box['name'], validation_box['label'], { class: "form-check-label" } %>
+                                    </div>
+                                    <% if validation_box['has_sub_answer'] %>
+                                      <div class="row g-3 <%= validation_box['name'] %> sub-answers d-none" id="validation-<%= question.question_id %>-<%= option_index+1 %>-<%= validation_box_index+1 %>">
+                                        <% validation_box['sub_answers'].each_with_index do |sub_validation_box, sub_validation_box_index| %>
+                                          <% if sub_validation_box['type'] == 'radio' || sub_validation_box['type'] == 'checkbox' %>
+                                            <div class="form-check mt-3 left-align">
+                                              <% if sub_validation_box['type'] == 'radio' %>
+                                                <%= radio_button_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                              <% else %>
+                                                <%= check_box_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                              <% end %>
+                                              <%= label_tag sub_validation_box['name'], sub_validation_box['label'], { class: "form-check-label" } %>
+                                            </div>
+                                          <% end %>
+                                        <% end %>
+                                      </div>
+                                    <% end %>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                        <% if option['has_validation_box'] && params[:user_type] == ApplicationRecord::CII_USER %>
+                          <div class="validation-box answer-<%= question.question_id %>-<%= option_index+1 %>" data-id="answer-<%= question.question_id %>-<%= option_index+1 %>">
+                            <% option['validation_boxes'].each_with_index do |validation_box, validation_box_index| %>
+                              <% if validation_box['type'] == 'label' %>
+                                <div class="col-md-12" style="margin-top: 1rem">
+                                  <label class="form-label d-block"><%= validation_box['label'] %></label>
+                                </div>
+                              <% end %>
+                              <% if validation_box['type'] == 'radio' || validation_box['type'] == 'checkbox' %>
+                                <div class="form-check mt-3 left-align">
+                                  <% if validation_box['type'] == 'radio' %>
+                                    <%= radio_button_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "validation-#{question.question_id}-#{option_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                  <% else %>
+                                    <%= check_box_tag validation_box['name'], validation_box['label'], @user_answers[validation_box['name']] == validation_box['label'], { class: "form-check-input", title: "validation-#{question.question_id}-#{option_index+1}-#{validation_box_index+1}", disabled: readonly } %>
+                                  <% end %>
+                                  <%= label_tag validation_box['name'], validation_box['label'], { class: "form-check-label" } %>
+                                </div>
+                                <% if validation_box['has_sub_answer'] %>
+                                  <div class="row g-3 <%= validation_box['name'] %> sub-answers d-none" id="validation-<%= question.question_id %>-<%= option_index+1 %>-<%= validation_box_index+1 %>">
+                                    <% validation_box['sub_answers'].each_with_index do |sub_validation_box, sub_validation_box_index| %>
+                                      <% if sub_validation_box['type'] == 'radio' || sub_validation_box['type'] == 'checkbox' %>
+                                        <div class="form-check mt-3 left-align">
+                                          <% if sub_validation_box['type'] == 'radio' %>
+                                            <%= radio_button_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                          <% else %>
+                                            <%= check_box_tag sub_validation_box['name'], sub_validation_box['label'], @user_answers[sub_validation_box['name']] == sub_validation_box['label'], { class: "form-check-input", disabled: readonly } %>
+                                          <% end %>
+                                          <%= label_tag sub_validation_box['name'], sub_validation_box['label'], { class: "form-check-label" } %>
+                                        </div>
+                                      <% end %>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                              <% end %>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                  <% if option['type'] == 'textarea' %>
+                    <% if option['label'] == 'CII Comments' && params[:user_type] == ApplicationRecord::CII_USER %>
+                      <div class="col-md-12" style="margin-top: 1rem">
+                        <%= text_area_tag option['name'], @user_answers[option['name']], { class: "form-control", placeholder: "#{option['label']}", readonly: readonly, } %>
+                      </div>
+                    <% elsif option['label'] == 'Company Comment' %>
+                      <div class="col-md-12" style="margin-top: 1rem">
+                        <%= text_area_tag option['name'], @user_answers[option['name']], { class: "form-control", placeholder: "#{option['label']}", readonly: true, } %>
+                      </div>
+                    <% else %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <div class="row mb-3 file-upload-note">
+              <label class="form-label d-block">COMPANY USER FILES:</label>
+              <% company_user_attachments = Attachment.find_by(user_id: params[:company_user_id], category_id: category.id, user_type: ApplicationRecord::COMPANY_USER)&.files %>
+              <% if !company_user_attachments.nil? %>
+                <% company_user_attachments.each_with_index do |attachment, attachment_index| %>
+                  <%= link_to "#{attachment_index + 1}. #{attachment.blob.filename}", rails_blob_path(attachment.blob, disposition: "attachment"), { class: "col-md-3 pb-3" } %>
+                <% end %>
+              <% else %>
+                <p class="mb-0">No attachments are here.</p>
+              <% end %>
+            </div>
+
+            <% if params[:user_type] == ApplicationRecord::CII_USER %>
+              <div class="row mb-3 file-upload-note">
+                <label class="form-label d-block">CII USER FILES:</label>
+                <% cii_user_attachments = Attachment.find_by(user_id: params[:company_user_id], category_id: category.id, user_type: ApplicationRecord::CII_USER)&.files %>
+                <% if readonly %>
+                  <% if !cii_user_attachments.nil? %>
+                    <% cii_user_attachments.each_with_index do |attachment, attachment_index| %>
+                      <%= link_to "#{attachment_index + 1}. #{attachment.blob.filename}", rails_blob_path(attachment.blob, disposition: "attachment"), { class: "col-md-3 pb-3" } %>
+                    <% end %>
+                  <% else %>
+                    <p class="mb-0">No attachments are here.</p>
+                  <% end %>
+                <% else %>
+                  <%= file_field_tag "category#{category.id}files", multiple: true, class: "form-control multiple-file", accept: ".xlsx, .xls, image/*, .doc, .docx, .ppt, .pptx, .txt, .pdf", disabled: readonly %>
+                  <div class="row mt-3 category<%= category.id %>files">
+                    <% if cii_user_attachments.present? %>
+                      <% cii_user_attachments.each_with_index do |attachment, attachment_index| %>
+                        <div class="col-md-3">
+                          <button type="button" class="btn-close file-remove" id="category<%= category.id %>files-<%= attachment_index %>" aria-label="Close" data-file="<%= attachment.blob.filename %>"></button>
+                          <a href="<%= rails_blob_path(attachment.blob, disposition: "attachment") %>">
+                            <img class="img-responsive img-thumbnail file-logo"
+                                 src="/assets/<%= if attachment.blob.content_type.split('/')[0] == 'image'
+                                                    'image.png'
+                                                  else
+                                                    (attachment.blob.content_type.split('/')[0] == 'video') ? 'video.png' : 'file.png'
+                                                  end %>"
+                                 title="<%= attachment.blob.filename %>">
+                          </a>
+                          <p><%= attachment.filename %></p>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                  <p class="mb-0"><b>Note:</b>
+                    <i>Please upload all supporting documents for verification of your response in this aspect.</i></p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="row">
+          <div class="col-md-3">
+            <%= button_tag "Previous", class: "btn btn-primary previous" %>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-3">
+            <%= button_tag "Next", class: "btn btn-primary next float-right" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

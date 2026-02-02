@@ -1,0 +1,173 @@
+<div class="card">
+	<div class="card-header">
+		<%= render 'data_collection_info', locals: { params: params } %>
+	</div>
+	<hr>
+	<div class="card-body">
+		<%= render 'data_collection_assessment_form', locals: { params: params } %>
+	</div>
+</div>
+
+<script>
+  $(document).ready(function () {
+	$('#modalUploadXML').modal({ backdrop: 'static', keyboard: false });
+  	const navbarHeight = $("#layout-navbar").outerHeight();
+  	var activePopupId = "";
+
+  	check = function (event) {
+  		let inputValue = event.target.value;
+  		if ((inputValue.split(".").length - 1) > 1){
+  			event.target.value = '';
+  		} else{
+  			if (/^\d{1,2}(\.\d{1,2})?(\.\d{0,2})?$/.test(inputValue) || inputValue === "") {
+  				return;
+  			}
+  			if (Number(inputValue) > 100.00) {
+  				event.target.value = '';
+  			} else if (Number(inputValue) === parseFloat(inputValue) && Number(inputValue) !== parseInt(inputValue)) {
+  				event.target.value = parseFloat(inputValue).toFixed(2);
+  			} else {
+  				event.target.value = (inputValue > 0) ? Number(inputValue) : '';
+  			}
+  		}
+  	}
+
+  	onPageLoad("modal-true");
+  	
+  	// ============================================= Pagination block start =========================================
+  	var currentPageOffset = 0; // Start from the first page
+	var questionsPerPage = 10;
+	var questionsCount = $('.form-group.col-md.mb-5.answerChangeCheck').length;
+	var totalPages = Math.ceil(questionsCount / questionsPerPage);
+
+	function disableOrEnablePrevBtn() {
+		if (currentPageOffset <= 0) {
+			$('.previous').prop('disabled', true);
+		} else {
+			$('.previous').prop('disabled', false);
+		}
+	}
+
+	function disableOrEnableNextBtn() {
+		if (currentPageOffset >= totalPages - 1) {
+			$('.next').prop('disabled', true);
+		} else {
+			$('.next').prop('disabled', false);
+		}
+	}
+
+	function hideOrShowQuestions() {
+		var startIndex = currentPageOffset * questionsPerPage;
+		var endIndex = Math.min(startIndex + questionsPerPage, questionsCount);
+		$('.form-group.col-md.mb-5.answerChangeCheck').hide().slice(startIndex, endIndex).show();
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		disableOrEnablePrevBtn();
+		disableOrEnableNextBtn();
+	}
+
+	hideOrShowQuestions();
+
+	$(".previous").click(function(event) {
+		event.preventDefault();
+		currentPageOffset--;
+		hideOrShowQuestions();
+	});
+
+	$(".next").click(function(event) {
+		event.preventDefault();
+		currentPageOffset++;
+		hideOrShowQuestions();
+	});
+
+  	// ============================================= Pagination block end =========================================
+
+  	$(".list-group-item-action").click(function() {
+  		showHidePreviousNextButton();
+  		window.scrollTo({ top: 0, behavior: 'smooth' });
+  	});
+	
+  	if (!$._data(document, 'events') || !$._data(document, 'events').click || !$._data(document, 'events').click.some(event => event.selector === '.file-remove')) {
+  		$(document).on('click', '.file-remove', function () {
+  			let $this = $(this);
+  			let aspectId = this.id.split("-")[0];
+  			let fileName = $(this).data("file");
+  			let formData = new FormData();
+  			formData.append('category_id', aspectId.match(/(\d+)/)[0]);
+  			formData.append('fileName', fileName);
+  			removeAttachment(formData, function (successMessage) {
+  				$this.parent().remove();
+  				toastr.success(successMessage);
+  			});
+  		});
+  	}
+
+
+  	function onPageLoad(modelStatus) {
+  		if(modelStatus === "modal-true"){
+  			$("#instructionsModal").click();
+  		}
+
+  		$("input[type=radio]:checked, input[type=checkbox]:checked").each(function() {
+  			$("." + this.name).addClass("d-none");
+
+  			if($(this).attr('title')) {
+				$("#" + this.title + ", ." + this.name + "checkbox").removeClass("d-none");
+            }
+  		});
+
+  		loadAnswerCount();
+  		submitButtonEnabledDisabled();
+  		showHidePreviousNextButton();
+  	}
+
+  	function loadAnswerCount() {
+  		$(".choice").each(function () {
+  			let tabId = $(this).closest('.tab-pane').attr("id");
+  			let inputName = [];
+  			let checkCount = 0;
+
+  			$("#" + tabId).find('.choice').each(function () {
+  				if((!inputName.includes($(this).attr("name")) && ($(this).attr("type") == 'radio'))) {
+  					inputName.push($(this).attr("name"));
+  				}
+  			});
+  		});
+  	}
+
+  	function showHidePreviousNextButton() {
+  		let tabId = $('.list-group-item-action.active').attr("id");
+
+  		if(tabId == "faq-list") {
+  			$(".previous").css({display: 'none'});
+  			$(".next").css({display: 'none'});
+  		} else {
+  			$(".previous").css({display: 'block'});
+  			$(".next").css({display: 'block'});
+  		}
+  	}
+
+  	function submitButtonEnabledDisabled() {
+  		let inputName = [];
+  		let checkCount = 0;
+
+  		$("#assessment_form").find('.choice').each(function () {
+  			if((!inputName.includes($(this).attr("name")) && ($(this).attr("type") == 'radio'))) {
+  				inputName.push($(this).attr("name"));
+  			}
+  		});
+
+  		for(let i = 0; i < inputName.length; i++) {
+  			$("input[name=" + inputName[i] + "]:checked").each(function() {
+  				checkCount += 1;
+  			});
+  		}
+
+  		if(checkCount == inputName.length) {
+  			$(".submit_assessment").removeAttr('disabled');
+  		} else {
+  			$(".submit_assessment").attr('disabled','disabled');
+  		}
+  	}
+	
+  });
+</script>

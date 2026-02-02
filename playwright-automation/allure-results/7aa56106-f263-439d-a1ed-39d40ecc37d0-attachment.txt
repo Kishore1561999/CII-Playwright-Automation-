@@ -1,0 +1,6 @@
+CII Data link is visible, clicking directly.
+✓ Clicked: CII Data link
+✓ Admin: Navigated to CII Data Collection
+✓ Admin: Filtered by Year: 2024
+✓ Admin: Filtered by Sector: Automobiles & Auto Components
+✓ Admin: Searched for Company: CII_CEAT Limited

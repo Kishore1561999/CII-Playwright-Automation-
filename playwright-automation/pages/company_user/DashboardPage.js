@@ -11,12 +11,27 @@ class DashboardPage extends BasePage {
         this.viewAssessmentLink = page.locator('.card:has(p.icon-name:text("View Assessment"))').locator('a, .card-body').first();
     }
 
+    async _robustClick(locator, name) {
+        // Ensure any lingering modals or backdrops are cleared first
+        await this.page.locator('.modal.show, .modal-backdrop, .toast').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
+        await locator.scrollIntoViewIfNeeded();
+        try {
+            await locator.click({ force: true, timeout: 5000 });
+            console.log(`\u2713 Clicked: ${name}`);
+        } catch (error) {
+            console.warn(`\u26A0 Standard click failed on ${name}: ${error.message}. Attempting JS click.`);
+            await locator.dispatchEvent('click');
+            console.log(`\u2713 JS clicked: ${name}`);
+        }
+    }
+
     async clickTakeAssessment() {
-        await this.takeAssessmentCard.click();
+        await this._robustClick(this.takeAssessmentCard, 'Take Assessment card');
     }
 
     async clickViewAssessment() {
-        await this.viewAssessmentCard.click();
+        await this._robustClick(this.viewAssessmentCard, 'View Assessment card');
     }
 
     async isTakeAssessmentDisabled() {
@@ -31,9 +46,13 @@ class DashboardPage extends BasePage {
 
     async downloadScorecard() {
         console.log('Attempting to download scorecard...');
+        await this.viewScorecardCard.scrollIntoViewIfNeeded();
         const [download] = await Promise.all([
             this.page.waitForEvent('download'),
-            this.viewScorecardCard.click()
+            this.viewScorecardCard.click({ force: true }).catch(async (e) => {
+                console.warn(`⚠ Standard click failed on View Scorecard card: ${e.message}. Attempting JS click.`);
+                await this.viewScorecardCard.dispatchEvent('click');
+            })
         ]);
         const path = await download.path();
         console.log(`✓ Scorecard downloaded to: ${path}`);
@@ -42,9 +61,13 @@ class DashboardPage extends BasePage {
 
     async downloadReport() {
         console.log('Attempting to download report...');
+        await this.viewReportCard.scrollIntoViewIfNeeded();
         const [download] = await Promise.all([
             this.page.waitForEvent('download'),
-            this.viewReportCard.click()
+            this.viewReportCard.click({ force: true }).catch(async (e) => {
+                console.warn(`⚠ Standard click failed on View Report card: ${e.message}. Attempting JS click.`);
+                await this.viewReportCard.dispatchEvent('click');
+            })
         ]);
         const path = await download.path();
         console.log(`✓ Report downloaded to: ${path}`);
