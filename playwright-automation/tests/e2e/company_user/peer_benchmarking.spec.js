@@ -198,6 +198,7 @@ test.describe('Peer Benchmarking Phase 2 Flow', () => {
     });
 
     test('Step 6: Admin Data Deletion (Cleanup)', async () => {
+        test.setTimeout(120000); // 2 mins for cleanup
         await loginPage.navigate('/users/sign_in');
         await loginPage.login(Env.ADMIN_EMAIL, Env.ADMIN_PASSWORD);
         await sharedPage.waitForTimeout(1000);

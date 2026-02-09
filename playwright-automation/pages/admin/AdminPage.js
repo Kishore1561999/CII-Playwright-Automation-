@@ -162,9 +162,16 @@ class AdminPage extends BasePage {
      * Basic Subscription
      */
     async navigateToBasicSubscription() {
+        // Clear any lingering modals or backdrops first
+        await this.page.locator('.modal.show, .modal-backdrop').waitFor({ state: 'hidden', timeout: 5000 }).catch(() => { });
+
         await this._robustClick(this.basicSubLink, 'Basic Subscription link');
+
+        // Wait for URL to change to confirm navigation
+        await this.page.waitForURL(/.*basic_subscription/, { timeout: 10000 });
         await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(2000);
+        console.log('✓ Admin: Navigated to Basic Subscription');
     }
 
     async searchBasicSubscription(sector, year) {
