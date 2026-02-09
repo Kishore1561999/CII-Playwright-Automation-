@@ -134,6 +134,7 @@ class AdminPage extends BasePage {
         if (companyName) {
             await this.searchNameInput.fill(companyName);
             await this.applyFilterBtn.click();
+            await this.page.waitForTimeout(500); // Wait for request to start
             await this.page.waitForLoadState('networkidle');
             console.log(`✓ Admin: Searched for Company: ${companyName}`);
         }
@@ -442,7 +443,14 @@ class AdminPage extends BasePage {
         // Scope to main table rows and take the first match to avoid strict mode violation 
         // with hidden/sidebar elements (like #company-my-list)
         const row = this.page.locator('table:not(#company-my-list) tbody tr').filter({ hasText: companyName }).first();
-        await row.waitFor({ state: 'visible', timeout: 10000 });
+        try {
+            await row.waitFor({ state: 'visible', timeout: 30000 }); // Increased timeout for Jenkins
+        } catch (e) {
+            // fast fail if "No matching records found" is present?
+            // For now, just let it fail with a more descriptive error or let the meaningful timeout happen.
+            console.warn(`\u26A0 Row for ${companyName} not found within 30s.`);
+            throw e;
+        }
         return row;
     }
 
