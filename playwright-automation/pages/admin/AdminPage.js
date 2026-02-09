@@ -310,7 +310,12 @@ class AdminPage extends BasePage {
     async deleteBasicSubscription(companyName) {
         console.log(`✓ Admin: Deleting Basic Subscription for: ${companyName}`);
         await this.searchByCompany(companyName);
-        const row = await this.getCompanyRow(companyName);
+        const row = await this.getCompanyRow(companyName, false); // Don't fail if already missing
+
+        if (!row) {
+            console.warn(`ℹ Company ${companyName} not found. Assuming already deleted.`);
+            return;
+        }
 
         // Direct delete button based on snippet
         const deleteBtn = row.locator('.delete_button, :text("Delete")').first();
@@ -439,16 +444,26 @@ class AdminPage extends BasePage {
     /**
      * Row helper
      */
-    async getCompanyRow(companyName) {
-        // Scope to main table rows and take the first match to avoid strict mode violation 
-        // with hidden/sidebar elements (like #company-my-list)
-        const row = this.page.locator('table:not(#company-my-list) tbody tr').filter({ hasText: companyName }).first();
+    async getCompanyRow(companyName, failOnMissing = true) {
+        // Simplified locator to find any row with the company name
+        const row = this.page.locator('tbody tr').filter({ hasText: companyName }).first();
         try {
             await row.waitFor({ state: 'visible', timeout: 30000 }); // Increased timeout for Jenkins
         } catch (e) {
-            // fast fail if "No matching records found" is present?
-            // For now, just let it fail with a more descriptive error or let the meaningful timeout happen.
-            console.warn(`\u26A0 Row for ${companyName} not found within 30s.`);
+            if (!failOnMissing) {
+                console.warn(`\u26A0 Row for ${companyName} not found within 30s. Returning null.`);
+                return null;
+            }
+
+            // Debugging: Log what IS visible
+            console.log(`\u26A0 Row for ${companyName} not found. Dumping visible rows:`);
+            const rows = this.page.locator('tbody tr');
+            const count = await rows.count();
+            console.log(`Total rows found: ${count}`);
+            for (let i = 0; i < count; i++) {
+                const text = await rows.nth(i).innerText();
+                console.log(`Row ${i + 1}: ${text.replace(/\n/g, ' ')}`);
+            }
             throw e;
         }
         return row;
