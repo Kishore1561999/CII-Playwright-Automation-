@@ -1,0 +1,136 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS_LTS' // Updated based on error message
+    }
+
+    // environment block removed as it was empty
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('playwright-automation') {
+                    bat 'npm install'
+                    bat 'npm list @playwright/test'
+                }
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                dir('playwright-automation') {
+                    bat 'npx playwright install --with-deps'
+                }
+            }
+        }
+
+        stage('Run All Tests') {
+            steps {
+                dir('playwright-automation') {
+                    script {
+                        try {
+                            // Run both E2E and Functional projects in a single command for consolidated reporting
+                            bat 'npx playwright test --project=E2E_Flow --project=Functional_Tests'
+                        } catch (Exception e) {
+                            echo 'Some tests failed'
+                            currentBuild.result = 'UNSTABLE'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                dir('playwright-automation') {
+                     // Generate Allure Report
+                     try {
+                        bat 'npx allure generate allure-results -o allure-report --clean'
+                     } catch (Exception e) {
+                        echo 'Failed to generate Allure report'
+                     }
+
+                     // Generate Ortoni PDF Report
+                     try {
+                        bat 'node utils/generatePDF.js'
+                     } catch (Exception e) {
+                        echo 'Failed to generate PDF report'
+                     }
+                }
+            }
+
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-automation/playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report',
+                reportTitles: ''
+            ])
+
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-automation/ortoni-report',
+                reportFiles: 'index.html',
+                reportName: 'Ortoni Report',
+                reportTitles: ''
+            ])
+
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-automation/allure-report',
+                reportFiles: 'index.html',
+                reportName: 'Allure Report',
+                reportTitles: ''
+            ])
+            
+            archiveArtifacts artifacts: 'playwright-automation/playwright-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/ortoni-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/allure-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/test-results/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-automation/report.pdf', allowEmptyArchive: true
+
+            // emailext (
+            //     subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
+            //     body: """<p>Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) finished.</p>
+            //              <p>Status: <strong>${currentBuild.result ?: 'SUCCESS'}</strong></p>
+            //              <p>Check console output at: <a href='${env.BUILD_URL}'>${env.BUILD_URL}</a></p>""",
+            //     to: "kishore.r@spritle.com",
+            //     mimeType: 'text/html',
+            //     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+            // )
+
+            emailext (
+                 subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) - ${currentBuild.result ?: 'SUCCESS'}",
+                 body: """
+                     <p><b>Project:</b> ${env.JOB_NAME}</p>
+                     <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                     <p><b>Build Status:</b> <b>${currentBuild.result ?: 'SUCCESS'}</b></p>
+                     <br>
+                     <p>Click below to view Playwright Ortoni Report:</p>
+                     <a href="${env.BUILD_URL}artifact/playwright-automation/ortoni-report/index.html">View Ortoni HTML Report</a>
+                     <br>
+                     <p><i>Note: Detailed PDF report is attached to this email.</i></p>
+                 """,
+                 to: 'kishore.r@spritle.com',
+                 attachmentsPattern: 'playwright-automation/report.pdf',
+                 mimeType: 'text/html',
+                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
+            )
+        }
+    }
+}
